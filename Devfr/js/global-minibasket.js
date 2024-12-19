@@ -14,32 +14,32 @@ var basketApp = new Vue({
         this.loaded = true;
         //this.active = false;
 
-        this.intervalObj = setInterval(function() {
+        this.intervalObj = setInterval(function () {
             _this.loadBasket();
         }, 60 * 1000);
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
             /*only for retail products*/
-            $('.retproducts').each(function() {
+            $('.retproducts').each(function () {
                 $('.retproducts .qtyboxMain input').prop('disabled', true);
                 $('.retproducts .drecipeCheck').prop('disabled', true);
                 $('.retproducts .mblAllowSubs .mrecipeCheck').prop('disabled', true);
             })
 
-            $('.retproducts').each(function() {
+            $('.retproducts').each(function () {
                 $('.retproducts .item-name').prop('disabled', true);
                 $('.retproducts .prodnamelink').removeAttr('href');
                 $('.retproducts .image-wrapper a').removeAttr('href');
             })
 
             var wsdisbledctr = 0;
-            $('.retproducts').each(function() {
+            $('.retproducts').each(function () {
                 wsdisbledctr++;
             })
             /*console.log(wsdisbledctr)*/
 
             var wsdisbledctr = 0;
-            $('.retproducts').each(function() {
+            $('.retproducts').each(function () {
                 wsdisbledctr++;
             })
             /*console.log(wsdisbledctr)*/
@@ -49,36 +49,36 @@ var basketApp = new Vue({
                 $('.checkAll .checkmark').css('opacity', '0.4');
                 $('.checkoutbutton').removeAttr('href');
                 $('.btn-checkout').removeAttr('href');
-                $('.checkoutbutton').click(function() {
+                $('.checkoutbutton').click(function () {
                     $('#cartitemdisableditemmodal').modal('show');
                 })
-                $('.btn-checkout').click(function() {
+                $('.btn-checkout').click(function () {
                     $('#cartitemdisableditemmodal').modal('show');
                 })
             }
             /*only for retail products */
             $("#minibsk").css("opacity", 1);
-            $(".no-touch #global-mini-basket-wrapper").on("mousemove", function() {
+            $(".no-touch #global-mini-basket-wrapper").on("mousemove", function () {
                 basketApp.activate();
             });
-            setTimeout(function() {
-                $(".no-touch #global-mini-basket-wrapper").on("mousemove", function() {
+            setTimeout(function () {
+                $(".no-touch #global-mini-basket-wrapper").on("mousemove", function () {
                     basketApp.activate();
                 });
             }, 1000);
-            $("body #global-mini-basket-wrapper").on("click", function(e) {
+            $("body #global-mini-basket-wrapper").on("click", function (e) {
                 if (!$("body").hasClass("no-touch"))
                     e.preventDefault();
                 basketApp.activate(true);
                 $('.masteracntbtn').hide();
             });
             var clickedTimes = 0;
-            $("body:not(.no-touch)").on("click", function(e) {
+            $("body:not(.no-touch)").on("click", function (e) {
                 //This close the minibasket in touch devices
                 var container = $("#minibsk");
                 var link = $("#global-mini-basket-wrapper");
 
-                if (container.is(e.target) || container.has(e.target).length !== 0) {} else {
+                if (container.is(e.target) || container.has(e.target).length !== 0) { } else {
                     if (link.is(e.target) || link.has(e.target).length !== 0) {
                         if (clickedTimes > 1 && basketApp.active) {
                             basketApp.active = false;
@@ -94,10 +94,10 @@ var basketApp = new Vue({
         });
     },
     methods: {
-        addProduct: function addProduct() {},
+        addProduct: function addProduct() { },
         loadBasket: function loadBasket() {
             var _this2 = this;
-            $.getJSON("/GLOBALBASK_JSON.html", function(data) {
+            $.getJSON("/GLOBALBASK_JSON.html", function (data) {
                 _this2.basket = data;
                 $(".basket-count").text(data.basket_count);
                 //this might be better as another vue instance?
@@ -110,7 +110,7 @@ var basketApp = new Vue({
                     $(".earnedpoints").text(data.total_points);
                     $(".pointmessage").show();
                 }
-                $('.miniproductcode').each(function() {
+                $('.miniproductcode').each(function () {
                     var targetInput = $(this).val();
                     var datathreebie = $(this).attr('data-minicartthreebie');
                     var datamarketthreebie = $(this).attr('data-marketthreebie');
@@ -123,16 +123,16 @@ var basketApp = new Vue({
                         getthreebiecounter++;
                         if (marketqtyincart < 3) {
                             threebiecounter++;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'RE CLOSE TO A THREEBIE!");
                             }, 100);
                         } else if ((marketqtyincart < 3 && $('.threebiecartbtn').is(":visible") == true || marketqtyincart >= 3 && $('.threebiecartbtn').is(":visible") == true)) {
                             threebiecounter--;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'RE CLOSE TO ANOTHER THREEBIE!");
                             }, 1000);
                         } else if (marketqtyincart >= 3) {
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'VE GOT THREEBIE SAVINGS!");
                             }, 100);
                         } else {
@@ -143,23 +143,23 @@ var basketApp = new Vue({
                         getthreebiecounter++;
                         if (qtyincart < 3) {
                             threebiecounter++;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'RE CLOSE TO A THREEBIE!");
                             }, 100);
                         } else if ((qtyincart < 3 && $('.threebiecartbtn').is(":visible") == true || qtyincart >= 3 && $('.threebiecartbtn').is(":visible") == true)) {
                             threebiecounter--;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'RE CLOSE TO ANOTHER THREEBIE!");
                             }, 1000);
                         } else if (qtyincart >= 3) {
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('.threebmessage').show().html("YOU'VE GOT THREEBIE SAVINGS!");
                             }, 100);
                         } else {
                             $('.threebmessage').hide('slow');
                         }
                     } else {
-                        if ($('.threebmessage').is(":visible")) {} else {
+                        if ($('.threebmessage').is(":visible")) { } else {
                             $('.threebmessage').hide();
                         }
 
@@ -167,12 +167,12 @@ var basketApp = new Vue({
 
                 });
 
-                if (threebiecounter > 0) {} else if (threebiecounter == 0) {} else if (threebiecounter == '') {
+                if (threebiecounter > 0) { } else if (threebiecounter == 0) { } else if (threebiecounter == '') {
                     $('.threebmessage').hide();
                 }
 
                 var mixandmatchsum = 0;
-                $('.sumofmixandmatch:visible').each(function() {
+                $('.sumofmixandmatch:visible').each(function () {
                     var mixandmatchcounter = $(this).text();
                     mixandmatchsum += !isNaN(mixandmatchcounter);
                 });
@@ -186,13 +186,13 @@ var basketApp = new Vue({
                 /*varibales used for minimum check*/
 
                 /*only for retail products*/
-                $('.retproducts').each(function() {
+                $('.retproducts').each(function () {
                     $('.retproducts .qtyboxMain input').prop('disabled', true);
                     $('.retproducts .drecipeCheck').prop('disabled', true);
                     $('.retproducts .mblAllowSubs .mrecipeCheck').prop('disabled', true);
                 })
 
-                $('.retproducts').each(function() {
+                $('.retproducts').each(function () {
                     $('.retproducts .item-name').prop('disabled', true);
                     $('.retproducts .prodnamelink').removeAttr('href');
                     $('.retproducts .image-wrapper a').removeAttr('href');
@@ -200,7 +200,7 @@ var basketApp = new Vue({
 
                 var wsdisbledctr = 0;
                 if ($('.retproducts').length > 0) {
-                    $('.retproducts').each(function() {
+                    $('.retproducts').each(function () {
                         wsdisbledctr++;
                     })
                     /*console.log(wsdisbledctr)*/
@@ -212,10 +212,10 @@ var basketApp = new Vue({
                         $('.checkAll .checkmark').css('opacity', '0.4');
                         $('.checkoutbutton').removeAttr('href');
                         $('.btn-checkout').removeAttr('href');
-                        $('.checkoutbutton').click(function() {
+                        $('.checkoutbutton').click(function () {
                             $('#cartitemdisableditemmodal').modal('show');
                         })
-                        $('.btn-checkout').click(function() {
+                        $('.btn-checkout').click(function () {
                             $('#cartitemdisableditemmodal').modal('show');
                         })
                     } else {
@@ -227,21 +227,21 @@ var basketApp = new Vue({
                 var sum = 0;
                 var pagecode = $('.pagecodes').text();
                 if (pagecode == "BASK") {
-                    $(".retproducts .msubtotal .psubtotal").each(function() {
+                    $(".retproducts .msubtotal .psubtotal").each(function () {
                         var val = $(this).text();
                         val = val.replace('$', '');
                         val = parseFloat(val, 10);
                         sum += (val);
                     });
                 } else {
-                    $("#minibsks:hidden .retproducts .msubtotal .psubtotal").each(function() {
+                    $("#minibsks:hidden .retproducts .msubtotal .psubtotal").each(function () {
                         var val = $(this).text();
                         val = val.replace('$', '');
                         val = parseFloat(val, 10);
                         sum += (val);
                     });
 
-                    $(".retproducts .msubtotal .psubtotal:visible").each(function() {
+                    $(".retproducts .msubtotal .psubtotal:visible").each(function () {
                         var val = $(this).text();
                         val = val.replace('$', '');
                         val = parseFloat(val, 10);
@@ -316,7 +316,7 @@ var basketApp = new Vue({
                     $('.totalamounts').text("$" + ordertotals);
                     $('.retailsubtotal').text(afterretailcheck);
                     /*$('#your-cart-link .basket-total').text('...');*/
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('#your-cart-link .basket-total').text("$" + afterretailcheck);
                     }, 500);
                     $('#minibsks .formatted_total').text("$" + afterretailcheck);
@@ -330,10 +330,10 @@ var basketApp = new Vue({
                     if (mintotal < 0) {
                         /*console.log("The min total is" + mintotal);*/
                         /*$('.minQty').html("Add $" + additionalPrice + " to meet $" + minrouteGroupPrice + " minimum " + minfaltratemsg);*/
-                        if ((($('#getweekday').val() == 1) || ($('#getweekday').val() == 6) || $('#getweekday').val() == 7) && (typeofmembership == 'BasicAccount')) {} else {
+                        if ((($('#getweekday').val() == 1) || ($('#getweekday').val() == 6) || $('#getweekday').val() == 7) && (typeofmembership == 'BasicAccount')) { } else {
                             if (basketTotal > 40 && (typeofmembership == 'BasicAccount')) {// $('.footer-quote').show();
-                            // $('.minQty').css('visibility', 'visible');
-                            // $('.minQty').html("You're almost there! Only $" + additionalPrice + " " + minfaltratemsg);
+                                // $('.minQty').css('visibility', 'visible');
+                                // $('.minQty').html("You're almost there! Only $" + additionalPrice + " " + minfaltratemsg);
                             } else if ((typeofmembership != 'BasicAccount') && basketTotal > 0) {
                                 $('.footer-quote').show();
                                 $('.minQty').css('visibility', 'visible');
@@ -355,13 +355,13 @@ var basketApp = new Vue({
                 $('.load-img1').hide();
                 /*check the min order and bask order and show message*/
                 /* New Fix for Subtotal */
-                $.get('/ajax.html?CustomerAction=getbasketcharges', function(data) {
+                $.get('/ajax.html?CustomerAction=getbasketcharges', function (data) {
                     var basketDataGet = JSON.parse(data)
                     for (var key in basketDataGet) {
                         if (key.includes("BasketTotal")) {
                             /*console.log(basketDataGet[key]);*/
                             $(".basket-total span").text(basketDataGet[key]);
-                            if (retailcounter > 0) {} else {
+                            if (retailcounter > 0) { } else {
                                 $('.formatted_total').text(basketDataGet[key]);
                                 BasketDiscount();
                             }
@@ -411,7 +411,7 @@ var basketApp = new Vue({
             clearTimeout(this.timeOut);
 
             if (!nonTimer) {
-                this.timeOut = setTimeout(function() {
+                this.timeOut = setTimeout(function () {
                     _this3.active = false;
                 }, 1500);
             }
@@ -448,10 +448,10 @@ var basketApp = new Vue({
         },
         CheckBasketItemss() {
 
-            $.getJSON("/GLOBALBASK_JSON.html", function(data) {
+            $.getJSON("/GLOBALBASK_JSON.html", function (data) {
                 if (data.groups.length) {
                     console.log('load');
-                    $.each(data.groups, function(i, item) {
+                    $.each(data.groups, function (i, item) {
                         var popupid = item.code;
                         var radiocheck = $('input[value="' + popupid + '"]');
                         popupidparent = $(radiocheck).attr("data-parent");
@@ -467,7 +467,7 @@ var basketApp = new Vue({
                         //       $(".ProductDetail-" + productcode)
                         //   .find('input[name="Product_Attributes[1]:value"]').attr('data-stock',datastock - item.quantity);
                         //     });
-                        $(".ProductDetail-" + productcode).find(".prodcodecheck-" + popupid).each(function() {
+                        $(".ProductDetail-" + productcode).find(".prodcodecheck-" + popupid).each(function () {
                             $(this).attr("data-qtycart", item.quantity);
                             $(".ProductDetail-" + productcode).find('input[name="Product_Attributes[1]:value"]').attr('data-stock', ((datastockraw / item.quantity) - Math.floor($(this).val())) * item.quantity);
                             console.log($(this).attr('data-newuom') + ' - ' + (((datastockraw / item.quantity) - Math.floor($(this).val())) * item.quantity));
@@ -486,36 +486,36 @@ var basketApp = new Vue({
         },
         CheckShippingMethods() {
 
-            $.get("/Merchant5/merchant.mvc?Screen=CUDET&CustomerAction=ReloadShipping&ShippingMethod=null", function(data) {})
+            $.get("/Merchant5/merchant.mvc?Screen=CUDET&CustomerAction=ReloadShipping&ShippingMethod=null", function (data) { })
 
         },
         checkifWineaccoutaddedWine() {
-            if(isUserLoggedIn == 1) {
-            if($('.checkiswineaccount').val() == 'showwinepopup') {
-                console.log($('.checkiswineaccount').val());
-                $('.proceedtocheckout,.btn-checkout').removeAttr('onclick');
-                $('.proceedtocheckout,.btn-checkout').attr('onclick', '$("#splitwinemodal").modal("show")');
-                if(getPageCode == 'opco') {
-                    window.location.href = '/Merchant5/merchant.mvc?Screen=BASK&Store_Code=G'
+            if (isUserLoggedIn == 1) {
+                if ($('.checkiswineaccount').val() == 'showwinepopup') {
+                    console.log($('.checkiswineaccount').val());
+                    $('.proceedtocheckout,.btn-checkout').removeAttr('onclick');
+                    $('.proceedtocheckout,.btn-checkout').attr('onclick', '$("#splitwinemodal").modal("show")');
+                    if (getPageCode == 'opco') {
+                        window.location.href = '/Merchant5/merchant.mvc?Screen=BASK&Store_Code=G'
+                    }
+                } else {
+                    $('.proceedtocheckout,.btn-checkout').attr('onclick', 'window.location.href="/Merchant5/merchant.mvc?Screen=OPCO&Store_Code=G"');
                 }
-            }else{
-                $('.proceedtocheckout,.btn-checkout').attr('onclick', 'window.location.href="/Merchant5/merchant.mvc?Screen=OPCO&Store_Code=G"');
             }
-        }
         }
     }
 
 });
 
 /*Minibasket Updated 08-sep-2021 */
-$(document).ready(function() {
+$(document).ready(function () {
     basketApp.checkifWineaccoutaddedWine();
     if (getPageCode !== 'OPCO' || getPageCode !== 'opcoguest') {
         basketApp.CheckShippingMethods();
     }
-    $('body').on('click', '#your-cart-link,#global-mini-basket-wrapper', function() {
+    $('body').on('click', '#your-cart-link,#global-mini-basket-wrapper', function () {
         var baskcount = $('body').find('.baskcount').text()
-       
+
         if (screen.width < 768 || pagecode == "BASK" || baskcount == '0' || pagecode == "OPCO" || pagecode == "opco" || pagecode == "OPCOGUEST" || pagecode == "opcoguest") {
             /*$('#your-cart-link .basket-total').text('...');*/
             location.href = "/?Screen=BASK&Store_Code=" + storecode;
@@ -532,7 +532,7 @@ $(document).ready(function() {
         basketApp.checkifWineaccoutaddedWine();
     });
 
-    $('.closeCart').click(function() {
+    $('.closeCart').click(function () {
         $('#minibsks').toggle();
         $('body').css('position', 'relative');
         $('body').css('overflow-y', 'auto');
@@ -541,7 +541,7 @@ $(document).ready(function() {
         $('.masteracntbtn').show();
     })
 
-    $('.addtocartbtn').click(function() {
+    $('.addtocartbtn').click(function () {
         /*basketApp.ShowLoader();
        $('.minibsk-body').load( window.location.protocol + "//" + window.location.host + window.location.pathname + " .minibsk-container",function( response, status, xhr){
        $('.minibsk-body').load().stop();
@@ -550,7 +550,7 @@ $(document).ready(function() {
         basketApp.loadBasket();
     });
 
-    $('.newPlusBtn').click(function() {
+    $('.newPlusBtn').click(function () {
         /*basketApp.ShowLoader();
             $('.minibsk-body').load( window.location.protocol + "//" + window.location.host + window.location.pathname + " .minibsk-container",function( response, status, xhr){
             $('.minibsk-body').load().stop();
@@ -560,7 +560,7 @@ $(document).ready(function() {
         basketApp.loadBasket();
     });
 
-    $('.newMinusBtn').click(function() {
+    $('.newMinusBtn').click(function () {
         /*basketApp.ShowLoader();
        $('.minibsk-body').load( window.location.protocol + "//" + window.location.host + window.location.pathname + " .minibsk-container",function( response, status, xhr){
        $('.minibsk-body').load().stop();
@@ -591,9 +591,9 @@ function removeItms($event) {
     /*console.log("removed from basket:");*/
     var deleteitem = 'Action=RGRP&Basket_Group=' + deleteid + ';&Offset=' + globalOffset + '&AllOffset=' + globalAllOffset + '&CatListingOffset=' + catlistOffset + '&RelatedOffset=' + relatedOffset + '&SearchOffset=' + searchOffset;
     basketApp.ShowLoader();
-    $('.minibsk-body').load('/ajax.html?CustomerAction=getMiniBasket&' + deleteitem + " .minibsk-container", function() {
+    $('.minibsk-body').load('/ajax.html?CustomerAction=getMiniBasket&' + deleteitem + " .minibsk-container", function () {
         basketApp.HideLoader();
-        setTimeout(function() {
+        setTimeout(function () {
             if (jQuery('#minibsks .product-row').length < 1) {
                 jQuery('.minibsk-header .baskcount').html('0');
                 jQuery('.minibsk-footer .formatted_total').html('$0.00');
@@ -603,14 +603,14 @@ function removeItms($event) {
         }, 500);
         basketApp.loadBasket();
         basketApp.CheckInventory();
-        setTimeout(function() {
+        setTimeout(function () {
             if ($('.ProductDetail-' + parentCode).length > 0) {
                 $('.ProductDetail-' + parentCode).find('input[type="radio"]').attr('data-stock', stockReset);
                 $('.ProductDetail-' + parentCode).find('input[value="' + productCode + '"]').attr('data-added', 0);
                 $('.ProductDetail-' + parentCode).find('.QtyVal').attr('data-qtycartcheck', 0);
                 $('.checkpcode-' + productCode).find('.data-min').attr('data-incart', 0)
-                $.getJSON("/GLOBALBASK_JSON.html", function(data) {
-                    $.each(data.items, function(key, val) {
+                $.getJSON("/GLOBALBASK_JSON.html", function (data) {
+                    $.each(data.items, function (key, val) {
                         /*console.log(data.items[key].code + " " + data.items[key].quantity);*/
                         $('.checkpcode-' + data.items[key].code).find('.data-min').attr('data-incart', 0)
                     });
@@ -624,7 +624,7 @@ function removeItms($event) {
     });
 }
 
-var changeBasketQty = function(element, sign) {
+var changeBasketQty = function (element, sign) {
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
@@ -667,7 +667,7 @@ var changeBasketQty = function(element, sign) {
     basketData = basketData.replace('Screen=', 'OldScreen=');
     basketApp.ShowLoader();
     basketApp.checkifWineaccoutaddedWine();
-    $('.minibsk-body').load("/ajax.html?CustomerAction=getMiniBasket&" + basketData + " .minibsk-container", function() {
+    $('.minibsk-body').load("/ajax.html?CustomerAction=getMiniBasket&" + basketData + " .minibsk-container", function () {
         $('.minibsk-body').load().stop();
         basketApp.CheckInventory();
         basketApp.HideLoader();
@@ -689,7 +689,7 @@ var changeBasketQty = function(element, sign) {
                 $('.ProductDetail-' + parentCode).find('.QtyVal').attr('data-qtycartcheck', 0);
                 $('.ProductDetail-' + parentCode).find('input[value="' + miniproductcode + '"]').attr('data-added', 0);
                 /*console.log(miniproductcode);*/
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.checkpcode-' + childcode).find('.data-min').attr('data-incart', 0);
                     addProductNew();
                     CheckBasketItems();
@@ -701,7 +701,7 @@ var changeBasketQty = function(element, sign) {
                 $('.ProductDetail-' + parentCode).find('.QtyVal').attr('data-qtycart', addedQty);
                 $('.checkpcode-' + childcode).find('.data-min').attr('data-incart', addedQty);
                 $('.ProductDetail-' + parentCode).find('.QtyVal').attr('data-qtycartcheck', addedQty);
-                setTimeout(function() {
+                setTimeout(function () {
                     addProductNew();
                     CheckBasketItems();
                 }, 1000);
@@ -716,12 +716,12 @@ var changeBasketQty = function(element, sign) {
 
 }
 
-$("#global-mini-basket-wrapper").click(function(element) {
+$("#global-mini-basket-wrapper").click(function (element) {
     basketApp.ShowLoader();
     basketApp.checkifWineaccoutaddedWine();
     var basketData = $(element).closest('.basket-page-quantity-update-form').serialize();
     basketData = basketData.replace('Screen=', 'OldScreen=');
-    $('.minibsk-body').load("/ajax.html?CustomerAction=getMiniBasket&" + basketData + " .minibsk-container", function(response, status, xhr) {
+    $('.minibsk-body').load("/ajax.html?CustomerAction=getMiniBasket&" + basketData + " .minibsk-container", function (response, status, xhr) {
         if (xhr.status == 200) {
 
             basketApp.HideLoader();
@@ -740,16 +740,16 @@ $("#global-mini-basket-wrapper").click(function(element) {
 console.log('Initially ' + (window.navigator.onLine ? 'on' : 'off') + 'line');
 window.addEventListener('online', () => {
     console.log('Became online'),
-    location.reload();
+        location.reload();
     basketApp.ShowLoader(),
-    basketApp.checkifWineaccoutaddedWine(),
-    $('.minibsk-body').load(window.location.protocol + "//" + window.location.host + window.location.pathname + " .minibsk-container", function(response, status, xhr) {
-        $('.minibsk-body').load().stop();
-        basketApp.HideLoader();
-        basketApp.loadBasket();
-        basketApp.CheckInventory();
-        refreshItemsOnBasket();
-    })
+        basketApp.checkifWineaccoutaddedWine(),
+        $('.minibsk-body').load(window.location.protocol + "//" + window.location.host + window.location.pathname + " .minibsk-container", function (response, status, xhr) {
+            $('.minibsk-body').load().stop();
+            basketApp.HideLoader();
+            basketApp.loadBasket();
+            basketApp.CheckInventory();
+            refreshItemsOnBasket();
+        })
 }
 );
 
@@ -775,8 +775,8 @@ $("body").find(".updatedShipping .load-img").css('display', 'flex');
 $("body").find(".updatedShipping .logo").hide();
 var retailcounter = $('.retailcounter').text();
 window.addEventListener('load', (event) => {
-    if (retailcounter > 0) {} else {
-        setTimeout(function() {
+    if (retailcounter > 0) { } else {
+        setTimeout(function () {
             $("body").find(".updatedShipping .logo").show();
             $('.totalamounts').text(basketformattedTotal).show();
             /*$('#your-cart-link .basket-total').text('&mvt:toolkit:basketsubtotalF;');*/
@@ -787,7 +787,7 @@ window.addEventListener('load', (event) => {
 );
 /*show after page load*/
 
-var changeBasketQtyusingInputforThreebie = function(element) {
+var changeBasketQtyusingInputforThreebie = function (element) {
     $(element).val();
     var parentCode = $(element).attr('data-parent');
     var childcode = $(element).attr('data-miniproductcode');
@@ -800,22 +800,22 @@ var changeBasketQtyusingInputforThreebie = function(element) {
     $('.checkpcode-' + childcode).find('.data-min').attr('data-incart', add);
     $('.ProductDetail-' + parentCode).find('.QtyVal').attr('data-qtycartcheck', add);
 
-    setTimeout(function() {
+    setTimeout(function () {
         addProductNew();
         CheckBasketItems();
     }, 1000);
 }
 
-var refreshItemsOnBasket = function() {
+var refreshItemsOnBasket = function () {
     var e = {};
-    "" !== basketApp.basket.items && basketApp.basket.items.forEach(function(t, a) {
+    "" !== basketApp.basket.items && basketApp.basket.items.forEach(function (t, a) {
         e[t.product.code] ? (e[t.product.code] += t.quantity) : (e[t.product.code] = t.quantity);
     }),
-    $(".product-item").each(function(t) {
-        $(this).attr("data-code") && e[$(this).attr("data-code")] ? ($(this).find(".in-cart").text(e[$(this).attr("data-code")] + " IN CART"),
-        0 === $(this).find(".in-cart").length && $(this).find(".product-details").append("<div class='in-cart'>" + e[$(this).attr("data-code")] + " IN CART</div>")) : $(this).find(".in-cart").remove();
-    }),
-    0 === $("td.addtocartbox .in-cart").length ? e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] && $("td.addtocartbox").append("<div class='in-cart'>" + e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] + " IN CART</div>") : e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] && $("td.addtocartbox").find(".in-cart").text(e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] + " IN CART");
+        $(".product-item").each(function (t) {
+            $(this).attr("data-code") && e[$(this).attr("data-code")] ? ($(this).find(".in-cart").text(e[$(this).attr("data-code")] + " IN CART"),
+                0 === $(this).find(".in-cart").length && $(this).find(".product-details").append("<div class='in-cart'>" + e[$(this).attr("data-code")] + " IN CART</div>")) : $(this).find(".in-cart").remove();
+        }),
+        0 === $("td.addtocartbox .in-cart").length ? e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] && $("td.addtocartbox").append("<div class='in-cart'>" + e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] + " IN CART</div>") : e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] && $("td.addtocartbox").find(".in-cart").text(e[$($("#js-purchase-product input[name=Product_Code]")[0]).val()] + " IN CART");
 };
 
 function BasketDiscount() {
