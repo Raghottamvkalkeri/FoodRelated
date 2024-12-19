@@ -1,0 +1,178 @@
+<style>
+    .contentJustify {
+        /*text-align: justify;*/
+        text-justify: inter-word;
+    }
+
+    .summaryOrder .contentJustify {
+        text-justify: inter-word;
+    }
+</style>
+<mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MSHIP', '', l.settings:allcustomfields )" />
+<mvt:item name="customfields" param="Read_Customer_ID( g.Basket:cust_id, 'membership_shipping_message', l.settings:membership_shipping_message )" />
+<mvt:do file="g.Module_Feature_SHP_DB" name="l.success" value="ShippingMethodRules_Load_Method('flatrate', 'Home Delivery', l.settings:shippingmethodrules)" />
+<mvt:comment>
+<mvt:if expr="l.settings:load_customers:ship_zip CIN l.settings:shippingmethodrules">
+    &mvt:load_customers:ship_zip;
+</mvt:if>
+</mvt:comment>
+<mvt:if expr="g.ship_zip EQ ''">
+    <mvt:assign name="g.ship_zip" value="l.settings:load_customers:ship_zip" />
+</mvt:if>
+<mvt:if expr="g.ship_state EQ ''">
+    <mvt:assign name="g.ship_state" value="l.settings:load_customers:ship_state" />
+</mvt:if>
+<mvt:if expr="g.nofedex EQ ''">
+    <mvt:assign name="g.nofedex" value="g.nofedex" />
+</mvt:if>
+<mvt:assign name="g.texasTimeZone" value="timezone()-1" />
+<mvt:assign name="g.dayoftheweek" value="time_t_dayofweek( s.time_t, g.texasTimeZone )" />
+<mvt:assign name="g.excludedays" value="''" />
+<mvt:if expr="(g.dayoftheweek EQ 1) OR (g.dayoftheweek EQ 6) OR (g.dayoftheweek EQ 7)">
+<mvt:assign name="g.excludedays" value="'excludeshipping'" />
+<mvt:else>
+<mvt:assign name="g.excludedays" value="'showshipping'" />
+</mvt:if>
+<div>
+    <mvt:if expr="NOT l.settings:basket:empty">
+        <mvt:assign name="l.settings:freeshippingmessage" value="''" />
+       <mvt:comment>
+        <mvt:if expr="l.settings:basket:total GT 75">
+            <mvt:else>
+                <mvt:assign name="l.settings:freeshippingmessage" value="' and FLAT RATE shipping options.'" />
+        </mvt:if>
+       </mvt:comment>
+        <div class="detailsAlign">
+            <div class="detailsSubContainner">
+                <div class="detailsText">
+                    <mvt:assign name="l.settings:freeshippingmsg" value="''" />
+                    <mvt:if expr="l.settings:basket:total GE 99 AND g.excludedays EQ 'showshipping' AND g.nofedex EQ 0">
+                        <mvt:assign name="l.settings:freeshippingmsg" value="'FREE SHIPPING'" />
+                        <mvt:else>
+                            <mvt:if expr="g.excludedays EQ 'showshipping' AND g.nofedex EQ 0">
+                            <mvt:assign name="l.settings:freeshippingmsg" value="'Flat Rate Shipping'" />
+                            <mvt:else>
+                                <mvt:assign name="l.settings:freeshippingmsg" value="'restricted-shipping'" />  
+                            </mvt:if>
+                    </mvt:if>
+                    <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+                        <mvt:else>
+                            <mvt:if expr='g.Basket:cust_id'> 
+                                <mvt:if expr="g.membership_type EQ 'Premium'">
+                                    <mvt:comment>All Condtion for Premium Users</mvt:comment>
+                                    <mvt:if expr="g.ship_zip EQ '' ">
+                                        <p class="ft-md ft-12p ltr-sp-0p5 showFreeShipping">
+                                            You're earning <b>VIP Rewards!</b>
+                                        </p>
+                                        <mvt:else>
+                                            <p class="ft-md ft-12p ltr-sp-0p5 showFreeShipping">
+                                               <mvt:comment>
+                                                <mvt:if expr="l.settings:membership_shipping_message EQ 'hdfrp' AND g.ship_state EQ 'TX' ">
+                                                    You've got
+                                                    <mvt:if expr="g.ship_zip CIN l.settings:shippingmethodrules">
+                                                    <b>FREE HOME DELIVERY</b>
+                                                    </mvt:if>
+                                                    <mvt:if expr="l.settings:freeshippingmsg">and</mvt:if>
+                                                    <b>&mvt:freeshippingmsg;</b> for this address
+                                                    <mvt:elseif expr="l.settings:membership_shipping_message EQ 'frp' AND g.ship_state EQ 'TX' ">
+                                                    You've got <b>&mvt:freeshippingmsg;</b> for this address
+                                                    <mvt:elseif expr="l.settings:membership_shipping_message EQ ''">
+                                                        <mvt:if expr="g.ship_zip CIN l.settings:shippingmethodrules">
+                                                        You've got <b>FREE HOME DELIVERY</b> for this address
+                                                        </mvt:if>
+                                                        <mvt:else> You're earning <b>VIP Rewards!</b>
+                                            </mvt:if>
+                                               </mvt:comment>
+                                               
+                                               <mvt:if expr="g.ship_state EQ 'TX'">
+                                               
+                                                <mvt:if expr="g.ship_zip CIN l.settings:shippingmethodrules">You've got <b>FREE HOME DELIVERY</b></mvt:if>
+                                                <mvt:if expr="l.settings:freeshippingmsg EQ 'FREE SHIPPING' AND g.ship_zip CIN l.settings:shippingmethodrules"> and  <b>Free FedEx Ground Shipping</b>
+                                                <mvt:elseif expr="l.settings:freeshippingmsg EQ 'Flat Rate Shipping' AND g.ship_zip CIN l.settings:shippingmethodrules"> and <b>Flat Rate Shipping</b>
+                                                <mvt:elseif expr="l.settings:freeshippingmsg EQ 'Flat Rate Shipping'">   You're getting  <b>Flat Rate Shipping</b>
+                                                <mvt:elseif expr="l.settings:freeshippingmsg EQ 'FREE SHIPPING'">You're getting <b>Free FedEx Ground Shipping</b>
+                                              <mvt:else>
+                                                
+                                            </mvt:if>
+                                                <mvt:if
+                                                    expr=" l.settings:freeshippingmsg EQ 'FREE SHIPPING' OR  l.settings:freeshippingmsg EQ 'Flat Rate Shipping' OR  g.ship_zip CIN l.settings:shippingmethodrules">
+                                                    for this address
+                                                    <mvt:else>
+                                                        You're earning <b>VIP Rewards!</b>
+                                                </mvt:if>
+                                                <mvt:elseif expr="(g.ship_state NE 'TX' AND g.SpecialShipping EQ 1 OR g.ship_state NE 'TX') AND g.excludedays EQ 'showshipping' AND g.nofedex EQ 1">
+                                                        Shipping options are restricted due to select perishable items in your cart. Please remove these items to receive <b>Flat Rate Shipping</b>
+                                                        <mvt:elseif expr="(g.ship_state NE 'TX' AND g.SpecialShipping LE 0 AND  g.iswinepresent LE 0 AND g.excludedays EQ 'showshipping')">
+                                                            You're getting <b>Flat Rate Shipping</b>
+                                                        <mvt:elseif expr="(g.ship_state NE 'TX' AND g.SpecialShipping LE 0 AND  g.iswinepresent LE 0 AND g.excludedays EQ 'showshipping') OR (g.ship_state NE 'TX' AND g.SpecialShipping LE 0 AND  g.iswinepresent LE 0 AND g.excludedays EQ 'showshipping')">
+                                                    You're getting <b>Flat Rate Shipping</b>
+                                                     
+                                                <mvt:else> You're earning <b>VIP Rewards!</b>
+                                                
+                                            </mvt:if>
+                                            <p>
+                                    </mvt:if>
+                                    <mvt:elseif expr="g.membership_type EQ '' OR g.membership_type EQ 'Basic'">
+                                        <mvt:comment>All Condtion for Basic Users</mvt:comment>
+                                        <mvt:assign name="l.settings:freeshippingmessage" value="''" />
+                                        <mvt:if expr="l.settings:basket:total GT 75">
+                                            <mvt:else>
+                                                <mvt:assign name="l.settings:freeshippingmessage"
+                                                    value="'FLAT RATE SHIPPING'" />
+                                        </mvt:if>
+                                        
+                                        <p class="ft-md ft-12p ltr-sp-0p5"><a class="ft-12p txt-green ft-md"
+                                                href="/FamClub.html">Upgrade</a> and
+                                            <span class="bold-ft">Save up to 15%</span> on this order with <span
+                                                class="bold-ft">FREE HOME DELIVERY</span> in the San Antonio area
+                                            <mvt:comment><mvt:if expr="l.settings:freeshippingmessage">and</mvt:if></mvt:comment>and<span class="bold-ft">
+                                                <mvt:comment>&mvt:freeshippingmessage;</mvt:comment> FREE SHIPPING
+                                            </span></span>
+                                            <mvt:comment><mvt:if expr="l.settings:freeshippingmessage"> in TX</mvt:if></mvt:comment> in TX, plus more
+                                            amazing rewards!
+                                        </p>
+                                </mvt:if>
+                                <mvt:comment> R-81869 - changed to 15%</mvt:comment>
+                                <mvt:else>
+                                    <mvt:comment>All Condtion for Guest Users</mvt:comment>
+                                    <mvt:assign name="l.settings:freeshippingmessage" value="''" />
+                                    <mvt:if expr="l.settings:basket:total GT 75">
+                                        <mvt:else>
+                                            <mvt:assign name="l.settings:freeshippingmessage"
+                                                value="'FLAT RATE SHIPPING'" />
+                                    </mvt:if>
+
+                                    <p class="ft-md ft-12p ltr-sp-0p5 test">Join Fam Rewards and <span
+                                            class="bold-ft">save up to 15%</span>
+                                        <mvt:comment> R-81869 - changed to 15%</mvt:comment>
+                                        on this order with <span class="bold-ft">FREE HOME DELIVERY</span>
+                                        <mvt:comment>
+                                            <mvt:if expr="l.settings:freeshippingmessage"><span class="light-ft">in the San
+                                                Antonio Area and</span>
+                                            <mvt:else><span class="light-ft">in the San Antonio area,</span>
+                                        </mvt:if> 
+                                        </mvt:comment>
+                                        in the San
+                                        Antonio Area and
+                                        <span class="bold-ft">
+                                            <mvt:comment>&mvt:freeshippingmessage;</mvt:comment> FREE SHIPPING
+                                        </span>
+                                        <mvt:comment><mvt:if expr="l.settings:freeshippingmessage"></mvt:if></mvt:comment> in TX, plus more Amazing
+                                        Rewards! Try us <span class="bold-ft">FREE</span> for a full year when you sign
+                                        up for an account!
+                                    </p>
+
+                            </mvt:if>
+                    </mvt:if>
+                </div>
+
+            </div>
+        </div>
+    </mvt:if>
+</div>
+<script>
+    var shipzip = $("#shipzip").val();
+</script>
+
+<!-- Sign up for our Food Related Membership and save up to 20% on this order – Plus more amazing benefits on future orders! -->

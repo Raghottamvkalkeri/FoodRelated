@@ -1,0 +1,1561 @@
+<mvt:item name="html_profile" />		
+<mvt:assign name="g.wishlistPageCode" value="l.settings:page:code" />		
+<mvt:assign name="g.pointsEarnedTotal" value="'0'" />
+<mvt:foreach iterator="group" array="basket:groups">
+    <mvt:item name="points" param="BasketGroup_Points( l.settings:group, l.settings:item:points_information )" />
+<mvt:assign name="g.pointsEarnedTotal" value="g.pointsEarnedTotal+l.settings:item:points_information:points_total" />		
+<mvt:if expr="l.settings:group:subterm_id GT 0">		
+<script>		
+location.href="/Merchant5/merchant.mvc?Screen=OPCO";		
+</script>		
+</mvt:if>		
+</mvt:foreach>	
+<mvt:if expr="g.ShippingMethod EQ 'null'">
+    <mvt:item name="toolkit" param="basketchargedelete|'SHIPPING'" />
+    <mvt:item name="toolkit" param="basketchargedelete|'FRHWFEE'" />
+    yes
+</mvt:if>	
+<head>		
+    <mvt:item name="head" param="css_list" />		
+    <mvt:item name="head" param="head_tag" />		
+    <mvt:item name="all_products_imagemachine" param="head" />		
+    <mvt:item name="product_display_imagemachine" param="head" />		
+    <mvt:item name="head" param="bask_css" />		
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />		
+    <meta http-equiv="Pragma" content="no-cache" />		
+    <meta http-equiv="Expires" content="0" />		
+    <style>		
+    </style>		
+    <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:cust_id, 'saved_cart_items', l.settings:saveditems )" />		
+    <mvt:assign name="l.settings:sitems" value="miva_splitstring(l.settings:saveditems, ',', l.settings:saveditemsarr, 'trim' )" />		
+    <mvt:item name="customfields" param="Read_Basket('cart_substitutions', l.settings:cart_substitutions )" />		
+    <mvt:assign name="l.void" value="miva_splitstring(l.settings:cart_substitutions, ',', l.settings:cart_substitutionsarr, 'trim' )" />		
+    <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />		
+    <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />		
+    <style>		
+        .disabled {		
+            background-color: grey;		
+        }		
+        		
+        .coupunbutton {		
+            background-color: #f47a44;		
+            color: #fff;		
+            /*font-weight: 600;*/		
+            text-align: center;		
+            padding: 6px 20px; /* alignment inputs from excel sheet #86 */	
+            font-size: 12px;		
+            display: block;		
+            border-radius: 3rem;		
+            cursor: pointer;		
+            border: none;		
+            width:80%;  /* 14-nov-2023 from excel sheet #86 */			
+        }		
+        		
+        		
+       .checkoutbutton:hover{		
+            color:#fff !important;		
+        }		
+        .coupunbutton:hover {		
+            color: #fff		
+        }		
+        		
+        .checkoutloginClick:hover {		
+            color: #fff;		
+        }		
+        .couponInput{		
+             border: 1px solid #d1d3d4;		
+             width: 100%;		
+             height: 30px;		
+             border-radius: 5px;		
+         }		
+        		
+        input[type=checkbox],		
+        input[type=radio] {		
+            margin: 0;		
+            line-height: normal;		
+        }		
+        		
+         :focus {		
+            outline: none !important;		
+            outline-style: none !important;		
+            outline-width: 1px;		
+        }		
+	.shipping-estimate{		
+	     padding: 5px 15px ; /* remove left,right padding 20px sr. #86*/
+             width:80%; /* 14-Nov-2023 from excel sheet sr. #86*/
+             text-align: right;		
+             border: solid #c9c4c4 1px;	  
+             letter-spacing: 0.5px;		
+             background: #fff;  		
+	}		
+        .ship-estimate{		
+            border: 1px solid #d1d3d4; /* alignment inputs from excel sheet #86 */	
+            width: 100%;		
+            height: 30px;		
+           /* border-radius: 5px; */			
+        }		
+        .ship-estimate:focus{		
+           border:1px solid #628e83;		
+        }		
+    		
+	.loggedin-ship::before {		
+        font-family: ITCAvantGardePro-Bk;		
+        font-size: 14px;		
+        content: "Shipping Zip Code:";		
+        top: 7px;		
+        left: 25px;position: absolute;		
+        letter-spacing: 0px;
+        padding:0px 6px;   /* alignment inputs from excel sheet #86 */		
+        }		
+        .loggedin-ship input{		
+         padding-left: 150px;		
+        }		
+        .guest-ship input {		
+            padding-left: 10px;		
+        }		
+        .estimateHeader{		
+            border-radius: 5px;		
+        }		
+        .estimateHeader input{		
+            /* padding-left: 10px; */		
+            font-family: ITCAvantGardePro-Bk;		
+            font-size: 14px;		
+	    /* margin-top: 5px;*/		
+            /* border-bottom: solid #c9c4c4  1px; */		
+            /* border: solid black 1px; */		
+            /* font-weight: 600; */		
+            /* border-radius: 5px; */		
+            /* margin-bottom: 10px; */		
+            /*letter-spacing: 1px;*/		
+        }		
+        .estimateHeader input:focus{		
+           border:1px solid #628e83;		
+         }		
+        .ship-est-main input {		
+            /* padding-left: 10px; */		
+            font-family: ITCAvantGardePro-Bk;		
+            font-size: 14px;		
+            /* font-weight: 600;		
+            border-radius: 5px; */		
+            margin-bottom: 10px;		
+            padding-top: 5px;		
+            /*letter-spacing: 1px;*/		
+            /* border: solid black 1px; */		
+    	    /* border-bottom: solid black 1px; */		
+            border-radius: 5px;		
+            background: #fff;/* changed from #f5f5f5 to #fff */		
+        }		
+        .account-pages h1 {		
+            margin: 64px 0px 24px 0px;		
+        }		
+        .BASK .margin-container{		
+            margin-top: 0px;	/* changed from 20px to 40px */	
+        }		
+	@media only screen and (min-device-width: 800px) and (max-device-width: 1024px) {		
+	   .BASK .cart-total h5.txt-orange {		
+		margin-top: -4px;		
+	   }		
+   	}		
+	@media (max-width: 768px) and (min-width: 320px) {		
+	    .BASK .cart-total h5.txt-orange {		
+    		font-size: 10px;		
+	     }	
+	    .account-pages  .cartHeader {
+	     	margin: 16px 0px;
+	     }
+	     .account-pages h1 {		
+            		margin: 48px 0px 16px 0px;		
+        	}	
+	}		
+        @media (max-width: 480px){		
+           .couponInput {		
+             margin-right:18%;		
+           }		
+            .ship-estimate {		
+              border-radius: 5px;		
+          }		
+          .applyBtn{		
+           height:32px;		
+           line-height:32px; 		
+          }		
+        }
+         @media (min-width:481px) and (max-width:900px){		
+          .applyBtn{ 		
+             margin-right: 20px;		
+            }		
+         }
+	.closeCsss{
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 16px;
+	}		
+    </style>	
+</head>
+
+<body class="&mvt:page:code; account-pages">
+<mvt:item name="readytheme" param="contentsection( 'globalvariables' )" />
+<input type="hidden" id="shipfname" value="&mvt:load_customers:ship_fname;" />
+<input type="hidden" id="shiplname" value="&mvt:load_customers:ship_lname;" />
+<input type="hidden" id="shipemail" value="&mvt:load_customers:ship_email;" />
+<input type="hidden" id="shipphone" value="&mvt:load_customers:ship_phone;" />
+<input type="hidden" id="shipaddr1" value="&mvt:load_customers:ship_addr1;" />
+<input type="hidden" id="shipaddr2" value="&mvt:load_customers:ship_addr2;" />
+<input type="hidden" id="shipcity" value="&mvt:load_customers:ship_city;" />
+<input type="hidden" id="shipbaskstate" value="&mvt:load_customers:ship_state;" />
+<input type="hidden" id="shipcntry" value="&mvt:load_customers:ship_cntry;" />
+<input type="hidden" id="shipzip" value="&mvt:load_customers:ship_zip;" />
+
+
+
+     
+    <mvt:assign name="l.settings:mobWSHeight" value="'retail'" />
+    <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+        <mvt:assign name="l.settings:mobWSHeight" value="'mobWSHeight'" />
+    </mvt:if>
+    <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+    <mvt:item name="customfields" param="Read_Customer_ID( g.Basket:cust_id, 'is_admin', l.settings:is_admin )" />
+    <p class="hidden baskcount"></p>
+    <div id="site-container">
+        <div id="global-header">
+            <mvt:item name="hdft" param="global_header" />
+        </div>
+        <div class="background-container">
+            <div class="container fr-main-container" id="baskContainer">   <mvt:comment> WR-50995 </mvt:comment>
+                <div class="fr-sub-container">   <mvt:comment> WR-50995 </mvt:comment>
+                <input type="hidden" value="&mvte:basket:empty" id="baskstatus">
+                <div class="loaderContainer" style="display:none;">
+                    <div class="loader"></div>
+                </div>
+
+
+                <div class="margin-container" style="margin-bottom:5px;">
+                    <mvt:if expr="l.settings:messages:information_message_count">
+                        <div class="information-message">
+                            <mvt:foreach iterator="message" array="messages:information_messages">
+                                &mvt:message;
+                            </mvt:foreach>
+                        </div>
+                    </mvt:if>
+                    <div class="row">
+                        <div id="page-header">
+                            <mvt:item name="hdft" param="header" />
+                        </div>
+                    </div>
+                    <div class="headingPart">
+                        <div class="">
+                        <div class="col-md-12 visible-md">&nbsp;</div>
+                            <div class="col-xs-8 col-sm-12 col-lg-8 col-md-8">
+                                <h1 class="header1 cartHeader">Shopping cart</h1>
+                            </div>
+
+                            <mvt:if expr="NOT l.settings:basket:empty">
+                              <mvt:if expr='g.Basket:cust_id'>
+                                <mvt:item name="readytheme" param="contentsection( 'price_change_updates' )" />
+                              </mvt:if>
+
+
+
+                                <div class="col-xs-12" style="z-index: 9;display: flex;flex-direction: row; align-items: center; flex-direction: row-reverse;">
+                                    <span>
+                                        <mvt:if expr='g.Basket:cust_id'>
+                                            <i style="font-size: 23px; margin-left: 25px;" class="fa fa-share-alt hidden-sm hidden-md hidden-lg share-basket-btn" aria-hidden="true"></i>
+                                        </mvt:if>
+                                     </span> 
+                                     <span>
+                                        <i style="font-size: 23px; position: relative; opacity:0.5;margin-left: 25px;" class="fa fa-trash fa-2x clrCart hidden-sm hidden-md hidden-lg " id="clearcartresponive" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="chillMsgMbl chillMsg" style='<mvt:if expr="l.settings:basket:empty"> display:none </mvt:if>;' style="margin-left: 25px;">
+                                        <mvt:item name="readytheme" param="banner( 'cooler-bags' )" />
+                                        <a href="javascript:;" class="btn btn-lg secondary-btn btn-gray" onclick="showKeepitColdProducts();">Need a Gift Box ? </a>
+                                    </span><mvt:comment>#613 </mvt:comment>
+                                </div>
+                            </mvt:if>
+
+                            <mvt:comment>
+                            <div class="visible-sm visible-md">&nbsp;</div>
+			                </mvt:comment>
+                            <div class="col-xs-1  hidden">
+                                <i style="font-size: 23px; margin-top: 15px; position: relative; left: 17%;" class="fa fa-share-alt fa-2x clrCart hidden-sm hidden-md hidden-lg " aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <mvt:comment>
+                            <div class="row selectAll">
+                                <div class="col-xs-4">
+                                </div>
+                                <mvt:if expr="NOT l.settings:basket:empty">
+                                    <div class="col-xs-8 allowSubText visible-xs form-group" style="padding-right:6%; z-index:99;">
+                                        <div>
+                                            <input type="checkbox" id="chekall-allowsub" class="checkAll mCheckAll">
+
+                                            <label for="chekall-allowsub" style="margin-right: 10px;" class="checkboxContainers displayPrintNone mb-ft-12p ltr-sp-1p ft-w-1">Allow substitutions</label>
+                                        </div>
+                                    </div>
+                                </mvt:if>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 visible-xs">
+                                    <mvt:if expr="l.settings:basket:formatted_total">
+                                        <p class="txt-orange ft-10p baskbrandnotes ltr-sp-0p5 ft-md">PLEASE NOTE: Due to supply chain disruption, some product brands may differ.</p>
+                                    </mvt:if>
+                                </div>
+                            </div> 
+                    </mvt:comment>
+                    </div>
+                <mvt:if expr="NOT l.settings:basket:empty">
+                    <div class="col-lg-9 col-md-9 hidden-xs hidden-sm" style="display: flex; justify-content: flex-end;">
+                        <div class="hidden-xs hidden-sm">
+                            <!-- Need Chill Bag -->
+                            <div class="chillMsg dchillMsg dgiftbox" style='<mvt:if expr="l.settings:basket:empty"> display:none </mvt:if>'>
+				  <!-- Changed to button because it looks like shifting on hover -->
+                                 <!-- <a href="javascript:;" class="btn primary-btn btn-green ft-12p ft-md" onclick="showKeepitColdProducts();">NEED A GIFTBOX ? </a> -->
+				  <button href="javascript:;" class="btn btn-lg primary-btn btn-green" onclick="showKeepitColdProducts();">NEED A GIFTBOX ? </button>
+                            </div>
+                            <!-- Need Chill Bag -->
+                        </div>
+                        &nbsp;
+                                        <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+                                        <div class="btn-space" style="width:auto;">
+                                           <!-- Changed to button because it looks like shifting on hover --> 
+					     <!-- <a class="btn primary-btn clearshopingcart shippingHide txt-black ft-md ft-12p" id="clearcart" style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if>" onclick="$('#clearCartModal').modal('show')" style="margin-bottom: 40px;">Clear Shopping cart</a> -->
+					     <button class="btn btn-lg secondary-btn btn-white shippingHide" id="clearcart" style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if>" onclick="$('#clearCartModal').modal('show')" style="margin-bottom: 40px;">Clear Shopping cart</button>
+                                        </div>
+                                        <mvt:if expr='g.Basket:cust_id'>
+                                                <div class="btn-space" style="width:auto;">
+						     <!-- PS-26775 Consolidation of Global CSS -->
+                                                    <!-- <a class="btn primary-btn cont-shopping continue-shopping share-basket-btn ft-md ft-12p" style="cursor: pointer;">Share Basket </a> --> 
+						      <button class="btn btn-lg secondary-btn btn-white continue-shopping share-basket-btn" style="cursor: pointer;">Share Basket </button>
+                                                </div>
+                                        </mvt:if>
+                                        <div class="btn-space" style="width:auto;">
+					     <!-- Changed to button because it looks like shifting on hover -->
+                                            <!-- <a class="btn primary-btn cont-shopping continue-shopping shippingHide ft-md ft-12p" style="" href="//&mvt:global:domain:name;">Continue Shopping</a> -->
+					     <button class="btn btn-lg secondary-btn btn-white continue-shopping shippingHide" style="" onclick="window.location.href = '//&mvt:global:domain:name;'">Continue Shopping</button>
+                                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-9 hidden-xs hidden-sm" style="margin-top: 20px;"> <!-- 20-oct-2023 change margin from 10 to 20 -->
+                        <div class="btn-seperator"></div>
+                    </div>
+                </mvt:if>
+                    <div class="baskcontent">
+                    <div class="col-sm-12 col-xs-12 <mvt:if expr="l.settings:basket:empty">col-lg-12 col-md-12 <mvt:else>col-lg-9 col-md-9</mvt:if>  paddingZero tabpadding <mvt:if expr=" l.settings:basket:empty "> <mvt:else> mb-tp-2 </mvt:if>">
+                        <mvt:if expr="NOT l.settings:basket:empty">
+                            <div class="full-width visible-xs mobile-top-total-checkout">
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </mvt:if>
+                        <div class="full-width">
+                            <div id="basket-contents" class="editable">
+                                <mvt:assign name="l.settings:loggedinwinecheck" value="''" /> 
+                                <mvt:assign name="g.nofedex" value="'0'" />
+                                <mvt:assign name="g.notuserwineproduct" value="'normaluser'" /> 
+                                <mvt:item name="basket" />
+                                <mvt:if expr="NOT l.settings:basket:empty">
+                                    <div class="coupon-wrapper">
+                                        <mvt:foreach iterator="charge" array="basket:charges">
+                                            <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+						                    <mvt:do file="g.Module_Library_DB" name="l.success" value="BasketCharge_Delete_Charge(l.settings:charge:charge_id)" />
+                                            </mvt:if>
+                                            <mvt:comment>Save coupon information and show separately.</mvt:comment>
+                                            <mvt:if expr="'(USECOUPONNAME)' CIN l.settings:charge:descrip">
+                                                <mvt:assign name="g.coupon_display" value="l.settings:charge" />
+                                                <mvt:else>
+                                                    <div class="bask-charges">
+                                                        <div class="charge-description hidden">&mvt:charge:descrip;:</div>
+                                                        <div class="formatted-charge hidden">&mvt:charge:formatted_disp_amt;
+                                                        </div>
+                                                    </div>
+                                            </mvt:if>
+                                        </mvt:foreach>
+                                        <mvt:foreach iterator="coupon" array="basket:coupons">
+                                            <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+					                        <mvt:do file="g.Module_Feature_PGR_DB" name="l.success" value="BasketCoupon_Delete(g.Basket:basket_id, l.settings:coupon:id)" />
+                                            </mvt:if>
+                                            <mvt:do name="l.settings:coupon:formatted_total" file="g.Module_Root $ g.Store:currncy_mod:module" value="CurrencyModule_AddFormatting( g.Store:currncy_mod, l.settings:coupon:total )" />
+                                            <div class="row basket-product-row">
+                                                <div class="column whole">
+                                                    <form method="post" action="&mvte:urls:BASK:rr;" class="nm coupon-added-form">
+                                                        <input type="hidden" name="Action" value="RCPN" />
+                                                        <input type="hidden" name="Coupon_Code" value="&mvte:coupon:code;" />
+                                                        <mvt:if expr="NOT ISNULL l.settings:coupon:descrip">
+                                                            <span class="coupon-name hidden">
+
+                                                            <span class="coupon-name hidden"><button type="submit" class="remove-item button button-mini bg-transparent align-baseline">x</button></span>
+                                                            <mvt:else>
+                                                                <span class="coupon-name hidden">
+                                                                        <button type="submit"class="remove-item button button-mini bg-transparent align-baseline">x</button>Coupon: &mvt:coupon:code; </span>
+                                                        </mvt:if>
+                                                        <span class="coupon-discount hidden">-$&mvt:coupon:total;</span>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </mvt:foreach>
+
+                                    </div>
+
+                                    <div id="mobileSummary" class="hidden-md hidden-lg visible-xs visible-sm">
+                                        <div style="">
+                                            <div class="col-xs-12" style="display: flex; justify-content: space-between">
+                                                <p class="bold-ft mb-ft-18p">Order Summary</p>
+                                            </div>
+    
+                                            
+    
+                                            <div class="col-xs-12" style="display: flex;
+                                                             justify-content: space-between">
+                                                <p class="mb-ft-14p ft-md ltr-sp-0p5">Subtotal:</p>
+                                                <!-- changed varible to show subtotal -->
+                                                <p class="mb-ft-14p ft-md ltr-sp-0p5">
+                                                    $&mvt:global:basketsubtotal;</p>
+                                                <!-- changed varible to show subtotal -->
+                                            </div>
+    
+                                            
+    
+                                            
+    
+                                            <div class="col-xs-12" style="display: flex;
+                                            justify-content: space-between">
+                                                <p class="mb-ft-14p ft-md ltr-sp-0p5">Shipping:</p>
+    
+                                                    <span class="">
+    
+                                                        <div class="imageandtextholder" data-toggle="modal" data-target="#estimateest">
+                                                            <div class="iconholder">
+                                                                <img class="img-responsives esttruck" style="-webkit-transform: scaleX(-1); transform: scaleX(-1);"
+                                                                src="graphics/00000001/3/est.png" /> </div>
+                                                                <span class="ft-10p ft-md ltr-sp-0p5 underline pointer view-opt">View Options</span>
+                                                        </div>
+                
+                                                    </span>
+    
+                                                <p class="shippingdetails mb-ft-14p ft-md ltr-sp-0p5">TBD</p>
+                                            </div>
+                                            <div class="col-xs-12" style="display: flex;
+                                             justify-content: space-between">
+                                                <p class="mb-ft-14p ft-md ltr-sp-0p5">Sales Tax:</p>
+                                                <p class="mb-ft-14p ft-md ltr-sp-0p5"><span class="salestax">$0.00</span></p>
+                                            </div>
+    
+                                            <mvt:if expr="g.item3BDiscountTotal GT 0">
+                                            <div class="col-xs-12" style="display: flex;
+                                             justify-content: space-between">
+                                                <p class="txt-orange" style="font-size: 14px;"><span class="ft-upc">Threebie</span> Savings </p>
+                                                <!-- changed varible to show subtotal -->
+                                                <p class="threebiediscounts txt-orange bold-ft" style="font-size: 14px;">($&mvt:global:item3BDiscountTotal;)</p>
+                                                <!-- changed varible to show subtotal -->
+                                            </div>
+                                            </mvt:if>
+                                            <div class="wholesaleDiscountMobile row marginzero">
+                    
+                                            </div>
+                                        <mvt:comment>
+                                            <div class="col-xs-12">
+                                                <mvt:if expr="g.Secure">
+                                                    <form method="get" name="shipestimate_form" action="&mvt:global:secure_sessionurl;" target="shipestimate" class="estimate-shipping-form estimate-shipping-form-mob">
+                                                        <mvt:else>
+                                                            <form method="get" name="shipestimate_form" action="&mvt:global:sessionurl;" target="shipestimate" class="estimate-shipping-form-mob">
+                                                </mvt:if>
+                                                <div class="col-xs-7 col-sm-8  <mvt:if expr='g.Basket:cust_id'>loggedin-ship<mvt:else>guest-ship</mvt:if>" style="padding-left: 0px;text-align: left;">
+                                                    <h5 class="estimateHeader" id="estimateHeader_mob" >
+                                                        <span contenteditable="true"></span>
+                                                        <span value="Your Shipping Zip Code"></span>
+                                                        <input type="text" class="ship-estimate" required="" onkeyup="$('.getzip').val($(this).val())" onkeypress="return isNumber(event)" pattern="[0-9]{5}" minlength="5" maxlength="10" value="&mvt:global:customer:ship_zip;" placeholder="Enter Zipcode" autocomplete="chrome-off">
+                                                </div>
+                                                <div class="col-xs-5 col-sm-3 mb-getestimmate-text" style="margin-left:-5%; float: right;">
+                                                    <!-- alignment inputs from excel sheet sr #86 -->
+                                                    <button type="submit" required class="estimate-shipping-modal-calculate-buttons estimate-shipping-modal-calculate-buttonsss createRecipeFolderBtn mb-ft-14p ft-16p nobrder estimate-shipping" onclick="$('#estimateinfo').submit();" style="margin-bottom: 10px;margin-right:-36%; width: max-content;border: solid #c9c4c4 1px; padding: 5px 10px;border-radius: 10px; background: #efefef; letter-spacing: 0.5px;">Get Estimate</button>
+                                                    <!-- alignment inputs from excel sheet sr #86 -->
+                                                </div>
+                                                <!--<div class="col-xs-1 mb-getestimate-icon" style="margin-left:4%;font-weight: bold;">
+                                                    <i class="fa fa-angle-down" id="summaryIcon" aria-hidden="true" onclick="submitEstimateShippingInfo('estimate_shipping_section_mob')"></i>
+                                                </div>-->
+                                                <div class="mb-estimate-border" style="border-bottom:1px solid;position: relative;
+                                                top: 50px;"></div>
+    
+                                            </div>
+                                        </mvt:comment>
+                                            <div class="col-xs-12 estimateTxt hidden">Enter your destination to get a shipping estimate.</div>
+                                            <div class="row hide_estimate_shipping container" id="estimate_shipping_section_mob">
+                                                <input type="hidden" name="Screen" value="SERT" />
+                                                <input type="hidden" name="Store_Code" value="&mvte:store:code;" />
+                                                <input type="hidden" name="SpecialShipping" value="&mvte:global:SpecialShipping;" />
+                                                <div class="col-xs-12 couponSection">
+                                                    <!-- <label>State/Province:</label><br> -->
+                                                    <div class="">
+                                                        <label for="shipestimate_addr"><b>Address:</b></label>
+                                                        <input type="text" id="shipestimate_addr" name="ShipEstimate:addr" value="&mvte:global:ShipEstimate:ship_addr1;" class="form-control shipestimate_addr_mob" placeholder="Address" />
+                                                    </div>
+                                                    <div class="">
+                                                        <label for="shipestimate_state_select"><b>State/Province:</b></label>
+                                                        <mvt:item name="216_MonkeyWrench" param="load-store-states" />
+                                                        <select name="ShipEstimate:ship_state_select" id="shipestimate_state_select" class="form-control shipestimate_state_select_mob" required>
+                                                            <mvt:foreach iterator="state"
+                                                                array="store_states">
+                                                                <mvt:if
+                                                                    expr="g.ShipEstimate:ship_state_select EQ l.settings:state:code">
+                                                                    <option value="&mvt:state:code;"
+                                                                        selected>&mvte:state:name;
+                                                                    </option>
+                                                                    <mvt:else>
+                                                                        <option
+                                                                            value="&mvt:state:code;">
+                                                                            &mvte:state:name;</option>
+                                                                </mvt:if>
+                                                            </mvt:foreach>
+                                                        </select>
+                                                    </div>
+                                                    <!--form-group-->
+    
+                                                    <div class="">
+                                                        <label for="shipestimate_zip"><b>ZIP/Postal
+                                                                Code:</b></label>
+                                                        <input type="text" id="shipestimate_zip" name="ShipEstimate:ship_zip" value="&mvte:global:ShipEstimate:ship_zip;" class="form-control shipestimate_zip_mob zipcode" minlength="5" maxlength="10" onkeypress="return isNumber(event)" placeholder="Enter zip / postalcode"
+                                                            required />
+                                                    </div>
+                                                    
+                                                    <!--form-group-->
+                                                </div>
+    
+                                                <div class="col-xs-12 couponSection">
+                                                    <div class="">
+                                                        <label>Country:</label>
+                                                        <select name="ShipEstimate:ship_cntry" id="shipestimate_country" class="form-control" required>
+                                                            <mvt:if
+                                                                expr="g.ShipEstimate:ship_cntry EQ 'GU'">
+                                                                <option value="GU" selected>Guam
+                                                                </option>
+                                                                <mvt:else>
+                                                                    <option value="GU">Guam</option>
+                                                            </mvt:if>
+                                                            <mvt:if
+                                                                expr="g.ShipEstimate:ship_cntry EQ 'PR'">
+                                                                <option value="PR" selected>Puerto Rico
+                                                                </option>
+                                                                <mvt:else>
+                                                                    <option value="PR">Puerto Rico
+                                                                    </option>
+                                                            </mvt:if>
+                                                            <mvt:if
+                                                                expr="(g.ShipEstimate:ship_cntry EQ 'US') OR (NOT g.ShipEstimate:ship_cntry)">
+                                                                <option value="US" selected>United
+                                                                    States</option>
+                                                                <mvt:else>
+                                                                    <option value="US">United States
+                                                                    </option>
+                                                            </mvt:if>
+                                                            <mvt:if
+                                                                expr="g.ShipEstimate:ship_cntry EQ 'VI'">
+                                                                <option value="VI" selected>Virgin
+                                                                    Islands &#40;US&#41;</option>
+                                                                <mvt:else>
+                                                                    <option value="VI">Virgin Islands
+                                                                        &#40;US&#41;</option>
+                                                            </mvt:if>
+                                                        </select>
+                                                    </div>
+                                                    <!--form-group-->
+                                                </div>
+    
+                                                <div class="col-xs-12 couponSection">
+                                                    <input type="submit" class="submitestimate" value="Get Estimate" rel="nofollow" style="display:none;" />
+                                                    <a class="estimateBtn createRecipeFolderBtn primary-btn estimate-shipping-modal-calculate-buttons" onclick="submitEstimateShippingInfoMob('estimate_shipping_section_mob');">Apply
+                                                        </a>
+                                                    
+                                                </div>
+    
+                                                </form>
+                                            </div>
+    
+                                        </div>
+                                        <mvt:if expr="l.settings:messages:error_message_count">
+                                            <div class="col-xs-12">
+                                                <div class="error-message">
+                                                    <mvt:foreach iterator="error" array="messages:error_messages">
+                                                        &mvt:error;
+                                                    </mvt:foreach>
+                                                </div>
+                                            </div>
+                                        </mvt:if>
+                                        <div class="col-lg-12">
+                                            <div class="error-message bask-error-message" hidden>
+                                                <mvt:foreach iterator="error" array="messages:error_messages">
+                                                    &mvt:error;
+                                                </mvt:foreach>
+                                            </div>
+                                        </div>
+                                        <mvt:comment>
+                                            <div class="col-xs-12"
+                                                style="<mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'> display:none;<mvt:else>display: flex;margin-top:2%</mvt:if>">
+                                                <form method="post" action="&mvte:global:secure_sessionurl;Screen=BASK" rel="nofollow" id="baskDiscountMobile"
+                                                    style="display:flex;align-items: baseline; width: 100%;justify-content: space-around;">
+                                                    <input type="text" class="couponInput" name="Coupon_Code" value="" placeholder="Enter Discount Code"
+                                                        style="width:65%;height:40px;padding:5px;margin-right: 7%;border-radius: 5px;">
+                                                    <input type="hidden" name="Action" value="ACPN" />
+                                        
+                                                    <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+                                        
+                                        
+                                        
+                                        
+                                                    <button type="submit" class="createRecipeFolderBtn applyBtn primary-btn"
+                                                        style="padding:0px 25px;margin-top:5px;">Apply</button>
+                                                </form>
+                                        
+                                        
+                                            </div>
+                                        </mvt:comment>
+                                        <!-- Show Coupons in Mobile -->
+                                        <mvt:foreach iterator="charge" array="basket:charges">
+                                            <mvt:comment>Save coupon information and show separately.
+                                            </mvt:comment>
+                                            <mvt:if expr="'(USECOUPONNAME)' CIN l.settings:charge:descrip">
+                                                <mvt:assign name="g.coupon_display" value="l.settings:charge" />
+                                                <mvt:else>
+                                                    <div class="bask-charges">
+                                                        <div class="charge-description hidden">
+                                                            &mvt:charge:descrip;:</div>
+                                                        <div class="formatted-charge hidden">
+                                                            &mvt:charge:formatted_disp_amt;</div>
+                                                    </div>
+                                            </mvt:if>
+                                        </mvt:foreach>
+                                        <mvt:comment>
+                                            <mvt:foreach iterator="coupon" array="basket:coupons">
+                                                <mvt:do name="l.settings:coupon:formatted_total" file="g.Module_Root $ g.Store:currncy_mod:module"
+                                                    value="CurrencyModule_AddFormatting( g.Store:currncy_mod, l.settings:coupon:total )" />
+                                                <div class="col-xs-12"
+                                                    style="<mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'> display:none;<mvt:else></mvt:if>">
+                                                    <!-- <h5>Coupon: &mvt:coupon:code;: &mvt:coupon:descrip $&mvt:coupon:total;
+                                                                                        </h5> -->
+                                                    <div class="discount-container txt-orange">
+                                                        <h5 class="ft-12p" style="margin-top: 18px;font-weight: 600;">Coupon: <span
+                                                                class="applliedcoupon">&mvt:coupon:code;</span>: &mvt:coupon:descrip; $&mvt:coupon:total;
+                                                        </h5>
+                                                        <form method="post" id="removeCouponform&mvt:coupon:code;" action="&mvte:global:secure_sessionurl;">
+                                                            <input type="hidden" name="Coupon_code" value="&mvt:coupon:code;">
+                                                            <input type="hidden" name="Action" value="RCPN">
+                                                            <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+                                                        </form>
+                                                        <span class="removecoupon&mvt:coupon:code; pointer" onclick="removeCoupon('&mvt:coupon:code;');"><i
+                                                                class="fa fa-times" aria-hidden="true"></i></span>
+                                                    </div>
+                                                </div>
+                                            </mvt:foreach>
+                                        </mvt:comment>
+                                        <!-- Show Coupons in Mobile -->
+                                       
+                                        <div class="col-xs-12">
+                                            <input type="text" class="inputText centerPlacehold displayNone" style="margin-top:15px;" placeholder="Enter Gift Certificate" />
+    
+                                        </div>
+                                        <div class="col-xs-12" style="display: flex;
+                                        justify-content: space-between">
+                                            <p class="mb-ft-16p bold-ft" style="margin-top:10px">
+                                                Total:
+                                            </p>
+    
+                                            <p class="mb-ft-16p bold-ft" style="margin-top:10px">
+                                                &mvt:basket:formatted_total;</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="visible-xs hidden-sm hidden-lg">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">&nbsp;</div>
+                    <mvt:item name="readytheme" param="contentsection( 'basket-points-content' )" />
+                                        <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                            <mvt:else>
+                                    <mvt:assign name="g.style" value="''" />
+                                    <mvt:if expr='(g.membership_type EQ "Premium" AND l.settings:load_customers:ship_zip EQ "" ) OR (g.membership_type EQ "Premium" AND  l.settings:membership_shipping_message EQ ""  )'><mvt:assign name="g.style" value="'display:none;'" /><mvt:else></mvt:if>
+                                    <div class="fam-main fam-mb " style="margin:0 0 32px 0px;">
+                                        <div class="fam-Container" >
+                                            
+            
+                                                <mvt:if expr="g.Basket:cust_id AND g.membership_type EQ 'Premium'">
+                                                    <span class="ft-14p ltr-sp-0p5 ft-demi">VIP Famie&nbsp;</span>
+                                                    <span class="ft-md ft-14p ltr-sp-0p5">Rewards</span>
+                                                 <mvt:elseif expr="g.Basket:cust_id AND g.membership_type EQ '' OR g.membership_type EQ 'Basic'">
+                                                    <a href="/FamClub.html">
+                                                        <span class="ft-14p ltr-sp-0p5 ft-md">Upgrade to </span>
+                                                        <span class="ft-md ft-14p ltr-sp-0p5 ft-demi">VIP Famie</span>
+                                                    </a>   
+                                                 <mvt:else>
+                                                    <a class="createAccount retailaccount">
+                                                        <span class="ft-md ft-14p ltr-sp-0p5">Join </span>
+                                                        <span class="ft-14p ltr-sp-0p5 ft-demi">Fam Rewards</span>
+                                                    </a>
+                                                </mvt:if>
+                                        </div>
+                                                <mvt:item name="readytheme" param="contentsection( 'checkout-message' )" />
+            
+                                    </div>
+                                    &nbsp;
+                                    </mvt:if>
+                                    </div>
+
+
+
+
+                                    <div id="basket-bottom-left">
+                                        <div class="estimate-total" class="hidden-xs">
+                                            <div class="">
+                                                <mvt:if expr='g.Basket:cust_id'>
+                                                    <div class="col-sm-3 visible-sm" style="width:auto;">
+						            <!-- Changed to button because it looks like shifting on hover -->
+                                                        <!-- <a class="btn cont-shopping continue-shopping share-basket-btn" style="cursor: pointer;">Share Basket </a> -->
+							  <button class="btn btn-lg secondary-btn btn-white continue-shopping share-basket-btn" style="cursor: pointer;">Share Basket </button>
+                                                    </div>
+                                                </mvt:if>
+                                                <div class="col-sm-3 visible-sm">
+							<!-- Changed to button because it looks like shifting on hover -->
+							<!-- <a class="btn primary-btn cont-shopping continue-shopping " href="//&mvt:global:domain:name;">Continue Shopping</a> -->
+							<button class="btn btn-lg secondary-btn btn-white continue-shopping "onclick="window.location.href = '//&mvt:global:domain:name;'">Continue Shopping</button>
+						 </div>
+                                                <div class="col-sm-3 visible-sm"> 
+							<!-- Changed to button because it looks like shifting on hover -->
+						       <!-- <a class="btn primary-btn clearshopingcart " style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if> margin-left:1rem" onclick="$('#clearCartModal').modal()">Clear Shopping cart</a> -->
+							<button class="btn btn-lg secondary-btn btn-white" style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if> margin-left:1rem" onclick="$('#clearCartModal').modal()">Clear Shopping cart</button> 
+						  </div>
+                                            </div>
+	                                     <mvt:comment><mvt:item name="toolkit" param="trim" /></mvt:comment>	
+                                            <mvt:comment><mvt:item name="toolkit" param="lasturl|url|http://dev.colmanandcompany.com/Merchant2/merchant.mvc" /></mvt:comment>
+
+
+                                            <div class="total-checkout-paypal-cards-wrapper col-sm-4" style="margin-top:-13%;">
+                                                <mvt:item name="shipestimate" />
+
+                                                
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <mvt:if expr="g.basketDiscount">
+                                                <mvt:do name="g.formatted_basketDiscount" file="g.Module_Root $ g.Store:currncy_mod:module" value="CurrencyModule_AddFormatting( g.Store:currncy_mod, g.basketDiscount )" />
+                                                <p class="cart-discount hidden-xs">
+                                                    <span class="total-wrapper hidden">This order you saved:</span>
+                                                    <span class="total-wrapper-price hidden" style="padding-right:14.5%;text-align:right;">
+                                                    &mvt:global:formatted_basketDiscount;</span>
+                                                </p>
+                                            </mvt:if>
+ 
+                                            <mvt:if expr="g.SpecialShipping">
+
+                                            </mvt:if>
+
+
+                                            <mvt:if expr="NOT l.settings:basket:empty">
+                                                <div class="checkout-button">
+                                                    <img src="graphics/bask-cards.png" alt="BASK Credit Cards" class="bask-credit-cards" style="display: none" />
+                                                    <!-- new Sign in account screen for sig in -->
+                                                    <mvt:if expr="g.Basket:cust_id">
+                                                       
+                                                        <mvt:else>
+                                                           
+                                                    </mvt:if>
+                                                    <!-- new Sign in account screen for sig in end -->
+                                                    <div class="clearfix"></div>
+
+                                                </div>
+                                            </mvt:if>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="visible-xs clearfix"></div>
+                                        <div class="button-wrapper">
+                                           
+
+
+                                            <mvt:assign name="g.jsclass" value="''" />
+                                            <mvt:if expr=" g.Action NE 'ACPN' ">
+                                            <mvt:assign name="g.jsclass" value="''" />
+                                            </mvt:if>
+                                            <form method="post" action="&mvte:global:secure_sessionurl;Screen=BASK" class='nm js-hide &mvt:global:jsclass;' id="js-coupon-form">
+                                                <input type="hidden" name="Action" value="ACPN" />
+                                                <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+                                                <div class="coupon-redeem">
+                                                    <input type="text" name="Coupon_Code" id="l-coupon-code" class="input" placeholder="Enter Discount Code" value="&mvte:global:Coupon_Code;">
+                                                    <button class="button red-button">Redeem</button>
+                                                </div>
+                                                <div class="breaker clear clearfix"></div>
+                                            </form>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <!--button-wrapper-->
+
+                                    </div>
+                                    <!--estimate-total-->
+                            </div>
+                            <!--basket-bottom-left-->
+                            <div class="clearfix hidden"></div>
+                            </mvt:if>
+                        </div>
+                        <div class="clearfix hidden"></div>
+                        <mvt:if expr="l.settings:is_admin">
+                            <div class="visible-xs mobile-share" style="width:100%;">
+                                
+                            </div>
+                        </mvt:if>
+
+                    </div>
+                    </div>
+                </div>
+                <mvt:assign name="l.settings:checkbaskvalue" value="''" />
+                <mvt:if expr="l.settings:basket:empty">
+                    <mvt:assign name="l.settings:checkbaskvalue" value="'hidden'" />
+                    <mvt:else>
+                    </mvt:if>
+                <div class="col-sm-4 col-md-3 col-lg-3 checkoutSummaryCard tabPaddingZero &mvt:checkbaskvalue;">
+                    <div class="summaryandotherdata">
+                    <div class="checkoutSummary">
+                        <h3 class="summary" style="font-family: 'ITCAvantGardePro-Bold';">Order Summary</h3>
+                        <div class="continue-button">
+                            <mvt:if expr="g.Basket:cust_id">
+                                <mvt:if expr="g.Secure">
+                                    <form method="get" name="shipestimate_form" action="&mvt:global:secure_sessionurl;" target="shipestimate" class="estimate-shipping-form estimate-shipping-form-loggedin">
+                                        <mvt:else>
+                                            <form method="get" name="shipestimate_form" action="&mvt:global:sessionurl;" target="shipestimate" class="estimate-shipping-form estimate-shipping-form-loggedin">
+                                </mvt:if>
+
+                                <div class="row estimateHeaderRow 1 hidden">
+                                    <div class="col-sm-8 col-lg-7 col-md-7 ship-est-main <mvt:if expr='g.Basket:cust_id'>loggedin-ship<mvt:else>guest-ship</mvt:if>">
+                                        <!-- <h5 class="estimateHeaders ft-w-4" id="estimateHeader"><span class="address"></span> Enter zipcode to estimate <br/> shipping cost </h5> -->
+                                        <span value="Your Shipping Zip Code">
+                                        <input type="text" class="ship-estimate" required=""  value="&mvt:global:customer:ship_zip;"  pattern="[0-9]{5}" minlength="5" maxlength="10" autocomplete="chrome-off">
+                                    </div>
+                                    <div class="col-sm-4 col-lg-5 col-md-5" style="text-align: right;">
+                                        
+                                        <button type="button" class="primary-btn estimate-shipping ft-12p ft-w-6 shipping-estimate" style="margin-bottom: 10px;border: solid #c9c4c4 1px;letter-spacing: 0.5px;">Get
+                                    Estimate</button>  <!-- remove style issue from excel sheet sr. no: #86 -->
+                                    </div>
+                                    <!-- <div class="col-sm-1" style="padding-top:5px">
+                                        <i class="fa fa-angle-down" id="summaryIcon" aria-hidden="true" style="font-weight: bold;" onclick="submitEstimateShippingInfo('estimate_shipping_section')"></i>
+                                    </div> -->
+                                </div>
+
+                                <div class="row hide_estimate_shipping" id="estimate_shipping_section">
+                                    <input type="hidden" name="Screen" value="SERT" />
+                                    <input type="hidden" name="Store_Code" value="&mvte:store:code;" />
+                                    <input type="hidden" name="SpecialShipping" value="&mvte:global:SpecialShipping;" />
+                                    <div class="col-sm-12 couponSection">
+                                        <div class="">
+                                            <label for="shipestimate_addr"><b>Address:</b></label>
+                                            <input type="text" id="shipestimate_addr" name="ShipEstimate:addr" value="&mvte:global:ShipEstimate:ship_addr1;" class="form-control shipestimate_addr" placeholder="Address" />
+                                        </div>
+                                        <div class="">
+                                            <label for="shipestimate_state_select"><b>State/Province:</b></label>
+                                            <mvt:item name="216_MonkeyWrench" param="load-store-states" />
+                                            <select name="ShipEstimate:ship_state_select" id="shipestimate_state_select" class="form-control shipestimate_state_select" required>
+                                    <mvt:foreach iterator="state" array="store_states">
+                                        <mvt:if expr="g.ShipEstimate:ship_state_select EQ l.settings:state:code">
+                                            <option value="&mvt:state:code;" selected>&mvte:state:name;
+                                            </option>
+                                            <mvt:else>
+                                                <option value="&mvt:state:code;">&mvte:state:name;</option>
+                                        </mvt:if>
+                                    </mvt:foreach>
+                                </select>
+                                        </div>
+                                        <!--form-group-->
+
+                                        <div class="">
+                                            <label for="shipestimate_zip"><b>ZIP/Postal Code:</b></label>
+                                            <input type="text" id="shipestimate_zip" name="ShipEstimate:ship_zip" value="&mvte:global:ShipEstimate:ship_zip;" class="form-control shipestimate_zip zipcode" minlength="5" maxlength="10" onkeypress="return isNumber(event)" placeholder="Enter zip / postalcode"
+                                                required />
+                                        </div>
+
+                                        <!--form-group-->
+                                    </div>
+
+                                    <div class="col-sm-12 couponSection">
+                                        <div class="">
+                                            <label>Country:</label>
+                                            <select name="ShipEstimate:ship_cntry" id="shipestimate_country" class="form-control" required>
+                                    <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'GU'">
+                                        <option value="GU" selected>Guam</option>
+                                        <mvt:else>
+                                            <option value="GU">Guam</option>
+                                    </mvt:if>
+                                    <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'PR'">
+                                        <option value="PR" selected>Puerto Rico</option>
+                                        <mvt:else>
+                                            <option value="PR">Puerto Rico</option>
+                                    </mvt:if>
+                                    <mvt:if
+                                        expr="(g.ShipEstimate:ship_cntry EQ 'US') OR (NOT g.ShipEstimate:ship_cntry)">
+                                        <option value="US" selected>United States</option>
+                                        <mvt:else>
+                                            <option value="US">United States</option>
+                                    </mvt:if>
+                                    <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'VI'">
+                                        <option value="VI" selected>Virgin Islands &#40;US&#41;</option>
+                                        <mvt:else>
+                                            <option value="VI">Virgin Islands &#40;US&#41;</option>
+                                    </mvt:if>
+                                </select>
+                                        </div>
+                                        <!--form-group-->
+                                    </div>
+                                    <div class="col-sm-12 couponSection">
+                                        <input type="submit" value="Apply" rel="nofollow" style="display:none;" />
+                                        <a class="estimateBtn createRecipeFolderBtn primary-btn estimate-shipping-modal-calculate-button" onclick="submitEstimateShippingInfoLoggedIn('estimate_shipping_section');">Apply</a>
+                                        
+                                    </div>
+                                    </form>
+                                    <div class="discount hidden">
+                                        <mvt:if expr="ISNULL l.settings:coupon:code">
+                                            <h5 class="col-lg-9 col-sm-9 ft-12p" style="margin-top: 18px;font-weight: 600;">Apply Discount Code
+                                            </h5>
+                                            <mvt:else>
+                                                <h5 class="ft-12p" style="margin-top: 18px;font-weight: 600;">Coupon: &mvt:coupon:code;: &mvt:coupon:descrip $&mvt:coupon:total;</h5>
+                                        </mvt:if>
+                                    </div>
+                                </div>
+
+                                <div class="row estimateHeaderRow 2 hidden" style="<mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'> display:none;</mvt:if> ">
+                                    <h5 class="col-lg-9 col-sm-9 hidden" style="margin-top: 18px;font-weight: 600;">Apply Discount Code
+                                    </h5>
+                                    <mvt:if expr="l.settings:messages:error_message_count">
+                                        <div class="col-lg-12">
+                                            <div class="error-message desktop-error-message">
+                                                <mvt:foreach iterator="error" array="messages:error_messages">
+                                                    &mvt:error;
+                                                </mvt:foreach>
+                                            </div>
+                                        </div>
+                                    </mvt:if>
+                                    <div class="col-lg-12">
+                                        <div class="error-message bask-error-message" hidden>
+                                            <mvt:foreach iterator="error" array="messages:error_messages">
+                                                &mvt:error;
+                                            </mvt:foreach>
+                                        </div>
+                                    </div>
+                                    <form method="post" action="&mvte:global:secure_sessionurl;Screen=BASK" id="baskDiscount" rel="nofollow">
+                                        <div class="col-sm-7 col-md-7 col-lg-7"> <!-- alignment input from excel sheet #86 -->
+                                            <span class="estimateHeader"><input type="text" class="couponInput" name="Coupon_Code" placeholder="Enter Discount Code" value="" style="border: none;width: 100%;height: 30px;border-radius: 5px;" required></span>
+
+                                            <input type="hidden" name="Action" value="ACPN" />
+
+                                            <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+
+
+                                            </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5" style="text-align: -webkit-right;"> <!-- alignment input from excel sheet  #86 -->
+                                            <button type="submit" class="btn coupunbutton primary-btn" style="">Apply</button>
+                                        </div>
+                                    </form>
+                                
+                                    <div class="col-sm-1 hidden" style="padding-top: 15px;">
+                                        <i class="fa fa-angle-down" style="font-weight: bold;" id="summaryIcon" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                                <mvt:else>
+                                    <mvt:comment>
+                                    <mvt:if expr="g.Secure">
+                                        <form method="get" name="shipestimate_form" action="&mvt:global:secure_sessionurl;" target="shipestimate" class="estimate-shipping-form estimate-shipping-form-notloggedin">
+                                            <mvt:else>
+                                                
+                                    </mvt:if>
+                                    </mvt:comment>
+                                    <form method="get" name="shipestimate_form" action="&mvt:global:sessionurl;" target="shipestimate" class="estimate-shipping-form estimate-shipping-form-notloggedin">
+
+                                    <div class="row estimateHeaderRow 3 hidden">
+                                        
+                                        <div class="col-sm-8 col-md-7 col-lg-7 ship-est-main  <mvt:if expr='g.Basket:cust_id'>loggedin-ship<mvt:else>guest-ship</mvt:if>">
+                                            <!-- <h5 class="estimateHeaders" id="estimateHeader"><span class="address"></span> Enter zipcode to estimate <br/> shipping cost </h5> -->
+                                            <mvt:assign name="g.custzip" value="''"/>
+                                            <mvt:if expr="g.Basket:cust_id">
+                                                <mvt:assign name="g.custzip" value="'g.customer:ship_zip'"/>
+                                            </mvt:if>
+                                            <input type="text" class="ship-estimate" required="" onkeyup="$('.getzip').val($(this).val())" onkeypress="return isNumber(event)" autocomplete="chrome-off"  pattern="[0-9]{5}" minlength="5" maxlength="10" value="&mvt:global:custzip" placeholder="Enter Zipcode" >
+                                        </div>
+                                        <div class="col-sm-4 col-md-5 col-lg-5" style="text-align:right">. <!-- remove style issue from excel sheet sr. no: #86 -->
+
+                                            <button type="submit"  target="_self" class="primary-btn estimate-shipping createRecipeFolderBtn nobrder ft-12p ft-w-6 shipping-estimate" style="border: solid #c9c4c4 1px;" onclick="$('#estimateinfo').submit();">Get Estimate</button> <!-- remove text-align issue from excel sheet sr. #86 -->
+                                        </div>
+                                        <!-- <div class="col-sm-1 col-md-1 col-lg-1" style="padding-top: 10px;">
+                                            <i class="fa fa-angle-down" style="font-weight: bold;" id=" summaryIcon" aria-hidden="true" onclick="submitEstimateShippingInfo('estimate_shipping_section')"></i>
+                                        </div> -->
+                                    
+                                    </div>
+
+
+                                    <div class="row hide_estimate_shipping" id="estimate_shipping_section">
+                                        <input type="hidden" name="Screen" value="SERT" />
+                                        <input type="hidden" name="Store_Code" value="&mvte:store:code;" />
+                                        <input type="hidden" name="SpecialShipping" value="&mvte:global:SpecialShipping;" />
+                                        <div class="col-sm-12 couponSection">
+
+                                            <div class="">
+                                                <label for="shipestimate_addr"><b>Address:</b></label>
+                                                <input type="text" id="shipestimate_addr" name="ShipEstimate:addr" value="&mvte:global:ShipEstimate:ship_addr1;" class="form-control shipestimate_addr" placeholder="Address" />
+                                            </div>
+                                            <div class="">
+                                                <label for="shipestimate_state_select"><b>State/Province:</b></label>
+                                                <mvt:item name="216_MonkeyWrench" param="load-store-states" />
+                                                <select name="ShipEstimate:ship_state_select" id="shipestimate_state_select" class="form-control shipestimate_state_select" required>
+                                                <mvt:foreach iterator="state" array="store_states">
+                                                    <mvt:if expr="g.ShipEstimate:ship_state_select EQ l.settings:state:code">
+                                                        <option value="&mvt:state:code;" selected>&mvte:state:name;
+                                                        </option>
+                                                        <mvt:else>
+                                                            <option value="&mvt:state:code;">&mvte:state:name;</option>
+                                                    </mvt:if>
+                                                </mvt:foreach>
+                                                </select>
+                                            </div>
+                                            <!--form-group-->
+
+                                            <div class="">
+                                                <label for="shipestimate_zip"><b>ZIP/Postal Code:</b></label>
+                                                <input type="text" id="shipestimate_zip" name="ShipEstimate:ship_zip" value="&mvte:global:ShipEstimate:ship_zip;" onkeypress="return isNumber(event)" minlength="5" maxlength="10" class="form-control shipestimate_zip zipcode" placeholder="Enter zip / postalcode"
+                                                    required />
+                                            </div>
+
+                                            <!--form-group-->
+                                        </div>
+
+                                        <div class="col-sm-12 couponSection">
+                                            <div class="">
+                                                <label>Country:</label>
+                                                <select name="ShipEstimate:ship_cntry" id="shipestimate_country" class="form-control" required>
+                                <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'GU'">
+                                    <option value="GU" selected>Guam</option>
+                                    <mvt:else>
+                                        <option value="GU">Guam</option>
+                                </mvt:if>
+                                <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'PR'">
+                                    <option value="PR" selected>Puerto Rico</option>
+                                    <mvt:else>
+                                        <option value="PR">Puerto Rico</option>
+                                </mvt:if>
+                                <mvt:if expr="(g.ShipEstimate:ship_cntry EQ 'US') OR (NOT g.ShipEstimate:ship_cntry)">
+                                    <option value="US" selected>United States</option>
+                                    <mvt:else>
+                                        <option value="US">United States</option>
+                                </mvt:if>
+                                <mvt:if expr="g.ShipEstimate:ship_cntry EQ 'VI'">
+                                    <option value="VI" selected>Virgin Islands &#40;US&#41;</option>
+                                    <mvt:else>
+                                        <option value="VI">Virgin Islands &#40;US&#41;</option>
+                                </mvt:if>
+                            </select>
+                                            </div>
+                                            <!--form-group-->
+                                        </div>
+                                        <div class="col-sm-12 couponSection">
+                                            <input type="submit" value="Apply" rel="nofollow" style="display:none;" />
+                                            <a class="estimateBtn estimate-shipping-modal-calculate-button createRecipeFolderBtn primary-btn" onclick="submitEstimateShippingInfoNotLoggedIn('estimate_shipping_section');">Apply</a>
+
+                                        </div>
+                                       
+                                        <div class="discount hidden">
+                                            <mvt:if expr="ISNULL l.settings:coupon:code">
+                                                <h5 class="col-lg-9 col-sm-9 hidden" style="margin-top: 18px;font-weight: 600;">Apply Discount Code</h5>
+                                                <mvt:else>
+                                                    <h5 class="ft-12p" style="margin-top: 18px;font-weight: 600;">Coupon: &mvt:coupon:code;: &mvt:coupon:descrip $&mvt:coupon:total;</h5>
+                                            </mvt:if>
+                                        </div>
+                                   
+                                    </div>
+                                    </form>
+
+
+                                    <div class="row estimateHeaderRow 4 hidden" style="<mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'> display:none;</mvt:if>">
+                                        <h5 class="col-lg-9 col-sm-9 hidden" style="margin-top: 18px;font-weight: 600;">Apply Discount Code</h5>
+                                        <mvt:if expr="l.settings:messages:error_message_count">
+                                            <div class="col-lg-12">
+                                                <div class="error-message desktop-error-message">
+                                                    <mvt:foreach iterator="error" array="messages:error_messages">
+                                                        &mvt:error;
+                                                    </mvt:foreach>
+                                                </div>
+                                            </div>
+                                        </mvt:if>
+                                        <div class="col-lg-12">
+                                            <div class="error-message bask-error-message" hidden>
+                                                <mvt:foreach iterator="error" array="messages:error_messages">
+                                                    &mvt:error;
+                                                </mvt:foreach>
+                                            </div>
+                                        </div>
+                                        <form method="post" action="&mvte:global:secure_sessionurl;Screen=BASK" id="baskDiscount" rel="nofollow">
+                                            <div class="col-sm-9 col-md-7 col-lg-7">
+                                                <span class="estimateHeader"><input type="text" class="couponInput" name="Coupon_Code" value="" placeholder="Enter Discount Code" style="border: none;width: 100%;height: 30px;border-radius: 5px;" required>
+                                                </span>
+
+                                                <input type="hidden" name="Action" value="ACPN" />
+
+                                                <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+
+
+                                            </div>
+                                            <div class="col-sm-3 col-md-5 col-lg-5" style="text-align: -webkit-right;"> <!-- 14-nov-2023 from excel sheet sr. #86-->
+                                                <button type="submit" class="btn coupunbutton primary-btn" style="padding:5px 20px;">Apply</button>
+                                            </div>
+                                        </form>
+                                        
+                                        <div class="col-sm-1 hidden" style="padding-top:15px">
+                                            <i class="fa fa-angle-down" id="summaryIcon" style="font-weight: bold;" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+
+                            </mvt:if>
+
+
+                            <div class="discount" style="border-bottom: unset;<mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'> display:none;</mvt:if>">
+                                <!-- Show coupons in Desktop -->
+                                <mvt:foreach iterator="charge" array="basket:charges">
+                                    <mvt:comment>Save coupon information and show separately.</mvt:comment>
+                                    <mvt:if expr="'(USECOUPONNAME)' CIN l.settings:charge:descrip">
+                                        <mvt:assign name="g.coupon_display" value="l.settings:charge" />
+                                        <mvt:else>
+                                            <div class="bask-charges hidden">
+                                                <div class="charge-description hidden">&mvt:charge:descrip;:</div>
+                                                <div class="formatted-charge hidden">&mvt:charge:formatted_disp_amt;</div>
+                                            </div>
+                                    </mvt:if>
+                                </mvt:foreach>
+                                <mvt:comment>
+                                <mvt:foreach iterator="coupon" array="basket:coupons">
+                                    <mvt:do name="l.settings:coupon:formatted_total" file="g.Module_Root $ g.Store:currncy_mod:module" value="CurrencyModule_AddFormatting( g.Store:currncy_mod, l.settings:coupon:total )" />
+                                    <div class="discount-container txt-orange">
+                                    <h5 class="ft-12p" style="margin-top: 18px;font-weight: 600;">Coupon: <span class="applliedcoupon">&mvt:coupon:code;</span> &mvt:coupon:descrip $&mvt:coupon:total; 
+                                    </h5>
+                                    <form method="post" id="removeCouponform&mvt:coupon:code;" action="&mvte:global:secure_sessionurl;">
+                                        <input type="hidden" name="Coupon_code" value="&mvt:coupon:code;">
+                                        <input type="hidden" name="Action" value="RCPN">
+                                        <input type="hidden" name="Store_Code" value="&mvte:global:Store_Code;" />
+                                    </form>
+                                    <span class="removecoupon&mvt:coupon:code; pointer" onclick="removeCoupon('&mvt:coupon:code;');"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                </div>
+
+                                </mvt:foreach>
+                            </mvt:comment>
+                                <!-- Show coupons in Desktop -->
+                            </div>
+	                       <mvt:comment> <mvt:item name="toolkit" param="basket|itemcount" /> </mvt:comment>	
+      				        <mvt:do file="g.Module_Library_DB" name="g.basketquantity" value="Basket_Quantity_All(g.Basket:basket_id)" />	
+      				        <mvt:do file="g.Module_Library_DB" name="g.basketsubtotal" value="Basket_SubTotal(g.Basket:basket_id)" />
+                            <div class="clearfix"></div>
+                            <div class="updatedShipping">
+                                <img src="graphics/00000001/loading.gif" class="load-img" style="max-height: 60px;margin: 61px auto;" hidden>
+                                <div class="logo ft-md ltr-sp-0p5" style="font-size: 14px;display:block">
+                                    <p class="col-sm-9 col-lg-9">Subtotal</p>
+                                    <mvt:if expr="g.basketsubtotal">
+
+                                        <p class="col-sm-3 col-lg-3 retailsubtotal" style="text-align: right;">$&mvt:global:basketsubtotal;</p>
+                                        <!-- changed varible to show subtotal -->
+                                        <mvt:else>
+                                            <p class="col-sm-3 col-lg-3" style="text-align: right;">$0.00</p>
+                                    </mvt:if>
+                                </div>
+
+                                
+                                
+                                <div class="logo ft-md ltr-sp-0p5" style="font-size: 14px;">
+                                    <p class="col-sm-3 col-lg-3">Shipping</p>
+                                    <span class="col-sm-6 col-lg-6 shipping-options">
+
+                                        <div class="imageandtextholder" data-toggle="modal" data-target="#estimateest">
+                                            <div class="iconholder">
+                                                <img class="img-responsives esttruck" style="-webkit-transform: scaleX(-1); transform: scaleX(-1);"
+                                                src="graphics/00000001/3/est.png" /> </div>
+                                                <span class="ft-10p ft-md ltr-sp-0p5 underline pointer view-opt">View Options</span>
+                                        </div>
+
+                                    </span>
+                                    <p class="shippingdetails col-sm-3 col-lg-3" style="text-align: right;">TBD</p>
+                                </div>
+                                <p style="font-size:9px;" class="hidden">(Standarad Rate-Price may vary depending on the <br /> item/destination. TECS Staff will contact you.)</p>
+                                <div class="logo ft-md ltr-sp-0p5" style="font-size: 14px;">
+                                    <p class="col-sm-9 col-lg-9">Tax</p>
+                                    <p class="salestax col-sm-3 col-lg-3" style="text-align: right;">$0.00</p>
+                                </div>
+                                <mvt:assign name="l.settings:ccFeesCheck" value="1" />
+                                <mvt:foreach iterator="charge" array="basket:charges">
+                                    <mvt:if expr="l.settings:charge:type EQ 'FRCCFEE' AND l.settings:ccFeesCheck">
+                                        <mvt:assign name="l.settings:ccFeesCheck" value="0" />
+                                        <div class="logo" style="font-family:ITCAvantGardePro-Bold;font-size: 14px;">
+                                            <p class="col-sm-9 col-lg-9">&mvt:charge:descrip;:</p>
+                                            <p class="col-sm-3 col-lg-3" style="text-align: right;">&mvt:charge:formatted_disp_amt;</p>
+                                        </div>
+                                    </mvt:if>
+                                </mvt:foreach>
+                                <mvt:if expr="g.item3BDiscountTotal GT 0">
+                                <div class="logo" style="padding-top:25px; font-family:ITCAvantGardePro-Bold;font-size: 14px;display:block">
+                                    <p class="col-sm-9 col-lg-9 txt-orange"><span class="ft-upc">Threebie</span> Savings </p>
+                                    <mvt:if expr="g.item3BDiscountTotal GT 0">
+                                        <p class="col-sm-3 col-lg-3 threebiediscounts txt-orange" style="text-align: right;">($&mvt:global:item3BDiscountTotal;)</p>
+                                        <!-- changed varible to show subtotal -->
+                                        <mvt:else>
+                                            <p class="col-sm-3 col-lg-3" style="text-align: right;">$0.00</p>
+                                    </mvt:if>
+                                </div>
+                                </mvt:if>
+                                <div class="wholesaleDiscount row marginzero">
+                                    
+                                </div>
+
+                                <div class="logo bold-ft" style="">
+                                    <p class="col-sm-8 col-lg-8">Order Total</p>
+                                    <mvt:if expr="l.settings:basket:formatted_total">
+                                        <p style="font-size: 18px; width: 33%;
+                                        text-align: right;" class="totalamounts" hidden>&mvt:basket:formatted_total;</p>
+                                        <mvt:else>
+                                            <p style="font-size: 18px; width: 33%;
+                                     text-align: right;">$0.00</p>
+                                    </mvt:if>
+                                </div>
+                                <div class="crwishlist"></div>
+
+                                <h5 class="txt-orange txt-center bold-ft minQty" style="visibility:hidden;">
+                                    <mvt:item name="readytheme" param="banner( 'wholesale-cartquote'  )" />
+                                </h5>
+
+                                
+                                <mvt:if expr="NOT l.settings:basket:empty">
+                                    <mvt:if expr="g.Basket:cust_id">
+      					 <!-- PS-26775 Consolidation of Global CSS -->
+                                        <!-- <a href="&mvt:global:secure_sessionurl;Screen=OPCO&Order=0&Store_Code=&mvt:global:Store_Code;" class="btn-checkout btn btn-xl primary-btn btn-orange createRecipeFolderBtn wd-100 &mvt:loggedinwinecheck;<mvt:if expr='l.settings:inventory LT 0'> btn-grey</mvt:if>" <mvt:if expr="l.settings:inventory LT 0">onclick="return false;" style="background-color:grey !important;"<mvt:else></mvt:if>> Proceed to Checkout</a> -->
+					 <button onclick="window.location.href='&mvt:global:secure_sessionurl;Screen=OPCO&Order=0&Store_Code=&mvt:global:Store_Code;'" class="btn-checkout btn btn-xl primary-btn btn-orange createRecipeFolderBtn wd-100 &mvt:loggedinwinecheck; &mvt:global:notuserwineproduct;<mvt:if expr='l.settings:inventory LT 0'> btn-grey</mvt:if>" <mvt:if expr="l.settings:inventory LT 0">onclick="return false;" style="background-color:grey !important;"<mvt:else></mvt:if>> Proceed to Checkout</button>
+
+
+                                        <mvt:else>
+                                            <a rel="nofollow" href="javascript:;" class="btn-checkout btn btn-xl primary-btn btn-orange btnLarge checkoutloginClick createRecipeFolderBtn wd-100  <mvt:if expr='l.settings:inventory LT 0'> btn-grey</mvt:if>" <mvt:if expr="l.settings:inventory LT 0"> onclick="return false;" style="background-color:grey !important;"<mvt:else></mvt:if>> Proceed to Checkout</a></mvt:if>
+                                </mvt:if>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">&nbsp;</div>
+                    <mvt:item name="readytheme" param="contentsection( 'basket-points-content' )" />
+                    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                        <mvt:else>
+                            
+                    <mvt:item name="customfields" param="Read_Customer_ID( g.Basket:cust_id, 'membership_shipping_message', l.settings:membership_shipping_message )" />
+                    <mvt:assign name="g.style" value="''" />
+                    <mvt:if expr='(g.membership_type EQ "Premium" AND l.settings:load_customers:ship_zip EQ "" ) OR (g.membership_type EQ "Premium" AND  l.settings:membership_shipping_message EQ ""  )'><mvt:assign name="g.style" value="'display:none;'" /><mvt:else></mvt:if>
+                    <div class="fam-main" style="margin:0 0 32px 0px;">
+                    
+                        <div class="fam-Container" >
+
+                                <mvt:if expr="g.Basket:cust_id AND g.membership_type EQ 'Premium'">
+                                    <span class="ft-14p ltr-sp-0p5 ft-demi">VIP Famie&nbsp;</span>
+                                    <span class="ft-md ft-14p ltr-sp-0p5">Rewards</span>
+                                 <mvt:elseif expr="g.Basket:cust_id AND g.membership_type EQ '' OR g.membership_type EQ 'Basic'">
+                                    <a href="/FamClub.html">
+                                        <span class="ft-14p ltr-sp-0p5 ft-md">Upgrade to </span>
+                                        <span class="ft-md ft-14p ltr-sp-0p5 ft-demi">VIP Famie</span>
+                                    </a>   
+                                 <mvt:else>
+                                    <a class="createAccount retailaccount">
+                                        <span class="ft-md ft-14p ltr-sp-0p5">Join </span>
+                                        <span class="ft-14p ltr-sp-0p5 ft-demi">Fam Rewards</span>
+                                    </a>
+                                </mvt:if>
+                            </div>
+                                <mvt:item name="readytheme" param="contentsection( 'checkout-message' )" />
+
+                        </div>
+                    </mvt:if>
+                    <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+                        <mvt:else>
+                            <div class="">&nbsp;</div>
+                    </mvt:if>
+                    </div>
+                </div>
+                    <!-- continue shopping cart Buttons -->
+                    <div class="row hidden-sm hidden-xs">
+
+
+                    <div class="hidden-lg hidden-md">
+                        <div>
+                            <div class="chillMsg dchillMsg" style='<mvt:if expr="l.settings:basket:empty"> display:none </mvt:if>'>
+                                <h3 class="mar-bt-zero" style="font-weight: bold;font-family: 'ITCAvantGardePro-Bold'; visibility: hidden;">NEED A GIFTBOX?</h3>
+                                <p style="visibility: hidden;">
+				    <mvt:item name="readytheme" param="banner( 'cooler-bags' )" /></p>
+
+                                <!-- <a class="btn cont-shopping">Continue Shopping</a> -->
+                                <mvt:comment>
+                                <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+                                <mvt:if expr='g.Basket:cust_id'>
+                                        <div class="col-lg-4 col-md-4" style="width:auto;">
+					     <!-- Changed to button because it looks like shifting on hover -->
+                                            <!-- <a class="btn cont-shopping continue-shopping share-basket-btn" style="cursor: pointer;">Share Basket </a> -->
+					      <button class="btn btn-lg secondary-btn btn-white continue-shopping share-basket-btn" style="cursor: pointer;">Share Basket </button>
+                                        </div>
+                                </mvt:if>
+                                        <div class="col-lg-4 col-md-4" style="width:auto;">
+					     <!-- Changed to button because it looks like shifting on hover -->
+                                            <!-- <a class="btn primary-btn cont-shopping continue-shopping shippingHide" style="margin-bottom: 40px;" href="//&mvt:global:domain:name;">Continue Shopping</a> -->
+					     <button class="btn btn-lg secondary-btn btn-white continue-shopping shippingHide" style="margin-bottom: 40px;" onclick="window.location.href = '//&mvt:global:domain:name;'">Continue Shopping</button>
+                                        </div>
+
+                                <div class="col-lg-4 col-md-4" style="width:auto;">
+				   <!-- Changed to button because it looks like shifting on hover -->
+                                  <!-- <a class="btn primary-btn clearshopingcart shippingHide" style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if>" onclick="$('#clearCartModal').modal()" style="margin-bottom: 40px;">Clear Shopping cart</a> -->
+				   <button class="btn btn-lg secondary-btn btn-white shippingHide" style="<mvt:if expr='l.settings:basket:empty'> display:none; </mvt:if>" onclick="$('#clearCartModal').modal()" style="margin-bottom: 40px;">Clear Shopping cart</button>
+                                </div>
+                                </div>
+                            </mvt:comment>
+                            </div>
+                </div>
+            </div>
+
+
+
+
+                <!-- continue shopping cart Buttons -->
+            </div>
+
+           
+            </div>
+        </div>
+            <div id="page-footer" class="bottom-carousal fr-main-container">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fr-sub-container">
+                <mvt:item name="hdft" param="footer" />
+</div>
+            </div>
+        <div id="bottom-wrap"></div>
+        <div id="global-footer">
+            <mvt:item name="hdft" param="global_footer" />
+        </div>
+   
+    </div>
+    </div>
+
+    </div>
+
+    <mvt:item name="readytheme" param="contentsection( 'clear_cart_modal' )" />
+    <mvt:item name="readytheme" param="contentsection( 'wishlist-modal' )" />
+    <mvt:item name="readytheme" param="contentsection( 'generic-err-pop' )" />
+    <mvt:item name="readytheme" param="contentsection( 'cartitemdisabled' )" />
+    <mvt:item name="readytheme" param="contentsection( 'wineItemPresent' )" />
+    <mvt:item name="readytheme" param="contentsection( 'nonwineItempopup' )" />
+    <mvt:item name="readytheme" param="contentsection( 'waitlist-modal' )" />
+    <mvt:item name="readytheme" param="contentsection( 'share_basket' )" />
+
+    <mvt:item name="custom-component" />
+
+    <mvt:if expr="g.restore">
+
+        <script>
+            var restoreCart = function restoreCart(basketSave) {
+  var itemsToBuy = [];
+  basketSave.split("|").forEach(function (item) {
+    if (item.trim().length) {
+      var temp = item.trim().split(";");
+      itemsToBuy.push(temp);
+    }
+  });
+  console.log("adding to cart", itemsToBuy);
+  var count = 0;
+  itemsToBuy.forEach(function (item) {
+    var url = "/Merchant5/merchant.mvc?Screen=GLOBALBASK_JSON&Action=ADPR&Product_Code=".concat(item[0], "&Product_Attributes[+1+]:code=").concat(item[1], "&Product_Attributes[1]:value=").concat(item[2], "&Quantity=").concat(item[3]);
+    console.log(url);
+    console.log(url);
+    $.get(url, function () {
+      if (typeof refreshItemsOnBasket === "function") {
+       
+      }
+
+      count += 1;
+
+      if (count === itemsToBuy.length) {
+        //all the calls were made
+        window.location.href = "/BASK.html";
+	//window.history.pushState(null, null, '/BASK.html');
+      }
+    });
+  });
+};
+
+setTimeout(function () {
+  console.log("restore_st", "&mvt:global:restore");
+  restoreCart("&mvt:global:restore");
+}, 500);
+
+
+
+        </script> 
+
+    </mvt:if>
+    <script>
+        $( document ).ready(function() {
+
+$('[data-toggle="tooltip"]').tooltip();
+
+            $('#share_basket').on('hidden.bs.modal', function () {
+                //location.reload();
+		$("#share-basket").find(".modal-titles").text('Share this Basket');
+		$("#share-basket").find("#share-basket-form").show();
+		$("#share-basket").find("button").show();
+		$("#share-basket").find(".email-field").val('');
+            })
+
+            // $('.estimateHeaderRow input:text').each(
+            // function(i,el) {
+            // if (!el.value || el.value == '') {
+            //     el.placeholder = 'Enter Zipcode';
+            // }
+            // });
+
+            $('.loggedinwinecheck').removeAttr('href').removeAttr('onclick');;
+            $(".loggedinwinecheck").click(function() {
+                $("#wineItemPresenthere").modal("show");
+            });
+
+            // $('.notuserwineproduct').removeAttr('href').removeAttr('onclick');;
+            // $(".notuserwineproduct").click(function() {
+            //     $("#nonwineItemPresenthere").modal("show");
+            // });
+
+            
+
+
+        });
+
+        var geturl = new URL(location.href);
+        setTimeout(function(){
+            geturl.searchParams.get('notwineproduct') === 'yes' ? $("#nonwineItemPresenthere").modal("show") : '';
+        },2000);
+        $('#baskDiscount').on('submit', function (e) {
+        e.preventDefault()
+        let url = $('#baskDiscount').attr('action');
+        
+        if(capitalize($('.couponInput:visible').val()) == $.trim(capitalize($('.applliedcoupon:visible').first().text()))){
+            $('.bask-error-message').text('This coupon code has already been applied').show();
+            setTimeout(function () {
+                $('.couponInput').val('');
+                $('#applycoupon .error-message').hide();
+            }, 5000);
+        }else{
+        let dataPost = $('#baskDiscount').serialize();
+        jQuery.ajax({
+            url: '/coupon-ajax.html?CustomerAction=coupenRedemption',
+            type: "POST",
+            showLoader: true,
+            data: dataPost,
+            cache: false,
+            beforeSend: function () {
+
+                $('.btnApply').addClass('adding');
+            },
+            success: function (data) {
+                $('.btnApply').removeClass('adding');
+              
+                $(".couponDisclaimer").show();
+                if (data.trim().search(/class="errormessageshow"/i) != -1) {
+                    $('.bask-error-message').text($(data).filter('.errormessageshow').text()).show();
+                    setTimeout(function () {
+                        $('.couponInput').val('');
+                        $('.bask-error-message').hide();
+                    }, 5000);
+                    return false;
+                } else {
+                    $('.showdiscounts').show();
+                    location.reload();
+                    $('.bask-error-message').text($(data).filter('.successmessageshow').text()).show();
+
+                }
+            }
+        });
+    }
+
+    });
+
+    $('#baskDiscountMobile').on('submit', function (e) {
+        e.preventDefault()
+        let url = $('#baskDiscountMobile').attr('action');
+        
+        if(capitalize($('.couponInput:visible').val()) == $.trim(capitalize($('.applliedcoupon:visible').first().text()))){
+            $('.bask-error-message').text('This coupon code has already been applied').css('display','flex');
+            setTimeout(function () {    
+                $('.couponInput').val('');
+                $('.bask-error-message').hide();
+            }, 5000);
+        }else{
+        let dataPost = $('#baskDiscountMobile').serialize();
+        jQuery.ajax({
+            url: '/coupon-ajax.html?CustomerAction=coupenRedemption',
+            type: "POST",
+            showLoader: true,
+            data: dataPost,
+            cache: false,
+            beforeSend: function () {
+
+                $('.btnApply').addClass('adding');
+            },
+            success: function (data) {
+                $('.btnApply').removeClass('adding');
+              
+                $(".couponDisclaimer").show();
+                if (data.trim().search(/class="errormessageshow"/i) != -1) {
+                    $('.bask-error-message').text($(data).filter('.errormessageshow').text()).css('display','flex');
+                    setTimeout(function () {
+                        $('.couponInput').val('');
+                        $('.bask-error-message').hide();
+                    }, 5000);
+                    return false;
+                } else {
+                    $('.showdiscounts').show();
+                    location.reload();
+                    $('.bask-error-message').text($(data).filter('.successmessageshow').text()).css('display','flex');
+
+                }
+            }
+        });
+    }
+
+    });
+
+    function capitalize(s){
+        return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
+    };
+
+
+    $(".gift-box-carousel").owlCarousel({
+          navText: [
+            "<img src='graphics/00000001/3/Arrow-HighRes-.png' width='20' height='28' style='width: 2rem;transform:rotate(180deg);filter: brightness(0.2);'>",
+            "<img src='graphics/00000001/3/Arrow-HighRes-.png' width='20' height='28' style='width: 2rem;filter: brightness(0.2);'>",
+          ],
+          items: 2,
+          loop: false,
+          pagination: false,
+          responsiveClass: true,
+          dots: false,
+          nav: true,
+          lazyLoad: true,
+          responsive: {
+            0: {
+              items: 2,
+              nav: true,
+              lazyLoad: true,
+            },
+            600: {
+              items: 2,
+              nav: true,
+              lazyLoad: true,
+            },
+            1000: {
+              items: 2,
+              nav: true,
+              loop: false,
+              lazyLoad: true,
+              touchDrag: false,
+              mouseDrag: false,
+            },
+          },
+        });
+
+    </script>
+</body>
+<div class="viewSubstitutionModal modal" id="viewSubstitutionModal" role="dialog" aria-hidden="false"></div>
+
+</html>
