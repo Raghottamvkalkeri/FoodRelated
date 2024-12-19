@@ -1,0 +1,457 @@
+<mvt:if expr="g.source EQ 'app'">
+    <mvt:else>
+<div class="backdrop"></div>
+<mvt:item name="readytheme" param="contentsection( 'Global_Tags' )" />
+<mvt:item name="readytheme" param="contentsection( 'guest-wholesale-check' )" />
+<mvt:item name="readytheme" param="contentsection( 'split-wine-popup' )" />
+<mvt:item name="readytheme" param="contentsection( 'view_splitwine_productss' )" />
+<mvt:item name="readytheme" param="contentsection( 'wineorders' )" />
+<mvt:item name="clientdimensions"/>
+<mvt:if expr="(l.settings:page:code EQ 'BASKI' OR l.settings:page:code EQ 'OCST' OR l.settings:page:code EQ 'OSEL' OR l.settings:page:code EQ 'OPAY' OR l.settings:page:code EQ 'opcoguest')">
+
+<mvt:comment>
+<footer>
+
+<div class="disclaimer-wrapper">
+  <div class="container">
+      <div class="disclaimer-nav"><a class="mb-ft-9p"  href="/about-food-related.html">About Food Related</a> | <a class="mb-ft-9p"
+              href="/choice-we-had-to-make.html">The Choice We Had To Make</a> | <a class="mb-ft-9p" href="/abus.html">About
+              Our Service</a> | <a class="mb-ft-9p" href="/love-drop-off.html">Why Us?</a> | <a class="mb-ft-9p"
+              href="/privacy-policy.html">Privacy Policy</a> | <a class="mb-ft-9p" href="/shipping-policy.html">Shipping
+              Policy</a> | <a href="/SARP.html">Returns</a> | <a class="mb-ft-9p" href="/shipping-policy.html">Shipping
+              Policy</a></div>
+      <div class="disclaimer">Copyright &copy; 1992 -
+          <mvt:item name="toolkit" param="time_t_year|nyear|our_time" />
+          <mvt:if expr="g.nyear">&mvt:global:nyear;</mvt:if> RJL Texas. ALL RIGHTS RESERVED. Please refer to
+          legal for terms of use.
+      </div>
+  </div>
+</div>
+</footer>
+</mvt:comment>
+
+<mvt:else>
+
+<div class="newsletter-wrapper hidden">
+    <div class="container">
+        <!-- aveto sm-6 to sm-12 41056  6-nov-2020-->
+        <!-- <div class="col-sm-12 xs-hidden np tabletfix">
+    <img class="" width="100%" src="graphics/Hompage-BottomBanner_1364x330.jpg" alt="Key to Success">
+</div> -->
+        <!-- aveto sm-6 to sm-12 end  41056 -->
+    </div>
+</div>
+
+            
+<footer id="mainFooter">
+    
+
+</footer>
+<mvt:if expr="g.screen CIN 'CTGY' OR l.settings:page:code CIN 'Origins|PROD|ShelfLP'">
+<mvt:if expr="g.Basket:Cust_id AND l.settings:taxId">
+<mvt:else>
+<button type="button" href="#" class="btn floating-flatrate-btn hidden-md hidden-lg" data-toggle="modal" data-target="#shippingPopup">
+<i class="fa-solid fa-truck-fast txt-white ft-24p"></i>
+</button>
+</mvt:if>
+</mvt:if>
+</mvt:if>
+
+<mvt:comment> Footer </mvt:comment>
+<div class="hidden-md hidden-sm hidden-lg visible-xs">
+    <mvt:if expr="l.settings:page:code EQ 'BASK' OR l.settings:page:code EQ 'bask' AND g.basketsubtotal GT 0">
+<div class="cart-total footer-quote hidden-md hidden-lg bold-ft" style="display:none">
+    <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+
+
+        <h5 class="txt-orange txt-center bold-ft minQty">
+            <mvt:item name="readytheme" param="banner( 'wholesale-cartquote'  )" />
+        </h5>
+
+</div>
+    </mvt:if>
+<div class="bg-white responsiveFooterBtns" id="responsiveButton" style="display: none">
+<a class="wd-50 txt-center ft-demi txt-black ltr-sp-0p5" href="/Bask.html">
+    <span>
+        <span class="cartqty txt-orange" style="display:none;">0</span>
+        <i class="fa fa-shopping-cart check-cart ft-20p" aria-hidden="true"></i>
+        
+        <mvt:item name="toolkit" param="basket|itemcount" />
+        <span class="basket-total ft-demi">
+          <span>
+          <mvt:if expr="g.basketsubtotal">
+            $&mvt:global:basketsubtotal;<mvt:else>$0.00</mvt:if>
+          </span>
+          </span>
+    </span>
+</a>
+<mvt:if expr="g.Basket:Cust_id">
+     <button class="wd-50 bg-orange txt-center ft-md txt-white ltr-sp-0p5 noborder btn-checkout" onclick='location.href="&mvt:global:secure_sessionurl;Screen=OPCO&amp;Store_Code=&mvta:store:code;"'>Checkout</button> 
+    <mvt:else>
+        <button class="wd-50 bg-orange txt-center ft-md txt-white ltr-sp-0p5 noborder checkoutloginClick checkoutguestbtn" onclick="$('.signinFormText').show();">Checkout</button> 
+</mvt:if>
+<!-- <a class="wd-50 bg-orange txt-center ft-md txt-white ltr-sp-0p5" href="/OPCO.html">
+        Checkout
+</a> -->
+</div>
+</div>
+<mvt:comment>Footer</mvt:comment>
+
+
+<mvt:comment> ** css ** </mvt:comment>
+
+
+
+<mvt:item name="head" param="css:ProductBox" />
+
+
+<script src="js/jquery-migrate.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<Mvt:if expr="l.settings:page:code EQ 'PROD' OR l.settings:page:code EQ 'PRODN' OR l.settings:page:code EQ 'BASK' OR l.settings:page:code EQ 'Bask' OR l.settings:page:code EQ 'bask' OR l.settings:page:code EQ 'ORDHP' OR l.settings:page:code EQ 'CTGY' OR l.settings:page:code EQ 'ORDGUIDE' OR l.settings:page:code EQ 'ordguide' OR l.settings:page:code EQ 'SRCH' OR l.settings:page:code EQ 'deli-grid' OR l.settings:page:code EQ 'SFNT' OR l.settings:page:code EQ 'ORDHN' OR l.settings:page:code EQ 'ORDHNMOBILE' OR l.settings:page:code EQ 'MSHIP' OR l.settings:page:code EQ 'mship' OR l.settings:page:code EQ 'ShelfLP' OR l.settings:page:code EQ 'blogmain' OR l.settings:page:code EQ 'OPCO_NEW' OR l.settings:page:code EQ 'opco_new' OR l.settings:page:code EQ 'ShelfLP_copy' OR l.settings:page:code EQ 'Origins' OR l.settings:page:code EQ 'ACED'">
+
+
+<!-- new version of owl-caroussel added here -->
+
+<script src="scripts/00000001/owl.carousel.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="scripts/00000001/owl.carousel.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<mvt:else>
+<script src="owl-carousel/owl-carousel/owl.carousel.js"></script>
+</Mvt:if>
+
+<!--productdetail.js-->
+<!--script type="text/javascript" src="scripts/00000001/productdetailcard.js?v=2"></script-->
+<!--productdetail.js end-->
+<mvt:if expr="l.settings:page:code EQ 'deli-grid' OR l.settings:page:code EQ 'PROD'">
+<mvt:else>
+<!--script type="text/javascript" src="/Merchant5/scripts/00000001/substitution.js?v=22223" defer></script-->
+</mvt:if>
+<mvt:if expr="l.settings:page:code EQ 'CTGY'">
+<script src="js/cat-head-text.js" defer></script>
+</mvt:if>
+<mvt:item name="head" param="footer_scripts" />
+
+
+
+
+<mvt:if expr="g.Screen EQ 'PRODREV' OR g.Screen EQ 'PRODREV_COPY' OR g.Screen EQ 'MSHIP' OR g.Screen EQ 'PROD'">
+<mvt:else>
+<mvt:item name="pm_easy_review" param="form" />
+</mvt:if>
+
+
+<mvt:comment> *** BEGIN Analytics Universal Tracking and Ecommerce Snippet *** </mvt:comment>
+<mvt:item name="ga_tracking" />
+<mvt:if expr="l.settings:page:code EQ 'INVC'">
+<mvt:item name="ga_transaction" />
+</mvt:if>
+<mvt:comment> *** END Analytics Universal Tracking and Ecommerce Snippet *** </mvt:comment>
+
+<mvt:comment> *** Microdata *** </mvt:comment>
+<script type="application/ld+json">
+<mvt:if  expr="(l.settings:page:code EQ 'SFNT') OR (l.settings:page:code EQ 'new-front-test')">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "Food Related - A Growing Family of Great Food Products",
+"url": "https://&mvte:global:domain:name;"
+<mvt:if expr="l.settings:pm_easy_review:avgcount GT 0">,      
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "&mvt:pm_easy_review:avgrating;",
+        "reviewCount": "&mvt:pm_easy_review:avgcount;"
+    },
+  "review": [
+    <mvt:foreach iterator="ep" array="storereviews">
+      {
+        "@type": "Review",
+        "author": "&mvt:ep:author;",
+        "datePublished": "&mvt:ep:date;",
+        "description": "&mvte:ep:review;",
+        "name": "&mvte:ep:title;",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "&mvt:ep:rating;"
+        }
+      }<mvt:if expr="pos1 LT l.settings:pm_easy_review:avgcount">,</mvt:if>
+    </mvt:foreach>
+  ]
+</mvt:if>
+}
+<mvt:elseif expr="l.settings:page:code EQ 'CTGY'">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "&mvt:category:name; from &mvt:global:store:name;&mvt:seo_pagination_text_stub;",
+"url": "&mvt:category_page_canonical_url;"
+}
+<mvt:elseif expr="l.settings:page:code EQ 'SRCH'">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "Search Results for: &mvte:global:SEARCH; | Food Related",
+"url": "&mvte:global:Search; Search Results from &mvt:global:store:name;&mvt:seo_pagination_text_stub;"
+}
+<mvt:elseif expr="(l.settings:page:code EQ 'PROD') OR (l.settings:page:code EQ 'PATR') OR ('prod-' CIN l.settings:page:code)">
+<mvt:assign name="l.settings:clean_descrip" value="glosub(glosub(l.settings:product:descrip, (asciichar(13) $ asciichar(10)), ' '), asciichar(10), ' ')" />
+<mvt:item name="216_MonkeyWrench" param="load-og-image|product|l.all_settings:product:id" />
+{
+"@context": "https://schema.org",
+"@type": "Product",
+"name": "&mvte:product:name;",
+"url": "https://&mvte:global:domain:name;/&mvt:product:code;/&mvta:product:name;.html",
+"image": "https://&mvte:global:domain:name;/mm5/&mvt:og_tag_image;",
+"category": "<mvt:foreach iterator="cats" array="breadcrumbs:links"><mvt:if expr="l.settings:cats:name NE l.settings:product:name"><mvt:if expr="pos1 GT 1">></mvt:if>&mvt:cats:name;</mvt:if></mvt:foreach>",
+<mvt:if expr="l.settings:product:weight GT 0">
+    "weight": "&mvt:product:weight; lbs",
+</mvt:if>
+<mvt:if expr="l.settings:clean_descrip">
+    "description": "&mvte:clean_descrip;",
+</mvt:if>
+<mvt:item name="216_MonkeyWrench" param="does-product-have-variants|l.all_settings:product:id" />
+<mvt:if expr="l.settings:product_has_variants"> 
+    "offers": {
+      "@type": "Offer",
+      <mvt:if expr="((l.settings:apt_product_type EQ 'related-product-driven') AND l.settings:is_main_related_products_in_stock) OR ((l.settings:apt_product_type EQ 'default') AND l.settings:is_main_product_in_stock)">
+        "availability": "https://schema.org/InStock",
+      <mvt:else>
+        "availability": "https://schema.org/OutOfStock",
+      </mvt:if>
+      "price": "&mvt:product:price;",
+      "priceCurrency": "USD"
+    },
+<mvt:else>
+    "offers": {
+        "@type": "Offer",
+        <mvt:if expr="( l.settings:product:inv_active AND l.settings:product:inv_level NE 'out') OR (NOT l.settings:product:inv_active) ">
+            "availability": "https://schema.org/InStock",
+        <mvt:else> 
+            "availability": "https://schema.org/OutOfStock",
+        </mvt:if>
+        "price": "&mvt:product:price;",
+        "priceCurrency": "USD"
+    },
+</mvt:if>
+
+<mvt:if expr="l.settings:main_product_reviews_data:avgcount GT 0">
+    "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "&mvt:main_product_reviews_data:avgrating;",
+    "reviewCount": "&mvt:main_product_reviews_data:avgcount;"
+    },
+    "review": [
+    <mvt:foreach iterator="ep" array="main_product_reviews">
+        {
+            "@type": "Review",
+            "author": "&mvte:ep:author;",
+            "datePublished": "&mvt:ep:date;",
+            "description": "&mvte:ep:review;",
+            "name": "&mvte:ep:title;",
+            "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "&mvt:ep:rating;"
+            }
+        }<mvt:if expr="pos1 LT l.settings:main_product_reviews_data:avgcount">,</mvt:if>
+    </mvt:foreach>
+],
+</mvt:if>
+
+"itemCondition": "NewCondition",
+"sku": "&mvt:product:code;"
+
+}
+<mvt:elseif expr="l.settings:page:code EQ 'ALLTEST'">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "&mvt:page:name; | Food Related",
+"url": "https://&mvte:global:domain:name;/&mvt:page:code;.html",
+"aggregateRating": {
+"@type": "AggregateRating",
+"ratingValue": "&mvt:pm_easy_review:avgrating;",
+"reviewCount": "&mvt:pm_easy_review:avgcount;"
+},
+"review": [
+<mvt:foreach iterator="ep" array="storereviews">
+  {
+    "@type": "Review",
+    "author": "&mvt:ep:author;",
+    "datePublished": "&mvt:ep:date;",
+    "description": "&mvte:ep:review;",
+    "name": "&mvte:ep:title;",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "&mvt:ep:rating;"
+    }
+  }<mvt:if expr="pos1 LT l.settings:pm_easy_review:avgcount">,</mvt:if>
+</mvt:foreach>
+]
+}
+<mvt:else>
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "&mvt:page:name; | Food Related",
+"url": "https://&mvte:global:domain:name;/&mvt:page:code;.html"
+}
+</mvt:if>
+</script>
+<mvt:item name="readytheme" param="contentsection( 'subscribe-newsletter' )" />
+<mvt:item name="readytheme" param="contentsection( 'gestmyordermodal' )" />
+<!-- Global site tag (gtag.js) - Google Ads: 801252144 -->
+<!-- <script  src=""></script> -->
+<script> var _ctct_m = "c550a1e13e629a850acedc6053dd147b"; </script>
+<!-- <script id="signupScript" src="//static.ctctcdn.com/js/signup-form-widget/current/signup-form-widget.min.js" async
+defer></script> -->
+<!-- End Constant Contact Active Forms -->
+<mvt:if expr="g.Screen NE 'newsletter-signup'">
+<mvt:item name="readytheme" param="contentsection( 'retail-nl-popup' )" />
+</mvt:if>
+<mvt:item name="readytheme" param="contentsection( 'ERRORPOPUP' )" />
+<mvt:item name="readytheme" param="contentsection( 'generic-err-pop' )" />
+<mvt:item name="readytheme" param="contentsection( 'new-features-modal' )" />
+<mvt:item name="head" param="js:gaucho" />
+<!-- <script type="text/javascript" src="scripts/00000001/google-address.js"></script> -->
+<link rel="stylesheet" href="/Merchant5/css/00000001/jquery-ui.css?T=d8f54a6d&v=12">
+<script> var setWholesaleuser = ''; var getPageCodes = '&mvt:page:code;'; </script>
+<mvt:if expr="g.Basket:Cust_id AND l.settings:taxId">
+<script>
+setWholesaleuser = 1;
+$(document).ready(function(){
+
+$('strike,.subtotal em').each(function(){
+$(this).hide();
+});
+});
+</script>
+<mvt:else>
+<script>
+function removeCouponsWhenLogin() {
+$.when(
+$.get("/ajax.html?removecouponcode=removeallcouponsforlogin", function(html) {
+    console.log('checked')
+})
+).then(function() {
+addProductNew();
+CheckBasketItems();
+$('.rimgss').css('opacity',1);
+});
+}
+setWholesaleuser = 0;
+</script>
+</mvt:if>
+<!--pagecode init-->
+<!--p class="hidden pagecodes" id="pagecode">&mvt:page:code;</p-->
+<!--pagecode init-->
+
+<mvt:item name="head" param="global_footer_js" />
+<!-- Start of LiveChat (www.livechat.com) code -->
+<script>
+window.__lc = window.__lc || {};
+window.__lc.license = 13873254;
+;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/13873254/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+<!-- End of LiveChat code -->
+<!--<div data-id="PVE9T0VMshN" class="livechat_button"><a href="https://www.livechat.com/utm-builder/?utm_source=chat_button&utm_medium=referral&utm_campaign=lc_13873254">UTM Builder</a></div>-->
+<span class="rotation"></span>
+<mvt:if expr="(g.source EQ 'app' AND l.settings:page:code EQ 'privacy-policy') OR (g.source EQ 'app' AND l.settings:page:code EQ 'SARP')  OR (g.source EQ 'app' AND l.settings:page:code EQ 'terms-conditions'  )">
+<mvt:else>
+<mvt:if expr="(g.source EQ '' AND l.settings:page:code EQ 'SFNT')">
+<mvt:item name="readytheme" param="contentsection( 'Coupon-deals' )" />
+</mvt:if>
+</mvt:if>
+</mvt:if>
+Session ID: &mvt:global:session_id;<!------>
+Customer Id : &mvt:global:basket:cussess_id;
+<a href="frapp://">Open in App</a>
+<a href="frapp://devfr.foodrelated.com/prod/CAVI115/russian-osetra-amber-caviar-gue-farmed-by-karat.html">Open in application </a>
+<div class="viewSubstitutionModal modal fade" id="viewSubstitutionModal" role="dialog" aria-hidden="false"></div>
+
+
+
+
+
+
+<mvt:comment>google signin starts here </mvt:comment>
+
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+$.getScript("scripts/00000001/google-address.js");
+function handleCredentialResponse(response) {
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onload = function() {
+var response = JSON.parse(this.responseText);
+if(response.status=='success' && response.redirect)
+{
+   //window.location = response.redirect;
+  let googleurl = new URL(response.redirect);
+  googleurl.searchParams.set('Screen', getPageCode);
+  if(getPageCode=='PROD'){
+    googleurl.searchParams.set('Product_code', localStorage.getItem('product_code'));
+  }
+  window.location = googleurl;
+}
+else
+{
+  alert(response.error);
+}
+}
+xmlhttp.open("GET", "/Merchant5/merchant.mvc?Action=FRGLogin&frg_token=" + response.credential);
+xmlhttp.send();
+}
+</script>
+<mvt:comment>google signin ends here </mvt:comment>
+<mvt:if expr="g.basket:cust_id">
+    <mvt:item name="customfields" param="Read_Basket( 'master_userid', g.master_userid )" />
+    <mvt:assign name="l.settings:mucookiecheck" value = "'0'" />
+    <mvt:if expr="g.master_userid">
+        <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:test" value="Customer_Load_ID(crypto_base64_decode(g.master_userid), l.settings:masteruser)" />
+        <mvt:assign name="l.settings:encyrpt_pwemail" value="crypto_base64_encode(l.settings:masteruser:pw_email)"/>
+        <mvt:item name="customfields" param="Read_Customer_ID(crypto_base64_decode(g.master_userid), 'universal_account',l.settings:universal_account )" />
+        <mvt:assign name="g.getmultiloginbutton" value="''"/>
+        <mvt:if expr="l.settings:universal_account">
+            <mvt:assign name="g.getmultiloginbutton" value="'Personal Account'"/>
+        <mvt:else>
+            <mvt:assign name="g.getmultiloginbutton" value="'Master Account'"/>
+        </mvt:if>
+    	<a class="masteracntbtn" href="https://devfr.foodrelated.com/Merchant5/merchant.mvc?screen=ajax&CustomerAction=MUSERLOGN&subuserlogin=&mvt:encyrpt_pwemail;">
+    		<span class="masteracntspan">Return to &mvt:global:getmultiloginbutton;</span></a>
+    <mvt:else>
+
+    	<mvt:if expr="g.request_cookies:master_userid">
+    		<mvt:item name="customfields" param="Write_Basket( 'master_userid',g.request_cookies:master_userid)" />
+    		<mvt:assign name="l.settings:mucookiecheck" value = "'1'" />
+    		<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:test" value="Customer_Load_ID(crypto_base64_decode(g.request_cookies:master_userid), l.settings:masteruser)" />
+    	    <mvt:assign name="l.settings:encyrpt_pwemail" value="crypto_base64_encode(l.settings:masteruser:pw_email)"/>
+    	    <mvt:item name="customfields" param="Read_Customer_ID(crypto_base64_decode(g.request_cookies:master_userid), 'universal_account',l.settings:universal_account )" />
+    		<a class="masteracntbtn" href="https://devfr.foodrelated.com/Merchant5/merchant.mvc?screen=ajax&CustomerAction=MUSERLOGN&subuserlogin=&mvt:encyrpt_pwemail;"><span class="masteracntspan"><mvt:if expr="l.settings:universal_account">Return to Personal Account<mvt:else>Return to Master Account</mvt:if></span></a>
+    	</mvt:if>
+    		
+    </mvt:if>
+    <mvt:if expr="l.settings:page:code EQ 'INVC' OR l.settings:mucookiecheck">
+    	<mvt:if expr="l.settings:mucookiecheck GT 0">
+    		<mvt:assign name="g.muexpires" value="s.time_t - (60 * 60 * 0.5 * 0.5)" />
+    	<mvt:else>
+    		<mvt:assign name="g.muexpires" value="s.time_t + (60 * 60 * 0.5 * 0.5)" />
+    	</mvt:if>
+    	<mvt:assign name="g.mucookie_name" value="'master_userid'" />
+    	<mvt:assign name="g.mucookie_value" value="g.master_userid" />
+    	<mvt:do file="g.module_library_utilities" name="g.null" value="SetCookie(g.Output_Cookies, g.mucookie_name, g.mucookie_value , g.cookiedomain , g.muexpires, g.cookiepath, 0 )" />
+    	<mvt:do file="g.module_library_utilities" name="g.null" value="OutputCookies( g.Output_Cookies )" />
+    </mvt:if>
+<mvt:else>
+    <mvt:item name="customfields" param="Write_Basket( 'master_userid','')" />
+</mvt:if>
+
+
+<!--script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script-->
+
+<!--script>
+  window.renderBadge = function() {
+    var ratingBadgeContainer = document.createElement("div");
+    document.body.appendChild(ratingBadgeContainer);
+    window.gapi.load('ratingbadge', function() {
+      window.gapi.ratingbadge.render(ratingBadgeContainer, {"merchant_id": 5351810867 ,"position" : "INLINE"});
+    });
+  }
+</script-->
