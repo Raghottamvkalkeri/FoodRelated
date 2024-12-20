@@ -1,0 +1,1419 @@
+<mvt:if expr="g.SubScreen EQ 'mobile'">
+    <mvt:assign name="l.header" value="miva_output_header( 'Content-type', 'application/json' )" />
+    <mvt:item name="frfunctions" param="orderinvadjust|l.all_settings:order:id" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_notes',g.order_notes )" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
+    <mvt:item name="customfields" param="Read_Basket( 'delivery_date', g.delivery_date_basket )" />
+    <mvt:if expr="g.delivery_date_basket">
+        <mvt:item name="customfields"
+            param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date_basket)" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date)" />
+    <mvt:if expr="g.deliverydate">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.deliverydate)" />
+    </mvt:if>
+
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_date',g.curbsy_date)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_data',g.curbsy_data)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'user_agent', s.http_user_agent)" />
+    <mvt:item name="customfields" param="Read_Basket( 'po_number', g.basket_po_number )" />
+    <mvt:if expr="g.basket_po_number">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'purchase_order', g.basket_po_number)" />
+        <mvt:else>
+            <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'purchase_order', g.po_number)" />
+    </mvt:if>
+    <mvt:item name="customfields"
+        param="Write_Order( l.settings:order:id, 'Formatted_deliverydate', g.Formatted_deliverydate )" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'leave_at_door', g.leave_at_door )" />
+    <mvt:item name="customfields" param="Read_Customer_ID( g.Basket:cust_id, '' )" />
+    <mvt:assign name="l.settings:customfieldsS" value="miva_array_serialize(l.settings:customfields)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'customer_cf', l.settings:customfieldsS)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'age_restriction', g.age_restriction)" />
+    <mvt:item name="customfields"
+        param="Write_Order( l.settings:order:id, 'age_restriction_check', g.age_restriction)" />
+    <mvt:comment>
+        <mvt:item name="customfields" param="Write_Basket( 'order_notes', g.order_notes )" />
+        <mvt:item name="customfields" param="Read_Basket( 'order_notes', g.my_order_notes )" />
+        <mvt:if expr="g.my_order_notes">
+            <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_notes',g.my_order_notes)" />
+    </mvt:comment>
+    <mvt:if expr="g.order_source">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_source', g.order_source )" />
+    </mvt:if>
+    <mvt:if expr="g.ordersource">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_source', g.ordersource )" />
+    </mvt:if>
+    <mvt:if expr="ISNULL g.order_stock OR g.order_stock EQ ''">
+        <mvt:item name="customfields" param="Read_Basket( 'order_stock', g.order_stock )" />
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
+    </mvt:if>
+
+    <mvt:comment> Sent email to Sales Manager </mvt:comment>
+    <mvt:do file="g.Module_Library_DB" name="l.success" value="Order_Load_ID(l.settings:order:id, l.run:order)" />
+    <mvt:item name="customfields"
+        param="Read_Customer_ID(l.settings:order:cust_id, 'Sales_Manager_Email', l.settings:email)" />
+    <mvt:if expr="l.settings:email NE ''">
+        <mvt:assign name="l.run:override_subject"
+            value="'Your Client ' $ l.settings:order:bill_fname $ ' ' $ l.settings:order:bill_lname $ ' just placed Order Number ' $ l.settings:order:id $ '.'" />
+        <mvt:assign name="l.run:override_to" value="l.settings:email" />
+        <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success"
+            value="TemplateOrderEmail_Load_Code('ORDERCONF_MERCHANT', l.email_template)" />
+        <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success"
+            value="TemplateOrderEmails_SendEmail(l.run, l.email_template)" />
+    </mvt:if>
+    <mvt:comment> Sent email to Sales Manager </mvt:comment>
+    <mvt:do file="g.Module_Root $ '/modules/system/FRFunctions.mvc'" name="l.settings:response"
+        value="FR_APP_Notificaction(l.settings:order:id,'1')" />
+    <mvt:do file="g.Module_Library_DB" name="l.settings:success" value="Basket_Delete_ID(g.Basket:basket_id)" />
+    <mvt:if expr="l.settings:success">
+        <mvt:assign NAME="l.settings:basket:session_id" VALUE="MakeSessionID()" />
+        <mvt:assign NAME="l.settings:basket:cussess_id" VALUE="MakeSessionID()" />
+        <mvt:assign NAME="l.settings:basket:order_id" VALUE="0" />
+        <mvt:assign NAME="l.settings:basket:order_proc" VALUE="0" />
+        <mvt:assign NAME="l.settings:basket:ship_id" VALUE="0" />
+        <mvt:assign NAME="l.settings:basket:lastupdate" VALUE="s.dyn_time_t" />
+        <mvt:assign NAME="l.settings:basket:cust_id" VALUE="g.customer_id" />
+        <mvt:do file="g.Module_Library_DB" name="l.success" value="Basket_Insert(l.settings:basket)" />
+		<mvt:assign NAME = "l.settings:wineOrderId"   VALUE = "''"/>
+        <mvt:if expr="g.wine_account AND g.basket_id">
+            <mvt:do file="g.Module_Root $ '/modules/system/FRSplitOrders.mvc'" name="l.settings:wineOrderId"  value="FR_SplitOrder_Create(l.settings:order:id,g.wine_account,g.basket_id)" />
+            <mvt:item name="customfields" param="Write_Order(l.settings:wineOrderId, 'curbsy_data',g.curbsy_data)" />
+	</mvt:if>
+        {"order_id":&mvt:order:id;,"session_id":"&mvt:basket:session_id;","wine_order":"&mvt:wineOrderId;"}
+   </mvt:if>
+    <mvt:do file="g.Module_Root $ '/modules/util/FROrderGuide.mvc'" name="l.settings:price_data"
+        value="FROG_Update_SavedProductPrice(l.settings:order:id,g.basket:cust_id)" />
+    <mvt:exit />
+</mvt:if>
+<mvt:item name="html_profile" />
+
+<head>
+    <mvt:item name="head" param="css_list" />
+    <mvt:item name="head" param="head_tag" />
+    <mvt:item name="all_products_imagemachine" param="head" />
+    <mvt:item name="product_display_imagemachine" param="head" />
+    <link type="text/css" media="all" rel="stylesheet" href="css/00000001/checkout.css">
+
+    <mvt:comment>Inventory Adjustment on Purchase</mvt:comment>
+    <mvt:item name="frfunctions" param="orderinvadjust|l.all_settings:order:id" />
+    <mvt:comment>Inventory Adjustment on Purchase</mvt:comment>
+    <mvt:item name="customfields" param="Write_Customer_ID(g.Basket:cust_id,'recently_view_product', '')" />
+    <mvt:item name="customfields" param="Read_Basket( 'order_notes', g.order_notes )" />
+    <mvt:if expr="g.membership_type EQ 'Premium' OR g.membership_type EQ 'Premium '  AND g.leave_at_doors EQ 'yes'">
+        <mvt:item name="customfields"
+            param="Write_Order( l.settings:order:id, 'order_notes' ,'***VIP Famie*** Leave order at the door '$ g.order_notes )" />
+        <mvt:elseif
+            expr="g.membership_type NE 'Premium' OR g.membership_type NE 'Premium '  AND g.leave_at_doors EQ 'yes'">
+            <mvt:item name="customfields"
+                param="Write_Order( l.settings:order:id, 'order_notes' ,'Leave order at the door '$ g.order_notes )" />
+            <mvt:elseif expr="g.membership_type EQ 'Premium' OR g.membership_type EQ 'Premium '">
+                <mvt:item name="customfields"
+                    param="Write_Order( l.settings:order:id, 'order_notes' ,'***VIP Famie***  '$ g.order_notes )" />
+                <mvt:else>
+                    <mvt:item name="customfields"
+                        param="Write_Order( l.settings:order:id, 'order_notes' ,g.order_notes )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
+    <mvt:item name="customfields" param="Read_Basket( 'delivery_date', g.delivery_date )" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_date',g.curbsy_date)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_data',g.curbsy_data)" />
+    <mvt:item name="customfields" param="Read_Basket( 'leave_at_door', g.leave_at_doors )" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'leave_at_door',g.leave_at_doors)" />
+
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'user_agent', s.http_user_agent)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'purchase_order', g.po_number)" />
+
+    <mvt:item name="customfields" param="Read_Customer_ID( g.Basket:cust_id, '' )" />
+    <mvt:assign name="l.settings:customfieldsS" value="miva_array_serialize(l.settings:customfields)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'customer_cf', l.settings:customfieldsS)" />
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'age_restriction', g.age_restriction)" />
+    <mvt:item name="customfields"
+        param="Write_Order( l.settings:order:id, 'age_restriction_check', g.age_restriction)" />
+    <mvt:item name="customfields"
+        param="Write_Order( l.settings:order:id, 'customer_payment_info',g.customerPaymentInfo )" />
+    <mvt:item name="customfields"
+        param="Read_Order( l.settings:order:id, 'customer_payment_info',g.customerPaymentInfo )" />
+    <mvt:item name="customfields"
+        param="Write_Order( l.settings:order:id, 'customer_Points_Info ',g.customerPointsInfo )" />
+    <!--Card Details &mvt:global:customerPaymentInfo; -->
+    <mvt:comment>
+        <mvt:item name="customfields" param="Write_Basket( 'order_notes', g.order_notes )" />
+        <mvt:item name="customfields" param="Read_Basket( 'order_notes', g.my_order_notes )" />
+        <mvt:if expr="g.my_order_notes">
+            <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_notes',g.my_order_notes)" />
+    </mvt:comment>
+
+    <mvt:if expr="ISNULL g.order_stock OR g.order_stock EQ ''">
+        <mvt:item name="customfields" param="Read_Basket( 'order_stock', g.order_stock )" />
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
+    </mvt:if>
+    <mvt:comment>APP Custom Field Data Fix Start</mvt:comment>
+    <mvt:item name="customfields" param="Read_Basket( 'app_order_source', g.app_order_source )" />
+    <mvt:if expr="g.app_order_source">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_source', g.app_order_source )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_ordersource', g.app_ordersource )" />
+    <mvt:if expr="g.app_ordersource">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_source', g.app_ordersource )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_order_notes', g.app_order_notes )" />
+    <mvt:if expr="g.app_order_notes">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_notes', g.app_order_notes)" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_curbsy_data', g.app_curbsy_data )" />
+    <mvt:if expr="g.app_curbsy_data">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_data', g.app_curbsy_data )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_curbsy_date', g.app_curbsy_date )" />
+    <mvt:if expr="g.app_curbsy_date">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_date', g.app_curbsy_date )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_delivery_date', g.app_delivery_date )" />
+    <mvt:if expr="g.app_delivery_date">
+        <mvt:item name="customfields"
+            param="Write_Order( l.settings:order:id, 'delivery_date', g.app_delivery_date )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_leave_at_doors', g.app_leave_at_doors )" />
+    <mvt:if expr="g.app_leave_at_doors">
+        <mvt:item name="customfields"
+            param="Write_Order( l.settings:order:id, 'leave_at_door', g.app_leave_at_doors )" />
+    </mvt:if>
+    <mvt:item name="customfields" param="Read_Basket( 'app_po_number', g.app_po_number )" />
+    <mvt:if expr="g.app_po_number">
+        <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'po_number', g.app_po_number )" />
+    </mvt:if>
+    <mvt:comment>APP Custom Field Data Fix End</mvt:comment>
+    <mvt:do file="g.Module_Root $ '/modules/util/FROrderGuide.mvc'" name="l.settings:price_data"
+        value="FROG_Update_SavedProductPrice(l.settings:order:id,g.basket:cust_id)" />
+
+    <style>
+        .thankYoutexts {
+            margin-bottom: 10px;
+        }
+
+        .INVC .orderLabel {
+            padding: 8px 0px;
+        }
+
+        .INVC .no-padding {
+            padding: 0px;
+        }
+
+        .right_final_txt {
+            margin-top: 10px;
+        }
+
+        .bask_main_wrp {
+            margin-top: 10px;
+        }
+
+        .invc_baskwrap .left-space .orderInvoiveMain,
+        .invc_baskwrap .left-space .orderInvoiveMain1 {
+            padding: 0 0 15px 0 !important;
+        }
+
+        .invc_baskwrap .left-space .heading,
+        .invc_baskwrap .left-space .sectionDetails {
+            margin-right: 15px;
+        }
+
+        .right_outwrap {
+            padding: 20px;
+        }
+
+        .thankYou {
+            padding: 30px 10px;
+            display: inline-block;
+            background-color: whitesmoke;
+        }
+
+        .ord-place {
+            margin-bottom: 30px;
+        }
+
+        /* INVC FIXES ENDS*/
+        .OrderSummarysubTotalValue {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .bask-items-wrapper {
+            font-size: 12px;
+        }
+
+        .group-name {
+            /*font-weight: 600; */
+        }
+
+        .INVC .headerDevider {
+            margin: 60px 0px 50px 0px;
+        }
+
+        /* 18-oct-2023 from excel sheet Sr. 91 */
+        .product-row {
+            padding: 10px 0px;
+        }
+
+        /* 18-oct-2023 from excel sheet Sr. 91 */
+        /* accordian styles starts here */
+        .panel-default>.panel-heading {
+            color: #333;
+            background-color: #ffffff;
+            border-color: #fff;
+        }
+
+        .rotate {
+            -webkit-transform: rotate(-180deg);
+            /* Chrome, Safari, Opera */
+            -moz-transform: rotate(-180deg);
+            /* Firefox */
+            -ms-transform: rotate(-180deg);
+            /* IE 9 */
+            transform: rotate(-180deg);
+            /* Standard syntax */
+        }
+
+        .panel-default {
+            border-color: #d1d3d4;
+        }
+
+        /* accordian styles ends here */
+
+        .error-message {
+            color: #f50101;
+            background-color: initial;
+            border: none;
+            margin: 4px 0px;
+            padding: 0px;
+            border-radius: 4px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .invoice-fields {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+
+        .guest-error-message {
+            position: absolute;
+        }
+
+        @media(min-width:1201px) {
+            #basket-contents.active .bask-container .scroll-div {
+                max-height: 260px;
+                min-height: 260px;
+            }
+
+            .account-pages .hmbtn .continue-button .red-button {
+                width: 96.5% !important;
+            }
+        }
+
+        @media(max-width:1023px) {
+            .summaryOrder {
+                background: white;
+            }
+        }
+
+        .pricecolm {
+            position: relative;
+            text-align: center;
+            /* right: 12px; */
+        }
+
+        .subtotalC {
+            position: relative;
+            left: 12px;
+
+        }
+
+        .prodHeight {
+            /* max-height:250px; */
+            /* 18-oct-2023 from excel sheet sr. 91 */
+            /* overflow-y: auto; */
+            /* 18-oct-2023 from excel sheet sr. 91 */
+            right: -5px;
+        }
+
+        @media(max-width:767px) {
+
+            .INVC .no-padding {
+                padding: 15px;
+            }
+
+            .thankYou {
+
+                display: inline-block;
+            }
+
+            .invc_baskwrap,
+            .no-space {
+                padding: 0px;
+            }
+
+            .INVC .background-container {
+                height: auto !important;
+            }
+
+            .prodHeight {
+                height: auto;
+                overflow: scroll;
+            }
+
+            #collapseOne {
+                /*pointer-events:none;*/
+            }
+
+            .subtotalC {
+                position: relative;
+                left: -8px;
+            }
+
+            .pricecolm {
+                position: relative;
+                text-align: center;
+                right: 10px;
+            }
+
+            .fontsize12 {
+                font-size: 12px
+            }
+
+            .summaryOrder {
+                background: white;
+            }
+
+            .displayForMobile {
+                display: none !important;
+            }
+
+            .mobileViewImage {
+                height: 40px;
+                width: 40px;
+            }
+
+            .OrderSummarysubTotalValue {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .padding0 {
+                padding: 0px
+            }
+
+            .paddingLeft5px {
+                /* padding-left: 5px; */
+            }
+
+            .fontSize8 {
+                font-size: 8px;
+            }
+
+            .left-pading {
+                padding-left: 0px !important;
+            }
+        }
+
+        .orderInvoiveMain p {
+            line-height: 0.9;
+        }
+
+        .displayForMobile {
+            display: block;
+        }
+
+        .HederItems {
+            font-size: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #414042;
+            margin: 8px 0;
+            text-transform: capitalize;
+        }
+
+        .textAlign {
+            text-align: center;
+        }
+    </style>
+    <style>
+        .INVC .continue-button {
+            width: 33.2%;
+        }
+
+        .account-pages .hmbtn .continue-button .red-button {
+            width: 100%;
+        }
+
+        .BASK .basket-header {
+            margin-bottom: 10px;
+            background-color: #fff;
+            text-transform: uppercase;
+            padding: initial;
+            border-bottom: 1px solid #e2e2e2;
+        }
+
+        .BASK .basket-header h3 {
+            font-size: 16px;
+            text-align: center;
+            font-weight: 600;
+            color: #414042;
+            margin: inherit;
+            text-transform: capitalize;
+        }
+
+        .checkoutTabLinks {
+            font-family: ITCAvantGardePro-bold;
+            border-bottom: none !important;
+            background: none !important;
+            letter-spacing: 0.5px;
+            padding: 0 !important;
+            color: #414042;
+            font-size: 20px;
+        }
+
+        .bottomLine {
+            border: 1px solid #e2e2e2;
+            width: 100% !important;
+            margin-left: 0 !important;
+        }
+    </style>
+
+    <mvt:if expr="'fedex' CIN l.settings:order:ship_data">
+        <Mvt:Assign Name="g.shipping_method" value="'Fedex'" />
+        <mvt:elseif expr="'Curbside Pickup' CIN l.settings:order:ship_data">
+            <Mvt:Assign Name="g.shipping_method" value="'Curbside'" />
+            <mvt:elseif expr="'Home Delivery' CIN l.settings:order:ship_data">
+                <Mvt:Assign Name="g.shipping_method" value="'Home Delivery'" />
+    </mvt:if>
+
+    <mvt:comment> Curbsy Preregistration </mvt:comment>
+    <!-- we have added new changes for will call express delivery to show slots on saturday as it was taking from curbsy database and we have added individually routegroup now  -->
+    <mvt:comment>
+        <mvt:item name="head" param="checkout_js" />
+    </mvt:comment>
+    <Mvt:comment>DevCopy
+        <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'route_groups', g.route_groups)" />
+        <mvt:assign name="g.locationSelectedDB" value="'FoodRelatedCurbside'" />
+        <mvt:if expr="g.route_groups EQ 'Austin'">
+            <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevAUSTN'" />
+            <mvt:elseif expr="g.route_groups EQ 'Boerne'">
+                <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevBOERNE'" />
+                <mvt:elseif expr="g.route_groups EQ 'Dallas'">
+                    <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevDLS'" />
+                    <mvt:elseif expr="g.route_groups EQ 'Hill Country'">
+                        <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevHILLCOUNTRY'" />
+                        <mvt:elseif expr="g.route_groups EQ 'Houston'">
+                            <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevHSTN'" />
+                            <mvt:elseif expr="g.route_groups EQ 'McAllen'">
+                                <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevMCALLEN'" />
+                                <mvt:elseif expr="g.route_groups EQ 'San Antonio'">
+                                    <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevSANANT'" />
+                                    <mvt:elseif expr="g.route_groups EQ 'Shipouts'">
+                                        <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevSHIPOUTS'" />
+                                        <mvt:elseif expr="g.route_groups EQ 'South Texas'">
+                                            <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDevSTEXAS'" />
+        </mvt:if>
+    </Mvt:comment>
+
+
+    <mvt:comment>Prod Copy</mvt:comment>
+    <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'route_groups', g.route_groups)" />
+    <mvt:assign name="g.locationSelectedDB" value="'FoodRelatedCurbside'" />
+    <mvt:if expr="g.route_groups EQ 'Austin'">
+        <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallAUSTN'" />
+        <mvt:elseif expr="g.route_groups EQ 'Boerne'">
+            <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallBOERNE'" />
+            <mvt:elseif expr="g.route_groups EQ 'Dallas'">
+                <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallDLS'" />
+                <mvt:elseif expr="g.route_groups EQ 'Hill Country'">
+                    <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallHILLCOUNTRY'" />
+                    <mvt:elseif expr="g.route_groups EQ 'Houston'">
+                        <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallHSTN'" />
+                        <mvt:elseif expr="g.route_groups EQ 'McAllen'">
+                            <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallMCALLEN'" />
+                            <mvt:elseif expr="g.route_groups EQ 'San Antonio'">
+                                <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallSANANT'" />
+                                <mvt:elseif expr="g.route_groups EQ 'Shipouts'">
+                                    <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallSHIPOUTS'" />
+                                    <mvt:elseif expr="g.route_groups EQ 'South Texas'">
+                                        <mvt:assign name="g.locationSelectedDB" value="'FR_WillCallSTEXAS'" />
+    </mvt:if>
+    <!-- we have added new changes for will call express delivery to show slots on saturday as it was taking from curbsy database and we have added individually routegroup now  -->
+    <script>
+        sessionStorage.removeItem("CardValue");
+        localStorage.removeItem('couponcode');
+        let shipping_method = "&mvt:global:shipping_method;";
+
+        let selected = localStorage.curbsyLastSelect ? JSON.parse(localStorage.curbsyLastSelect) : {};
+        if (selected.tempid && shipping_method !== "Fedex") {
+            var newSelectedUrl = selected.url.replace("FoodRelatedCurbside", "&mvt:global:locationSelectedDB;");
+            $.get(newSelectedUrl + selected.tempid + "/&mvt:order:id;").done((data) => {
+                localStorage.curbsyLastSelect = "";
+                if (!data || !data.ok) {
+                    alert("It seems an issue was encounter with your delivery date reservation, we'll contanct you if any change is necessary.");
+                    console.log(data);
+                    return 0
+                }
+                console.log("CURBSY: Reservation complete");
+            }).fail((err) => {
+                localStorage.curbsyLastSelect = "";
+                alert("It seems an issue was encounter with your delivery date reservation, we'll contanct you if any change is necessary.");
+                console.error(err);
+            });
+        }
+    </script>
+    <mvt:comment> Curbsy Preregistration </mvt:comment>
+
+    <mvt:comment> Sent email to Sales Manager </mvt:comment>
+    <mvt:do file="g.Module_Library_DB" name="l.success" value="Order_Load_ID(l.settings:order:id, l.run:order)" />
+    <mvt:item name="customfields"
+        param="Read_Customer_ID( g.Basket:cust_id, 'Sales_Manager_Email', l.settings:email)" />
+    <mvt:if expr="l.settings:email NE ''">
+        <mvt:assign name="l.run:override_subject"
+            value="'Your Client ' $ l.settings:order:bill_fname $ ' ' $ l.settings:order:bill_lname $ ' just placed Order Number ' $ l.settings:order:id $ '.'" />
+        <mvt:assign name="l.run:override_to" value="l.settings:email" />
+        <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success"
+            value="TemplateOrderEmail_Load_Code('ORDERCONF_MERCHANT', l.email_template)" />
+        <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success"
+            value="TemplateOrderEmails_SendEmail(l.run, l.email_template)" />
+    </mvt:if>
+    <mvt:comment> Sent email to Sales Manager </mvt:comment>
+
+    <!-- Event snippet for Purchase conversion page -->
+    <script>
+        gtag('event', 'conversion', {
+            'send_to': 'AW-801252144/HFjaCMLOhtUBELDGiP4C',
+            'value': "&mvt:order:total;" || 0,
+            'currency': 'USD',
+            'transaction_id': ''
+        });
+    </script>
+</head>
+<mvt:if expr="g.isThisWineProduct EQ 'yes'">
+    <mvt:item name="customfields"
+        param="Read_Customer_ID(l.settings:order:cust_id, 'wine_account_link', l.settings:wine_account_link)" />
+    <mvt:do file="g.Module_Root $ '/modules/system/FRSplitOrders.mvc'" name="l.settings:wineOrderId"
+        value="FR_SplitOrder_Create(l.settings:order:id,l.settings:wine_account_link,g.Basket:basket_id)" />
+    <mvt:item name="customfields" param="Write_Order(l.settings:wineOrderId, 'curbsy_data',g.curbsy_data)" />
+</mvt:if>
+
+<body class="&mvt:page:code; account-pages one-column" id="INVC">
+    <mvt:assign name="g.pointsEarnedTotal" value="'0'" />
+    <mvt:foreach iterator="group" array="order:groups">
+        <mvt:item name="points" param="BasketGroup_Points( l.settings:group, l.settings:item:points_information )" />
+        <mvt:assign name="g.pointsEarnedTotal"
+            value="g.pointsEarnedTotal+l.settings:item:points_information:points_total" />
+    </mvt:foreach>
+    <div id="site-container" class="u-printable">
+        <div id="global-header">
+            <mvt:item name="hdft" param="global_header" />
+        </div>
+        <div class="background-container">
+            <div class="fr-main-container">
+                <mvt:comment> WR-50995 </mvt:comment>
+
+                <div class="fr-sub-container">
+                    <mvt:comment> WR-50995 </mvt:comment>
+                    <div class="margin-container hmbtns">
+                        <div id="page-header">
+                            <mvt:item name="hdft" param="header" />
+                        </div>
+                        <!-- 18-oct-2023 from excel sheet Sr. 91 -->
+                        <!--
+                     <div class="col-sm-12 hidden-xs">
+                        &nbsp;
+                    </div>
+                    <div class="col-sm-12 hidden-xs">
+                        &nbsp;
+                    </div>
+               -->
+                        <!-- 18-oct-2023 from excel sheet Sr. 91 -->
+                        <div class="col-sm-12 col-xs-12">
+                            &nbsp;
+                        </div>
+                        <!-- <h1>Invoice <a href="javascript:window.print();" class="linkbutton" style="float:right;min-width:180px;max-width:220px;margin-bottom:15px">Print Invoice</a></h1> -->
+                        <!-- new container added -->
+                        <div class="col-lg-4 col-md-4">
+                            <div class="thankYou displayForMobiles mr-tp-1r ltr-sp-1p">
+
+                                <div class="col-sm-12">
+                                    <h5 class="checkoutTabLinks ord-place" style="margin-top:0;"> <span
+                                            class="actives mb-ft-14p ft-md ft-16p">Your order was placed
+                                            successfully.</span></h5>
+                                    <h4 class="thankYoutexts bold-ft ft-32p txt-left txt-orange">THANK YOU</h4>
+                                    <div class="text-left mb-ft-14p ft-16p ft-md"
+                                        style="text-align:left;padding:0 !important;">
+                                        <span>for allowing us to serve you, from the Food Related team</span>
+                                    </div>
+                                    <mvt:if expr="l.settings:wineOrderId">
+                                        <div class="text-left mb-ft-14p ft-16p ft-md"
+                                            style="text-align:left;padding:0 !important;">
+                                            <span class="ft-md" onclick="viewwineorders.fetchWineOrderItems()">Your Wine
+                                                Products have been added to Order #<span
+                                                    class=" bold-ft pointer getwineorder">&mvt:wineOrderId;</span></span>
+                                        </div>
+                                    </mvt:if>
+                                    <mvt:if expr="g.basket:cust_id">
+                                        <mvt:else>
+                                            <div class="headerDevider"></div>
+                                            <div class="mb-ft-14p ft-md ft-16p">
+                                                Sign up and SAVE BIG on your future orders
+                                                <p style="margin: 20px 0px;"><span class="txt-orange">15% off </span> on
+                                                    your first order</p>
+                                                <p class="txt-orange">FREE VIP Membership</p><br>
+                                                <button
+                                                    class="btn btn-lg primary-btn btn-orange createAccount retailaccount"
+                                                    onclick="$('.benefits').css('display','flex');">JOIN THE
+                                                    FAMILY</button>
+                                            </div>
+                                    </mvt:if>
+
+
+
+
+
+                                </div>
+
+
+                            </div>
+                            <mvt:comment>
+                                <div class="hidden-xs hidden-sm">
+                                    <mvt:item name="readytheme" param="contentsection( 'guest_account_creation' )" />
+                                </div>
+                            </mvt:comment>
+
+                            <mvt:if expr="g.Basket:Cust_id">
+
+                                <mvt:item name="readytheme" param="contentsection( 'basket-points-content' )" />
+
+                            </mvt:if>
+
+                        </div>
+                        <!-- new container added ends-->
+                        <div class="col-lg-8 col-md-8 col-sm-12 right_outwrap paddingZero">
+
+                            <!-- left part starts -->
+                            <div class="col-sm-12 col-md-8 col-lg-8 no-padding">
+
+                                <!-- accordian started here -->
+                                <div class="bs-example hidden-lg hidden-sm hidden-md">
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h5 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                        href="#collapseOne" class="ft-14p bold-ft ltr-sp-1p"> ORDERED
+                                                        ITEMS <span
+                                                            class="glyphicon glyphicon-chevron-down float-rt"></span></a>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div
+                                                        class="paddingZero col-xs-12 hidden-sm hidden-md hidden-lg prodHeight">
+
+
+                                                        <mvt:if expr="l.settings:group:master_code">
+                                                            <mvt:assign name="l.settings:group:parent"
+                                                                value="l.settings:group:master_code" />
+                                                        </mvt:if>
+
+                                                        <mvt:foreach iterator="item" array="order:groups">
+
+                                                            <mvt:assign name="l.settings:item:parent"
+                                                                value="l.settings:item:code" />
+
+                                                            <mvt:comment>Gift box code</mvt:comment>
+                                                            <mvt:item name="customfields"
+                                                                param="Read_Product_Code( l.settings:item:parent, 'giftbox_check', l.settings:giftbox_check )" />
+                                                            <mvt:comment>Gift box code</mvt:comment>
+                                                            <mvt:assign name="l.settings:oicount"
+                                                                value="l.settings:oicount+1" />
+                                                            <mvt:item name="customfields"
+                                                                param="Read_Product_ID(l.settings:group:Product_ID, 'brand', l.settings:brand)" />
+                                                            <div class="bask-items-wrappers col-sm-12 product-row">
+                                                                <mvt:if expr="l.settings:item:option_count">
+                                                                    <mvt:assign name="l.settings:rowspan"
+                                                                        value="l.settings:item:option_count + 1" />
+                                                                    <mvt:else>
+                                                                        <mvt:assign name="l.settings:rowspan"
+                                                                            value="1" />
+                                                                </mvt:if>
+
+                                                                <mvt:if expr="l.settings:item:subscrp_id">
+                                                                    <mvt:assign name="l.settings:rowspan"
+                                                                        value="l.settings:rowspan + 1" />
+                                                                </mvt:if>
+                                                                <div
+                                                                    class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hidden-xss paddingZero">
+                                                                    <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2">
+                                                                        <mvt:item name="216_MonkeyWrench"
+                                                                            param="load-most-appropriate-image-for-basket-and-order-contents-product|basket|l.all_settings:group:line_id" />
+                                                                        <mvt:if
+                                                                            expr="ISNULL l.settings:item:imagetypes:main">
+                                                                            &nbsp;
+                                                                            <mvt:else>
+                                                                                <div class="image-wrapper">
+                                                                                    <img src="&mvt:global:baseurl;&mvte:item:imagetypes:main;"
+                                                                                        alt="&mvte:item:name;"
+                                                                                        class="mobileViewImage img-responsive" />
+                                                                                </div>
+                                                                        </mvt:if>
+                                                                    </div>
+                                                                    <div class="col-xs-8 col-lg-10">
+                                                                        <div class="special-offer">
+                                                                            <mvt:if expr="l.settings:item:upsold">
+                                                                                (Special Offer)</mvt:if>
+                                                                        </div>
+                                                                        <mvt:item name="customfields"
+                                                                            param="Read_Product_ID(l.settings:item:product_id, 'brand', l.settings:brand)" />
+                                                                        <mvt:assign name="l.settings:brand_pos"
+                                                                            value="indexof( ' by ', l.settings:item:name, 1 )" />
+                                                                        <div class="group-name item-name">
+                                                                            <mvt:assign
+                                                                                name="l.settings:item:short_name"
+                                                                                value="substring( l.settings:item:name, 1, l.settings:brand_pos)" />
+                                                                            <mvt:if expr="l.settings:brand_pos">
+                                                                                &mvt:item:short_name;<mvt:if
+                                                                                    expr="l.settings:brand NE '' "> by
+                                                                                    &mvt:brand; </mvt:if>
+                                                                                <mvt:else>
+                                                                                    &mvt:item:name;<mvt:if
+                                                                                        expr="l.settings:brand NE '' ">
+                                                                                        by &mvt:brand; </mvt:if>
+                                                                            </mvt:if> <br />
+                                                                            <mvt:comment>
+                                                                                <mvt:if expr="l.settings:brand_pos">
+                                                                                    by &mvt:brand;
+                                                                                </mvt:if>
+                                                                            </mvt:comment>
+                                                                        </div>
+                                                                        <span
+                                                                            class="item-code fontSize8">&mvt:item:code;</span>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-lg-10">
+                                                                        <mvt:if
+                                                                            expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+                                                                            <mvt:if
+                                                                                expr="l.settings:giftbox_check EQ 'yes' OR l.settings:giftbox_check EQ 1 ">
+                                                                                <p class="ft-10p txt-orange ft-md">
+                                                                                    PLEASE NOTE: This box needs 24HR
+                                                                                    notice,
+                                                                                    after which it will be delivered on
+                                                                                    your next delivery slot.
+                                                                                </p>
+                                                                            </mvt:if>
+                                                                        </mvt:if>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row visible-xs visible-sm"
+                                                                    style="margin:12px 0;">
+                                                                    <div
+                                                                        class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">
+                                                                        Price</div>
+                                                                    <div
+                                                                        class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">
+                                                                        Qty</div>
+                                                                    <div
+                                                                        class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">
+                                                                        Subtotal</div>
+                                                                </div>
+                                                                <div class="">
+
+                                                                    <div
+                                                                        class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlignMent">
+
+                                                                        <h3 class="group-price  pricecolm ft-14p bold-ft"
+                                                                            style="margin:inherit;">
+                                                                            &mvt:item:formatted_price;</h3>
+
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign">
+                                                                        <h3 class="group-price ft-14p bold-ft"
+                                                                            style="margin:inherit;">&mvt:item:quantity;
+                                                                        </h3>
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign fontsize12 subtotal ft-14p bold-ft">
+                                                                        <mvt:if
+                                                                            expr="l.settings:item:subtotal_base_price NE l.settings:item:subtotal">
+                                                                            <span
+                                                                                style="text-decoration: line-through;color:#F47A44;position: absolute;top: -1.3em;left: 50%;transform: translate(-50%, 0);/* color: #777; */"><em>&mvt:item:formatted_subtotal_base_price;</em></span>
+                                                                        </mvt:if>
+                                                                        <h3 class="group-price ft-14p bold-ft"
+                                                                            style="margin:inherit;">
+                                                                            &mvt:item:formatted_subtotal;</h3>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+
+                                                            <mvt:foreach iterator="option" array="item:options">
+                                                                <div class="bask-charges">
+                                                                    <div
+                                                                        class="formatted-charge ft-14p bold-ft textAlignMent">
+                                                                        <mvt:if
+                                                                            expr="l.settings:option:subtotal_base_price OR l.settings:option:subtotal">
+                                                                            <mvt:if
+                                                                                expr="l.settings:option:subtotal_base_price NE l.settings:option:subtotal">
+                                                                                <span
+                                                                                    style="text-decoration: line-through;">&mvt:option:formatted_subtotal_base_price;</span>
+                                                                            </mvt:if>
+                                                                            &mvt:option:formatted_subtotal;
+                                                                        </mvt:if>
+                                                                    </div>
+                                                                </div>
+                                                            </mvt:foreach>
+
+                                                            <mvt:comment>
+                                                                <mvt:foreach iterator="discount" array="item:discounts">
+                                                                    <mvt:if expr="l.settings:discount:display">
+                                                                        <div class="item-discount">
+                                                                            &mvt:discount:descrip;:
+                                                                            &mvt:discount:formatted_discount;</div>
+                                                                    </mvt:if>
+                                                                </mvt:foreach>
+                                                            </mvt:comment>
+
+                                                        </mvt:foreach>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- accordian ends here -->
+
+
+
+                                <!-- tabls -->
+                                <div class="col-lg-12 col-sm-12 no-space">
+                                    <div class="col-lg-12 no-space">
+                                        <h5 class="checkoutTabLinks"> <span class="actives mb-ft-14p"
+                                                id="invoiceTab">ORDER
+                                                INVOICE</span> &nbsp;
+                                            <span class="bold-ft left-space mb-ft-14p"
+                                                style="margin:4px 0px;">#&mvt:order:id;</span>
+                                        </h5>
+                                        <h2 class="checkoutTabLinks displayForMobile hidden"><span id="orderTab">ORDER
+                                                DETAILS</span></h2>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h2 class="checkoutTabLinks displayForMobile hidden"> <span class=""
+                                                id="reviewTab">REVIEW
+                                                ORDER</span>
+                                        </h2>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h2 class="checkoutTabLinks hidden">
+                                            <span class="active" id="invoiceTab">ORDER INVOICE</span>
+                                        </h2>
+                                    </div>
+                                </div>
+
+                                <!-- order detail  -->
+
+                                <div id="customer-fields" class="invoice-fields col-sm-12 paddingZero">
+                                    <mvt:item name="order_customer" />
+                                    <!-- <div class="invoice-thanks">
+                                    <h3>THANK YOU</h3>
+                                    for allowing us to serve you,
+                                    <span>from the Food Related team</span>
+                                </div> -->
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="visible-sm visible-md">&nbsp;</div>
+
+                                <!-- oreder dettial end -->
+
+                            </div>
+                            <!-- left part ends -->
+
+                            <!-- right part starts -->
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xs-12 no-space">
+                                <div class="col-sm-12 summaryOrder paddingZero right_final_txt">
+                                    <div class="col-sm-12 col-xs-12 left-pading">
+                                        <h4 style="font-weight: bold;text-transform: uppercase;"
+                                            class="displayForMobile bold-ft">Final Summary</h4>
+                                        <!-- <h5 class="light-ft">Order #&mvt:order:id;</h5> -->
+                                    </div>
+                                    <div class="rows orderLabel">
+                                        <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                            Sub-Total
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue"
+                                            id="OrderSummarysubTotal">
+                                            &mvt:order:formatted_subtotal;
+                                        </div>
+                                    </div>
+                                    <mvt:foreach iterator="charge" array="order:charges">
+                                        <mvt:if expr="l.settings:charge:type EQ  'SHIPPING'">
+                                            <mvt:Assign Name="l.settings:charge:descrip" value="'Shipping'" />
+                                            <div class="rows orderLabel">
+                                                <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                    &mvt:charge:descrip;
+                                                </div>
+                                                <div class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                    &mvt:charge:formatted_disp_amt;</div>
+                                            </div>
+                                            <mvt:elseif expr="l.settings:charge:type EQ  'TAX'">
+                                                <mvt:Assign Name="l.settings:charge:descrip" value="'Sales Tax'" />
+                                                <div class="rows orderLabel">
+                                                    <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                        &mvt:charge:descrip;
+                                                    </div>
+                                                    <div class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                        &mvt:charge:formatted_disp_amt;</div>
+                                                </div>
+                                                <mvt:elseif expr="l.settings:charge:descrip EQ '(USECOUPONNAME)'">
+                                                    <mvt:assign name="l.settings:charge:descrip" value="''" />
+                                                    <div class="rows orderLabel hidden">
+                                                        <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                            &mvt:charge:descrip;
+                                                        </div>
+                                                        <div
+                                                            class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                            &mvt:charge:formatted_disp_amt;</div>
+                                                    </div>
+                                                    <mvt:elseif expr="l.settings:charge:descrip EQ 'Credit Card Fees'">
+                                                        <div class="rows orderLabel">
+                                                            <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                                &mvt:charge:descrip;
+                                                            </div>
+                                                            <div
+                                                                class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                                &mvt:charge:formatted_disp_amt;</div>
+                                                        </div>
+                                                        <mvt:elseif expr="l.settings:charge:descrip EQ 'Paypal Charge'">
+                                                            <div class="rows orderLabel">
+                                                                <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                                    &mvt:charge:descrip;
+                                                                </div>
+                                                                <div
+                                                                    class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                                    &mvt:charge:formatted_disp_amt;</div>
+                                                            </div>
+                                                            <mvt:elseif
+                                                                expr="l.settings:charge:descrip EQ 'Heavy Weight Charge' OR l.settings:charge:descrip EQ 'HeavyWeightCharge'">
+                                                                <div class="rows orderLabel">
+                                                                    <div
+                                                                        class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                                                        Heavy Weight Charge
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue">
+                                                                        &mvt:charge:formatted_disp_amt;</div>
+                                                                </div>
+                                        </mvt:if>
+
+
+
+
+
+                                    </mvt:foreach>
+
+                                    <mvt:assign name="g.redeemed_points_total" value="''" />
+                                    <mvt:foreach iterator="payment" array="order:payments">
+                                        <mvt:if expr="'Customer Points' CIN l.settings:payment:desc">
+                                            <div class="rows orderLabel">
+                                                <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px txt-orange">
+                                                    Redeemed Points :
+                                                </div>
+                                                <div
+                                                    class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue txt-orange">
+                                                    <mvt:assign name="l.settings:usedpoints"
+                                                        value="(l.settings:payment:amount * 100)" />
+                                                    &mvt:payment:formatted_amount_negative;
+                                                    <mvt:assign name="g.redeemed_points_total"
+                                                        value="l.settings:payment:amount" />
+                                                    <mvt:comment>(&mvt:usedpoints;)</mvt:comment>
+                                                </div>
+                                            </div>
+                                        </mvt:if>
+                                    </mvt:foreach>
+
+
+
+
+                                    <!---discount show-->
+                                    <mvt:assign name="g.coupon_display" value="''" />
+                                    <mvt:assign name="g.coupon_total" value="''" />
+                                    <mvt:do file="g.Module_Library_DB" name="l.success"
+                                        value="OrderChargeList_Load_Order(l.settings:order:id, l.settings:ordercharges)" />
+                                    <mvt:if expr="l.settings:order:coupons">
+                                        <mvt:do file="g.Module_Feature_PGR_DB" name="l.success"
+                                            value="CouponList_Load_Order(l.settings:order:id, l.settings:ordercoupons)" />
+                                        <mvt:foreach iterator="coupon" array="order:coupons">
+                                            <div class="rows orderLafbel">
+                                                <mvt:do name="l.settings:coupon:formatted_total"
+                                                    file="g.Module_Root $ g.Store:currncy_mod:module"
+                                                    value="CurrencyModule_AddFormatting( g.Store:currncy_mod, l.settings:coupon:total )" />
+
+                                                <div
+                                                    class="col-sm-6 col-xs-6 col-lg-6 bold-ft ft-14p paddingLeft5px txt-orange">
+                                                    &mvt:coupon:code;<br>&mvt:order:coupon:code;
+                                                    &mvt:order:coupons:code;</div>
+                                                <div
+                                                    class="col-sm-6 col-xs-6 col-lg-6 bold-ft ft-14p OrderSummarysubTotalValue txt-orange">
+                                                    (&mvt:coupon:formatted_total;)</div>
+                                                <mvt:assign name="g.coupon_total"
+                                                    value="l.settings:coupon:total ROUND 2" />
+                                            </div>
+                                        </mvt:foreach>
+                                    </mvt:if>
+                                    <!-- Coupon Total : &mvt:global:coupon_total;
+                    Redeemed Total : &mvt:global:redeemed_points_total; -->
+                                    <mvt:assign name="g.coupon_display" value="''" />
+                                    <mvt:assign name="g.final_total" value="''" />
+                                    <!--discount show-->
+                                    <div class="rows orderLabel discountLabel">
+                                        <!-- <div class="col-sm-6">
+                                        <span>Discount </span><br />
+                                        <span class="discountCode">FORM10</span>
+                                    </div> -->
+                                        <div class="col-sm-6 col-xs-6 col-lg-9" id="OrderSummaryDiscount">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 border-bottom" style="border:solid 1px #d1d3d4;"></div>
+                                    <div class="rows orderLabel orderTotal ft-w-6">
+                                        <div class="col-sm-6 col-xs-6 col-lg-6 paddingLeft5px">
+                                            Total
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6 col-lg-6 OrderSummarysubTotalValue"
+                                            id="OrderSummaryTotal">
+                                            <mvt:assign name="g.final_total"
+                                                value="(l.settings:order:total -g.redeemed_points_total) ROUND 2" />
+                                            $&mvt:global:final_total;
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 border-bottom" style="border:solid 1px #d1d3d4;"></div>
+                                </div>
+
+                            </div>
+                            <!-- right part ends -->
+
+                            <!-- bask content full width -->
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bask_main_wrp">
+                                <div class="col-sm-12 col-xs-12 hidden-xs bottomLine"></div>
+
+                                <!-- bask content  -->
+
+                                <mvt:assign name="l.settings:oicount" value="0" />
+                                <div class="col-sm-12 col-xs-12 paddingZero">
+                                    <div class="BASK">
+                                        <div class="basket-header hidden-sm">
+                                            <div class="container" style="padding: 15px 0 15px 0;">
+                                                <div class="col-xs-5 col-sm-5 col-md-6 col-lg-6 hidden-xs">
+                                                    <h3 class="prhead ft-12p ltr-sp-1p bold-ft">
+                                                        Item
+                                                    </h3>
+                                                </div>
+                                                <div class="col-xs-12 hidden"
+                                                    style="text-align: left;font-weight: 700;padding:10px 0px 6px 0px; font-size:12px; color:#777;">
+                                                    <div class="col-xs-4 ft-12p ltr-sp-1p bold-ft">Item </div>
+                                                </div>
+                                                <div class="col-xs-7s col-sm-7s hidden-xs " style="padding:0px">
+                                                    <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign">
+                                                        <h3 class="ft-12p ltr-sp-1p bold-ft">Price</h3>
+                                                    </div>
+                                                    <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign">
+                                                        <h3 class="ft-12p ltr-sp-1p bold-ft">qty</h3>
+                                                    </div>
+                                                    <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign">
+                                                        <h3 class="ft-12p ltr-sp-1p bold-ft">Subtotal</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="paddingZero col-sm-12 hidden-xs prodHeight">
+
+                                    <mvt:foreach iterator="item" array="order:groups">
+                                        <mvt:assign name="l.settings:oicount" value="l.settings:oicount+1" />
+
+                                        <div class="bask-items-wrappers col-sm-12 product-row">
+                                            <mvt:if expr="l.settings:item:option_count">
+                                                <mvt:assign name="l.settings:rowspan"
+                                                    value="l.settings:item:option_count + 1" />
+                                                <mvt:else>
+                                                    <mvt:assign name="l.settings:rowspan" value="1" />
+                                            </mvt:if>
+
+                                            <mvt:if expr="l.settings:item:subscrp_id">
+                                                <mvt:assign name="l.settings:rowspan" value="l.settings:rowspan + 1" />
+                                            </mvt:if>
+                                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 hidden-xss paddingZero">
+                                                <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2">
+                                                    <mvt:item name="216_MonkeyWrench"
+                                                        param="load-most-appropriate-image-for-basket-and-order-contents-product|basket|l.all_settings:group:line_id" />
+                                                    <mvt:if expr="ISNULL l.settings:item:imagetypes:main">
+                                                        &nbsp;
+                                                        <mvt:else>
+                                                            <div class="image-wrapper">
+                                                                <img src="&mvt:global:baseurl;&mvte:item:imagetypes:main;"
+                                                                    alt="&mvte:item:name;"
+                                                                    class="mobileViewImage img-responsive" />
+                                                            </div>
+                                                    </mvt:if>
+                                                </div>
+                                                <div class="col-xs-8 col-lg-10">
+                                                    <div class="special-offer">
+                                                        <mvt:if expr="l.settings:item:upsold">(Special Offer)</mvt:if>
+                                                    </div>
+                                                    <mvt:item name="customfields"
+                                                        param="Read_Product_ID(l.settings:item:product_id, 'brand', l.settings:brand)" />
+                                                    <mvt:assign name="l.settings:brand_pos"
+                                                        value="indexof( ' by ', l.settings:item:name, 1 )" />
+                                                    <div class="group-name item-name">
+                                                        <mvt:assign name="l.settings:item:short_name"
+                                                            value="substring( l.settings:item:name, 1, l.settings:brand_pos)" />
+                                                        <mvt:if expr="l.settings:brand_pos">
+                                                            &mvt:item:short_name;<mvt:if expr="l.settings:brand NE '' ">
+                                                                by &mvt:brand; </mvt:if>
+                                                            <mvt:else>
+                                                                &mvt:item:name;<mvt:if expr="l.settings:brand NE '' ">
+                                                                    by &mvt:brand; </mvt:if>
+                                                        </mvt:if> <br />
+                                                        <mvt:comment>
+                                                            <mvt:if expr="l.settings:brand_pos">
+                                                                by &mvt:brand;
+                                                            </mvt:if>
+                                                        </mvt:comment>
+                                                    </div>
+                                                    <span class="item-code fontSize8">&mvt:item:code;</span>
+                                                </div>
+                                                <div class="col-xs-12 col-lg-10">
+                                                    <mvt:if
+                                                        expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+                                                        <mvt:if
+                                                            expr="l.settings:giftbox_check EQ 'yes' OR l.settings:giftbox_check EQ 1 ">
+                                                            <p class="ft-10p txt-orange ft-md">
+                                                                PLEASE NOTE: This box needs 24HR notice,
+                                                                after which it will be delivered on your next delivery
+                                                                slot.
+                                                            </p>
+                                                        </mvt:if>
+                                                    </mvt:if>
+                                                </div>
+                                            </div>
+                                            <div class="row visible-xs visible-sm" style="margin:12px 0;">
+                                                <div class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">Price</div>
+                                                <div class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">Qty</div>
+                                                <div class="col-xs-4 ft-12p ltr-sp-1p bold-ft textAlignMent">Subtotal
+                                                </div>
+                                            </div>
+                                            <div class="">
+
+                                                <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlignMent">
+
+                                                    <h3 class="group-price  pricecolm ft-14p bold-ft"
+                                                        style="margin:inherit;">&mvt:item:formatted_price;</h3>
+
+                                                </div>
+
+                                                <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign">
+                                                    <h3 class="group-price ft-14p bold-ft" style="margin:inherit;">
+                                                        &mvt:item:quantity;</h3>
+                                                </div>
+
+                                                <div
+                                                    class="col-xs-4 col-sm-4 col-md-2 col-lg-2 textAlign fontsize12 subtotal ft-14p bold-ft">
+                                                    <mvt:if
+                                                        expr="l.settings:item:subtotal_base_price NE l.settings:item:subtotal">
+                                                        <span
+                                                            style="text-decoration: line-through;color:#F47A44;position: absolute;top: -1.3em;left: 50%;transform: translate(-50%, 0);/* color: #777; */"><em>&mvt:item:formatted_subtotal_base_price;</em></span>
+                                                    </mvt:if>
+                                                    <h3 class="group-price ft-14p bold-ft" style="margin:inherit;">
+                                                        &mvt:item:formatted_subtotal;</h3>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+
+                                        <mvt:foreach iterator="option" array="item:options">
+                                            <div class="bask-charges">
+                                                <div class="formatted-charge ft-14p bold-ft textAlignMent">
+                                                    <mvt:if
+                                                        expr="l.settings:option:subtotal_base_price OR l.settings:option:subtotal">
+                                                        <mvt:if
+                                                            expr="l.settings:option:subtotal_base_price NE l.settings:option:subtotal">
+                                                            <span
+                                                                style="text-decoration: line-through;">&mvt:option:formatted_subtotal_base_price;</span>
+                                                        </mvt:if>
+                                                        &mvt:option:formatted_subtotal;
+                                                    </mvt:if>
+                                                </div>
+                                            </div>
+                                        </mvt:foreach>
+
+                                        <mvt:comment>
+                                            <mvt:foreach iterator="discount" array="item:discounts">
+                                                <mvt:if expr="l.settings:discount:display">
+                                                    <div class="item-discount">&mvt:discount:descrip;:
+                                                        &mvt:discount:formatted_discount;</div>
+                                                </mvt:if>
+                                            </mvt:foreach>
+                                        </mvt:comment>
+
+                                    </mvt:foreach>
+                                </div>
+                                <!-- bask-contnet end -->
+                            </div>
+                            <!-- bask content full width ends-->
+
+                        </div>
+
+                        <mvt:comment>
+                            <mvt:if expr="g.basket:cust_id">
+                                <mvt:else>
+                                    <mvt:item name="readytheme"
+                                        param="contentsection( 'guest_account_creation_pop_up' )" />
+                            </mvt:if>
+                        </mvt:comment>
+
+
+
+                        <mvt:if expr="l.settings:messages:information_message_count">
+                            <div class="blue aligncenter" style="margin:0 0 6px 0;">
+                                <mvt:foreach iterator="message" array="messages:information_messages">
+                                    &mvt:message;
+                                </mvt:foreach>
+                            </div>
+                            <mvt:elseif expr="l.settings:messages:error_message_count">
+                                <div class="red aligncenter" style="margin:0 0 6px 0;">
+                                    <mvt:foreach iterator="error" array="messages:error_messages">
+                                        &mvt:error;
+                                    </mvt:foreach>
+                                </div>
+                        </mvt:if>
+
+                        <div id="page-footer">
+                            <mvt:item name="hdft" param="footer" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="bottom-wrap"></div>
+    <div id="global-footer">
+        <mvt:item name="hdft" param="global_footer" />
+    </div>
+    </div>
+    <mvt:comment>
+        <mvt:item name="toolkit" param="alsobought|250" />
+    </mvt:comment>
+    <mvt:item name="print_order" />
+
+    <script>
+        $(document).ready(function () {
+            let fedeType = {
+                "STANDARD_OVERNIGHT": "FedEx Standard Overnight®",
+                "EDEX_STANDARD_OVERNIGHT_EXTRA_HOURS": "FedEx Ground®"
+            }
+            let url = "/Merchant5/FedExApi/estimate-delivery-new.php?baskweight=&mvt:basket:total_weight;&destzip=&mvte:order:ship_zip;"
+            let fedExtype = "&mvte:order:charges[1]:descrip;"
+            jQuery.ajax({
+                url: url,
+                type: "POST",
+                showLoader: true,
+                cache: false,
+                beforeSend: function () {
+                    $(".loaderContainer").show();
+                },
+                success: function (data) {
+                    let type = JSON.parse(data)
+                    $(".loaderContainer").hide();
+
+                    console.log('data//////......................', data)
+                    let shippingtype = $('#shippingType').text();
+
+
+                    Object.keys(fedeType).forEach(key => {
+                        if (shippingtype === fedeType[key]) {
+
+                            $('#shippingTime').text(type[key])
+                        }
+                        console.log(key, fedeType[key], type[key]);
+                    });
+
+
+
+
+                }
+            });
+
+            var urls = $('.cardDetails').text();
+            var urls1 = $('.cardDetails1').text();
+            //$('.cardDetails').html(urls.substring(urls.indexOf('ending') + 'ending'.length));
+            //$('.cardDetails1').html(urls1.substring(urls1.indexOf('ending') + 'ending'.length));
+            //$(".cardDetailss").text().split(' ')[1];
+            //$(".cardDetailss").html($(".cardDetailss").text().split(' ')[1]);
+        });
+
+
+    </script>
+    <!-- accordian script start -->
+    <script>
+        $(document).ready(function () {
+            // Add minus icon for collapse element which is open by default
+            $(".collapse.in").each(function () {
+                $(this)
+                    .siblings(".panel-heading")
+                    .find(".glyphicon")
+                    .addClass("rotate");
+            });
+
+            // Toggle plus minus icon on show hide of collapse element
+            $(".collapse")
+                .on("show.bs.collapse", function () {
+                    $(this)
+                        .parent()
+                        .find(".glyphicon")
+                        .addClass("rotate");
+                })
+                .on("hide.bs.collapse", function () {
+                    $(this)
+                        .parent()
+                        .find(".glyphicon")
+                        .removeClass("rotate");
+                });
+        });
+
+    </script>
+    <script>
+        function openPopup(x) {
+            if (x.matches) { // If media query matches
+                $('#GuestuserLogin').modal('show');
+            } else {
+                $('#GuestuserLogin').modal('hide');
+            }
+        }
+        var x = window.matchMedia("(max-width: 768px)")
+        setTimeout(() => {
+            openPopup(x);
+        }, 5000)
+        x.addListener(openPopup)
+    </script>
+    <!-- accordian script ends -->
+</body>
+
+</html>
