@@ -168,18 +168,11 @@
                     console.log(s.replace("avg", ""));
                     return s.replace("avg", "").replace("(", "").replace(")", "");
                 } else {
-                    /*console.log(
-                    s
-                        .replace(/^[^-]+ - /, "")
-                        .replace("(", "")
-                        .replace(")", "")
-                    );*/
                     return s
                         .replace(/^[^-]+ - /, "")
                         .replace("(", "")
                         .replace(")", "");
                 }
-                //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
             },
             getCurrenctRestockDate(d) {
                 // Convert date string to Date object
