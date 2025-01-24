@@ -1,0 +1,422 @@
+{
+"data": [{
+"66751":[{
+	"batch_id": 0,
+	"bill_addr": "7000 Harrisburg Boulevard ghgjhgj",
+	"bill_addr1": "7000 Harrisburg Boulevard",
+	"bill_addr2": "ghgjhgj",
+	"bill_city": "Houston",
+	"bill_cntry": "US",
+	"bill_comp": "",
+	"bill_email": "wotest@yopmail.com",
+	"bill_fax": "",
+	"bill_fname": "test",
+	"bill_lname": "test",
+	"bill_phone": "\u0028767\u0029 678 - 6878",
+	"bill_state": "TX",
+	"bill_zip": 77011,
+	"bord_count": 0,
+	"cust_id": 20452,
+	"dt_instock": 0,
+	"dt_updated": 1737636176,
+	"id": 66751,
+	"net_capt": 0,
+	"note_count": 37,
+	"orderdate": 1737629271,
+	"orderpayment_id": 37674,
+	"original_cust_id": 20452,
+	"pay_data": "",
+	"pay_id": 62,
+	"pay_secdat": "",
+	"pay_secid": 0,
+	"pay_seckey": "",
+	"pay_status": 0,
+	"pend_count": 2,
+	"processed": 0,
+	"ship_addr": "7000 Harrisburg Boulevard ghgjhgj",
+	"ship_addr1": "7000 Harrisburg Boulevard",
+	"ship_addr2": "ghgjhgj",
+	"ship_city": "Houston",
+	"ship_cntry": "US",
+	"ship_comp": "",
+	"ship_data": "PRIORITY_OVERNIGHT",
+	"ship_email": "wotest@yopmail.com",
+	"ship_fax": "",
+	"ship_fname": "test",
+	"ship_id": 188,
+	"ship_lname": "test",
+	"ship_phone": "\u0028767\u0029 678 - 6878",
+	"ship_res": 0,
+	"ship_state": "TX",
+	"ship_zip": 77011,
+	"source": "shopper",
+	"source_id": 20452,
+	"status": 0,
+	"stk_status": 0,
+	"total": 1913.15,
+	"total_auth": 349.99,
+	"total_capt": 0,
+	"total_rfnd": 0,
+	"total_ship": 201.31,
+	"total_tax": 0
+}],
+"edit_order":"1",
+"formatted_date":"01/25/2025",
+"ordercharges":[[
+	{
+		"amount": 201.31,
+		"charge_id": 279755,
+		"descrip": "Shipping: FedEx Priority Overnight\u0026reg\u003B",
+		"disp_amt": 201.31,
+		"module_id": 188,
+		"order_id": 66751,
+		"tax": 0,
+		"tax_exempt": 0,
+		"type": "SHIPPING"
+	},
+	{
+		"amount": 0,
+		"charge_id": 279756,
+		"descrip": "Sales Tax",
+		"disp_amt": 0,
+		"module_id": 85,
+		"order_id": 66751,
+		"tax": 0,
+		"tax_exempt": 0,
+		"type": "TAX"
+	}
+]],
+"points_redeemed":"",
+"invoice":{"invoice_id":"","invoice_date":"","invoice_amount":"","payments":"","write_offs":"","amount_due":""},
+"orderitems":[
+{"line_id": 630672,"base_price": 236.12,"code": "GG-3581-CS","dt_instock": 0,"name": "Bresaola Dry Cured Beef","price": 236.12,"product_id": 3361,"quantity": 7,"retail": 355.17,"sku": "GG-3581","tax": 0,"taxable": 1,"upsold": 0,"weight": 3.25,"catch_weight":"","catch_weight_price_ext":"","heavy_weight":"0"
+,"product" : [
+{
+"success":	1,
+"data":
+{
+"id":	3361,
+"disp_order":	3362,
+"code":	"GG-3581-Parent",
+"sku":	"GG-3581",
+"name":	"Bresaola Dry Cured Beef",
+"thumbnail":	"",
+"image":	"",
+"price":	64.59,
+"formatted_price":	"$64.59",
+"cost":	166.2,
+"formatted_cost":	"$166.20",
+"page_code":	"",
+"page_id":	0,
+"cancat_code":	"",
+"product_inventory_active":	true,
+"product_inventory":	32,
+"weight":	3.25,
+"formatted_weight":	"3.25 pounds",
+"taxable":	false,
+"active":	true,
+"page_title":	"",
+"dt_created":	1559612599,
+"dt_updated":	1737633713
+,"productimagedata":
+[
+{
+"id":	3319,
+"product_id":	3361,
+"image_id":	3015,
+"type_id":	1,
+"code":	"main",
+"type_desc":	"Main",
+"image":	"graphics\/00000001\/GG-3581_braesola_front.jpg",
+"width":	2000,
+"height":	2000,
+"disp_order":	4034
+}
+,{
+"id":	3320,
+"product_id":	3361,
+"image_id":	3016,
+"type_id":	5,
+"code":	"image2",
+"type_desc":	"Image 2",
+"image":	"graphics\/00000001\/GG-3581_braesola_back.jpg",
+"width":	2000,
+"height":	2000,
+"disp_order":	4035
+}
+]
+,"url": "https:\/\/devfr.foodrelated.com\/prod\/GG-3581-Parent\/bresaola-punta-danca-by-bernina.html"
+,"brand":"Bernina"
+,"available":1
+,"oguide":1
+,"substitute":"GG-5638-Parent,MTAR160,GG-5489-Parent"
+,"retail_only":""
+,"restock_date":"4/15/2023"
+,"market_product":""
+,"fr_product_inv":"0"
+,"fr_product":""
+,"fr_product_image":""
+,"giftbox_status":"0"
+,"giftbox_product":""
+,"giftbox_image":""
+,"giftbox_inventory":"0"
+,"giftbox_title":""
+,"giftbox_subtext":"" ,"retail_sort":"C8703"
+,"how_to_cook":""
+,"available_option":""
+,"wishlist":"0"
+,"avg_rating":"0.00",
+"variants":
+[ { "id":"3486",
+"code":"GG-3581-EA",
+"UOM":"EA",
+"UOM_TEXT":"",
+"pack_size":"1",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"59",
+"msrp":"88.79",
+"inv":"32",
+"notes":"",
+"brand":"Bernina",
+"sale":0,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"1",
+"catch_weight":"1",
+"default":"1",
+"slacdiscount":0,
+"min_qty":0,
+"discount_text":"",
+"discount_amount":"29.79",
+"discount_percentage":"34",
+"slac":"0",
+"slac_retail":"0"
+}
+,{ "id":"3486",
+"code":"GG-3581-EA",
+"UOM":"EA",
+"UOM_TEXT":"Threebie",
+"pack_size":"1",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"53.10",
+"msrp":"59.00",
+"inv":"10",
+"notes":"",
+"brand":"Bernina",
+"sale":0,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"1",
+"catch_weight":"1",
+"default":"0",
+"slacdiscount":0,
+"min_qty":3,
+"discount_text":"Buy 3 Each, Save 10%",
+"discount_amount":"17.70",
+"discount_percentage":"10",
+"slac":"0",
+"slac_retail":"0"
+}
+,
+{ "id":"3487",
+"code":"GG-3581-CS",
+"UOM":"CS",
+"UOM_TEXT":"",
+"pack_size":"4",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"236.12",
+"msrp":"355.17",
+"inv":"8",
+"notes":"Get additional 10% of on Minimum purchase of 10 cases",
+"brand":"Bernina",
+"sale":1,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"0",
+"catch_weight":"1",
+"default":"0",
+"slacdiscount":0,
+"min_qty":0,
+"discount_text":"Buy big, Save 34%",
+"discount_amount":"119.05",
+"discount_percentage":"34",
+"slac":"0",
+"slac_retail":"1"
+}
+] }
+}
+]
+}
+,
+{"line_id": 630689,"base_price": 59,"code": "GG-3581-EA","dt_instock": 0,"name": "Bresaola Dry Cured Beef","price": 59,"product_id": 3361,"quantity": 1,"retail": 88.79,"sku": "GG-3581","tax": 0,"taxable": 1,"upsold": 0,"weight": 3.25,"catch_weight":"","catch_weight_price_ext":"","heavy_weight":"0"
+,"product" : [
+{
+"success":	1,
+"data":
+{
+"id":	3361,
+"disp_order":	3362,
+"code":	"GG-3581-Parent",
+"sku":	"GG-3581",
+"name":	"Bresaola Dry Cured Beef",
+"thumbnail":	"",
+"image":	"",
+"price":	64.59,
+"formatted_price":	"$64.59",
+"cost":	166.2,
+"formatted_cost":	"$166.20",
+"page_code":	"",
+"page_id":	0,
+"cancat_code":	"",
+"product_inventory_active":	true,
+"product_inventory":	32,
+"weight":	3.25,
+"formatted_weight":	"3.25 pounds",
+"taxable":	false,
+"active":	true,
+"page_title":	"",
+"dt_created":	1559612599,
+"dt_updated":	1737633713
+,"productimagedata":
+[
+{
+"id":	3319,
+"product_id":	3361,
+"image_id":	3015,
+"type_id":	1,
+"code":	"main",
+"type_desc":	"Main",
+"image":	"graphics\/00000001\/GG-3581_braesola_front.jpg",
+"width":	2000,
+"height":	2000,
+"disp_order":	4034
+}
+,{
+"id":	3320,
+"product_id":	3361,
+"image_id":	3016,
+"type_id":	5,
+"code":	"image2",
+"type_desc":	"Image 2",
+"image":	"graphics\/00000001\/GG-3581_braesola_back.jpg",
+"width":	2000,
+"height":	2000,
+"disp_order":	4035
+}
+]
+,"url": "https:\/\/devfr.foodrelated.com\/prod\/GG-3581-Parent\/bresaola-punta-danca-by-bernina.html"
+,"brand":"Bernina"
+,"available":1
+,"oguide":1
+,"substitute":"GG-5638-Parent,MTAR160,GG-5489-Parent"
+,"retail_only":""
+,"restock_date":"4/15/2023"
+,"market_product":""
+,"fr_product_inv":"0"
+,"fr_product":""
+,"fr_product_image":""
+,"giftbox_status":"0"
+,"giftbox_product":""
+,"giftbox_image":""
+,"giftbox_inventory":"0"
+,"giftbox_title":""
+,"giftbox_subtext":"" ,"retail_sort":"C8703"
+,"how_to_cook":""
+,"available_option":""
+,"wishlist":"0"
+,"avg_rating":"0.00",
+"variants":
+[ { "id":"3486",
+"code":"GG-3581-EA",
+"UOM":"EA",
+"UOM_TEXT":"",
+"pack_size":"1",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"59",
+"msrp":"88.79",
+"inv":"32",
+"notes":"",
+"brand":"Bernina",
+"sale":0,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"1",
+"catch_weight":"1",
+"default":"1",
+"slacdiscount":0,
+"min_qty":0,
+"discount_text":"",
+"discount_amount":"29.79",
+"discount_percentage":"34",
+"slac":"0",
+"slac_retail":"0"
+}
+,{ "id":"3486",
+"code":"GG-3581-EA",
+"UOM":"EA",
+"UOM_TEXT":"Threebie",
+"pack_size":"1",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"53.10",
+"msrp":"59.00",
+"inv":"10",
+"notes":"",
+"brand":"Bernina",
+"sale":0,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"1",
+"catch_weight":"1",
+"default":"0",
+"slacdiscount":0,
+"min_qty":3,
+"discount_text":"Buy 3 Each, Save 10%",
+"discount_amount":"17.70",
+"discount_percentage":"10",
+"slac":"0",
+"slac_retail":"0"
+}
+,
+{ "id":"3487",
+"code":"GG-3581-CS",
+"UOM":"CS",
+"UOM_TEXT":"",
+"pack_size":"4",
+"unit_size":"avg 3 LB - $29.38\/lb",
+"unit_size_raw":"3 LB",
+"unit_size_disc":"0",
+"price":"236.12",
+"msrp":"355.17",
+"inv":"8",
+"notes":"Get additional 10% of on Minimum purchase of 10 cases",
+"brand":"Bernina",
+"sale":1,
+"sale_offer":0,
+"vip_sale":0,
+"threebie":"0",
+"catch_weight":"1",
+"default":"0",
+"slacdiscount":0,
+"min_qty":0,
+"discount_text":"Buy big, Save 34%",
+"discount_amount":"119.05",
+"discount_percentage":"34",
+"slac":"0",
+"slac_retail":"1"
+}
+] }
+}
+]
+}
+] }]
+}

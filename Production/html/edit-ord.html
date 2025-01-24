@@ -1,0 +1,1290 @@
+<mvt:item name="html_profile" />
+
+<head>
+    <mvt:item name="head" param="css_list" />
+    <mvt:item name="head" param="head_tag" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <style>
+        hr {
+            border-top: 1px solid #d1d3d4;
+        }
+
+        #orderhistory_list .ft-14p {
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+
+        .invo_tabn {
+            margin: 20px 0;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .btn-outline-danger {
+            border-color: #ff5722;
+            /* border-radius: 25px;
+    line-height: 12px;
+    padding: 8px 15px;
+    font-size: 12px;
+    letter-spacing:0.5px; */
+        }
+
+        .mar-10 {
+            margin-right: 10px;
+        }
+
+        .invo_tabn .track_num {
+            margin-bottom: 10px;
+            display: inline-block;
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
+        .collapse.in {
+            display: block !important;
+        }
+
+        .showorders {
+            display: block !important;
+        }
+
+        .showdates {
+            display: block !important;
+        }
+
+        .ui--trigger {
+            width: 4rem !important;
+            cursor: pointer;
+        }
+
+        .mobileview-height1 {
+            height: 8rem !important;
+            transition: top 2s;
+        }
+
+
+        .mobileview-height2 {
+            height: 50rem !important;
+            transition: top 2s;
+            overflow: scroll;
+        }
+
+        .ord-summary {
+            display: flex;
+            justify-content: space-around;
+            letter-spacing: 1px;
+        }
+
+        .hrordh {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .scroll-view {
+            height: 30rem;
+            overflow: scroll;
+            width: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #eee #fff;
+            min-width: 230.38px;
+        }
+
+        /* lets change scroll for comment section */
+        /* width */
+
+        .scroll-view::-webkit-scrollbar {
+            width: 0;
+        }
+
+        /* Track */
+
+        .scroll-view::-webkit-scrollbar-track {
+            background: none;
+            border-radius: 0;
+        }
+
+        /* Handle */
+
+        .scroll-view:-webkit-scrollbar-thumb {
+            background: none;
+            border-radius: 0;
+        }
+
+        /* Handle on hover */
+
+        .comments-section::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            border-radius: 10px;
+        }
+
+        /* lets change scroll for comment section */
+
+        .orders-list {
+            width: fit-content;
+        }
+
+
+        .search-order {
+            position: relative;
+            padding: 8px;
+        }
+
+        /* 12-02-2024 */
+        /* #filterOrders , #filterOrdersMob , .clearserch{
+                position: absolute;
+                top: 13px;
+                right: 20px;
+        } */
+        /* 12-02-2024 */
+        .searchmsg {
+            font-size: 12px;
+            text-align: center;
+            color: #f47a44;
+        }
+
+        .collapses {
+            display: block;
+        }
+
+        .invoice-error {
+            display: flex;
+            height: 30rem;
+            overflow: hidden;
+            justify-content: center;
+            vertical-align: middle;
+            align-items: center;
+            align-content: center;
+            font-size: 2em !important;
+            justify-content: center;
+        }
+
+        .tracker-main {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .track-status ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .track-status ul li {
+            padding: 0px 10px;
+        }
+
+        .ORDHN .status-circle {
+            font-size: 18px;
+            margin: 0px 4px;
+        }
+
+        .status-main-1,
+        .status-main-2,
+        .status-main-3,
+        .status-main-4 {
+            display: flex;
+        }
+
+        .status-text1,
+        .status-text2,
+        .status-text3,
+        .status-text4 {
+            margin-top: 2px;
+        }
+
+
+
+        @media screen and (max-width:1920px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 27vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1680px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 27vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1600px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 27vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1536px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 27vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 65vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1440px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 23vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 65vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1380px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 27vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1366px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 31vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 78vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1364px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 30vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:1280px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 23vh !important;
+                justify-content: space-evenly;
+            }
+        }
+
+        @media screen and (max-width:1024px) {
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 23vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: 50vh !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:768px) {
+            .track_num {
+                padding: 0px 10px
+            }
+
+            .tracker-main {
+                flex-direction: column;
+            }
+
+            .btn-outline-danger {
+                font-size: 11px;
+                margin-right: 5px !important
+            }
+
+            .orders-wrapper {
+                display: flex;
+                height: max-content;
+                width: 23vh !important;
+                justify-content: space-evenly;
+            }
+
+            .orderscroll-view {
+                height: auto !important;
+                overflow-y: scroll;
+                scrollbar-width: thin;
+                scrollbar-color: #eee #fff;
+            }
+        }
+
+        @media screen and (max-width:767px) {
+            #site-container {
+                background: unset !important;
+            }
+
+            .mobileview-height2 {
+                height: 50rem !important;
+                transition: top 2s;
+                overflow: scroll;
+            }
+
+            .invoice-error {
+                display: flex;
+                height: 10rem;
+                overflow: hidden;
+                justify-content: center;
+                vertical-align: middle;
+                align-items: center;
+                align-content: center;
+                font-weight: 900;
+                font-size: 1em !important;
+                justify-content: center;
+            }
+
+        }
+
+
+        .center-align-text {
+            display: flex;
+            align-content: center;
+            /*justify-content: center;*/
+            align-items: center;
+        }
+
+        .ht-50p {
+            height: 50px;
+        }
+
+        @media not all and (min-resolution:.001dpcm) {
+            @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+                .ordernumber-list {
+                    padding: 5px 0;
+                    font-size: 13.8px;
+                }
+            }
+
+            .selected-order {
+                font-weight: 500;
+            }
+        }
+
+        .ordernumber-list {
+            padding: 5px 5px 5px 0;
+            /* margin-left: 18px;*/
+            /* 18-oct-2023 from excel sheet sr.312,313 */
+            font-size: 13.8px;
+            /*font-size: .9em;*/
+        }
+
+        /* input[type="search"]::-webkit-search-cancel-button {
+             -webkit-appearance: none; 
+            width: 10px;
+            height: 10px;
+            -webkit-appearance: searchfield-cancel-button;
+            background: #414042 !important;
+        } */
+
+        .loading {
+            background-image: url(https://devfr.foodrelated.com/Merchant5/graphics/00000001/loading.gif) !important;
+            height: 27rem;
+            width: 19rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .bubble {
+            border: solid 1px red;
+            position: absolute;
+            width: 215px;
+            height: 90px;
+            padding: 0px;
+            background: #ffffff;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 12px;
+            /* 7-nov-2023 from excel sheet #82*/
+            margin-top: -129px;
+            margin-left: 76px;
+            display: none;
+            font-weight: 100;
+            /* 7-nov-2023 from excel sheet #82*/
+            box-shadow: 0px 0px 5px 2px rgb(0 0 0/20%);
+            /* 7-nov-2023 from excel sheet #82*/
+        }
+
+        .bubble:after {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 15px 15px 0;
+            border-color: #ffffff transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+            bottom: -15px;
+            left: 34px;
+        }
+
+        .order-list-products {
+            max-height: 50rem !important;
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #eee #fff;
+        }
+
+        .orders-wrapper {
+            display: flex;
+            height: max-content;
+            width: 100% !important;
+            justify-content: space-evenly;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: flex-end;
+            /* side border align with box border */
+            /* align-content: space-between;*/
+            align-items: baseline;
+            z-index: 99999;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            padding: 0 8px;
+            /* side border align with box border */
+        }
+
+        .orderscroll-view::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        /* Track */
+
+        .orderscroll-view::-webkit-scrollbar-track {
+            background: #a29a9a;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+
+        .orderscroll-view:-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+
+        .order-list-products::-webkit-scrollbar {
+            width: 1px !important;
+        }
+
+        /* Track */
+
+        .order-list-products::-webkit-scrollbar-track {
+            background: #a29a9a;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+
+        .order-list-products:-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+
+        .order-list-products::-webkit-scrollbar {
+            width: 0.2em !important;
+        }
+
+        .order-list-products::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px #f5f5f5 !important;
+        }
+
+        .order-list-products::-webkit-scrollbar-thumb {
+            background-color: #808080 !important;
+            /* outline: 1px solid slategrey !important; */
+        }
+
+
+
+        #orderlistdata {
+            display: grid;
+            grid-template-columns: 1.8fr 7fr 4fr;
+            gap: 20px;
+            padding: 15px;
+            /* max-width: 1200px;
+      margin: auto; */
+        }
+
+        #ordersummary {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #ordersummary,
+        .order-details,
+        .add-items {
+            /* background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+            padding: 10px;
+        }
+
+        #ordersummary h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .section {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .section h3 {
+            font-family: 'ITCAvantGardePro-Bold';
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .section p {
+            margin: 5px 0;
+            font-family: 'ITCAvantGardePro-Bk';
+        }
+
+        .totals p {
+            margin: 5px 0;
+            font-weight: bold;
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
+        .order-details h1 {
+            margin: 0 0 10px;
+            font-size: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-details h1 button {
+            background-color: #f1c40f;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .order-details h1 button:hover {
+            background-color: #d4ac0d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th,
+        table td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background-color: #f9f9f9;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        table td input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quantity-controls button {
+            background: #f1f1f1;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .add-items h2 {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+
+        .add-items input {
+            width: calc(100% - 50px);
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        .add-items button {
+            width: 40px;
+            height: 40px;
+            background: #f1c40f;
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 16px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .add-items button:hover {
+            background: #d4ac0d;
+        }
+
+
+        .ordloader {
+            display: flex;
+            justify-content: center;
+            height: 50vh;
+            align-items: center;
+        }
+
+
+        .searchproductlist {
+            max-height: 300px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            margin: 10px 0;
+        }
+
+        .ogitems {
+            display: grid;
+            grid-template-columns: 80px 300px 15px;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .searchitemgrid {
+            display: grid;
+            padding: 8px 0;
+            grid-gap: 8px;
+        }
+
+        .uomandpricelist {
+            display: flex;
+            gap: 100px;
+        }
+
+        #ordguideproductsmodal .loader {
+            display: flex;
+            justify-content: center;
+        }
+
+        @media screen and (max-width: 767px) {
+            .ogitems {
+                display: grid;
+                grid-template-columns: 80px 180px 15px;
+                gap: 10px;
+                margin: 15px 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="&mvt:page:code; one-column  hide-on-print" id="ORDEDIT">
+    <mvt:do file="g.Module_Feature_AGR_DB" name="l.success"
+        value="AvailabilityGroup_Load_Name('Wholesale Items', g.availabilitygroupWholesale)" />
+    <mvt:do file="g.Module_Feature_AGR_DB" name="l.success"
+        value="AvailGroupXCustomer_Load(g.availabilitygroupWholesale, g.basket:cust_id, l.settings:availgroupxcustomer)" />
+
+
+    <mvt:item name="readytheme" param="contentsection( 'reorderStockPopup' )" />
+
+    <div id="site-container">
+<input type="hidden" id="order_id" value="&mvt:global:order_id;" />
+        <div id="global-header">
+            <mvt:item name="hdft" param="global_header" />
+        </div>
+        <div class="background-container">
+            <div class="container fr-main-container">
+                <mvt:comment> WR-50995 </mvt:comment>
+                <div class="margin-container container fr-sub-container">
+                    <mvt:comment> WR-50995 </mvt:comment>
+                    &nbsp;
+                    <div class="row">
+                        <div id="page-header">
+                            <mvt:item name="hdft" param="header" />
+                        </div>
+
+
+
+
+
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-lg-12">
+                    <!-- <a target="_blank" onclick="location.href='&mvte:urls:ORDS:auto;&order_id='+orderid" class="btn btn-outline-danger mar-10 trackorderbtn" data-trackorder="&mvt:order:id;">Track Order</a> -->
+                    <a class="btn btn-outline-danger mar-10 reorderbtn" onclick="addCheckedToCart(this);"
+                        style="display: none;">Reorder</a>
+                    <a target="_blank"
+                        href="&mvte:urls:Print_Order:auto;&order_id=&mvt:order:id;&session_id=&mvt:global:session_id;"
+                        class="btn btn-lg secondary-btn btn-white btn-outline-danger mar-10 printorderbtn"
+                        style="display: none;">Print Invoice</a>
+                    <!-- <a href="" class="btn btn-outline-danger">Add to Order Guide</a> -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- NEW DESIGN CHANGES WHOLESALE ENDS-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="bottom-wrap"></div>
+    <div id="global-footer">
+        <mvt:item name="hdft" param="global_footer" />
+    </div>
+
+
+
+
+
+
+
+
+    <div id="page-footer">
+        <mvt:item name="hdft" param="footer" />
+    </div>
+    <mvt:item name="head" param="invoice_js" />
+</body>
+
+<script>
+
+    jQuery(function () {
+
+    });
+
+
+    function getOrderStatus(element) {
+        var getOrderid = element;
+        var dataShip = $('.order_shipping_method-' + element).attr('data-shipping');
+        var shippingMethod = $('.order_shipping_method-' + getOrderid).attr('data-method');
+        if (shippingMethod == "FEDEX") {
+            var url = '/Merchant5/sync/scripts/orderstatuscheck.php?orderId=' + getOrderid;
+        }
+        else {
+            var url = '/Merchant5/sync/scripts/orderstatuscheck.php?orderId=' + getOrderid + '&type=nonfedex';
+        }
+        let dataPost = jQuery(this).serialize();
+        jQuery.ajax({
+            url: url,
+            type: "POST",
+            data: dataPost,
+            showLoader: true,
+            cache: false,
+            beforeSend: function () {
+                $(".loaderContainer").show();
+            },
+            success: function (server_response) {
+                var siteurl = location.origin;
+                if (server_response == 0) {
+
+                    // $('.progress-value').css('width','0%');
+                    // $('.order_status p').html("Order Received");
+                    $('.status1').removeClass('hidden');
+                    $('.status2').removeClass('hidden');
+                    $('.status3').removeClass('hidden');
+                    $('.status-text1').removeClass('hidden');
+                    $('.status-text2').removeClass('hidden');
+                    $('.status-text3').removeClass('hidden');
+
+                    $('.status1').removeClass('grey-lighter-1');
+                    $('.status1').addClass('txt-green-light ');
+
+                    $('.status2').removeClass('txt-green-light ');
+                    $('.status2').addClass('grey-lighter-1 ');
+                    $('.status3').removeClass('txt-green-light ');
+                    $('.status3').addClass('grey-lighter-1 ');
+                    $('.status4').removeClass('txt-green-light ');
+                    $('.status4').addClass('grey-lighter-1');
+
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status p').html("Your order is being shipped");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+
+
+                }
+                else if (server_response == 1) {
+                    // $('.progress-value').css('width','32%');
+                    // $('.order_status p').html("Taking Care of Your Order")
+
+                    $('.status1').removeClass('hidden');
+                    $('.status2').removeClass('hidden');
+                    $('.status3').removeClass('hidden');
+                    $('.status-text1').removeClass('hidden');
+                    $('.status-text2').removeClass('hidden');
+                    $('.status-text3').removeClass('hidden');
+
+                    $('.status1').removeClass('grey-lighter-1');
+                    $('.status1').addClass('txt-green-light ');
+                    $('.status2').removeClass('grey-lighter-1');
+                    $('.status2').addClass('txt-green-light ');
+
+                    $('.status3').removeClass('txt-green-light ');
+                    $('.status3').addClass('grey-lighter-1 ');
+                    $('.status4').removeClass('txt-green-light ');
+                    $('.status4').addClass('grey-lighter-1');
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status p').html("Your order is being shipped");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                }
+
+                else if (server_response == 2) {
+
+                    $('.status1').removeClass('hidden');
+                    $('.status2').removeClass('hidden');
+                    $('.status3').removeClass('hidden');
+                    $('.status-text1').removeClass('hidden');
+                    $('.status-text2').removeClass('hidden');
+                    $('.status-text3').removeClass('hidden');
+
+                    $('.status1').removeClass('grey-lighter-1');
+                    $('.status1').addClass('txt-green-light ');
+                    $('.status2').removeClass('grey-lighter-1');
+                    $('.status2').addClass('txt-green-light ');
+                    $('.status3').removeClass('grey-lighter-1');
+                    $('.status3').addClass('txt-green-light ');
+
+                    $('.status4').removeClass('txt-green-light ');
+                    $('.status4').addClass('grey-lighter-1');
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status p').html("Your order is being shipped");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+
+                }
+                else if (server_response == 3) {
+                    $('.status1').removeClass('txt-green-light');
+                    $('.status1').addClass('grey-lighter-1 ');
+
+                    $('.status2').removeClass('txt-green-light ');
+                    $('.status2').addClass('grey-lighter-1 ');
+                    $('.status3').removeClass('txt-green-light ');
+                    $('.status3').addClass('grey-lighter-1 ');
+                    // $('.status4').removeClass('txt-green-light ');
+                    // $('.status4').addClass('grey-lighter-1');
+
+                    $('.status1').addClass('hidden');
+                    $('.status2').addClass('hidden');
+                    $('.status3').addClass('hidden');
+                    $('.status-text1').addClass('hidden');
+                    $('.status-text2').addClass('hidden');
+                    $('.status-text3').addClass('hidden');
+
+                    $('.status4').removeClass('grey-lighter-1');
+                    $('.status4').addClass('txt-green-light ');
+                    $(".del_success").css('width', 'max-content');
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status p').html("Your order is being shipped");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status p').html("Your order has been shipped");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status p').html("Your order is ready for pickup");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status p').html("Out for delivery");
+                    }
+
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status_pass p').html("Picked up");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status_pass p').html("Delivered");
+                    }
+                }
+                else if (server_response == 4) {
+
+                    $('.status1').addClass('hidden');
+                    $('.status2').addClass('hidden');
+                    $('.status3').addClass('hidden');
+                    $('.status4').addClass('hidden');
+
+                    $('.status-text1').addClass('hidden');
+                    $('.status-text2').addClass('hidden');
+                    $('.status-text3').addClass('hidden');
+                    $('.status-text4').addClass('hidden');
+
+                    $('.del_success').css('display', 'none');
+                    $('.progress-value').css('display', 'inline-block');
+                    $('.del_fail').css('display', 'inline-block');
+                    $('.del_fail').css('width', 'max-content');
+                    $('.progress-current').css('display', 'none');
+                    $('.redClose').css('display', 'inline-block');
+                    if (dataShip == "FEDEX" || dataShip == "PRIORITY_OVERNIGHT") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip.includes("Curbside") === true) {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "Will Call") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "FR Truck Delivery") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "Home Delivery") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "STANDARD_OVERNIGHT") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "FEDEX_GROUND") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+                    else if (dataShip == "GROUND_HOME_DELIVERY") {
+                        $('.order_status p').html("Delivery Failed");
+                    }
+
+                }
+            },
+        });
+    }
+
+    function Trackmyorder(element) {
+        $('body').find('.track_num').html(
+            'Order: #' + element +
+            "<span class='pointer' onclick='viewwineorders.fetchWineOrderItems();'>" +
+            ($('.filter' + element).attr('data-wineorder') !== ''
+                ? " Wine Order: #<span class='getwineorder'>" + $('.filter' + element).attr('data-wineorder') + "</span>"
+                : " ") +
+            "</span>"
+        );
+        $('body').find('.trackorderbtn').attr('data-trackorder', element);
+        $('body').find('.trackorderbtn').attr('href', "/Merchant5/merchant.mvc?screen=ords&order_id=" + element);
+        $('body').find('.printorderbtn').attr('href', "/Merchant5/merchant.mvc?screen=Print_Order&order_id=" + element);
+        $('body').find('.reorderbtn').attr('onclick', 'addCheckedToCart(' + element + ')');
+        var adsinvoice = $('.filter' + element).attr('data-adsinvoice');
+        console.log(adsinvoice);
+        if (adsinvoice == '' || adsinvoice == '0') {
+
+            $('body').find('.printorderbtn').hide();
+            $('body').find('.reorderbtn').hide();
+        } else {
+
+            $('body').find('.printorderbtn').show()
+            $('body').find('.reorderbtn').show();
+        }
+        var greyoutcounter = 0;
+        $('.ord-' + element).find('.greyout').each(function () {
+            greyoutcounter++;
+        });
+        if (greyoutcounter > 0) {
+            $('.restockmessage').show();
+        } else {
+            $('.restockmessage').hide();
+        }
+    }
+
+    function addOrdernumbertoReorder(element) {
+        $('body').find('.reorderbtn').attr('onclick', 'addCheckedToCart(' + element + ')');
+    }
+
+
+    /*for substitution */
+    function showSubstitutionsalt(productCode, subitems) {
+        $('#viewSubstitutionModal').addClass('viewSubstitution' + productCode);
+        loadProducts(['getSubstitutes', 'substitutionproducts-' + productCode, subitems, '', '']);
+        let url = "/cudet.html?CustomerAction=getCartSubstitution&productCode=" + productCode;
+        $.get(url, (response) => {
+            $('#viewSubstitutionModal').html($(response).find('.modal').html());
+            $("#viewSubstitutionModal").modal('show').addClass('dataloaded');
+            loadSubstitutioncarousel();
+        }
+        );
+    }
+    /*for substitution */
+
+
+    $(window).on('load', function () {
+        SearchInovice();
+        $('.margin-container').removeAttr('hidden');
+        //jQuery('.invoicelist').first().click();
+        $('body').on('keypress', '#searchKeyElement', function (args) {
+            if (args.keyCode == 13) {
+                $('#filterOrders').click();
+                return false;
+            }
+        });
+    });
+
+</script>
+
+</html>

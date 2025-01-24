@@ -1,0 +1,263 @@
+<div class="order-details" id="orderDetails">
+    <!-- <span class="ft-14p bold-ft">Order: #&mvt:global:order_id;</span> -->
+    <!-- {{orderSummary.data}} -->
+    <div id="ordersummary">
+        <h5 class="bold-ft">Order Summary</h5>
+        <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
+            :key="index">
+            <h3>Billing Information</h3>
+            <p>{{ item.bill_fname }} {{ item.bill_lname }}</p>
+            <p>{{ item.bill_addr }} , {{ item.bill_city }} , {{ item.bill_state }}, {{ item.bill_zip }}</p>
+            <p>{{item.bill_phone}} </p>
+        </div>
+        <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
+            :key="index">
+            <h3>Shipping Information</h3>
+            <p>{{ item.ship_fname }} {{ item.ship_lname }}</p>
+            <p>{{ item.ship_addr }}, {{ item.ship_city }}, {{ item.ship_state }}, {{ item.ship_zip }}</p>
+            <p>{{ item.ship_phone }}</p>
+        </div>
+        <div class="bold-ft" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
+            :key="index">
+            <p>Sub Total: <span class="ft-md">${{(orderDetails.subtotal).toFixed(2)}}</span></p>
+            <p>Shipping: <span v-for="(charges ,index) in orderDetails.ordercharges" class="ft-md ft-14p">
+                    <span v-for="(chargelist ,index) in charges" v-if="chargelist.descrip.includes('Shipping')"
+                        v-html="chargelist.descrip"></span>
+                </span> <span class="ft-md"> ${{(item.total_ship).toFixed(2)}}</span></p>
+            <p>Sales Tax: <span class="ft-md">${{(item.total_tax).toFixed(2)}}</span></p>
+            <p>Total: <span class="ft-md">${{(item.total).toFixed(2)}}</span></p>
+        </div>
+
+    </div>
+    <div class="order-list">
+        <span class="ft-14p bold-ft">Order: #&mvt:global:order_id;</span>
+        <div v-if="showLoader" class="loader-overlay">
+            <img src="graphics/00000001/loading.gif" alt="Loading...">
+        </div>
+        <div class="order-row header">
+            <div class="order-item">Items</div>
+            <div class="order-size">Size</div>
+            <div class="order-unit">Unit</div>
+            <div class="order-price">Price</div>
+            <div class="order-qty">Qty Ordered</div>
+        </div>
+        <div class="order-row" v-for="orders in orderDetails.orderitems">
+            <div class="order-item">
+                <div class="wd-20" v-if="orders.product && orders.product.length > 0"
+                    v-for="(products, idx) in orders.product" :key="idx">
+                    <img v-if="products.data.productimagedata && products.data.productimagedata[0]"
+                        class="img-responsive wd-100"
+                        :src="products.data.productimagedata[0].image || 'https://placehold.co/400'" alt="" />
+                </div>
+                <div class="ord-name-sku"><span>{{ orders.name }}</span> <span class="txt-gray ft-12p"> {{orders.sku}}
+                    </span></div>
+            </div>
+            <div class="order-size">17 oz</div>
+            <div v-for="(product, idx) in orders.product" :key="idx" class="order-units"
+                v-bind:class="'ProductDetail-'+product.data.code">
+                <div v-for="(variant, index) in product.data.variants" v-if="variant.UOM_TEXT !== 'Threebie'">
+                    <input type="hidden" v-bind:name="'Products['+product.data.id+']:attributes[1]:code'"
+                        class="miltiattrcode" value="size" autocomplete="off">
+                    <div class="form-check " style="margin-top: 0">
+
+                        <input class="form-check-inputs miltiattrvalue"
+                            v-bind:class="variant.UOM_TEXT === 'Threebie' ? '' : 'radioUnit-'+variant.code" type="radio"
+                            v-bind:name="'Products['+product.data.id+orders.line_id+']:attributes[1]:value'"
+                            v-bind:id="variant.code+'-option'" v-bind:value="variant.code"
+                            v-bind:data-option-code="variant.code" v-bind:data-parent="product.data.code"
+                            v-bind:data-stock="product.data.product_inventory"
+                            v-bind:actualdata-stock="product.data.product_inventory"
+                            v-bind:data-stockafteraddedtocart="product.data.product_inventory"
+                            v-bind:data-product_code="product.data.code" v-bind:data-uom="variant.UOM"
+                            v-bind:data-product_sku="product.data.sku" v-bind:data-line_id="orders.line_id"
+                            v-bind:data-name="product.data.name" v-bind:data-code="variant.code"
+                            v-bind:data-sku="product.data.sku" v-bind:data-quantity="2"
+                            v-bind:data-price="variant.price" v-bind:data-weight="product.data.weight"
+                            v-bind:data-taxable="true" v-bind:data-attr_code="'size'"
+                            v-bind:data-opt_code_or_data="variant.code" v-bind:data-attr_price="variant.price"
+                            v-bind:data-attr_weight="product.data.weight" data-maxqty="" data-saleprice="$0.50"
+                            data-salebaseprice="$2.55" v-bind:data-min="variant.pack_size"
+                            v-bind:checked="orders.code == variant.code || variant.checkedvalues == true ? true : ''"
+                            autocomplete="off"
+                            @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);">
+                        
+
+                        <label class="form-check-label shown" v-bind:for="variant.code+'-option'"
+                            v-if="variant.UOM_TEXT !== 'Threebie'">
+                            <p hidden="" class="displayUom uom_name">{{variant.UOM}}</p>
+                            <input v-bind:value="variant.pack_size" class="data-min hidden"
+                                v-bind:class="'prodcodecheck-'+variant.code" class="data-min hidden"
+                                v-bind:data-newuom="variant.addclass && product.data.market_product != '1' && isSlacUser.includes('SLAC') !== true && vueUserTypes == 'Retail' ? '' :  getUomforInventorymessage(variant.UOM)"
+                                v-bind:data-reorderstock="product.data.product_inventory" autocomplete="off">
+                            <span class="option-prompt" style="display:none">{{variant.UOM}}</span>
+                            <span class="uomName mb-ft-10p ft-12p">{{capitalizeText(variant.UOM)}}</span>
+                            <span class="units_pk" style="display:none;">&nbsp;</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="order-price">${{(orders.price).toFixed(2)}}</div>
+            <div class="order-qty" v-for="(product, idx) in orders.product" :key="idx">
+                <button type="button" class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn">
+                    <span class="newMinusBtn"
+                        @click="qtyupdateDesk('qty-'+product.data.code+'-lineid-'+orders.line_id,'minus',product.data.code,product.data.code);">
+                        -
+                    </span>
+                    <input type="tel" v-bind:name="'Products['+product.data.id+orders.line_id+']:quantity'"
+                        v-bind:value="orders.quantity" class="align-center text-center qtybox   multiprodqty QtyVal"
+                        v-bind:class="['qtybox-'+product.data.sku , 'qty-'+product.data.code, 'qty-lineid'+product.data.code+orders.line_id]"
+                        v-bind:data-stock="product.data.product_inventory" data-maxqty="" v-bind:data-minqty="12"
+                        v-bind:data-productcode="product.data.code" data-product-att1="size"
+                        v-bind:data-product-att2="product.data.code" maxlength="4" @change="qtyValueReset($event);"
+                        @keyup="qtyupdateDeskInput('qty-'+product.data.code,'plus',product.data.code,product.data.code);"
+                        onkeypress="return isNumber(event)"
+                        v-bind:data-stockafteraddedtocart="product.data.product_inventory" autocomplete="off"
+                        v-bind:data-productid="product.data.id">
+                    <span class="newPlusBtn"
+                        @click="qtyupdateDesk('qty-'+product.data.code+'-lineid'+orders.line_id,'plus',product.data.code,product.data.code);">
+                        +
+                    </span>
+                </button>
+                <a data-ogid="15409" v-bind:data-lineid="orders.line_id" class="ogdelete"
+                    @click="deleteOrderItem(orders.line_id)" contenteditable="false" style="cursor: pointer;"><span
+                        class="material-icons grey-lighter-1">
+                        highlight_off
+                    </span></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    #orderDetails {
+        display: grid;
+        grid-template-columns: 180px 760px;
+    }
+
+    .order-details h1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .order-details {
+        position: relative;
+    }
+
+    .save-button {
+        background-color: #ffcc00;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .order-row {
+        display: grid;
+        grid-template-columns: 300px 50px 100px 60px 200px;
+        gap: 10px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .header {
+        font-family: 'ITCAvantGardePro-Bold';
+        /* background-color: #f8f8f8; */
+        border-bottom: 2px solid #ccc;
+    }
+
+    .order-item,
+    .order-size,
+    .order-unit,
+    .order-price,
+    .order-qty {
+        display: flex;
+        align-items: center;
+        font-family: 'ITCAvantGardePro-Md';
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .order-unit {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .order-units {
+        display: inline-flex;
+        flex-direction: column-reverse;
+        align-items: baseline;
+        flex-wrap: wrap;
+        padding-left: 23px !important;
+
+    }
+
+    .order-unit label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        align-items: baseline;
+    }
+
+    .order-qty {
+        justify-content: space-between;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quantity-controls button {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .quantity-controls input {
+        width: 50px;
+        text-align: center;
+    }
+
+    .ord-name-sku {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Full-screen overlay */
+    .loader-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    /* Ensure the loading image is responsive */
+    .loader-overlay img {
+        max-width: 100px;
+        /* Adjust based on preference */
+        width: 20%;
+        height: auto;
+    }
+</style>

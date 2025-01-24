@@ -1,0 +1,113 @@
+<div class="order-details">
+    <span class="ft-14p bold-ft">Order: #&mvt:global:order_id;</span>
+    <div class="order-list">
+        <div class="order-row header">
+            <div class="order-item">Items</div>
+            <div class="order-size">Size</div>
+            <div class="order-unit">Unit</div>
+            <div class="order-price">Price</div>
+            <div class="order-qty">Qty Ordered</div>
+        </div>
+        <div class="order-row">
+            <div class="order-item">Balsamic Glaze by Santa Caterina</div>
+            <div class="order-size">17 oz</div>
+            <div class="order-unit">
+                <label><input type="radio" name="unit1" checked> Case</label>
+                <label><input type="radio" name="unit1"> Each</label>
+            </div>
+            <div class="order-price">$5.75</div>
+            <div class="order-qty">
+                <button type="button" class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn">
+                    <span class="newMinusBtn"> - </span>
+                    <input type="tel" name="Products[3775]:quantity" value="0" data-stock="35" data-maxqty=""
+                        data-minqty="12" data-productcode="CHSF112" data-product-att1="size" data-product-att2="CHSF112"
+                        maxlength="4" onkeypress="return isNumber(event)" data-stockafteraddedtocart="35"
+                        autocomplete="off" data-storeprice="CHSF112=9.92" data-productid="3775" data-id="15408"
+                        class="align-center text-center qtybox multiprodqty QtyVal qtybox-CHSF112 qty-CHSF112" />
+                    <span class="newPlusBtn"> + </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .order-details h1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .save-button {
+        background-color: #ffcc00;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .order-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr 1fr 2fr;
+        gap: 10px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .header {
+        font-family: 'ITCAvantGardePro-Bold';
+        background-color: #f8f8f8;
+        border-bottom: 2px solid #ccc;
+    }
+
+    .order-item,
+    .order-size,
+    .order-unit,
+    .order-price,
+    .order-qty {
+        display: flex;
+        align-items: center;
+        font-family: 'ITCAvantGardePro-Md';
+        font-size: 14px;
+    }
+
+    .order-unit {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .order-unit label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        align-items: baseline;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quantity-controls button {
+        background-color: #eee;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .quantity-controls input {
+        width: 50px;
+        text-align: center;
+    }
+</style>
