@@ -693,13 +693,13 @@ var addProductFrom = function addProductFrom(addForm, sign, prevQuantity = null,
     var formData = $($(addForm)[0]).serialize();
     if (getPageCode === 'ORDEDIT') {
         console.log(storeOrderedValues);
-    
+        qty = $(".ProductDetail-" + parentprodcode).find(".QtyVal").attr('data-added') === undefined ? $(".ProductDetail-" + parentprodcode).find('input[name="Quantity"]').val() : $(".ProductDetail-" + parentprodcode).find(".QtyVal").attr('data-added');
         let productFound = false; 
     
         storeOrderedValues.forEach(item => {
             if (item.code === prodCode) {
                 productFound = true; 
-                var newQty = parseInt($(".ProductDetail-" + parentprodcode).find(".QtyVal").val()) + item.quantity;
+                var newQty = parseInt(qty) + item.quantity;
                 console.log("Matching product found!");
                 viewOrderDetails.editOrderItem({
                     line_id: item.line_id,
@@ -729,7 +729,7 @@ var addProductFrom = function addProductFrom(addForm, sign, prevQuantity = null,
                 Code: prodCode,
                 Name: product_name,
                 SKU: prodSKU,
-                Quantity: $(".ProductDetail-" + parentprodcode).find(".QtyVal").val(),
+                Quantity: qty,
                 Price: salePrice,
                 Weight: prodWeight,
                 product_id: product_id,

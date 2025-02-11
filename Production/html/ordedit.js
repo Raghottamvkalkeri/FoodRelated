@@ -1,7 +1,5 @@
-<script>
-    let editOrder = document.querySelector('#editOrder').value;
+
     let storeOrderedValues = '';
-    let userData = '';
     let hasRedirected = false;
     var SearchProductslist = new Vue({
         el: "#app-search",
@@ -39,7 +37,9 @@
                     }
                 )
                     .then(function (response, status, xhr) {
+                        //console.log(xhr.status);
                         $("#getResponse").val(xhr.status);
+                        //myObject.products = this.products.push(response);
                         if (xhr.status == 200) {
 
                             if (response.length > 0) {
@@ -55,7 +55,7 @@
                                     var isChildSale = "";
                                     getcount++;
                                     $("#getCount").val(getcount);
-                                    SearchProductslist.products.push(response[i]);
+                                    myObjects.products.push(response[i]);
                                 }
                                 //products.push(response);
                                 setTimeout(function () {
@@ -283,12 +283,10 @@
                         if (responsedata < 1 || responsedata == '') {
                             setTimeout(function () {
                                 $('.ProductDetail-' + productcode).find('#viewSubstitutions').hide();
-                                $('.ProductDetails-' + productcode + ' .viewSubstitution').hide();
                             }, 500);
                         } else {
                             setTimeout(function () {
                                 $('.ProductDetail-' + productcode).find('#viewSubstitutions').show();
-                                $('.ProductDetails-' + productcode + '.viewSubstitution').show();
                             }, 500);
                         }
 
@@ -358,62 +356,15 @@
                         }
                     },
                     success(result) {
-
-                        self.SearchProductslist = result;
-                        self.products = result;
-                        self.savedforlater1 = result;
-                        self.orderguideProducts = [];
-
-                        //                         let excludeProductCodes = [];
-
-                        // const orderId = document.querySelector('#order_id').value;
-                        // const orderData = userData && userData[orderId] ? userData[orderId][0] : null;
-                        // if (orderData) {
-                        //     if (orderData.ship_state !== 'TX') {
-                        //         // Exclude wine products if shipping is outside TX
-                        //         excludeProductCodes = result.filter(wineproduct => wineproduct.data.wine_check !== '1');
-                        //     } else if (
-                        //         orderData.ship_state === 'TX' &&
-                        //         !['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FR Truck Delivery', 'Will Call'].includes(orderData.ship_data)
-                        //     ) {
-                        //         // Exclude special shipping products if shipping method is not FedEx Ground
-                        //         excludeProductCodes = result.filter(specialshipping => specialshipping.data.special_shipping !== '1');
-                        //     }  else {
-                        //         // Default case, exclude non-fedex products
-                        //         excludeProductCodes = result.filter(nonfedex => nonfedex.data.non_fedex !== '1');
-                        //     }
-                        // }
-
-
-                        //                         console.log(excludeProductCodes);
-                        //                         self.products = excludeProductCodes;
-                        let excludeProductCodes = [];
-
-                        const orderId = document.querySelector('#order_id').value;
-                        const orderData = userData?.[orderId]?.[0] || null;
-
-                        if (!orderData) return;
-
-                        const isTexas = orderData.ship_state === 'TX';
-                        const isSpecialShipping = ['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FR Truck Delivery', 'Will Call'].includes(orderData.ship_data);
-                        const FedExShipping = ['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FEDEX_GROUND'].includes(orderData.ship_data);
-
-                        excludeProductCodes = result.filter(product => {
-                            if (!isTexas) return product.data.wine_check !== '1'; // Exclude wine if outside TX
-                            if (isTexas && !isSpecialShipping) return product.data.special_shipping !== '1'; // Exclude special shipping
-                            return product.data.non_fedex !== '1' && !FedExShipping; // Default case: Exclude non-FedEx products
-                        });
-
-                        console.log(excludeProductCodes);
-                        self.products = excludeProductCodes;
-
-
-                        if (self.products.length < 1) {
+                        if (result.length < 1) {
                             $('.productsearcherror').show()
                         } else {
                             $('.productsearcherror').hide()
                         }
-
+                        self.SearchProductslist = result;
+                        self.products = result;
+                        self.savedforlater1 = result;
+                        self.orderguideProducts = [];
                         setTimeout(function () {
                             getProductresponse(result);
                             addProductNew();
@@ -441,7 +392,6 @@
             searchProducts(searchKey) {
                 const sort_by = setWholesaleuser === 1 ? 'customfield:customfields:wprice' : 'customfield:customfields:pprprice';
                 this.makeAjaxRequest(`/?Screen=SRCHJSON&Search=${searchKey}&SearchOffset=0&Sort_By=${sort_by}&per_page=24&recipes=No&x=0&y=0&`);
-                console.log(userData[document.querySelector('#order_id').value][0].bill_state);
             },
 
             onSearchKeyup() {
@@ -683,7 +633,7 @@
 
             setTimeout(function () {
                 if (dataval[i].data.product_inventory <= 0 && dataval[i].data.substitute != '') {
-                    SearchProductslist.getsubstitutionInventory(dataval[i].data.code, dataval[i].data.substitute);
+                    myObjects.getsubstitutionInventory(dataval[i].data.code, dataval[i].data.substitute);
                 }
             }, 10);
 
@@ -724,15 +674,12 @@
             newlineid: '',
             oldqty: '',
             productCode: '',
-            isDeleted: false,
-            existingQty: 0,
             remainingSeconds: null, // Remaining seconds until cutoff
             userIdleTimerStarted: false, // To track if UserIdleTime has been triggered
             hasRedirected: false, // To prevent multiple redirects
             countdownTimer: null, // Timer reference for UserIdleTime
             showLoader: false, // Loader state
             isOrderEdited: false, // Flag to check if the order is editable
-            deleteOrderItemPopUp: false,  // Flag to check if the delete order item popup is visible
             orderDetails: [], // Placeholder for the order data
             orderSummary: [] // Placeholder for the order summary
         },
@@ -742,14 +689,7 @@
             loadOrderDetails: function () {
                 var self = this; // Reference to the Vue instance
                 self.showLoader = true;
-                if (document.querySelector('#searchproducts').value !== '') {
-                    SearchProductslist.products = [];
-                    SearchProductslist.onSearchSubmit();
-                }
-                if (self.isDeleted || self.closeModal) {
-                    self.deleteOrderItemPopUp = false;
-                    self.orderDetails.orderitems = [];
-                }
+                self.InventoryUpdate();
                 var requestData = {
                     Store_Code: self.Store_Code,
                     Function: self.Function,
@@ -773,28 +713,47 @@
                         // Convert UOM for each variant
                         newOrderData.orderitems.forEach((item, i) => {
                             if (item.product) {
-                                item.product.forEach(product => {
-                                    setTimeout(function () {
-                                        if (product.data.product_inventory <= 0 && product.data.substitute != '') {
-                                            SearchProductslist.getsubstitutionInventory(product.data.code, product.data.substitute);
-                                        }
-                                    }, 10);
-                                    product.data.variants.forEach(variant => {
+                                item.product.forEach(variant => {
+                                    variant.data.variants.forEach(variant => {
                                         variant.UOM = self.convertUOM(variant);
                                     });
                                 });
                             }
+
+                            // Check if the current item has the same product as any previous item
+                            const isSameProduct = newOrderData.orderitems.slice(0, i).some((previousItem) => {
+                                // Ensure previousItem.product exists and compare based on product ID
+                                return previousItem.product && Array.isArray(previousItem.product) &&
+                                    previousItem.product[0]?.data?.id === item.product[0]?.data?.id;
+                            });
+
+                            if (isSameProduct) {
+                                console.log("Same product: " + item.name);
+                                item.product.forEach(variant => {
+                                    variant.data.variants.forEach(variant => {
+
+                                        variant.sameProduct = true;
+                                    });
+                                });
+                            }
                         });
+
+
+
                         // Calculate the subtotal
+                        // console.log("isSameProduct " + isSameProduct);
                         const subtotal = newOrderData.orderitems.reduce((acc, item) => {
                             return acc + (item.price * item.quantity);
                         }, 0);
+
                         // Update the reactive data to trigger UI changes
                         self.orderDetails = {
                             ...newOrderData,
                             orderitems: [...(newOrderData.orderitems || [])],
                             subtotal: subtotal,
+
                         };
+
                         self.$nextTick(() => {
                             self.orderDetails = {
                                 ...newOrderData,
@@ -802,13 +761,19 @@
                                 subtotal: subtotal,
 
                             };
+                            $(document).on('shown.bs.modal', '#savedOrderDetailsModal', function () {
+                                // isModalOpen = true;
+                                console.log('hi');
+                            });
+
+                            $(document).on('hidden.bs.modal', '#savedOrderDetailsModal', function () {
+                                isModalOpen = false;
+                            });
                         });
 
 
                         // Store updated order values for later use
                         storeOrderedValues = newOrderData.orderitems;
-                        userData = newOrderData;
-                        // console.log(userData);
                     },
                     complete: function () {
                         self.showLoader = false;
@@ -822,27 +787,24 @@
             convertUOM(variant) {
                 const uomMapping = {
                     EA: "EACH",
-                    CS: "CASE",
-                    BAG: "BAG",
-                    BX: "BOX",
-                    PK: "PACK",
-                    TUB: "TUB",
+                    CS: `CASE`,
+                    BAG: `BAG`,
+                    BX: `Box`,
+                    PK: `Pack`,
+                    TUB: `TUB`,
                     CASE: "CASE",
                     Case: "CASE"
                 };
 
-                // Check for 'Case of X', 'Box of X', or 'Pack of X'
-                // const casePattern = /^(Case|Box|Pack) of (\d+)$/i;
-                const casePattern = /^(Case|Box|Pack) of ([\d,]+)$/i;
+                // Check for 'Case of X' pattern and return it as 'CASE of X'
+                const casePattern = /^Case of (\d+)$/i;
                 const match = variant.UOM.match(casePattern);
 
                 if (match) {
-                    return match[1].toUpperCase(); // Converts "Case" -> "CASE", "Box" -> "BOX", "Pack" -> "PACK"
+                    return `CASE`;
                 }
-
                 return uomMapping[variant.UOM] || variant.UOM;
-            }
-            ,
+            },
             processProducts(result) {
                 console.log(result);
                 result.forEach((item) => {
@@ -933,8 +895,6 @@
                         this.saveOrderDetails();
                     }
                     window.location.href = "/Merchant5/merchant.mvc?screen=ORDHN"; // Redirect to order history page
-                    editOrder.value = '0';
-                    this.checkEditOrderStatus();
                     return;
                 }
 
@@ -979,7 +939,7 @@
                 // console.log(qtyboxid);
                 var getProductCode = newelement;
                 let qty_selected = 0;
-                let element = $(".qty-lineid" + ele + lineId);
+                let element = $("." + qtyboxid);
                 if (element.val() == "" || element.val() == NaN) {
                     element.val(0);
                 }
@@ -993,15 +953,19 @@
                     .text();
                 let parentuom = $(element).attr("data-uom");
                 var checkedAttr = $(
-                    "input[data-product_code=" + parentprodcode + qtylineid + "][type=radio]:checked"
+                    "input[data-product_code=" + parentprodcode + "][type=radio]:checked"
                 );
-                var selected = $(".qty-lineid" + ele + lineId).find("input[type=radio]:is(:checked)");
-                var notselected = $(".qty-lineid" + ele + lineId).find("input[type=radio]:not(:checked)");
+                var radioCheck = $(
+                    "input[data-product_code=" + parentprodcode + "][type=radio]"
+                ).val();
+                var selected = $("." + ele).find("input[type=radio]:is(:checked)");
+                var notselected = $("." + ele).find("input[type=radio]:not(:checked)");
                 dataStock = parseInt($(checkedAttr).attr("data-stock"));
                 var totalQntyAvailable = parseInt($.trim($(checkedAttr).attr("data-stock")));
                 minQnty = parseInt($(checkedAttr).attr("data-min"));
                 var reorderDataStock = $(".ProductDetail-" + getProductCode + qtylineid + ":visible").find(".data-min").attr(
                     "data-reorderstock");
+
                 var NewMinQty = [];
                 var NewMinQtyNew = "";
                 var showDisplay = "";
@@ -1012,11 +976,8 @@
                     $(".ProductDetail-" + getProductCode + qtylineid + ":visible")
                         .find(".data-min")
                         .each(function () {
-                            console.log($(this).attr('data-stock'));
                             NewMinQtyNew = $(this).val();
-                            console.log(NewMinQtyNew);
-                            // availableStock = Math.floor(totalQntyAvailable / NewMinQtyNew);
-                            availableStock = Math.floor($(this).attr('data-stock') / NewMinQtyNew) * NewMinQtyNew;
+                            availableStock = Math.floor(totalQntyAvailable / NewMinQtyNew);
                             if (CheckUOMS.includes(availableStock)) {
                                 getNewUOm = $(this).attr("data-newuom");
                             } else {
@@ -1036,11 +997,7 @@
                         });
 
                     qty = qty + 1;
-                    // console.log(dataStock + '' + minQnty + '' + qty);
-                    var newQty = qty + 1;  // Store the new intended quantity
-                    console.log(getProductCode);
-                    console.log("Current Stock:", dataStock, "Current Qty:", qty, "New Intended Qty:", newQty, "Min Qty:", minQnty);
-                    if ((newQty - qty) > dataStock) {
+                    if (dataStock < minQnty * qty) {
                         showDisplay = dispalyUOM.toString().replace(/,/g, "<br>");
                         var errorMsg =
                             "Sorry, we do not have enough quantity to fulfill your order.\r\nPlease adjust the quantity and try again.<br>";
@@ -1052,13 +1009,16 @@
                         $("#new_globalerrorpopup").modal("show");
 
                         if (selected) {
-                            ShowUOM = $(".qty-lineid" + ele + lineId)
+                            ShowUOM = $("." + ele)
                                 .find(".displayUom")
                                 .eq(1)
                                 .text();
                             var remaingQnty = Math.floor(dataStock / minQnty);
+                            $(selected).each(function () {
+                                console.log("selectes" + availableStock);
+                            });
                             showDisplay = dispalyUOM.unshift(ShowUOM + " - " + availableStock);
-                            // element.val(remaingQnty);
+                            element.val(remaingQnty);
                         }
                         return false;
                     } else {
@@ -1066,6 +1026,7 @@
                         //    var item =     this.orderDetails[index];
                         //    console.log(miltiattrvalue);
                         $(".qty-" + getProductCode + ":visible").find('.QtyVal').val();
+                        console.log(element.val());
                         // console.log($(".ProductDetail-" + getProductCode + ":visible").find('.miltiattrvalue:checked').val());
                         $(".ProductDetail-" + getProductCode + qtylineid).find('.miltiattrvalue:checked').each(function () {
                             let orderItemData = {
@@ -1081,8 +1042,8 @@
                                     {
                                         attr_code: $(this).data('attr_code'),
                                         opt_code_or_data: $(this).data('opt_code_or_data'),
-                                        // price: $(this).data('attr_price'),
-                                        // weight: $(this).data('attr_weight')
+                                        price: $(this).data('attr_price'),
+                                        weight: $(this).data('attr_weight')
                                     }
                                 ]
                             };
@@ -1093,8 +1054,10 @@
 
                     }
                 } else {
-                    qty = qty === 0 ? 1 : qty - 1;
+                    qty = qty > 0 ? qty - 1 : 0;
+                    element.val(qty);
                     $(".qty-" + getProductCode + ":visible").find('.QtyVal').val();
+                    console.log(element.val());
                     // console.log($(".ProductDetail-" + getProductCode + ":visible").find('.miltiattrvalue:checked').val());
                     $(".ProductDetail-" + getProductCode + qtylineid).find('.miltiattrvalue:checked').each(function () {
                         let orderItemData = {
@@ -1110,8 +1073,8 @@
                                 {
                                     attr_code: $(this).data('attr_code'),
                                     opt_code_or_data: $(this).data('opt_code_or_data'),
-                                    // price: $(this).data('attr_price'),
-                                    // weight: $(this).data('attr_weight')
+                                    price: $(this).data('attr_price'),
+                                    weight: $(this).data('attr_weight')
                                 }
                             ]
                         };
@@ -1168,10 +1131,11 @@
 
             checkCase: function (lineIds, code) {
                 var caseCount = 0;
+                var lineid = 0;
                 var oldqty = 0;
                 var lineIds = lineIds;
                 var caseCount = 0;
-                var oldlineid = 0;
+                var lineid = 0;
                 var codes = "";
                 var UOM = "";
                 var existedname = "";
@@ -1196,7 +1160,7 @@
                             if (variant.code === code) {
                                 caseCount++;
                                 getproductcode = product.data.code;
-                                oldlineid = order.line_id;
+                                lineid = order.line_id;
                                 oldqty = order.quantity;
                                 UOM = this.convertUOM(variant);
                                 existedname = product.data.name;
@@ -1213,29 +1177,43 @@
                 if (caseCount > 0) {
                     this.newlineid = lineIds;
                     console.log(oldqty);
-                    console.log(UOM + " is already present in another line ID:", oldlineid, "name:", existedname);
+                    console.log(UOM + " is already present in another line ID:", lineid, "name:", existedname);
                     this.modalMessage = `A ${UOM} of this item is already in your cart. Do you still want to change the unit?`;
                     this.showModal = true;  // Show the modal
-                    this.pushlineid = oldlineid;
+                    this.pushlineid = lineid;
                     this.oldqty = oldqty;
                     this.productCode = getproductcode;
+                    //     var requestData = {
+                    //     line_id: lineid,
+                    //     Code: codes,
+                    //     Name: updatedItem.Name,
+                    //     SKU: updatedItem.SKU,
+                    //     Quantity: updatedItem.Quantity,
+                    //     Price: updatedItem.Price,
+                    //     Weight: updatedItem.Weight,
+                    //     Taxable: updatedItem.Taxable,
+                    //     Attributes: updatedItem.Attributes
+                    // };
+
+
+
+
                 }
 
             },
             closeModal: function () {
                 this.showModal = false;  // Close the modal
-                this.loadOrderDetails();
             },
-            SameProductUpdate: function () {
+            SameProductUpdate: function (lineid) {
                 self = this;
                 var getProductCode = self.productCode;
-                var oldlineid = self.oldlineid || self.pushlineid;
+                var line_ids = self.pushlineid;
                 var qty = $(".qty-lineid" + getProductCode + self.newlineid + ":visible").val();
                 console.log(qty);
                 this.showModal = false;  // Close the modal
                 $(".ProductDetail-" + getProductCode + self.newlineid).find('.miltiattrvalue:checked').each(function () {
                     console.log(self.newlineid);
-                    console.log(oldlineid);
+                    console.log(line_ids);
                     let orderItemData = {
                         newlineid: self.newlineid,
                         isSameProductEdited: true,
@@ -1245,7 +1223,7 @@
                         Name: $(this).data('name'),
                         SKU: $(this).data('sku'),
                         Quantity: parseInt(qty) + parseInt(self.oldqty),
-                        delete_line_id: oldlineid,
+                        delete_line_id: line_ids,
                         Price: $(this).data('price'),
                         Weight: $(this).data('weight'),
                         Taxable: $(this).data('taxable'),
@@ -1253,88 +1231,16 @@
                             {
                                 attr_code: $(this).data('attr_code'),
                                 opt_code_or_data: $(this).data('opt_code_or_data'),
-                                // price: $(this).data('attr_price'),
-                                // weight: $(this).data('attr_weight')
+                                price: $(this).data('attr_price'),
+                                weight: $(this).data('attr_weight')
                             }
                         ]
                     };
 
-                    setTimeout(function () {
-                        console.log(orderItemData.delete_line_id);
-                        viewOrderDetails.editSameOrderItem(orderItemData);
-                    }, 1000);
+                    viewOrderDetails.editOrderItem(orderItemData);
                 });
             }
             ,
-            editSameOrderItem: function (updatedItem) {
-                var self = this;
-                console.log(updatedItem);
-                var requestDatas = {
-                    Store_Code: self.Store_Code,
-                    Session_Type: self.Session_Type,
-                    Function: "Module",
-                    Module_Code: self.Module_Code,
-                    Module_Function: "FR_OrderItem_Update",
-                    customer_session: self.customer_session,
-                    order_id: self.Order_Id.id,
-                    customer_id: self.Customer_ID,
-                    line_id: updatedItem.line_id,
-                    Code: updatedItem.Code,
-                    Name: updatedItem.Name,
-                    SKU: updatedItem.SKU,
-                    Quantity: updatedItem.Quantity,
-                    Price: updatedItem.Price,
-                    Weight: updatedItem.Weight,
-                    Taxable: updatedItem.Taxable,
-                    delete_line_id: updatedItem.isSameProductEdited === true ? updatedItem.delete_line_id : null,
-                    Attributes: updatedItem.Attributes
-                };
-                self.showLoader = true;
-                $.ajax({
-                    url: '/Merchant5/json.mvc',
-                    type: 'POST',
-                    dataType: 'text',
-                    cache: false,
-                    data: JSON.stringify(requestDatas),
-                    contentType: 'application/json',
-                    beforeSend: function () {
-                        console.log('Updating order item:', requestDatas);
-                        self.showLoader = true;
-                    },
-                    success: function (response) {
-                        // console.log(error);
-                        if (response) {
-                            console.log('Order item updated successfully:', updatedItem);
-                            $(".ProductDetail-" + updatedItem.ParentCode).find(".addbtn").removeClass('adding').html('Add');
-
-                            self.loadOrderDetails();
-                        } else {
-                            console.error('Failed to update order item:', response.message);
-                        }
-                    },
-                    complete: function () {
-                        self.showLoader = false;
-                        self.isOrderEdited = true;
-                    },
-                    error: function (error) {
-                        console.error('Error updating order item:', error);
-                        console.log('Error details:', error.status, error.statusText);
-                        console.error('Error updating order item:', error);
-                    }
-                });
-            },
-            checkEditOrderStatus: function () {
-                var self = this;
-                $.ajax({
-                    url: `/cudet.html?customerAction=checkEditOrder&customer_id=${self.Customer_ID}&order_id=${self.Order_Id.id}`,
-                    type: 'POST',
-                    success: function (response) {
-                    },
-                    error: function (error) {
-                        console.error('Error fetching order details:', error);
-                    }
-                });
-            },
             addOrderItem: function (newItem) {
                 var self = this;
                 self.showLoader = true;
@@ -1446,17 +1352,8 @@
             },
 
             // Method to delete an order item
-            deleteOrderItem: function (lineId, inventory) {
-                inventory = inventory === 1 ? 1 : 0;
+            deleteOrderItem: function (lineId) {
                 var self = this;
-                self.deletelineId = lineId;
-                if (inventory == 0) {
-                    self.deleteOrderItemPopUp = true;
-                    // alert('Sorry, this item is out of stock');
-                    return false;
-
-                }
-
                 self.showLoader = true;
                 var requestData = {
                     Store_Code: self.Store_Code,
@@ -1469,79 +1366,26 @@
                     Order_Id: self.Order_Id.id,
                     line_ids: [lineId]
                 };
-                let newOrderData = [];
+
                 // Perform AJAX call to delete the item
                 $.ajax({
                     url: '/Merchant5/json.mvc',
                     type: 'POST',
                     data: JSON.stringify(requestData),
                     contentType: 'application/json',
-                    beforeSend: function () {
-                        console.log('Deleting order item:', requestData);
-                        $('#deleteOrderItemPopUp').modal('hide');
-                    },
                     success: function (response) {
                         if (response) {
-                            self.orderDetails.orderitems = [];
-                            // console.log('Item deleted successfully:', lineId);
-                            newOrderData = response.data[0] || {};
+                            console.log('Item deleted successfully:', lineId);
+                            // Reload order details to reflect the changes
 
+                            self.loadOrderDetails();
                         } else {
                             console.error('Failed to delete item:', response.message);
                         }
                     },
                     complete: function () {
-                        self.deleteOrderItemPopUp = false;
-                        self.isDeleted = true;
                         self.showLoader = false;
                         self.isOrderEdited = true;
-                        // self.loadOrderDetails();
-
-                        // Reload order details to reflect the changes
-
-
-                        // Convert UOM for each variant
-                        newOrderData.orderitems.forEach((item, i) => {
-                            if (item.product) {
-                                item.product.forEach(product => {
-                                    setTimeout(function () {
-                                        if (product.data.product_inventory <= 0 && product.data.substitute != '') {
-                                            SearchProductslist.getsubstitutionInventory(product.data.code, product.data.substitute);
-                                        }
-                                    }, 10);
-                                    product.data.variants.forEach(variant => {
-                                        variant.UOM = self.convertUOM(variant);
-                                    });
-                                });
-                            }
-                        });
-                        // Calculate the subtotal
-                        const subtotal = newOrderData.orderitems.reduce((acc, item) => {
-                            return acc + (item.price * item.quantity);
-                        }, 0);
-                        // Update the reactive data to trigger UI changes
-                        // self.orderDetails = {
-                        //     ...newOrderData,
-                        //     orderitems: [...(newOrderData.orderitems || [])],
-                        //     subtotal: subtotal,
-                        // };
-                        self.$nextTick(() => {
-                            self.orderDetails = {
-                                ...newOrderData,
-                                orderitems: [...(newOrderData.orderitems || [])],
-                                subtotal: subtotal,
-
-                            };
-                        });
-
-
-                        // Store updated order values for later use
-                        storeOrderedValues = newOrderData.orderitems;
-                        if (document.querySelector('#searchproducts').value !== '') {
-                            SearchProductslist.products = [];
-                            SearchProductslist.onSearchSubmit();
-                        }
-
                     },
                     error: function (error) {
                         console.error('Error deleting order item:', error);
@@ -1663,7 +1507,7 @@
             },
             handleClickOnLogoOrFooter: function (event) {
                 if (event.target.closest('.logo-wrapper,#FooterSection a, .global-header-wrapper,.mm_searchfield_container,.mm_searchfield,.product-detail-wrapper,.product-name a ,.product-list-link')) {
-                    $('#savedOrderDetailsModal').modal({ 'show': true, keyboard: false, backdrop: 'static' });
+                    $('#savedOrderDetailsModal').modal('show');
                 }
             }
         },
@@ -1694,19 +1538,13 @@
             if (url.searchParams.get('isEdited') === 'true') {
                 this.saveOrderDetails();
             }
-            if (editOrder !== '1') {
-                location.href = '/Merchant5/merchant.mvc?screen=ORDHN';
-            }
-
-            $.fn.modal.Constructor.DEFAULTS.keyboard = false;
-            $.fn.modal.Constructor.DEFAULTS.backdrop = 'static';
         }
         , watch: {
             showModal: function (newVal) {
                 // When showModal changes to true, trigger the Bootstrap modal
                 if (newVal) {
                     this.$nextTick(function () {
-                        $('#caseCheckModal').modal({ 'show': true, keyboard: false, backdrop: 'static' });  // Trigger the Bootstrap modal
+                        $('#caseCheckModal').modal('show');  // Trigger the Bootstrap modal
                     });
                 } else {
                     $('#caseCheckModal').modal('hide');  // Hide the Bootstrap modal
@@ -1719,10 +1557,10 @@
                         document.querySelectorAll('.logo-wrapper a, #FooterSection a,.global-header-wrapper,.mm_searchfield_container,.searchhistorycontainer a,.product-detail-wrapper,.product-name a ,.product-list-link').forEach(el => {
                             el.removeAttribute('href');
                             el.removeAttribute('onclick');
-                            // el.addEventListener('click', function (event) {
-                            //     event.stopPropagation();
-                            //     event.preventDefault();
-                            // }, true);
+                            el.addEventListener('click', function (event) {
+                                event.stopPropagation();
+                                event.preventDefault();
+                            }, true);
                         });
                         document.addEventListener('click', this.handleClickOnLogoOrFooter);
                         document.addEventListener('click', function (event) {
@@ -1733,7 +1571,7 @@
 
                         window.onpopstate = function () {
                             // Show custom popup
-                            $('#savedOrderDetailsModal').modal({ 'show': true, keyboard: false, backdrop: 'static' });
+                            $('#savedOrderDetailsModal').modal('show');
 
                             // Push state again to prevent back navigation
                             history.pushState(null, "", location.href);
@@ -1742,25 +1580,7 @@
 
                         url.searchParams.set('isEdited', 'true');
                         window.history.pushState({}, '', url.toString());
-
-                        window.addEventListener("unload", function () {
-                            const customer_id = self.Customer_ID;
-                            const order_id = self.Order_Id.id;
-                            const url = `/majax.html?mobileAction=processEditOrder&customer_id=${customer_id}&order_id=${order_id}`;
-                            navigator.sendBeacon(url, JSON.stringify({
-                                message: "User closed the edit order page",
-                            }));
-                        });
                     })
-                }
-            },
-            deleteOrderItemPopUp: function (newVal) {
-                if (newVal) {
-                    this.$nextTick(function () {
-                        $('#deleteOrderItemPopUp').modal({ 'show': true, keyboard: false, backdrop: 'static' });
-                    });
-                } else {
-                    $('#deleteOrderItemPopUp').modal('hide');
                 }
             }
         }
@@ -1770,9 +1590,3 @@
     function playAudio() {
         alerts.play();
     }
-
-
-
-
-
-</script>

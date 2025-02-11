@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Modal on Reload</title>
+    <style>
+        /* Basic styling for the modal */
+        #customModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modalContent {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Custom Modal -->
+<div id="customModal">
+    <div id="modalContent">
+        <p>Are you sure you want to leave without saving changes?</p>
+        <button class="button" id="stayBtn">Stay</button>
+        <button class="button" id="leaveBtn">Leave</button>
+    </div>
+</div>
+
+<!-- Content of the page -->
+<p>Make changes on the page, then try to reload or navigate away to trigger the modal.</p>
+<input type="text" placeholder="Type something here...">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    let isChanged = false;
+    let isLeaving = false;
+
+    // Triggered when the user makes changes
+    $(document).on('input', function() {
+        isChanged = true;
+    });
+
+    // Show modal before navigating away
+    $(window).on('beforeunload', function(event) {
+        if (isChanged && !isLeaving) {
+            event.preventDefault(); // Prevent the default prompt
+            event.returnValue = ''; // Standard for many browsers
+            showModal(); // Show your custom modal
+            return ''; // Show the custom message in some browsers
+        }
+    });
+
+    // Show the custom modal
+    function showModal() {
+        $('#customModal').show();
+    }
+
+    // If the user chooses 'Stay', hide the modal
+    $('#stayBtn').click(function() {
+        $('#customModal').hide();
+        isLeaving = false; // Reset leaving status
+    });
+
+    // If the user chooses 'Leave', proceed with navigation
+    $('#leaveBtn').click(function() {
+        isLeaving = true;
+        $('#customModal').hide();
+        window.location.reload(); // Simulate page refresh or redirect
+    });
+});
+</script>
+
+</body>
+</html>
