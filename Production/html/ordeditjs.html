@@ -388,30 +388,61 @@
                         //                         console.log(excludeProductCodes);
                         //                         self.products = excludeProductCodes;
                         let excludeProductCodes = [];
-
+                        let message = '';
                         const orderId = document.querySelector('#order_id').value;
                         const orderData = userData?.[orderId]?.[0] || null;
-
+                        console.log(orderData.ship_data);
                         if (!orderData) return;
 
                         const isTexas = orderData.ship_state === 'TX';
                         const isSpecialShipping = ['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FR Truck Delivery', 'Will Call'].includes(orderData.ship_data);
-                        const FedExShipping = ['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FEDEX_GROUND'].includes(orderData.ship_data);
+                        const FedExShipping = ['FEDEX_GROUND', 'FEDEX_2_DAY', 'FEDEX', 'FedEX'].includes(orderData.ship_data);
+                        const NonFedExShipping = ['PRIORITY_OVERNIGHT', 'STANDARD_OVERNIGHT', 'FEDEX_GROUND', 'FEDEX_2_DAY', 'FEDEX', 'FedEX'].includes(orderData.ship_data);
+
+
+
+
+
+
+
+
+
 
                         excludeProductCodes = result.filter(product => {
-                            if (!isTexas) return product.data.wine_check !== '1'; // Exclude wine if outside TX
-                            if (isTexas && !isSpecialShipping) return product.data.special_shipping !== '1'; // Exclude special shipping
-                            return product.data.non_fedex !== '1' && !FedExShipping; // Default case: Exclude non-FedEx products
+                            // Exclude special shipping products if a special shipping method is NOT used
+                            if (!isSpecialShipping && product.data.special_shipping === '1') {
+                                return false;
+                            }
+
+                            // Exclude wine products for non-Texas orders
+                            if (!isTexas && product.data.wine_check === '1') {
+                                return false;
+                            }
+
+                            // FedEx shipping check
+                            if (NonFedExShipping) {
+                                // **NEW FIX:** If the product requires special shipping, exclude it
+                                // if (product.data.special_shipping === '1') {
+                                //     return false;
+                                // }
+
+                                return product.data.non_fedex !== '1';
+                            }
+
+
+
+                            return true;
                         });
 
-                        console.log(excludeProductCodes);
+
+                        console.log(FedExShipping);
                         self.products = excludeProductCodes;
 
 
                         if (self.products.length < 1) {
-                            $('.productsearcherror').show()
+                            $('.productsearcherror').show();
                         } else {
-                            $('.productsearcherror').hide()
+                            $('.productsearcherror').hide();
                         }
 
                         setTimeout(function () {
@@ -1016,7 +1047,12 @@
                             NewMinQtyNew = $(this).val();
                             console.log(NewMinQtyNew);
                             // availableStock = Math.floor(totalQntyAvailable / NewMinQtyNew);
-                            availableStock = Math.floor($(this).attr('data-stock') / NewMinQtyNew) * NewMinQtyNew;
+                            if ($(this).attr('data-stock') < NewMinQtyNew) {
+                                availableStock = $(this).attr('data-stock'); // Show remaining stock instead of a full pack
+                            } else {
+                                availableStock = Math.floor($(this).attr('data-stock') / NewMinQtyNew) * NewMinQtyNew;
+                            }
+                            //availableStock = Math.floor($(this).attr('data-stock') / NewMinQtyNew) * NewMinQtyNew;
                             if (CheckUOMS.includes(availableStock)) {
                                 getNewUOm = $(this).attr("data-newuom");
                             } else {
@@ -1230,7 +1266,7 @@
                 self = this;
                 var getProductCode = self.productCode;
                 var oldlineid = self.oldlineid || self.pushlineid;
-                var qty = $(".qty-lineid" + getProductCode + self.newlineid + ":visible").val();
+                var qty = $(".qty-lineid" + getProductCode + oldlineid + ":visible").val();
                 console.log(qty);
                 this.showModal = false;  // Close the modal
                 $(".ProductDetail-" + getProductCode + self.newlineid).find('.miltiattrvalue:checked').each(function () {
@@ -1244,7 +1280,7 @@
                         Code: $(this).data('code'),
                         Name: $(this).data('name'),
                         SKU: $(this).data('sku'),
-                        Quantity: parseInt(qty) + parseInt(self.oldqty),
+                        Quantity: parseInt(qty) + 1,
                         delete_line_id: oldlineid,
                         Price: $(this).data('price'),
                         Weight: $(this).data('weight'),
@@ -1479,6 +1515,7 @@
                     beforeSend: function () {
                         console.log('Deleting order item:', requestData);
                         $('#deleteOrderItemPopUp').modal('hide');
+
                     },
                     success: function (response) {
                         if (response) {
@@ -1491,14 +1528,10 @@
                         }
                     },
                     complete: function () {
-                        self.deleteOrderItemPopUp = false;
-                        self.isDeleted = true;
-                        self.showLoader = false;
-                        self.isOrderEdited = true;
-                        // self.loadOrderDetails();
+
 
                         // Reload order details to reflect the changes
-
+                        $('.ordernumberandbuttonholder').show();
 
                         // Convert UOM for each variant
                         newOrderData.orderitems.forEach((item, i) => {
@@ -1514,17 +1547,12 @@
                                     });
                                 });
                             }
+
                         });
                         // Calculate the subtotal
                         const subtotal = newOrderData.orderitems.reduce((acc, item) => {
                             return acc + (item.price * item.quantity);
                         }, 0);
-                        // Update the reactive data to trigger UI changes
-                        // self.orderDetails = {
-                        //     ...newOrderData,
-                        //     orderitems: [...(newOrderData.orderitems || [])],
-                        //     subtotal: subtotal,
-                        // };
                         self.$nextTick(() => {
                             self.orderDetails = {
                                 ...newOrderData,
@@ -1541,7 +1569,11 @@
                             SearchProductslist.products = [];
                             SearchProductslist.onSearchSubmit();
                         }
-
+                        self.deleteOrderItemPopUp = false;
+                        self.isDeleted = true;
+                        self.showLoader = false;
+                        self.isOrderEdited = true;
+                        // self.loadOrderDetails();
                     },
                     error: function (error) {
                         console.error('Error deleting order item:', error);
@@ -1741,6 +1773,7 @@
 
 
                         url.searchParams.set('isEdited', 'true');
+                        $('.ordernumberandbuttonholder').show();
                         window.history.pushState({}, '', url.toString());
 
                         window.addEventListener("unload", function () {
@@ -1772,7 +1805,9 @@
     }
 
 
-
+    document.addEventListener("DOMContentLoaded", function () {
+        document.body.style.zoom = "90%";
+    });
 
 
 </script>
