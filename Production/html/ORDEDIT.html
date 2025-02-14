@@ -161,7 +161,7 @@
                                 data-salebaseprice="$2.55" v-bind:data-min="variant.pack_size"
                                 v-bind:checked="orders.code == variant.code || variant.checkedvalues == true ? true : ''"
                                 autocomplete="off"
-                                @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);checkCase(orders.line_id,variant.code);">
+                                @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);checkCase(orders.line_id,orders.code == variant.code ?variant.code);">
 
 
                             <label class="form-check-label shown" v-bind:for="variant.code+'-option'"

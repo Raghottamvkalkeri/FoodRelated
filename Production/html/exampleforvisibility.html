@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <h1>My First Heading</h1>
+    <p>My first paragraph.</p>
+    <span id="visibilityState"></span>
+    <script>
+        let visibilityState = document.visibilityState;
+        document.addEventListener("visibilitychange", function () {
+            document.querySelector("#visibilityState").textContent = document.visibilityState;
+            document.title = document.visibilityState;
+    if (document.visibilityState === "hidden") {
+
+        const orderData = {
+            orderId: 12345,
+            changes: { quantity: 2, product: "Sample Item" },
+            timestamp: new Date().toISOString()
+        };
+
+        const jsonData = JSON.stringify(orderData);
+        
+        // Use Beacon API to send data even if the browser is closing
+        navigator.sendBeacon('/updateOrder', jsonData);
+
+        console.log("Order update sent via Beacon API:", orderData);
+    }
+});
+</script>
+</body>
+</html>

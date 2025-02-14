@@ -447,23 +447,17 @@
 
                         setTimeout(function () {
                             getProductresponse(result);
-                            addProductNew();
+                            // addProductNew();
                         }, 200)
                     },
                     complete() {
                         if (toggleVisibility) {
                             document.querySelector('.searchproductlist').style.display = 'block'; // Show only if the flag is true
                         }
-                        if (showLoader) {
-                            document.querySelector('.searchproductlist').scrollTo({
-                                top: 0
-                            });
-                        }
-                        if (showLoader) { self.loading = false; } // Hide loader only if it was shown
                         $(".productListing").show();
                         $('.loader').hide();
                         setTimeout(function () {
-                            addProductNew();
+                            // addProductNew();
                         }, 200)
                     },
                 });
@@ -503,7 +497,7 @@
 
         mounted() {
 
-            addProductNew();
+
             // Attach event listener for Enter key
             const self = this;
             document
@@ -521,6 +515,9 @@
                     self.onSearchSubmit();
                 });
         },
+        updated() {
+            addProductNew();
+        }
     });
 
     function getProductresponse(dataval) {
@@ -1202,7 +1199,8 @@
                 }
             },
 
-            checkCase: function (lineIds, code) {
+            checkCase: function (lineIds, code , orderuom) {
+                
                 var caseCount = 0;
                 var oldqty = 0;
                 var lineIds = lineIds;
@@ -1217,20 +1215,23 @@
                 var eixedtaxable = "";
                 var eixedattributes = "";
                 var getproductcode = "";
+		        var foundMatch = false;
                 for (var i = 0; i < this.orderDetails.orderitems.length; i++) {
                     var order = this.orderDetails.orderitems[i];
 
                     // Skip checking against the same line_id
                     if (order.line_id == lineIds) continue;
-
+			
                     for (var j = 0; j < order.product.length; j++) {
                         var product = order.product[j];
 
                         for (var k = 0; k < product.data.variants.length; k++) {
                             var variant = product.data.variants[k];
 
-                            if (variant.code === code) {
+                            if (order.code == code) {
+                                console.log(code);
                                 caseCount++;
+				                foundMatch = true;
                                 getproductcode = product.data.code;
                                 oldlineid = order.line_id;
                                 oldqty = order.quantity;
@@ -1240,13 +1241,13 @@
                                 eixtedprice = variant.price;
                                 eixtedweight = variant.weight;
                                 eixedtaxable = variant.taxable;
-                                console.log("Found in line ID:", order.line_id, "Variant:", variant.code);
+                                console.log("Found in line ID:", order.line_id, "Variant:", order.code);
                             }
                         }
                     }
                 }
 
-                if (caseCount > 0) {
+                if (caseCount > 0 && foundMatch) {
                     this.newlineid = lineIds;
                     console.log(oldqty);
                     console.log(UOM + " is already present in another line ID:", oldlineid, "name:", existedname);
@@ -1515,12 +1516,11 @@
                     beforeSend: function () {
                         console.log('Deleting order item:', requestData);
                         $('#deleteOrderItemPopUp').modal('hide');
-
+                        self.isOrderEdited = false;
                     },
                     success: function (response) {
                         if (response) {
                             self.orderDetails.orderitems = [];
-                            // console.log('Item deleted successfully:', lineId);
                             newOrderData = response.data[0] || {};
 
                         } else {
@@ -1528,11 +1528,8 @@
                         }
                     },
                     complete: function () {
-
-
                         // Reload order details to reflect the changes
                         $('.ordernumberandbuttonholder').show();
-
                         // Convert UOM for each variant
                         newOrderData.orderitems.forEach((item, i) => {
                             if (item.product) {
@@ -1624,8 +1621,6 @@
                     success: function (response) {
                         if (response) {
                             console.log('Order saved successfully:', response);
-                            // Reload order details to reflect the changes
-                            // self.loadOrderDetails();
                             location.href = '/Merchant5/merchant.mvc?screen=ORDHN';
                         } else {
                             console.error('Failed to save order:', response.message);
@@ -1640,10 +1635,6 @@
             // Method to handle order editing
             editOrder: function (newOrderDetails) {
                 var self = this;
-
-                // Update order details or make changes
-
-                // Once order is edited, re-load the order details to reflect the changes
                 self.loadOrderDetails();
             },
             // Function to handle the countdown timer
@@ -1710,14 +1701,6 @@
 
 
 
-            window.addEventListener('beforeunload', function (event) {
-                if (isModalOpen) {
-                    event.preventDefault();
-                    event.returnValue = '';  // Required for some browsers to trigger warning
-                    viewOrderDetails.saveOrderDetails();
-                }
-            });
-
 
         }, mounted() {
             document.querySelector('.checkoutcounter').innerHTML = `<p class='ft-md ft-12p txt-warning'>
@@ -1751,10 +1734,6 @@
                         document.querySelectorAll('.logo-wrapper a, #FooterSection a,.global-header-wrapper,.mm_searchfield_container,.searchhistorycontainer a,.product-detail-wrapper,.product-name a ,.product-list-link').forEach(el => {
                             el.removeAttribute('href');
                             el.removeAttribute('onclick');
-                            // el.addEventListener('click', function (event) {
-                            //     event.stopPropagation();
-                            //     event.preventDefault();
-                            // }, true);
                         });
                         document.addEventListener('click', this.handleClickOnLogoOrFooter);
                         document.addEventListener('click', function (event) {
@@ -1766,7 +1745,6 @@
                         window.onpopstate = function () {
                             // Show custom popup
                             $('#savedOrderDetailsModal').modal({ 'show': true, keyboard: false, backdrop: 'static' });
-
                             // Push state again to prevent back navigation
                             history.pushState(null, "", location.href);
                         };
@@ -1775,15 +1753,6 @@
                         url.searchParams.set('isEdited', 'true');
                         $('.ordernumberandbuttonholder').show();
                         window.history.pushState({}, '', url.toString());
-
-                        window.addEventListener("unload", function () {
-                            const customer_id = self.Customer_ID;
-                            const order_id = self.Order_Id.id;
-                            const url = `/majax.html?mobileAction=processEditOrder&customer_id=${customer_id}&order_id=${order_id}`;
-                            navigator.sendBeacon(url, JSON.stringify({
-                                message: "User closed the edit order page",
-                            }));
-                        });
                     })
                 }
             },
