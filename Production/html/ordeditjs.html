@@ -156,7 +156,7 @@
             },
             capitalizeText(s) {
                 return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-                //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+
             },
             roundNumbers(s) {
                 // console.log(s);
@@ -168,18 +168,12 @@
                     console.log(s.replace("avg", ""));
                     return s.replace("avg", "").replace("(", "").replace(")", "");
                 } else {
-                    /*console.log(
-                    s
-                        .replace(/^[^-]+ - /, "")
-                        .replace("(", "")
-                        .replace(")", "")
-                    );*/
                     return s
                         .replace(/^[^-]+ - /, "")
                         .replace("(", "")
                         .replace(")", "");
                 }
-                //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+
             },
             getCurrenctRestockDate(d) {
                 // Convert date string to Date object
@@ -391,7 +385,6 @@
                         let message = '';
                         const orderId = document.querySelector('#order_id').value;
                         const orderData = userData?.[orderId]?.[0] || null;
-                        console.log(orderData.ship_data);
                         if (!orderData) return;
 
                         const isTexas = orderData.ship_state === 'TX';
@@ -435,7 +428,7 @@
                         });
 
 
-                        console.log(FedExShipping);
+
                         self.products = excludeProductCodes;
 
 
@@ -938,8 +931,7 @@
                 // Check if the time matches 22:00:59 Central Time (10:00:59 PM)
                 if ((currentHours > 22) || (currentHours === 22 && currentMinutes > 0) || (currentHours === 22 && currentMinutes === 0 && currentSeconds >= 59)) {
                     hasRedirected = true; // Set flag to true
-                    // console.log("It's 22:00:59 Central Time. Refreshing page...");
-                    // location.reload();  // Refresh the page
+
                     location.href = '/Merchant5/merchant.mvc?screen=ORDHN'; // Redirect to the order history page
                 }
             },
@@ -977,7 +969,7 @@
             },
             capitalizeText(s) {
                 return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-                //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+
             },
             roundNumbers(s) {
                 // console.log(s);
@@ -997,7 +989,7 @@
           );*/
                     return s.replace(/^[^-]+ - /, "").replace("(", "").replace(")", "");
                 }
-                //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
+
             },
             // Increase quantity
             qtyupdateDesk(qtyboxid, type, ele, newelement, lineId) {
@@ -1199,8 +1191,7 @@
                 }
             },
 
-            checkCase: function (lineIds, code , orderuom) {
-                
+            checkCase: function (lineIds, code, orderuom) {
                 var caseCount = 0;
                 var oldqty = 0;
                 var lineIds = lineIds;
@@ -1215,13 +1206,14 @@
                 var eixedtaxable = "";
                 var eixedattributes = "";
                 var getproductcode = "";
-		        var foundMatch = false;
+                var foundMatch = false;
+                var ordereduom = '';
                 for (var i = 0; i < this.orderDetails.orderitems.length; i++) {
                     var order = this.orderDetails.orderitems[i];
 
                     // Skip checking against the same line_id
                     if (order.line_id == lineIds) continue;
-			
+
                     for (var j = 0; j < order.product.length; j++) {
                         var product = order.product[j];
 
@@ -1231,17 +1223,18 @@
                             if (order.code == code) {
                                 console.log(code);
                                 caseCount++;
-				                foundMatch = true;
+                                foundMatch = true;
                                 getproductcode = product.data.code;
                                 oldlineid = order.line_id;
                                 oldqty = order.quantity;
                                 UOM = this.convertUOM(variant);
+                                ordereduom = orderuom;
                                 existedname = product.data.name;
                                 existedsku = product.data.sku;
                                 eixtedprice = variant.price;
                                 eixtedweight = variant.weight;
                                 eixedtaxable = variant.taxable;
-                                console.log("Found in line ID:", order.line_id, "Variant:", order.code);
+                                console.log("Found in line ID:", order.line_id, "Variant:", orderuom);
                             }
                         }
                     }
@@ -1251,7 +1244,7 @@
                     this.newlineid = lineIds;
                     console.log(oldqty);
                     console.log(UOM + " is already present in another line ID:", oldlineid, "name:", existedname);
-                    this.modalMessage = `A ${UOM} of this item is already in your cart. Do you still want to change the unit?`;
+                    this.modalMessage = `A ${ordereduom} of this item is already in your cart. Do you still want to change the unit?`;
                     this.showModal = true;  // Show the modal
                     this.pushlineid = oldlineid;
                     this.oldqty = oldqty;
