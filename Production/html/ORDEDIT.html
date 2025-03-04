@@ -7,14 +7,16 @@
         <h5 class="bold-ft">Order Summary</h5>
         <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
             :key="index">
-            <h3>Billing Information</h3>
+            <h3>Billing Information <i class="billing-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i></h3>
+<p></p>
             <span>{{ item.bill_fname }} {{ item.bill_lname }}</span>
             <span>{{ item.bill_addr }} , {{ item.bill_city }} , {{ item.bill_state }}, {{ item.bill_zip }}</span>
             <span>{{item.bill_phone}} </span>
         </div>
         <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
             :key="index">
-            <h3>Shipping Information</h3>
+            <h3>Shipping Information <i class="shipping-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i></h3>
+<p></p>
             <span>{{ item.ship_fname }} {{ item.ship_lname }}</span>
             <span>{{ item.ship_addr }}, {{ item.ship_city }}, {{ item.ship_state }}, {{ item.ship_zip }}</span>
             <span>{{ item.ship_phone }}</span>
@@ -59,14 +61,14 @@
             <div class="modal-dialogs" role="document">
                 <div class="modal-contents">
                     <div class="modal-headerss">
-                        <h5 class="modal-titles">Are you sure you are finished making changes</h5>
+                        <h5 class="modal-titles">Are you finished making changes to your order?</h5>
                         <!-- <button type="button" class="close1" data-dismiss="modal" aria-label="Close"></button> -->
                     </div>
                     <div class="modal-bodys">
-                        <span class="gpoperror txt-warning txt-center">Orders can be edited once</span>
+                        <span class="gpoperror txt-warning txt-center"><span class="ft-demi">PLEASE NOTE:</span> Orders can be edited only once</span>
                     </div>
                     <div class="modal-footers">
-                        <button class="btn btn-lg secondary-btn btn-white" data-dismiss="modal"> Cancel </button>
+                        <button class="btn btn-lg secondary-btn btn-white" data-dismiss="modal" @click="viewOrderDetails.loadOrderDetails()"> Cancel </button>
                         <button class="btn btn-lg primary-btn btn-orange" @click="saveOrderDetails"> Save Changes
                         </button>
                     </div>
@@ -87,7 +89,7 @@
                         <!-- <span class="gpoperror txt-warning txt-center">Orders can be editied once</span> -->
                     </div>
                     <div class="modal-footers">
-                        <button class="btn btn-lg secondary-btn btn-white" data-dismiss="modal"> Cancel </button>
+                        <button class="btn btn-lg secondary-btn btn-white" @click="viewOrderDetails.loadOrderDetails()" data-dismiss="modal"> Cancel </button>
                         <button class="btn btn-lg primary-btn btn-orange" v-bind:data-line-id="deletelineId" @click="deleteOrderItem(deletelineId,1)"> Remove item
                         </button>
                     </div>
@@ -135,13 +137,13 @@
                         </span>
                 </div>
                 <div v-for="(product, idx) in orders.product" :key="idx" class="order-units"
-                    v-bind:class="'ProductDetail-'+product.data.code+orders.line_id" v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:none;' : ''">
+                    v-bind:class="'ProductDetail-'+product.data.code+orders.line_id" v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
                     <div v-for="(variant, index) in product.data.variants" v-if="variant.UOM_TEXT !== 'Threebie'" v-bind:class="[variant.inv <=0 ? 'disabled ' : '' , product.data.product_inventory <= 0 ? 'greyout' : '']">
                         <input type="hidden" v-bind:name="'Products['+product.data.id+']:attributes[1]:code'"
                             class="miltiattrcode" value="size" autocomplete="off">
                         <div class="form-check " style="margin-top: 0">
 
-                            <input class="form-check-inputs miltiattrvalue" v-bind:disabled="product.data.product_inventory <= 0 ? true : false"
+                            <input class="form-check-inputs miltiattrvalue" v-bind:disabled="variant.inv <= 0 ? true : false"
                                 v-bind:class="variant.UOM_TEXT === 'Threebie' ? '' : 'radioUnit-'+variant.code"
                                 type="radio"
                                 v-bind:name="'Products['+product.data.id+orders.line_id+']:attributes[1]:value'"
@@ -161,7 +163,8 @@
                                 data-salebaseprice="$2.55" v-bind:data-min="variant.pack_size"
                                 v-bind:checked="orders.code == variant.code || variant.checkedvalues == true ? true : ''"
                                 autocomplete="off"
-                                @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);checkCase(orders.line_id,orders.code == variant.code ?variant.code);">
+                                v-bind:data-orderduom="orders.OrderdedUOM"
+                                @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);checkCase(orders.line_id,orders.code == variant.code ? orders.code :variant.code,orders.code == variant.code ? capitalizeText(variant.UOM) : capitalizeText(variant.UOM) ,$event);">
 
 
                             <label class="form-check-label shown" v-bind:for="variant.code+'-option'"
@@ -183,7 +186,7 @@
                 <div class="order-price">${{(orders.price).toFixed(2)}}</div>
                 <div class="order-qty" v-for="(product, idx) in orders.product" :key="idx" v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''">
                     <button type="button"
-                        class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:none;' : ''">
+                        class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
                         <span class="newMinusBtn" v-bind:style="orders.quantity == 1 ? 'pointer-events:none;cursor:not-allowed;opacity:0.5' : ''"
                             @click="qtyupdateDesk('qty-'+product.data.code+'-lineid'+orders.line_id,'minus',product.data.code,product.data.code,orders.line_id);">
                             -
@@ -220,6 +223,8 @@
     #orderDetails {
         display: grid;
         grid-template-columns: 180px 760px;
+	grid-gap:10px;
+       border-right: solid 2px #ccc;
     }
 
     .order-details h1 {
@@ -255,6 +260,7 @@
         gap: 10px;
         padding: 10px;
         border-bottom: 1px solid #ddd;
+align-items: center;
     }
 
     .header {
@@ -316,7 +322,8 @@
     }
 
     .order-qty {
-        justify-content: space-between;
+        /* justify-content: space-between; */
+        gap:30px;
     }
 
     .order-items {
@@ -353,6 +360,7 @@
     .orderholder {
         height: 500px;
         overflow-y: auto;
+        overflow-x: hidden;
     }
 
     /* Full-screen overlay */
@@ -362,7 +370,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 0.8);
+        /* background: rgba(255, 255, 255, 0.8); */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -371,7 +379,7 @@
 
     /* Ensure the loading image is responsive */
     .loader-overlay img {
-        max-width: 100px;
+        max-width: 200px;
         /* Adjust based on preference */
         width: 20%;
         height: auto;

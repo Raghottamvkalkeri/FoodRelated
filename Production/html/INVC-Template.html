@@ -8,6 +8,8 @@
         <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date_basket)" />
     </mvt:if>
 
+    <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'edit_order', g.edit_order)" />
+
     <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date)" />
     <mvt:if expr="g.deliverydate">
       <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.deliverydate)" />
@@ -43,6 +45,7 @@
         <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
     </mvt:if>
     
+
     <mvt:comment> Sent email to Sales Manager </mvt:comment>
     <mvt:do file="g.Module_Library_DB" name="l.success" value="Order_Load_ID(l.settings:order:id, l.run:order)" />
     <mvt:item name="customfields" param="Read_Customer_ID(l.settings:order:cust_id, 'Sales_Manager_Email', l.settings:email)" />
@@ -104,6 +107,7 @@
     <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'order_stock',g.order_stock)" />
     <mvt:item name="customfields" param="Read_Basket( 'delivery_date', g.delivery_date )" />
     <mvt:item name="customfields" param="Read_Basket( 'curbsy_data', g.curbsy_datas )" />
+     <mvt:item name="customfields" param="Read_Basket( 'Formatted_deliverydate', g.Formatted_deliverydate )" />
     <mvt:item name="customfields" param="Read_Basket( 'curbsy_date', g.curbsy_dates )" />
     <mvt:if expr="g.curbsy_datas">
         <mvt:assign name="g.curbsy_data" value="g.curbsy_datas" />
@@ -114,6 +118,50 @@
     <mvt:assign name="g.curbsy_date" value="g.curbsy_dates" />
     <mvt:else>
     <mvt:assign name="g.curbsy_date" value="g.curbsy_date" />
+    </mvt:if>
+   <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'tax_id_number', l.settings:taxId)" />
+   <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'is_admin', g.is_admin)" />
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer"    value="Customer_Load_ID(g.basket:cust_id, l.settings:load_customer)" />
+    <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId AND (g.is_admin EQ "Yes" OR g.is_admin EQ "1")'>
+     <mvt:assign name="g.texasTimeZone" value="timezone()-1" />
+     <mvt:assign name="g.current_hour" value="time_t_hour(s.time_t, g.texasTimeZone)" />
+<mvt:assign name="g.current_min" value="time_t_min(s.time_t, 'local')" />
+<mvt:assign name="g.cutoff_hour" value="23" />
+<mvt:assign name="g.cutoff_min" value="0" />
+<mvt:assign name="g.today_date" value="padl(time_t_month(s.time_t, g.texasTimeZone), 2, '0') $ '/' $ padl(time_t_dayofmonth(s.time_t, g.texasTimeZone), 2, '0') $ '/' $ padl(time_t_year(s.time_t, g.texasTimeZone), 4, '0')" />
+<mvt:assign name="g.input_date" value="g.Formatted_deliverydate" />
+<mvt:assign name="g.today_date_clean" value="substring(g.today_date, 1, 10)" />
+<mvt:assign name="g.today_date_cleanvalue" value="''" />
+&mvt:global:Formatted_deliverydate;
+<mvt:if expr="g.input_date EQ g.today_date_clean">
+<mvt:assign name="g.today_date_cleanvalue" value="'Today'" />
+    The dates are equal.
+<mvt:elseif expr="input_date LT g.today_date_clean">
+    The given date is in the past.
+    <mvt:assign name="g.today_date_cleanvalue" value="'notToday'" />
+<mvt:elseif expr="input_date GT g.today_date_clean">
+    The given date is in the future.
+    <mvt:assign name="g.today_date_cleanvalue" value="'notTodaydate'" />
+</mvt:if>
+    <mvt:if expr="l.settings:order:ship_data EQ 'Will Call'">
+        <mvt:if expr="g.today_date_cleanvalue EQ 'notTodaydate'">
+       <mvt:item name="customfields" param="Read_Customer_ID(l.settings:order:cust_id, 'wine_account_link', l.settings:wine_account_link)" />
+        <mvt:if expr="g.isThisWineProduct EQ 'yes' OR l.settings:wine_account_link">
+        <mvt:else>
+        <mvt:if expr="g.current_hour LT g.cutoff_hour OR (g.current_hour EQ g.cutoff_hour AND g.current_min LT g.cutoff_min)">
+        <mvt:item name="customfields" param="Write_Order(l.settings:order:id, 'edit_order', '1')" />
+        </mvt:if>
+        </mvt:if>
+        </mvt:if>
+        <mvt:else>
+        <mvt:item name="customfields" param="Read_Customer_ID(l.settings:order:cust_id, 'wine_account_link', l.settings:wine_account_link)" />
+        <mvt:if expr="g.isThisWineProduct EQ 'yes' OR l.settings:wine_account_link">
+        <mvt:else>
+        <mvt:if expr="g.current_hour LT g.cutoff_hour OR (g.current_hour EQ g.cutoff_hour AND g.current_min LT g.cutoff_min)">
+            <mvt:item name="customfields" param="Write_Order(l.settings:order:id, 'edit_order', '1')" />
+            </mvt:if>
+             </mvt:if>
+    </mvt:if>
     </mvt:if>
     <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'delivery_date',g.delivery_date)" />
     <mvt:item name="customfields" param="Write_Order( l.settings:order:id, 'curbsy_date',g.curbsy_date)" />
