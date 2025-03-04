@@ -18,7 +18,7 @@ jQuery(document).ready(function () {
         });
     });
 
-    
+
 
     jQuery(".showmore").click(function () {
         var facetClass = jQuery(this).attr("data-class");
