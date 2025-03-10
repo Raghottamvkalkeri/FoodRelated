@@ -652,7 +652,8 @@
             isOrderEdited: false, // Flag to check if the order is editable
             deleteOrderItemPopUp: false,  // Flag to check if the delete order item popup is visible
             orderDetails: [], // Placeholder for the order data
-            orderSummary: [] // Placeholder for the order summary
+            orderSummary: [], // Placeholder for the order summary
+            Shipping_Methods: [],
         },
 
         methods: {
@@ -730,9 +731,11 @@
                         // Store updated order values for later use
                         storeOrderedValues = newOrderData.orderitems;
                         userData = newOrderData;
+                        self.loadShippingInfo();
                     },
                     complete: function () {
                         self.showLoader = false;
+
                     },
                     error: function (error) {
                         console.error('Error fetching order details:', error);
@@ -1115,7 +1118,7 @@
 
                 if (caseCount > 0 && foundMatch) {
                     this.newlineid = lineIds;
-                    this.modalMessage = `This item is currently in your cart as  ${checkedUOM}.Are you sure you'd like to change this item to ${ordereduom}?`;
+                    this.modalMessage = `This item is currently in your cart as  ${checkedUOM}.Are you sure you'd like to change this item to ${ordereduom.toUpperCase()}?`;
                     this.showModal = true;  // Show the modal
                     this.pushlineid = oldlineid;
                     this.oldqty = oldqty;
@@ -1541,7 +1544,68 @@
                     $('#savedOrderDetailsModal').modal({ 'show': true, keyboard: false, backdrop: 'static' });
                 }
             }
+            ,
+            // Shipping Methods
+            loadShippingInfo() {
+                let self = this;
+                let requestData = {
+                    Store_Code: self.Store_Code,
+                    Function: "Module",
+                    Module_Code: self.Module_Code,
+                    Module_Function: "FR_Order_ShippingMethods",
+                    Session_Type: self.Session_Type,
+                    customer_session: self.customer_session,
+                    Order_Id: self.Order_Id.id
+                };
+                $.ajax({
+                    url: "/Merchant5/json.mvc",
+                    type: "POST",
+                    data: requestData,
+                    beforeSend: function () {
+                        self.loading = true;
+                    },
+                    success: function (response) {
+                        self.loading = false;
+                        // Try parsing if response is a string
+                        if (typeof response === "string") {
+                            try {
+                                response = JSON.parse(response);
+                            } catch (e) {
+                                console.error("Invalid JSON response", e);
+                                return;
+                            }
+                        }
+                        if (response && response.success === 1) {
+                            self.$set(self.orderDetails, 'shipping_methods', response.data); // Directly store the array
+                        } else {
+                            self.$set(self.orderDetails, 'shipping_methods', []); // Assign empty array if no data
+                        }
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.error("Error fetching shipping methods:", error);
+                    },complete: function () {
+                        self.loading = false;
+                        $(document).on("click", ".curbsyShippingRadio", function () {
+    if ($(this).is(":checked") === true) {
+        if (
+            $(this).val().includes("Home Delivery") &&
+            parseFloat(document.querySelector(".basktotal").innerHTML) < 50
+        ) {
+            $("#new_globalerrorpopups").modal("show");
+        } else {
+            getCurbsyDelivery();
+        }
+    }
+});
+
+                    }
+                    
+                });
+            }
+
         },
+
 
         // Load order details when the Vue instance is created
         created: function () {

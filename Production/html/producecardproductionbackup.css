@@ -1,0 +1,1326 @@
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/styles20200830.css?T=5394d3ff ; media=all */
+@media all {
+
+    body a,
+    body a:focus,
+    body a:visited {
+        color: #414042;
+    }
+
+    body a:hover {
+        font-weight: normal;
+        /*-webkit-text-stroke: .5px #414042;*/
+    }
+
+    body .addWishlist:hover {
+        font-weight: normal;
+        font-family: 'ITCAvantGardePro-Md';
+        /*-webkit-text-stroke: .5px #414042;*/
+    }
+
+    body .product-name a:hover {
+        font-weight: normal;
+        font-family: 'ITCAvantGardePro-Bk';
+        /*-webkit-text-stroke: .5px #414042;*/
+    }
+
+    @media (min-width: 768px) and (max-width:1024px) {
+        .fa-heart-o {
+            font-size: 14pt !important;
+            vertical-align: top;
+        }
+    }
+
+    a:hover {
+        color: #414042;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .addFav {
+        position: absolute;
+        top: 5%;
+        right: 10px;
+    }
+
+    .removeWishlist .fa-heart {
+        color: #ff0000;
+    }
+}
+
+.productListing {
+    scroll-behavior: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 16px;
+    /* grid-gap: 25px; */
+    grid-auto-flow: row;
+    grid-auto-flow: row;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(20, 1fr);
+    -webkit-overflow-scrolling: touch;
+    grid-template-rows: unset;
+    overflow: hidden;
+    align-items: center;
+    padding: 15px 0;
+touch-action:  inherit;
+    /* max-width: 1440px; */
+scrollbar-width: thin;
+}
+
+.productouter {
+    display: -webkit-box;
+}
+
+/* Home page Product card carousel */
+#sfntproductcard .product-details {
+    display: grid;
+    grid-template-columns: 119px 1fr;
+    grid-gap: 10px;
+    width: 100%;
+    overflow: hidden;
+    padding: 8px;
+    /*border: dotted;*/
+}
+
+#sfntproductcard .btn-container-grid {
+    display: grid;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
+/* Home page Product card carousel */
+.nogrid {
+    display: flex;
+    justify-content: center;
+}
+
+#main-prod-card .productListing {
+    display: block;
+    overflow: initial;
+}
+
+.showthreebie {
+    margin-bottom: 8px;
+}
+
+#main-prod-card .productCardContainer {
+    box-shadow: none;
+    display: block;
+}
+
+.maincardd .btn-secondary:hover {
+    background-color: #fff;
+}
+
+.CTGY .productListing,
+.SRCH .productListing {
+    scroll-behavior: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    grid-auto-flow: row;
+    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+    justify-content: center;
+}
+
+#WISH-page .productListing , .SavedList .productListing {
+    grid-template-columns: repeat(5, 1fr);
+    overflow:visible;
+}
+
+.productListing {
+    --scrollbar-height: 4.5px;
+    --scrollbar-width: 10px;
+    --scrollbar-border-thickness: 3px;
+    --show-double-buttons: none;
+    --scrollbar-button-color: #fff;
+    --numCols: 4;
+}
+
+.productListing::-webkit-scrollbar {
+    width: var(--scrollbar-width, 20px);
+    height: var(--scrollbar-height, 5px);
+}
+
+.productListing::-webkit-scrollbar-thumb:hover {
+    outline: #c0c0c0 auto 5px;
+}
+
+.productListing::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color, #d1d2d3);
+    outline: #d1d2d3 1px;
+    border-radius: var(--scrollbar-border-radius, 4px);
+}
+
+/* Used for recently used container */
+.searchedproduct {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: center;
+    align-content: center;
+    width: 150px;
+    grid-gap: 12px;
+    padding: 0 5px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1px;
+}
+
+/* Used for search history and trending search */
+.searchlist {
+    display: flex;
+    vertical-align: middle;
+    gap: 5px;
+    margin: 5px 0;
+    align-items: center;
+    padding:5px;
+}
+
+.searchlist:hover {
+        background-color: #f5f5f5;
+}
+
+
+.searchedproductname {
+    width: 150px;
+    text-align: center;
+    white-space: nowrap; /* Prevents the text from wrapping to the next line */
+    overflow: hidden;    /* Hides the overflowed content */
+    text-overflow: ellipsis; /* Adds the ellipsis (...) */
+}
+
+/*.productListing::-webkit-scrollbar-button {
+    background: var(--scrollbar-button-color, #3F3F46);
+    border: var(--scrollbar-border-thickness, 3px) solid var(--scrollbar-border-color, rgb(255, 255, 255));
+    border-radius: var(--scrollbar-border-radius, 4px);
+}*/
+.grabbing {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.productarrows {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    /* -webkit-tap-highlight-color: transparent; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    left: 0;
+    right: 0;
+    /* z-index: 1; */
+}
+
+.productarrows>button {
+    z-index: 9999;
+    background: 0 0;
+    border: none;
+    /* background: #ccc; */
+    border-radius: 50px;
+    /* padding: 12px; */
+    width: 40px;
+    height: 40px;
+}
+
+.productarrows>button:hover {
+    background: #869791;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.productarrows .arrow-left {
+    /* margin: 0px; */
+    /* position: absolute; */
+    /* top: 50%; */
+    /* z-index: 9999; */
+z-index:99;
+    /* transform: translateX(-50%) translateY(-50%); */
+    /* left: 0; */
+}
+
+.productarrows .arrow-right {
+    /* margin: 0px; */
+    /* position: absolute; */
+    z-index: 99;
+    /* transform: translateX(50%) translateY(-50%); */
+    /* right: 0; */
+    /* flex: 1 0 0; */
+    /* width: 5px; */
+}
+
+.productarrows>.disabled {
+    opacity: 0.5;
+    cursor: default;
+   visibility: hidden;
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/ctgy.css?T=56d7e06e ; media=all */
+@media all {
+    .product-thumbnail {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+    }
+
+    .caret {
+        margin-top: -15px;
+        display: block;
+        position: absolute;
+        margin-left: 92% !important;
+    }
+
+    .product-item-new .product-thumbnail {
+        min-height: 152px;
+    }
+
+    #sfntproductcard .product-item-new .product-thumbnail {
+        min-height: auto;
+        height: 100%;
+        align-items: center;
+    }
+
+    #sfntproductcard .product-detail-wrapper {
+        /* display: flex; */
+        /* height: 100%; */
+        align-items: center;
+        /* width: fit-content; */
+    }
+}
+
+/* .product-item-new {
+        /* padding: 5px; */
+/* margin-bottom: 30px;
+        margin: 10px 0; */
+}
+
+*/ .product-item-new .cart-section {
+    /* display: flex!important; */
+    align-items: center !important;
+    justify-content: center;
+    min-height: 35px;
+    width: 100%;
+}
+
+.dLabel3 {
+    border: none !important;
+    background: 0 0;
+    border-bottom: .8px solid #d1d2d3 !important;
+    /* width: 205px; */
+    width: 100%;
+    text-align: justify;
+    font-size: 12px;
+    padding-block: 1px;
+    padding-inline-start: 0;
+    padding-inline-end: 6px;
+}
+
+/* Home page Product card carousel */
+#sfntproductcard .dLabel3 {
+    border: none !important;
+    background: 0 0;
+    border-bottom: .8px solid #d1d2d3 !important;
+    /* width: 205px; */
+    width: 205px;
+    text-align: justify;
+    font-size: 12px;
+    padding-block: 1px;
+    padding-inline-start: 0;
+    padding-inline-end: 6px;
+}
+
+/* Home page Product card carousel */
+
+.dropdown-menu {
+    min-width: 210px;
+    width: 100%;
+    /* width: 109%; */
+    font-size: 12px;
+    /* margin-left: -20px; */
+}
+
+.savePackDisplay {
+    text-align: center;
+    color: #628e83 !important;
+    height: 40px;
+    font-family: ITCAvantGardePro-Bold;
+    font-size: 10pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdown-menu>li>a {
+    /* padding: 3px 10px; */
+    height: auto;
+}
+
+#viewSubstitutions:hover {
+    cursor: pointer;
+}
+
+.prod-card-btn {
+    max-width: 140px;
+}
+
+.dropdown.open {
+    z-index: 9999;
+}
+
+@media only screen and (min-width : 768px) and (max-width :1024px) and (orientation :portrait) {
+    .dLabel3 {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .prod-card-btn {
+        width: 100%;
+        max-width: 120px;
+    }
+
+    .dLabel3 {
+        /* width: 17rem !important; */
+        width: 100%;
+    }
+
+    .caret {
+        margin-left: 15rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .productListing {
+        display: grid;
+        grid-auto-flow: column;
+        /* play with this to change height of the children, 50% will fill half */
+        grid-template-columns: repeat(2, 200px);
+        /* do not set template columns and rows */
+        /* grid-template-rows: unset;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    align-items: center; */
+    }
+
+    .nogrid {
+        display: flex;
+        justify-content: center;
+    }
+
+    .CTGY .productListing,
+    .SRCH .productListing {
+        display: grid;
+        /* play with this to change height of the children, 50% will fill half */
+        /* do not set template columns and rows */
+        align-items: center;
+        grid-template-columns: auto auto;
+    }
+
+    .threebieproductbtn>div img,
+    .threebieproductbtnnew>div img {
+        max-width: 13px;
+    }
+
+    .product-item-new .form-check-label {
+        font-size: 10px;
+    }
+
+    .product-item-new .product-name {
+        height: 35px;
+    }
+
+    .cart-section .dropdown-menu {
+        font-size: 9px;
+        min-width: 190px;
+        width: auto;
+        margin-left: -10px;
+    }
+
+    .second-content .dropdown-menu {
+        margin-left: -40px;
+        min-width: 200px;
+    }
+
+    .savePackDisplay {
+        text-align: center;
+        color: #628e83 !important;
+        height: 30px;
+        font-family: ITCAvantGardePro-Bold;
+        font-size: 10px;
+    }
+
+    .dropdown {
+        font-size: 10px;
+    }
+
+    .caret {
+        margin-top: -11px;
+        display: block;
+        position: absolute;
+        margin-left: 142px;
+    }
+
+    .product-item-new .dropdown .allPrice,
+    .product-item-new .dropdown .unitofmeasure {
+        float: right;
+        margin-right: 10px;
+    }
+
+    .product-name {
+        font-size: 12px !important;
+    }
+
+    .brand {
+        font-size: 10px !important;
+        white-space: inherit;
+    }
+
+    .dLabel3 {
+        border: none !important;
+        background: 0 0;
+        border-bottom: .8px solid #d1d2d3 !important;
+        /* width: 16rem !important; */
+        width: 100%;
+        text-align: justify;
+        font-size: 11px;
+    }
+
+    .prod-card-btn {
+        width: 118px;
+        font-size: 10px;
+        font-weight: 600;
+        max-width: 140px;
+    }
+
+    /* Home page Product card carousel */
+    #sfntproductcard .dLabel3 {
+        width: 160px;
+    }
+
+    /* Home page Product card carousel */
+
+}
+
+.slacdiscounttext {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .CTGY .product-item-new .product-name {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .slacdiscounttext {
+        font-size: 9px;
+    }
+}
+
+input[type=radio] {
+    accent-color: #ff5722;
+    -webkit-appearance: radio;
+    -moz-appearance: radio;
+    -ms-appearance: radio;
+}
+
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: #eeeeeeee;
+}
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/aveto-global.css?v=18 */
+a,
+input[type=radio] {
+    cursor: pointer;
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/aveto.css?v=8.1234121422 */
+.product-details .addtocartbtns.btn-orange {
+    min-width: 55px;
+    padding: 7px 12px 5px 12px;
+}
+
+#category-listing .productCardContainer .product-item-new {
+    /* min-height: 480px; */
+    /* margin: 0; */
+}
+
+@media only screen and (min-width: 991px) and (max-width:1280px) {
+    #category-listing .productCardContainer .product-item-new {
+        /* min-height:625px; */
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width:1030px) {
+    #category-listing .productCardContainer .product-item-new {
+        /* min-height: 470px; */
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:990px) {
+    #category-listing .productCardContainer .product-item-new {
+        min-height: 400px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .product-details .addtocartbtns.btn-orange {
+        width: 30px;
+        height: 30px;
+        min-width: initial;
+        padding: 6px;
+    }
+
+    #category-listing .productCardContainer .product-item-new {
+        /* min-height: 396px; */
+    }
+}
+
+input[type=radio] {
+    accent-color: #eb4e08;
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/global-header.css?v=123 ; media=all */
+@media all {
+    :focus-visible {
+        outline: 0 !important;
+    }
+
+    :focus {
+        outline: 0 !important;
+    }
+
+    input:focus {
+        outline: 0 !important;
+        box-shadow: none;
+    }
+
+    .btn:focus,
+    .btn:hover {
+       /* color: #414042 !important;*/
+        text-decoration: none;
+    }
+
+    /*  .btn:focus,.btn:hover {
+        color: #414042!important;
+        text-decoration: none;
+    } */
+    .btn-green:hover {
+        /*color: #fff !important;*/
+        text-decoration: none;
+    }
+
+    .btn-orange:hover {
+        color: #fff !important;
+        text-decoration: none;
+    }
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/global.css?T=e9c97efb ; media=all */
+@media all {
+    .btn-height {
+        height: 32px;
+        line-height: 32px;
+        padding: 0 16px;
+    }
+
+    .threebieproductbtn,
+    .threebieproductbtnnew,
+    .waitlistbtn {
+        width: 192px;
+    }
+
+    .addtocart-container {
+        margin-bottom: 8px;
+        z-index: 99;
+        position: relative;
+    }
+
+    .threebieproductbtn>div,
+    .threebieproductbtnnew>div {
+        height: auto !important;
+        margin-top: 3px;
+    }
+
+    .threebieproductbtn>div img,
+    .threebieproductbtnnew>div img {
+        margin-top: -3px;
+    }
+
+    * {
+        margin: 0;
+    }
+
+    *,
+    ::after,
+    ::before {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn,
+    a,
+    button,
+    img,
+    input {
+        transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+    }
+
+    /* .CTGY .Threeebielogo,.slaclogo {
+        position: absolute;
+        top: 1%;
+        z-index: 1;
+    } */
+    .Threeebielogo .Threebie-icon {
+        max-width: 85%;
+    }
+
+    .btn-orange:hover,
+    .btn-green:hover,
+    .showthreebie .threebieproductbtn:hover {
+        background-color: #d9764a !important;
+    }
+
+    button[disabled]:hover {
+    cursor: default;
+    background-color: #D1D3D4 !important;
+    opacity: 1 !important;
+}
+
+    .btn-yellow:hover,
+    .showthreebie .threebieproductbtnnew:hover {
+        background-color: #FFC107;
+        color: initial;
+    }
+
+    .btn.btn-green:hover {
+        background-color: #4e746b !important;
+    }
+
+    .dropdown-menu>li>a {
+        padding: 3px 10px;
+        height: auto;
+    }
+
+    .slacdiscounttext {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        flex-wrap: wrap;
+	text-wrap: balance;
+    }
+
+    .flags {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        z-index: 99;
+        /* padding: 6px; */
+        /* left: 0; */
+        width: fit-content;
+        top: unset;
+    }
+}
+
+.productCardContainer .product-item-new .flag {
+    width: 60px;
+}
+
+.product-item-new .adding,
+.card-secondary-content .adding {
+    background: #2B5249;
+}
+
+@media only screen and (max-width: 767px) {
+
+    .threebieproductbtn,
+    .threebieproductbtnnew,
+    .waitlistbtn {
+        width: 150px;
+    }
+
+    .slacdiscounttext {
+        font-size: 9px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width:1023px) {
+
+    .threebieproductbtn,
+    .threebieproductbtnnew {
+        width: 177px;
+    }
+}
+
+.product-item-new .product-name {
+    margin: 0 auto;
+    /* max-width: 85%; */
+    /* max-width: 100%; */
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    height: 30px;
+    height: 60px;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: 'ITCAvantGardePro-Bk';
+    /* letter-spacing: 1px; */
+    Letter-spacing: 0.5px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-top: 4px;
+}
+
+.product-item-new .brand {
+    /* font-weight: 600; */
+    font-family: 'ITCAvantGardePro-Demi';
+    font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    height: 15px;
+    white-space: nowrap;
+}
+
+.product-item-new .addFav,
+.productListing .addFav {
+    position: absolute;
+    top: unset;
+    right: 0;
+    /* padding: 12px; */
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    margin-top: -11px;
+    align-items: center;
+}
+
+.product-item-new .movewish {
+    /* position: absolute; */
+    top: unset;
+    right: 80px;
+    /* padding: 12px; */
+    width: 20px;
+    border-radius: 50%;
+    z-index: 99;
+}
+
+.product-item-new .removewish {
+    /* position: absolute; */
+    top: unset;
+    right: 50px;
+    /* padding: 12px; */
+    border-radius: 50%;
+    z-index: 99;
+}
+
+.removeWishlistinwishlist {
+    display: block;
+}
+
+.product-item-new .addFav:hover,
+.productListing .addFav:hover {
+    position: absolute;
+    top: unset;
+    right: 0;
+    background: #cccccc94;
+    /* padding:  12px; */
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: 999;
+}
+
+.product-item-new .addFav:focus {
+    text-decoration: none;
+}
+
+.newMinusBtn {
+    float: left;
+}
+
+.newPlusBtn {
+    float: right;
+}
+
+.newMinusBtn:hover,
+.newPlusBtn:hover {
+    font-weight: 700;
+}
+
+.product-item-new .notes-float {
+    height: 20px;
+    text-align: center;
+    font-size: 12px;
+    font-family: ITCAvantGardePro-Bk;
+}
+
+.product-item-new .form-check-label {
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin-bottom: 1px;
+    font-weight: initial;
+    align-content: space-between;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.product-item-new .product-details .product-thumbnail img {
+    width: 85%;
+    max-height: 530px;
+    max-width: 530px;
+    margin: 0 auto;
+    display: block;
+}
+
+.product-item-new .dropdown .uomName {
+    float: left;
+}
+
+.product-item-new .dropdown .allPrice,
+.product-item-new .dropdown .unitofmeasure {
+    float: right;
+}
+
+.unitofmeasure,
+.unitofprice {
+    display: inline-flex;
+    gap: 5px;
+    align-items: baseline;
+}
+
+.product-item-new .dLabel3 .allPrices,
+.product-item-new .dLabel3 .unitofmeasure {
+    margin-right: 20px;
+}
+
+.product-item-new .dLabel3 .unitofprice {
+    margin-right: 0;
+}
+
+.productCardContainer .product-item-new .product-details .product-thumbnail img {
+    width: 85%;
+    max-height: 530px;
+    max-width: 530px;
+    margin: 0 auto;
+    display: block;
+}
+
+.soldoutmessage,
+.wholesalonlyitem {
+    position: absolute;
+    background-color: #d1d2d3;
+    border-radius: 5px;
+    padding: 8px;
+    width: 80%;
+    text-align: center;
+    opacity: 1;
+    display: grid;
+
+    /* Center horizontally */
+    flex-direction: column;
+    /* Move the container to the horizontal center */
+    /* transform: translateY(-33px); */
+    /* Correct for half the width of the container */
+    /* bottom: 50%; */
+    /* opacity: 0.9; */
+    flex-wrap: wrap;
+}
+
+.product-zoom-image-wrapper .soldoutmessage {
+    position: absolute;
+    background-color: #d1d2d3;
+    border-radius: 5px;
+    padding: 8px;
+    width: 50%;
+    text-align: center;
+    opacity: 1;
+    display: grid;
+    /* Center horizontally */
+    flex-direction: column;
+    /* Move the container to the horizontal center */
+    transform: translateY(-33px);
+    /* Correct for half the width of the container */
+    bottom: 50%;
+    opacity: 0.9;
+    align-items: center;
+    align-content: center;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.soldoutmessage h5,
+.soldoutmessage p {
+    margin: 0;
+}
+
+.productCardContainer {
+    padding: 8px;
+    position: relative;
+    background-color: #fff;
+    /*box-shadow: rgb(50 50 93 / 25%) 0px 0px 0px 0px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;*/
+    /* margin: 0 1px; */
+    height: 100%;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#sfntproductcard .productCardContainer {
+    display: grid;
+    border-radius: 5px;
+    place-content: center;
+    place-items: center;
+    margin: 10px 5px;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 20px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+input:focus {
+    outline: 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .dLabel3 {
+        font-size: 11px;
+        /* width: 16rem !important; */
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .product-item-new .product-name {
+        height: 35px;
+    }
+
+    .brand {
+        font-size: 10px !important;
+        white-space: inherit;
+    }
+}
+
+.productcardbtn {
+    background-color: #fff;
+    color: #414042 !important;
+    border: solid 1px #d1d3d4;
+}
+
+.productcardbtn .btn.active,
+.btn:active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.btn:active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.productcardbtn input {
+    display: inline;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'ITCAvantGardePro-MD';
+    border: none;
+    width: 80px;
+    line-height: normal;
+    background-color: #fff;
+}
+
+.productcardbtn input:focus {
+    border: none !important;
+}
+
+.prod-card-btn {
+    width: 135px;
+}
+
+.productcardbtn .newPlusBtn,
+.productcardbtn .newMinusBtn {
+    font-size: 18px;
+    font-family: 'ITCAvantGardePro-MD';
+    line-height: inherit;
+}
+
+.addbtn:hover,
+.addbtn:focus,
+.btn-yellow:hover,
+.showthreebie .threebieproductbtnnew:hover {
+    color: #000 !important;
+}
+
+
+.adding:focus,
+.threebieproductbtnnew:focus {
+    color: #000 !important;
+}
+
+.visibleformobile {
+    display: hidden !important;
+}
+
+@media screen and (max-width: 1023px) {
+    .productcardbtn input {
+        display: inline;
+        text-align: center;
+        font-size: 14px;
+        font-family: 'ITCAvantGardePro-MD';
+        border: none;
+        width: 60px;
+        background-color: #ffffff;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .prod-card-btn {
+        width: 115px;
+        font-size: 10px;
+        font-weight: 600;
+        max-width: 140px;
+    }
+
+    .productcardbtn input {
+        display: inline;
+        text-align: center;
+        font-size: 12px;
+        font-family: 'ITCAvantGardePro-MD';
+        border: none;
+        width: 40px;
+        background-color: #ffffff;
+    }
+
+    .addbtn {
+        padding-left: 1px;
+        padding-right: 1px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .visibleformobile {
+        display: inline-block !important;
+    }
+
+    .product-item-new .form-check-label {
+        align-items: end;
+    }
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/font-awesome.css?T=c6e28696 ; media=all */
+@media all {
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .fa-shopping-cart:before {
+        content: "\f07a";
+    }
+
+    .fa-heart-o:before {
+        content: "\f08a";
+    }
+}
+
+/*! CSS Used from: https://devfr.foodrelated.com/Merchant5/css/00000001/aveto.css?T=21ada4d2 ; media=all */
+@media all {
+    .product-details .addtocartbtns.btn-orange {
+        min-width: 55px;
+        padding: 7px 12px 5px 12px;
+    }
+
+    .highlightimg {
+        filter: drop-shadow(5px 2px 8px #8a7575);
+    }
+
+    #category-listing .productCardContainer .product-item-new {
+        /* min-height: 480px; */
+        margin: 0;
+        /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
+    }
+
+    @media only screen and (max-width: 767px) {
+        .product-details .addtocartbtns.btn-orange {
+            width: 30px;
+            height: 30px;
+            min-width: initial;
+            padding: 6px;
+        }
+
+        #category-listing .productCardContainer .product-item-new {
+            /* min-height: 396px; */
+        }
+    }
+
+    input[type=radio] {
+        accent-color: #eb4e08;
+    }
+}
+
+/* additional fix for dropdown issue - internal issue 391(1)*/
+.owl-item.active {
+    z-index: 1000
+}
+
+.owl-item.active+.owl-item.active {
+    z-index: 800
+}
+
+.productListing .owl-stage-outer {
+    position: relative;
+    overflow: hidden overlay;
+    -webkit-transform: translate3d(0, 0, 0);
+    overflow: clip visible;
+}
+
+/* additional fix for dropdown issue */
+.noprouctsmsg {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    min-height: 20vh;
+}
+
+.wishlist-text {
+    position: absolute;
+    z-index: 99999999999999999999999999999999999;
+    width: 155px;
+    border: solid 1px #628e83;
+    padding: 5px;
+    top: -36px;
+    right: -53px;
+    overflow: visible;
+    text-align: center;
+    background: #fff;
+    letter-spacing: .5px;
+    font-size: 10px;
+}
+
+/* Tablet up to 990px css */
+@media screen and (max-width: 990px) {
+
+    .CTGY .productListing,
+    .SRCH .productListing,
+    #WISH-page .productListing {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 2595px) and (orientation: landscape) {
+
+    .CTGY .productListing,
+    .SRCH .productListing {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #WISH-page .productListing , .SavedList .productListing {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .productListing {
+        --numcols: 3.5;
+    }
+}
+
+@media only screen and (pointer: coarse) and (hover: none) and (max-width: 2595px) and (orientation: landscape) {
+    .CTGY .productListing,
+    .SRCH .productListing {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (pointer: coarse) and (hover: none) and (max-width: 1180px) and (orientation: portrait) {
+    .CTGY .productListing,
+    .SRCH .productListing {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* Optional: Add custom scrollbar styling (works for WebKit browsers like Chrome, Safari) */
+#searchedproducts::-webkit-scrollbar {
+    width: 15px; /* Width of the scrollbar */
+    scrollbar-width: thin;
+    scrollbar-width: thin;
+    height:8px;
+}
+
+#searchedproducts::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+#searchedproducts::-webkit-scrollbar-thumb {
+    background: #ccc; /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Round corners of the scrollbar thumb */
+}
+
+#searchedproducts::-webkit-scrollbar-thumb:hover {
+    background: #d1d2d3; /* Color of the scrollbar thumb when hovered */
+}
+
+#searchedproducts::-moz-scrollbar {
+    display: none; /* Hides the scrollbar */
+}
+
+#searchedproducts {
+ overflow: auto hidden;
+ grid-gap: 10px;
+-webkit-overflow-scrolling: touch;
+touch-action:  inherit;
+scrollbar-width: none;  /* Firefox */
+}
+
+/* Backdrop effect */
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 9999; /* Below the search history container */
+    display: none;
+}
+/* Backdrop effect */

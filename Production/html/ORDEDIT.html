@@ -1,3 +1,4 @@
+<mvt:item name="readytheme" param="contentsection( 'deliverymethods' )" />
 <div class="order-details" id="orderDetails">
     <!-- <span class="ft-14p bold-ft">Order: #&mvt:global:order_id;</span> -->
     <!-- {{orderSummary.data}} -->
@@ -7,16 +8,18 @@
         <h5 class="bold-ft">Order Summary</h5>
         <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
             :key="index">
-            <h3>Billing Information <i class="billing-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i></h3>
-<p></p>
+            <h3>Billing Information <i class="billing-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i>
+            </h3>
+            <p></p>
             <span>{{ item.bill_fname }} {{ item.bill_lname }}</span>
             <span>{{ item.bill_addr }} , {{ item.bill_city }} , {{ item.bill_state }}, {{ item.bill_zip }}</span>
             <span>{{item.bill_phone}} </span>
         </div>
         <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
             :key="index">
-            <h3>Shipping Information <i class="shipping-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i></h3>
-<p></p>
+            <h3>Shipping Information <i class="shipping-find fa fa-angle-down" onclick="toggleShippingInfo(this)"></i>
+            </h3>
+            <p></p>
             <span>{{ item.ship_fname }} {{ item.ship_lname }}</span>
             <span>{{ item.ship_addr }}, {{ item.ship_city }}, {{ item.ship_state }}, {{ item.ship_zip }}</span>
             <span>{{ item.ship_phone }}</span>
@@ -32,9 +35,50 @@
                     </span>
                 </span> </span>
             <!-- <span>Sales Tax: <span class="ft-md">${{(item.total_tax).toFixed(2)}}</span></span> -->
-            <span class="ft-12p ord-summary bold-ft">Total: <span class="ft-md">${{(item.total).toFixed(2)}}</span></span>
+            <span class="ft-12p ord-summary bold-ft">Total: <span
+                    class="ft-md">${{(item.total).toFixed(2)}}</span></span>
         </div>
-
+        <div id="shippingmethods" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]" :key="index">
+            <h5 class="bold-ft ft-12p mar-zero">Available Delivery Methods - </h5>
+            <span span v-for="(charges ,index) in orderDetails.ordercharges">
+                <span class="ft-md ft-10p" v-for="(chargelist ,index) in charges" v-if="chargelist.descrip.includes('Shipping')" v-html="chargelist.descrip.replace(/Shipping: \s*/gi, ' ')" class="bold-ft ft-12p"></span>
+                        
+                </span>
+            </span>
+            <div v-if="orderDetails.shipping_methods && orderDetails.shipping_methods.length">
+                <div v-for="method in orderDetails.shipping_methods" :key="method.method_code">
+                   
+                    <!-- <label class="form-check-label shipping-label">
+                        <input type="radio" 
+                        name="shipping_method" 
+                        :value="method.method_code" 
+                        >
+                      <div class="">
+                        <span class="ft-md ft-12p">{{method.method_name}}</span>
+                        <span class="txt-orange ft-md ft-12p">{{method.formatted_price}}</span> 
+                      </div>
+                    </label> -->
+                    <label v-bind:data-method="method.method_code"
+                    v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping' : method.method_code.split(':').pop()"
+                    class="form-check-label shipping-label" v-bind:for="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'">
+                    <div class="ht-75 methodcard shipping-details" > 
+                        <input type="radio" required name="ShippingMethod" class=""  v-bind:class="method.method_name.includes('FedEx') || method.method_name.includes('Free Ground') ? 'shippingMethodRadioNew' : 'curbsyShippingRadio'"
+                            v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'" v-bind:value="method.method_code"
+                            v-bind:shiping-method="method.method_code.split(':').pop()" v-bind:shipping-name="method.method_name" v-bind:data-estimated-date="method.fedEXInternalDateCheck">
+                            <div class="shipping-details">
+                                <span class="ft-md ft-12p">{{method.method_name}}</span>
+                            <p class="ft-14p marginzero ltr-sp-0p5 ft-md mb-ft-12p shippingname" v-bind:class="method.shippingname ? 'frtuckclass' : ''" v-html="method.shippingname"></p>
+                            <span class="shipping-price txt-orange "> {{method.formatted_price}} <span class="txt-hover" v-if="productweightcheck > 0 && (method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')) && vueUserTypes !== 'Wholesale'"> + $40*</span> </span>
+                            <span v-if="method.method_name.includes('FedEx International Economy') || method.method_name.includes('FedEx International Priority')" v-html="method.fedEXInternationdate"></span>
+                            <span v-bind:class="{'getestimateddelivery':method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')}" class="ft-14p ltr-sp-0p5"></span>
+                            </div>
+                        
+                    </div>
+                </label>
+                </div>
+            </div>
+            
+        </div>
     </div>
     <div class="order-list">
         <!-- Modal Component -->
@@ -65,10 +109,12 @@
                         <!-- <button type="button" class="close1" data-dismiss="modal" aria-label="Close"></button> -->
                     </div>
                     <div class="modal-bodys">
-                        <span class="gpoperror txt-warning txt-center"><span class="ft-demi">PLEASE NOTE:</span> Orders can be edited only once</span>
+                        <span class="gpoperror txt-warning txt-center"><span class="ft-demi">PLEASE NOTE:</span> Orders
+                            can be edited only once</span>
                     </div>
                     <div class="modal-footers">
-                        <button class="btn btn-lg secondary-btn btn-white" data-dismiss="modal" @click="viewOrderDetails.loadOrderDetails()"> Cancel </button>
+                        <button class="btn btn-lg secondary-btn btn-white" data-dismiss="modal"
+                            @click="viewOrderDetails.loadOrderDetails()"> Cancel </button>
                         <button class="btn btn-lg primary-btn btn-orange" @click="saveOrderDetails"> Save Changes
                         </button>
                     </div>
@@ -83,14 +129,16 @@
                 <div class="modal-contents">
                     <div class="modal-headerss">
                         <h5 class="modal-titles">Remove this item from your order?</h5>
-                       
+
                     </div>
                     <div class="modal-bodys">
                         <!-- <span class="gpoperror txt-warning txt-center">Orders can be editied once</span> -->
                     </div>
                     <div class="modal-footers">
-                        <button class="btn btn-lg secondary-btn btn-white" @click="viewOrderDetails.loadOrderDetails()" data-dismiss="modal"> Cancel </button>
-                        <button class="btn btn-lg primary-btn btn-orange" v-bind:data-line-id="deletelineId" @click="deleteOrderItem(deletelineId,1)"> Remove item
+                        <button class="btn btn-lg secondary-btn btn-white" @click="viewOrderDetails.loadOrderDetails()"
+                            data-dismiss="modal"> Cancel </button>
+                        <button class="btn btn-lg primary-btn btn-orange" v-bind:data-line-id="deletelineId"
+                            @click="deleteOrderItem(deletelineId,1)"> Remove item
                         </button>
                     </div>
                 </div>
@@ -116,9 +164,10 @@
         </div>
         <div class="orderholder">
             <div class="order-row" v-for="orders in orderDetails.orderitems">
-                <div class="order-items" v-bind:class="products.data.product_inventory <= 0 ? 'greyout' : ''" v-for="(products, idx) in orders.product" :key="idx">
-                    <div  v-if="orders.product && orders.product.length > 0"
-                        v-for="(products, idx) in orders.product" :key="idx" v-bind:class="products.data.product_inventory <= 0 ? 'greyout' : ''">
+                <div class="order-items" v-bind:class="products.data.product_inventory <= 0 ? 'greyout' : ''"
+                    v-for="(products, idx) in orders.product" :key="idx">
+                    <div v-if="orders.product && orders.product.length > 0" v-for="(products, idx) in orders.product"
+                        :key="idx" v-bind:class="products.data.product_inventory <= 0 ? 'greyout' : ''">
                         <img v-if="products.data.productimagedata && products.data.productimagedata[0]"
                             class="img-responsive wd-100"
                             :src="products.data.productimagedata[0].image || 'https://placehold.co/400'" alt="" />
@@ -126,7 +175,12 @@
                     <div class="ord-name-sku"><span>{{ orders.name }}</span> <span class="txt-gray ft-12p">
                             {{orders.sku}}
                         </span>
-                    <span v-for="(products, idx) in orders.product" :key="idx" class="txt-orange ft-12p viewSubstitution pointer" v-bind:class="'ProductDetails-'+products.data.code" @click="showSubstitutions(products.data.code,products.data.substitute);" v-if="products.data.product_inventory <= 0 && products.data.substitute !== ''" style="display: none;">Add Substitution</span>
+                        <span v-for="(products, idx) in orders.product" :key="idx"
+                            class="txt-orange ft-12p viewSubstitution pointer"
+                            v-bind:class="'ProductDetails-'+products.data.code"
+                            @click="showSubstitutions(products.data.code,products.data.substitute);"
+                            v-if="products.data.product_inventory <= 0 && products.data.substitute !== ''"
+                            style="display: none;">Add Substitution</span>
                     </div>
                 </div>
                 <div class="order-size">
@@ -137,33 +191,36 @@
                         </span>
                 </div>
                 <div v-for="(product, idx) in orders.product" :key="idx" class="order-units"
-                    v-bind:class="'ProductDetail-'+product.data.code+orders.line_id" v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
-                    <div v-for="(variant, index) in product.data.variants" v-if="variant.UOM_TEXT !== 'Threebie'" v-bind:class="[variant.inv <=0 ? 'disabled ' : '' , product.data.product_inventory <= 0 ? 'greyout' : '']">
+                    v-bind:class="'ProductDetail-'+product.data.code+orders.line_id"
+                    v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''"
+                    v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
+                    <div v-for="(variant, index) in product.data.variants" v-if="variant.UOM_TEXT !== 'Threebie'"
+                        v-bind:class="[variant.inv <=0 ? 'disabled ' : '' , product.data.product_inventory <= 0 ? 'greyout' : '']">
                         <input type="hidden" v-bind:name="'Products['+product.data.id+']:attributes[1]:code'"
                             class="miltiattrcode" value="size" autocomplete="off">
                         <div class="form-check " style="margin-top: 0">
 
-                            <input class="form-check-inputs miltiattrvalue" v-bind:disabled="variant.inv <= 0 ? true : false"
+                            <input class="form-check-inputs miltiattrvalue"
+                                v-bind:disabled="variant.inv <= 0 ? true : false"
                                 v-bind:class="variant.UOM_TEXT === 'Threebie' ? '' : 'radioUnit-'+variant.code"
                                 type="radio"
                                 v-bind:name="'Products['+product.data.id+orders.line_id+']:attributes[1]:value'"
                                 v-bind:id="variant.code+'-option'" v-bind:value="variant.code"
                                 v-bind:data-option-code="variant.code" v-bind:data-parent="product.data.code"
-                                v-bind:data-stock="variant.inv"
-                                v-bind:actualdata-stock="variant.inv"
+                                v-bind:data-stock="variant.inv" v-bind:actualdata-stock="variant.inv"
                                 v-bind:data-stockafteraddedtocart="variant.inv"
-                                v-bind:data-product_code="product.data.code+orders.line_id" v-bind:data-uom="variant.UOM"
-                                v-bind:data-product_sku="product.data.sku" v-bind:data-line_id="orders.line_id"
-                                v-bind:data-name="product.data.name" v-bind:data-code="variant.code"
-                                v-bind:data-sku="product.data.sku" v-bind:data-quantity="2"
-                                v-bind:data-price="variant.price" v-bind:data-weight="product.data.weight"
-                                v-bind:data-taxable="product.data.taxable" v-bind:data-attr_code="'size'"
-                                v-bind:data-opt_code_or_data="variant.code" v-bind:data-attr_price="variant.price"
-                                v-bind:data-attr_weight="product.data.weight" data-maxqty="" data-saleprice="$0.50"
-                                data-salebaseprice="$2.55" v-bind:data-min="variant.pack_size"
+                                v-bind:data-product_code="product.data.code+orders.line_id"
+                                v-bind:data-uom="variant.UOM" v-bind:data-product_sku="product.data.sku"
+                                v-bind:data-line_id="orders.line_id" v-bind:data-name="product.data.name"
+                                v-bind:data-code="variant.code" v-bind:data-sku="product.data.sku"
+                                v-bind:data-quantity="2" v-bind:data-price="variant.price"
+                                v-bind:data-weight="product.data.weight" v-bind:data-taxable="product.data.taxable"
+                                v-bind:data-attr_code="'size'" v-bind:data-opt_code_or_data="variant.code"
+                                v-bind:data-attr_price="variant.price" v-bind:data-attr_weight="product.data.weight"
+                                data-maxqty="" data-saleprice="$0.50" data-salebaseprice="$2.55"
+                                v-bind:data-min="variant.pack_size"
                                 v-bind:checked="orders.code == variant.code || variant.checkedvalues == true ? true : ''"
-                                autocomplete="off"
-                                v-bind:data-orderduom="orders.OrderdedUOM"
+                                autocomplete="off" v-bind:data-orderduom="orders.OrderdedUOM"
                                 @change="setQuantityforThreebie(product.data.code+orders.line_id, orders.quantity , orders.code ,variant.code);checkCase(orders.line_id,orders.code == variant.code ? orders.code :variant.code,orders.code == variant.code ? capitalizeText(variant.UOM) : capitalizeText(variant.UOM) ,$event);">
 
 
@@ -171,8 +228,8 @@
                                 v-if="variant.UOM_TEXT !== 'Threebie'">
                                 <span hidden="" class="displayUom uom_name">{{variant.UOM}}</span>
                                 <input v-bind:value="variant.pack_size" class="data-min hidden"
-                                    v-bind:data-stock="variant.inv"
-                                    v-bind:class="'prodcodecheck-'+variant.code" class="data-min hidden"
+                                    v-bind:data-stock="variant.inv" v-bind:class="'prodcodecheck-'+variant.code"
+                                    class="data-min hidden"
                                     v-bind:data-newuom="variant.addclass && product.data.market_product != '1' && isSlacUser.includes('SLAC') !== true && vueUserTypes == 'Retail' ? '' :  getUomforInventorymessage(variant.UOM)"
                                     v-bind:data-reorderstock="product.data.product_inventory" autocomplete="off">
                                 <span class="option-prompt" style="display:none">{{variant.UOM}}</span>
@@ -184,10 +241,13 @@
 
                 </div>
                 <div class="order-price">${{(orders.price).toFixed(2)}}</div>
-                <div class="order-qty" v-for="(product, idx) in orders.product" :key="idx" v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''">
+                <div class="order-qty" v-for="(product, idx) in orders.product" :key="idx"
+                    v-bind:class="product.data.product_inventory <= 0 ? 'greyout' : ''">
                     <button type="button"
-                        class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn" v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
-                        <span class="newMinusBtn" v-bind:style="orders.quantity == 1 ? 'pointer-events:none;cursor:not-allowed;opacity:0.5' : ''"
+                        class="btn primary-btn prod-card-btn ft-12p btn-height upbuttons productcardbtn"
+                        v-bind:style="product.data.product_inventory <= 0 ? 'pointer-events:all;' : ''">
+                        <span class="newMinusBtn"
+                            v-bind:style="orders.quantity == 1 ? 'pointer-events:none;cursor:not-allowed;opacity:0.5' : ''"
                             @click="qtyupdateDesk('qty-'+product.data.code+'-lineid'+orders.line_id,'minus',product.data.code,product.data.code,orders.line_id);">
                             -
                         </span>
@@ -207,8 +267,9 @@
                         </span>
                     </button>
                     <a data-ogid="15409" v-if="orderDetails.orderitems.length > 1" v-bind:data-lineid="orders.line_id"
-                        class="ogdelete" @click="deleteOrderItem(orders.line_id,products.data.product_inventory)" contenteditable="false"
-                        style="cursor: pointer;" v-for="(products, idx) in orders.product" :key="idx"><span class="material-icons grey-lighter-1">
+                        class="ogdelete" @click="deleteOrderItem(orders.line_id,products.data.product_inventory)"
+                        contenteditable="false" style="cursor: pointer;" v-for="(products, idx) in orders.product"
+                        :key="idx"><span class="material-icons grey-lighter-1">
                             highlight_off
                         </span></a>
                 </div>
@@ -223,8 +284,8 @@
     #orderDetails {
         display: grid;
         grid-template-columns: 180px 760px;
-	grid-gap:10px;
-       border-right: solid 2px #ccc;
+        grid-gap: 10px;
+        border-right: solid 2px #ccc;
     }
 
     .order-details h1 {
@@ -260,7 +321,7 @@
         gap: 10px;
         padding: 10px;
         border-bottom: 1px solid #ddd;
-align-items: center;
+        align-items: center;
     }
 
     .header {
@@ -323,14 +384,14 @@ align-items: center;
 
     .order-qty {
         /* justify-content: space-between; */
-        gap:30px;
+        gap: 30px;
     }
 
     .order-items {
         display: grid;
         grid-template-columns: 60px 1fr;
         font-size: 14px;
-        gap:10px;
+        gap: 10px;
         font-family: 'ITCAvantGardePro-Md';
     }
 
@@ -388,8 +449,19 @@ align-items: center;
 
 
     .greyout {
-    color: #ddd !important;
-}
+        color: #ddd !important;
+    }
+
+    .shipping-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .shipping-details {
+        display: flex;
+        flex-direction: column;
+    }
 
     /* .order-row:has(.disabled) {
         opacity: 0.5;
