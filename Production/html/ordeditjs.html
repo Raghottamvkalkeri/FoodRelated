@@ -1566,6 +1566,7 @@
                     },
                     success: function (response) {
                         self.loading = false;
+                        var shippingname = "";
                         // Try parsing if response is a string
                         if (typeof response === "string") {
                             try {
@@ -1576,11 +1577,16 @@
                             }
                         }
                         if (response && response.success === 1) {
+                            response.data.forEach(method => {
+                            if (method.method_name) {
+                                method.shippingname = method.method_name.replace(/&reg;/g, "<sup>®</sup>");
+                            }
+                            });
                             self.$set(self.orderDetails, 'shipping_methods', response.data); // Directly store the array
                         } else {
                             self.$set(self.orderDetails, 'shipping_methods', []); // Assign empty array if no data
                         }
-                        console.log(response);
+                        // console.log(response);
                     },
                     error: function (error) {
                         console.error("Error fetching shipping methods:", error);

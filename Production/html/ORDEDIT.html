@@ -60,25 +60,26 @@
                     </label> -->
                     <label v-bind:data-method="method.method_code"
                     v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping' : method.method_code.split(':').pop()"
-                    class="form-check-label shipping-label" v-bind:for="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'">
-                    <div class="ht-75 methodcard shipping-details" > 
+                    class="form-check-label" v-bind:for="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'">
+                    <div class="ht-75 methodcard shipping-label" > 
                         <input type="radio" required name="ShippingMethod" class=""  v-bind:class="method.method_name.includes('FedEx') || method.method_name.includes('Free Ground') ? 'shippingMethodRadioNew' : 'curbsyShippingRadio'"
                             v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'" v-bind:value="method.method_code"
                             v-bind:shiping-method="method.method_code.split(':').pop()" v-bind:shipping-name="method.method_name" v-bind:data-estimated-date="method.fedEXInternalDateCheck">
                             <div class="shipping-details">
-                                <span class="ft-md ft-12p">{{method.method_name}}</span>
+                                <!-- <span class="ft-md ft-12p">{{method.method_name}}</span> -->
                             <p class="ft-14p marginzero ltr-sp-0p5 ft-md mb-ft-12p shippingname" v-bind:class="method.shippingname ? 'frtuckclass' : ''" v-html="method.shippingname"></p>
                             <span class="shipping-price txt-orange "> {{method.formatted_price}} <span class="txt-hover" v-if="productweightcheck > 0 && (method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')) && vueUserTypes !== 'Wholesale'"> + $40*</span> </span>
                             <span v-if="method.method_name.includes('FedEx International Economy') || method.method_name.includes('FedEx International Priority')" v-html="method.fedEXInternationdate"></span>
                             <span v-bind:class="{'getestimateddelivery':method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')}" class="ft-14p ltr-sp-0p5"></span>
                             </div>
-                        
                     </div>
                 </label>
                 </div>
             </div>
             
         </div>
+        <div id="selectedDeliveryContentforFedExShipping" class="hidden"></div>                                        
+        <div id="selectedDeliveryContent"></div>
     </div>
     <div class="order-list">
         <!-- Modal Component -->
@@ -461,6 +462,11 @@
     .shipping-details {
         display: flex;
         flex-direction: column;
+    }
+
+    .methodcard {
+        border: none;
+        width: 100%;
     }
 
     /* .order-row:has(.disabled) {

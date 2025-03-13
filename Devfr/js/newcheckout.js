@@ -1651,6 +1651,8 @@ function GetCurbsySLots() {
       deliverymethod == "FR Truck Delivery"
     ) {
       var newList = dataval;
+      var currentDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+      var currentDay = new Date(currentDate).getDay(); // Get current weekday (0 = Sunday, 6 = Saturday)
       for (var i = 0; i < newList.length; i++) {
         var dates = new Date(newList[i].day).toLocaleString("en-us", {
           weekday: "short",
@@ -1665,7 +1667,13 @@ function GetCurbsySLots() {
           timeZone: "America/New_York",
         });
         var getday = new Date(newList[i].day).getDay();
-        newList[i].dates = dates;
+        var displayDay = dates; // Default is the short weekday name
+    if (getday === currentDay) {
+        displayDay = "Today";
+    } else if (getday === (currentDay + 1) % 7) {
+        displayDay = "Tomorrow";
+    }
+        newList[i].dates = displayDay;
         newList[i].month = month;
         newList[i].days = day;
         newList[i].getday = getday;
@@ -1690,6 +1698,8 @@ function GetCurbsySLots() {
         });
       });
 
+      var currentDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+      var currentDay = new Date(currentDate).getDay(); // Get current weekday (0 = Sunday, 6 = Saturday)
       for (var i = 0; i < newList.length; i++) {
         var dates = new Date(newList[i].day).toLocaleString("en-us", {
           weekday: "short",
@@ -1704,7 +1714,15 @@ function GetCurbsySLots() {
           timeZone: "America/New_York",
         });
         var getday = new Date(newList[i].day).getDay();
-        newList[i].dates = dates;
+
+            // Compare days to determine "Today" or "Tomorrow"
+    var displayDay = dates; // Default is the short weekday name
+    if (getday === currentDay) {
+        displayDay = "Today";
+    } else if (getday === (currentDay + 1) % 7) {
+        displayDay = "Tomorrow";
+    }
+        newList[i].dates = displayDay;
         newList[i].month = month;
         newList[i].days = day;
         newList[i].getday = getday;

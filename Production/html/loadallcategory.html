@@ -1,0 +1,215 @@
+<style>
+    .categoryss {
+        background-color: #78909C;
+        border: 2px dotted;
+        padding: 2px;
+        height: 50px;
+    }
+
+    .categorycard {
+        border-radius: 10px;
+        /* border: solid 3px #fff; */
+        background-color: #fff;
+        /* box-shadow: inset rgba(0, 0, 3, 0.20) 1px -4px 0px 2px; */
+        /* padding: 10px; */
+    }
+
+    #openImageModal iframe {
+        width: 100%;
+        height: 600px;
+        border: none;
+    }
+
+    /* #loadallcategorys {
+     scrollbar-width: thin;
+     } */
+
+    /* width */
+    /* #loadallcategorys:-webkit-scrollbar {
+      width: 2px;
+    } */
+
+    /* Track */
+    /* #loadallcategorys::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    } */
+
+    /* Handle */
+    /* #loadallcategorys::-webkit-scrollbar-thumb {
+      background: #888;
+    } */
+
+    /* Handle on hover */
+    /* #loadallcategorys::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+        .categorycard img {
+            border-radius: 10px;
+        } */
+
+    /* .SFNT #loadallcategorys .owl-nav {position: absolute;width: 100%;margin: 0;top: 60px;}
+    .SFNT #loadallcategorys  .owl-nav .owl-prev {position: absolute;left: -20px;font-size: 50px;color: #000000;}
+    .SFNT #loadallcategorys  .owl-nav .owl-prev img {width: 1.5rem !important;}
+    .SFNT #loadallcategorys  .owl-nav .owl-next {position: absolute;right: -20px;font-size: 50px;color: #000000;}
+    .SFNT #loadallcategorys  .owl-nav .owl-next img {width: 1.5rem !important;}
+    .SFNT #loadallcategorys  .owl-nav .owl-next:hover {cursor: pointer;}
+    .SFNT #loadallcategorys  .owl-nav .owl-prev:hover {cursor: pointer;} */
+    /* .SFNT .owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+      background: unset; }
+      .owl-theme .owl-nav [class*='owl-']:hover {
+      background: unset; } */
+    /* .SFNT #loadallcategorys .owl-nav .owl-next {
+        position: absolute;
+        top: 20px;
+        right: -30px;
+        font-size: 50px;
+        height: 35px;
+        width: 35px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .SFNT #loadallcategorys .owl-nav .owl-prev {
+        position: absolute;
+        top: 20px;
+        left: -30px;
+        font-size: 50px;
+        font-size: 50px;
+        height: 35px;
+        width: 35px;
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+    .img-size {
+        min-width: 190px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .img-size {
+            min-width: 130px;
+        }
+
+        /* .SFNT #loadallcategorys .owl-nav .owl-prev {
+            top: 0px
+        }
+        .SFNT #loadallcategorys .owl-nav .owl-next {
+            top: 0px
+        } */
+
+    }
+</style>
+<script>
+
+</script>
+<mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer"
+    value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+<mvt:comment>
+    <div>
+        <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+            <h5 class="header1">
+                <mvt:item name="readytheme" param="banner( 'ws_second_content_cat_car_header' )" />
+            </h5>
+            <mvt:else>
+                <h5 class="header1">
+                    <mvt:item name="readytheme" param="banner( 'second_content_cat_car_header' )" />
+                </h5>
+        </mvt:if>
+    </div>
+
+    <!-- <div id="loadallcategorys" class="owl-carousel owl-theme"
+        style="display: none;" >
+        <div v-for="cat in loadcategory.category" style="padding: 16px;" class="img-size">
+            <div class="categorys categorycard pointer" @click="location.href=cat.category_link">
+                <img class="img-responsives" loading="lazy" v-bind:src="cat.category_image" />
+            </div>
+        <h5 class="ft-md ft-14p txt-center"> {{ cat.category_name }} </h5>
+        </div>
+    </div> -->
+</mvt:comment>
+<mvt:comment>Load all navigation categories here</mvt:comment>
+<div id="loadallcategorys" style="display: none;">
+    <h5 class="header1">{{loadcategory[0].title}}</h5>
+
+    <div v-for="cats in loadcategory">
+        <div id="loadhomecategories" class="owl-carousel owl-theme">
+            <div v-for="cat in cats.data" style="" class="img-size" v-if="cat.link_type !='N'">
+                <div class="categorys categorycard pointer"
+                    @click="cat.link_type !='G' ? location.href=cat.url : openImage(cat.url,cat.label)">
+                    <img class="img-responsives" loading="lazy"
+                        v-bind:src="cat.image != '' ? cat.image: 'graphics/00000001/3/categorythumbnail.png'" />
+                </div>
+                <!-- <h5 class="ft-md ft-14p txt-center"> {{ cat.label }} </h5> -->
+            </div>
+        </div>
+    </div>
+</div>
+<mvt:comment>Load all navigation categories here</mvt:comment>
+
+<script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
+
+<div class="modal fade" id="openImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialogs" role="document">
+        <div class="modal-contents">
+            <div class="modal-headerss">
+                <h5 class="modal-titles" id="imagelabel">Image</h5>
+            </div>
+            <div class="modal-bodys">
+                <iframe id="modalIframe" src="" allowfullscreen></iframe>
+            </div>
+            <div class="modal-footers">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--script>
+  window.renderBadge = function() {
+    var ratingBadgeContainer = document.createElement("div");
+    document.body.appendChild(ratingBadgeContainer);
+    window.gapi.load('ratingbadge', function() {
+      window.gapi.ratingbadge.render(ratingBadgeContainer, {"merchant_id": 5351810867 ,"position" : "INLINE"});
+    });
+  }
+</script-->
+<script>
+    function openImage(url,label) {
+       
+    //     setTimeout(function(){
+    //     $('#openImageModal').modal('show', function () {
+            
+    //     });
+    //     $('#imagelabel').text(label);
+    //     $('#modalIframe').attr('src', url);
+
+
+    //     $('#myModal').on('hidden.bs.modal', function () {
+    //         $('#modalIframe').attr('src', ''); // Clear iframe to stop loading when closed
+    //     });
+    // },1000);
+    // window.open(url,'_blank');
+    openOrFocusTab(url);
+    }
+
+    let openTabs = {};
+
+function openOrFocusTab(url) {
+    if (openTabs[url] && !openTabs[url].closed) {
+        openTabs[url].focus(); // Focus on the existing tab
+    } else {
+        openTabs[url] = window.open(url, "_blank"); // Open new tab
+    }
+}
+
+// Example Usage
+
+
+</script>
+<div class="col-lg-12 hidden">
+    <g:ratingbadge merchant_id=5351810867></g:ratingbadge>
+</div>
