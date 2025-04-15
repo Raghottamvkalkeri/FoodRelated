@@ -60,7 +60,7 @@
             <mvt:assign name="l.settings:navigationitem:image" value="l.settings:imagedata[1]:image:image"/>
         </mvt:if>
         <mvt:assign name="l.settings:navigationitem:label" value="l.settings:product:name"/>
-         <mvt:elseif expr="l.settings:navigationitem:link_type EQ 'G'">
+        <mvt:elseif expr="l.settings:navigationitem:link_type EQ 'G'">
         <mvt:assign name="l.settings:imagedata" value="''"/>
         <mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'page_image', l.settings:page_image )" />
         <mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'page_label', l.settings:page_label )" />
