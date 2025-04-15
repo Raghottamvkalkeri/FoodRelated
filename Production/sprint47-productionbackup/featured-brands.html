@@ -1,0 +1,1041 @@
+<mvt:item name="html_profile" />
+
+<head>
+    <mvt:item name="head" param="css_list" />
+    <mvt:item name="head" param="head_tag" />
+    <mvt:item name="product_display_imagemachine" param="head" />
+    <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+    <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer"
+        value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+    <mvt:if expr="g.Category_Code EQ 'hc' AND g.customer:pw_email NE 'elizabeth.lutz@healthcollaborative.net'">
+        <script>
+            window.location.href = "/";
+        </script>
+    </mvt:if>
+    <link type="text/css" media="all" rel="stylesheet" href="css/00000001/virtualdeli.css?v=<mvt:eval expr="
+        random(1000)" />">
+    </link>
+    <style>
+        video::-webkit-media-controls-start-playback-button {
+            display: none;
+        }
+
+        .video-wrapper video {
+            position: relative;
+            bottom: -8px;
+            right: 2px;
+            border-radius: 5px;
+        }
+
+        .video-wrapper {
+            overflow: hidden;
+        }
+
+        .imgText {
+            z-index: 1;
+        }
+
+        .line-ht {
+            line-height: 1.3;
+        }
+
+        .loaderContainer {
+            position: absolute;
+            width: 100%;
+            max-width: 100%;
+            height: 200vh;
+            background-color: #fff;
+            opacity: 1;
+            overflow: auto;
+            z-index: 999;
+            top: 110px;
+            right: 0;
+            left: 0;
+            margin: 0 auto;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #f47a44;
+            width: 50px;
+            height: 50px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            position: relative;
+            top: 25%;
+            left: 50%;
+        }
+
+        .main-banner {
+            position: relative;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 7px;
+            width: 100%;
+        }
+
+        .Small {
+            width: 50%;
+        }
+
+        .productCardContainer .product-item-new .flag {
+            border-radius: initial;
+        }
+
+        .CTGY .productListing,
+        .SRCH .productListing {
+            justify-content: initial;
+        }
+    </style>
+</head>
+
+<body class="CTGYS &mvt:category:id;">
+    <mvt:comment>
+        <mvt:item name="readytheme" param="contentsection( 'coming-soon' )" />
+    </mvt:comment>
+    <div class="loaderContainer">
+        <div class="loader"></div>
+    </div>
+    <mvt:comment>
+        <mvt:item name="toolkit" param="subcat|subcatcount|g.Category_Code" />
+    </mvt:comment>
+    <!-- Subcat Toolkit replacement  function -->
+    <mvt:assign name="l.settings:sub_categories" value="''" />
+    <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+        value="Category_Load_Code( l.settings:cats:code, l.settings:current_category )" />
+    <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+        value="CategoryList_Load_Parent( l.settings:current_category:id, l.settings:sub_categories )" />
+    <!-- Subcat Toolkit replacement  function ends -->
+    <mvt:if expr='g.subcatcount'>
+        <div id="site-container" class='ctgy-content sub-ctgy-content'>
+            <mvt:else>
+                <div id="site-container" class='sub-ctgy-content'>
+    </mvt:if>
+    <div id="global-header">
+        <mvt:item name="hdft" param="global_header" />
+    </div>
+    <div class="background-container" style="padding-bottom: 20px;overflow:hidden; display:hidden;">
+        <div id="page-header">
+            <mvt:item name="hdft" param="header" />
+        </div>
+        <div class="main-banner" id="top">
+            <mvt:comment>
+                <mvt:if expr="l.settings:clientdimensions:width LE 767">
+                    <mvt:item name="customfields"
+                        param="Read_Category_ID(l.settings:category:id, 'cat_video_mobile', l.settings:cat_video_path )" />
+                    <mvt:elseif
+                        expr="l.settings:clientdimensions:width GE 768 AND l.settings:clientdimensions:width LE 1024">
+                        <mvt:item name="customfields"
+                            param="Read_Category_ID(l.settings:category:id, 'cat_video_ipad', l.settings:cat_video_path )" />
+                        <mvt:elseif expr="l.settings:clientdimensions:width GT 1024">
+                            <mvt:item name="customfields"
+                                param="Read_Category_ID(l.settings:category:id, 'cat_video', l.settings:cat_video_path )" />
+                </mvt:if>
+
+                <div autoplay="" muted="" loop="" id="bg-video">
+                    <video class="embed-responsive-item" autoplay loop muted playsinline>
+                        <source src="&mvt:cat_video_path;" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="video-overlay header-text">
+                    <div class="caption">
+                        <mvt:item name="readytheme" param="contentsection( 'market_landing_content' )" />
+                    </div>
+                </div>
+            </mvt:comment>
+        </div>
+
+        <div class="container fr-main-container ">
+            <mvt:comment> WR-50995 </mvt:comment>
+            <div class="fr-sub-container ">
+                <mvt:comment> WR-50995 </mvt:comment>
+
+
+
+                <div id="breadcrumbs" class="hidden-xs">
+                    <mvt:item name="breadcrumbs" />
+                </div>
+
+
+
+
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12 globalCols mobile">
+
+
+                    <mvt:item name="216_Category_Header_Expander" param="check-category-header|800" />
+
+                    <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 infoCol hidden">
+                        <div class="desktopinfo">
+                            <mvt:item name="customfields"
+                                param="Read_Category_Code(g.Category_Code, 'banner_img',l.settings:bannerImage )" />
+                            <mvt:item name="customfields"
+                                param="Read_Category_Code(g.Category_Code, 'title',l.settings:bannerTitle )" />
+                            <div class="cat-head-text-wrapper">
+                                <div class="cat-head-text">
+
+                                    <!-- first page  banner image -->
+                                    <img src="&mvt:bannerImage;" border="0" class="deli-header hidden" /></a>
+
+                                </div>
+                                <mvt:comment>
+                                    <div class="imgText">
+                                        &mvt:bannerTitle;
+                                    </div>
+                                </mvt:comment>
+
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <mvt:if expr="l.settings:clientdimensions:width LE 767">
+                                <mvt:item name="customfields"
+                                    param="Read_Category_ID(l.settings:category:id, 'cat_video_mobile', l.settings:cat_video_path )" />
+                                <mvt:elseif
+                                    expr="l.settings:clientdimensions:width GE 768 AND l.settings:clientdimensions:width LE 1024">
+                                    <mvt:item name="customfields"
+                                        param="Read_Category_ID(l.settings:category:id, 'cat_video_ipad', l.settings:cat_video_path )" />
+                                    <mvt:elseif expr="l.settings:clientdimensions:width GT 1024">
+                                        <mvt:item name="customfields"
+                                            param="Read_Category_ID(l.settings:category:id, 'cat_video', l.settings:cat_video_path )" />
+                            </mvt:if>
+
+                            <mvt:comment>market page content from content section
+                                <mvt:item name="readytheme" param="contentsection( 'market_landing_content' )" />
+                                market page content from content section
+                            </mvt:comment>
+                        </div>
+                    </div>
+
+
+                    <mvt:comment>
+                        BEGIN - DISPLAY SUB-CATEGORIES
+                    </mvt:comment>
+                    <mvt:assign name="l.settings:scatsonly" value="''" />
+                    <mvt:assign name="l.settings:scatscounter" value="0" />
+                    <mvt:comment>
+                        <mvt:item name="toolkit" param="subcat|subcatcount|g.Category_Code" />
+                    </mvt:comment>
+                    <!-- Subcat Toolkit replacement  function -->
+                    <mvt:assign name="l.settings:sub_categories" value="''" />
+                    <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                        value="Category_Load_Code( l.settings:cats:code, l.settings:current_category )" />
+                    <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+                        value="CategoryList_Load_Parent( l.settings:current_category:id, l.settings:sub_categories )" />
+                    <!-- Subcat Toolkit replacement  function ends -->
+                    <mvt:if expr="g.subcatcount">
+                        <!--<h3 class="scatsheadingalt" style="font-size: 36.28px;display:none">Subcategories</h3>-->
+                        <div class="subdisplay">
+                            <mvt:foreach iterator="sub_cat" array="sub_categories">
+                                <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                <mvt:assign name="l.uri:cat_id" value="l.settings:sub_cat:id" />
+                                <mvt:do file="g. " name="l.have_uri"
+                                    value="URI_Load_Item_Canonical( l.uri, l.settings:cat_uri )" />
+                                <mvt:if expr="l.have_uri">
+                                    <mvt:assign name="l.settings:sub_cat:link" value="l.settings:cat_uri:uri" />
+                                </mvt:if>
+                                <mvt:assign name="g.catlistingTotal" value="1 + g.catlistingTotal" />
+
+                                <mvt:comment>
+                                    <mvt:item name="toolkit" param="subcat2|subcatcount2|l.all_settings:sub_cat:code" />
+                                </mvt:comment>
+                                <!-- Subcat Toolkit replacement  function -->
+                                <mvt:assign name="l.settings:sub_categories" value="''" />
+                                <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                                    value="Category_Load_Code( l.settings:cats:code, l.settings:current_category )" />
+                                <mvt:do name="g.subcatcount2" file="g.Module_Library_DB"
+                                    value="CategoryList_Load_Parent( l.settings:current_category:id, l.settings:sub_categories )" />
+                                <!-- Subcat Toolkit replacement  function ends -->
+                                <mvt:if expr="0">
+                                    <!--g.subcatcount2-->
+                                    <h3><a href="&mvt:sub_cat:link;" rel="nofollow">&mvte:sub_cat:name;</a></h3>
+                                    <mvt:assign name="l.settings:scatscounter" value="l.settings:scatscounter+1" />
+                                    <div class="cust-sub-category">
+
+                                        <mvt:foreach iterator="sub_cat2" array="sub_categories2">
+                                            <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                            <mvt:assign name="l.uri:cat_id" value="l.settings:sub_cat2:id" />
+                                            <mvt:do file="g.Module_Feature_URI_DB" name="l.have_uri2"
+                                                value="URI_Load_Item_Canonical( l.uri, l.settings:cat2_uri )" />
+                                            <mvt:if expr="l.have_uri2">
+                                                <mvt:assign name="l.settings:sub_cat2:link"
+                                                    value="l.settings:cat2_uri:uri" />
+                                            </mvt:if>
+                                            <mvt:if expr="l.settings:sub_cat2:active">
+                                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 cat-listing">
+                                                    <div>
+                                                        <div class="image-wrapper">
+                                                            <mvt:item name="216_MonkeyWrench"
+                                                                param="represent-category-with-product-image-machine-image|l.all_settings:sub_cat2:id" />
+                                                            <mvt:if expr="l.settings:category_image">
+                                                                <a href="&mvt:sub_cat2:link;" rel="nofollow">
+                                                                    <img src="&mvt:category_image;" border="0"
+                                                                        class="img-responsive sub-cat-image"
+                                                                        data-id="&mvt:sub_cat2:id;" /></a>
+                                                            </mvt:if>
+                                                        </div>
+                                                        <h2 class="subcat-name"><a href="&mvt:sub_cat2:link;"
+                                                                rel="nofollow"
+                                                                class="cust-title-button ver-align">&mvte:sub_cat2:name;</a>
+                                                        </h2>
+                                                        <div class="black-overlay"></div>
+                                                    </div>
+                                                </div>
+                                            </mvt:if>
+                                        </mvt:foreach>
+                                    </div>
+                                    <mvt:else>
+                                        <mvt:assign name="l.settings:scatonly" value="l.settings:sub_cat:code" />
+                                        <mvt:assign name="l.success"
+                                            value="miva_array_insert( l.settings:scatsonly, l.settings:scatonly, '-1')" />
+                                </mvt:if>
+                            </mvt:foreach>
+                            <mvt:assign name="g.scatonlycount" value="miva_array_elements(l.settings:scatsonly)" />
+                            <mvt:assign name="g.counter" value="0" />
+                            <mvt:if expr="g.scatonlycount">
+                                <mvt:if expr="l.settings:clientdimensions:width LE 767">
+                                    <div class="cust-sub-category">
+
+                                        <mvt:foreach iterator="scatonly" array="scatsonly">
+                                            <mvt:assign name="l.settings:frbrands" value="''" />
+                                            <mvt:assign name="l.settings:frpartners" value="''" />
+                                            <mvt:assign name="l.settings:current_category1" value="''" />
+                                            <mvt:assign name="l.settings:current_category2" value="''" />
+                                            <mvt:do name="l.settings:result" file="g.Module_Library_DB"
+                                                value="Category_Load_Code(l.settings:scatonly,l.settings:scato)" />
+                                            <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                            <mvt:assign name="l.uri:cat_id" value="l.settings:scato:id" />
+                                            <mvt:do file="g.Module_Feature_URI_DB" name="l.have_urisc"
+                                                value="URI_Load_Item_Canonical( l.uri, l.settings:scatonly_uri )" />
+                                            <mvt:if expr="l.have_urisc">
+                                                <mvt:assign name="l.settings:scatonly:link"
+                                                    value="l.settings:scatonly_uri:uri" />
+                                            </mvt:if>
+
+                                            <mvt:assign name="g.category_codes" value="''" />
+
+                                            <mvt:if expr="l.settings:scato:active">
+                                                <mvt:assign name="g.counter" value="g.counter + 1" />
+
+
+                                                <mvt:if expr="l.settings:scato:code EQ 'fr-brands'">
+                                                    <mvt:assign name="g.category_codes" value="'fr-brands'" />
+                                                    <mvt:elseif
+                                                        expr="l.settings:scato:code EQ 'featured-test' AND g.category_codes EQ ''">
+                                                        <mvt:assign name="g.category_codes" value="'featured-test'" />
+                                                </mvt:if>
+
+
+                                                <mvt:if expr="g.category_codes EQ 'fr-brands'">
+                                                <div class="fr-brand-cat">
+                                                    <h5 class="header1">Food Related Brands</h5>
+
+
+                                                    <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                                                        value="Category_Load_Code( l.settings:scato:code, l.settings:current_category1 )" />
+                                                    <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+                                                        value="CategoryList_Load_Parent( l.settings:current_category1:id, l.settings:frbrands )" />
+                                                    <mvt:assign name="l.settings:category_matched" value="1" />
+                                                    <mvt:foreach iterator="frcategory" array="frbrands">
+
+
+
+
+                                                        <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                                        <mvt:assign name="l.uri:cat_id"
+                                                            value="l.settings:frcategory:id" />
+                                                        <mvt:do file="g.Module_Feature_URI_DB" name="l.have_urisc"
+                                                            value="URI_Load_Item_Canonical( l.uri, l.settings:frcategory_uri )" />
+                                                        <mvt:if expr="l.have_urisc">
+                                                            <mvt:assign name="l.settings:frcategory:link"
+                                                                value="l.settings:frcategory_uri:uri" />
+                                                        </mvt:if>
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'market_cat_order_desktop', l.settings:market_cat_order_desktop )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                        <mvt:assign name="g.hidecategory" value="''" />
+                                                        <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                        <mvt:if
+                                                            expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                            <mvt:if
+                                                                expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                <mvt:assign name="g.hidecategory" value="'show'" />
+                                                                <mvt:else>
+                                                                    <mvt:assign name="g.hidecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="''" />
+                                                            </mvt:if>
+                                                            <mvt:elseif
+                                                                expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                <mvt:if
+                                                                    expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:else>
+
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:assign name="g.hidewholesalecategory"
+                                                                            value="'show'" />
+                                                                </mvt:if>
+                                                        </mvt:if>
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'mkt_order', l.settings:mkt_order )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'mkt_img', l.settings:mkt_img )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'mkt_img_size', l.settings:mkt_img_size )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                        <mvt:assign name="g.hidecategory" value="''" />
+                                                        <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                        <mvt:if
+                                                            expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                            <mvt:if
+                                                                expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                <mvt:assign name="g.hidecategory" value="'show'" />
+                                                                <mvt:else>
+                                                                    <mvt:assign name="g.hidecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="''" />
+                                                            </mvt:if>
+                                                            <mvt:elseif
+                                                                expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                <mvt:if
+                                                                    expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:else>
+
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:assign name="g.hidewholesalecategory"
+                                                                            value="'show'" />
+                                                                </mvt:if>
+                                                        </mvt:if>
+                                                        <div class="col-xs-3 visible-xs"></div>
+                                                        <mvt:if expr="g.counter EQ '6'">
+
+                                                            <span style="display: inline-grid;justify-items: center;">
+                                                                <img src="graphics/00000001/3/swcs.png" data-sort="6"
+                                                                    class="col-xs-12 swcs_image sort-listing hidden">
+                                                            </span>
+
+                                                        </mvt:if>
+                                                        <div class="col-xs-3 visible-xs"></div>
+                                                        <div class="cat-listing fr-brands  sort-listing 1 &mvt:mkt_order; &mvt:mkt_img_size; &mvt:global:hidecategory; &mvt:global:hidewholesalecategory;"
+                                                            data-sort="&mvt:mkt_order;">
+                                                            <div>
+                                                                <div class="image-wrapper 11 ">
+                                                                    <mvt:item name="216_MonkeyWrench"
+                                                                        param="represent-category-with-product-image-machine-image|l.all_settings:frcategory:id" />
+                                                                    <mvt:if expr="l.settings:category_image">
+                                                                        <mvt:item name="customfields"
+                                                                            param="Read_Category_ID( l.settings:frcategory:id, 'subctgy_image', l.settings:category_image_name )" />
+                                                                        <mvt:if
+                                                                            expr="NOT l.settings:category_image_name">
+                                                                            <mvt:assign
+                                                                                name="l.settings:category_image_name"
+                                                                                value="l.settings:category_image" />
+                                                                        </mvt:if>
+                                                                    </mvt:if>
+
+                                                                    <!-- aveto start  #87992   -->
+
+                                                                    <a href="&mvt:frcategory:link;" rel="nofollow"><img
+                                                                            src="&mvt:mkt_img;" border="0"
+                                                                            class="img-responsive sub-cat-image"
+                                                                            data-id="&mvt:frcategory:id;" /></a>
+                                                                    <mvt:comment>
+                                                                        <h2 class="subcat-name"><a
+                                                                                href="&mvt:frcategory:link;"
+                                                                                rel="nofollow"></a></h2>
+                                                                    </mvt:comment>
+
+                                                                    <!-- aveto end -->
+
+                                                                </div>
+
+                                                                <div class="black-overlay"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </mvt:foreach>
+                                                </mvt:if>
+                                                <mvt:if expr="g.category_codes EQ 'featured-test'">
+                                                    <div class="fr-partner-cat">
+                                                    <h5 class="header1">Partner Brands</h5>
+                                                    <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                                                        value="Category_Load_Code( l.settings:scato:code, l.settings:current_category2 )" />
+                                                    <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+                                                        value="CategoryList_Load_Parent( l.settings:current_category2:id, l.settings:frpartners )" />
+                                                    <mvt:assign name="l.settings:category_matched" value="1" />
+                                                    <mvt:foreach iterator="frpartner" array="frpartners">
+                                                        <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                                        <mvt:assign name="l.uri:cat_id"
+                                                            value="l.settings:frpartner:id" />
+                                                        <mvt:do file="g.Module_Feature_URI_DB" name="l.have_urisc"
+                                                            value="URI_Load_Item_Canonical( l.uri, l.settings:frpartner_uri )" />
+                                                        <mvt:if expr="l.have_urisc">
+                                                            <mvt:assign name="l.settings:frpartner:link"
+                                                                value="l.settings:frpartner_uri:uri" />
+                                                        </mvt:if>
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'market_cat_order_desktop', l.settings:market_cat_order_desktop )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                        <mvt:assign name="g.hidecategory" value="''" />
+                                                        <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                        <mvt:if
+                                                            expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                            <mvt:if
+                                                                expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                <mvt:assign name="g.hidecategory" value="'show'" />
+                                                                <mvt:else>
+                                                                    <mvt:assign name="g.hidecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="''" />
+                                                            </mvt:if>
+                                                            <mvt:elseif
+                                                                expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                <mvt:if
+                                                                    expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:else>
+
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:assign name="g.hidewholesalecategory"
+                                                                            value="'show'" />
+                                                                </mvt:if>
+                                                        </mvt:if>
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'mkt_order', l.settings:mkt_order )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'mkt_img', l.settings:mkt_img )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'mkt_img_size', l.settings:mkt_img_size )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                        <mvt:assign name="g.hidecategory" value="''" />
+                                                        <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                        <mvt:if
+                                                            expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                            <mvt:if
+                                                                expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                <mvt:assign name="g.hidecategory" value="'show'" />
+                                                                <mvt:else>
+                                                                    <mvt:assign name="g.hidecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="''" />
+                                                            </mvt:if>
+                                                            <mvt:elseif
+                                                                expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                <mvt:if
+                                                                    expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:else>
+
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:assign name="g.hidewholesalecategory"
+                                                                            value="'show'" />
+                                                                </mvt:if>
+                                                        </mvt:if>
+                                                        <div class="col-xs-3 visible-xs"></div>
+                                                        <mvt:if expr="g.counter EQ '6'">
+
+                                                            <span style="display: inline-grid;justify-items: center;">
+                                                                <img src="graphics/00000001/3/swcs.png" data-sort="6"
+                                                                    class="col-xs-12 swcs_image sort-listing hidden">
+                                                            </span>
+
+                                                        </mvt:if>
+                                                        <div class="col-xs-3 visible-xs"></div>
+                                                        <div class="cat-listing fr-partners sort-listing 1 &mvt:mkt_order; &mvt:mkt_img_size; &mvt:global:hidecategory; &mvt:global:hidewholesalecategory;"
+                                                            data-sort="&mvt:mkt_order;">
+                                                            <div>
+                                                                <div class="image-wrapper 11 ">
+                                                                    <mvt:item name="216_MonkeyWrench"
+                                                                        param="represent-category-with-product-image-machine-image|l.all_settings:frpartner:id" />
+                                                                    <mvt:if expr="l.settings:category_image">
+                                                                        <mvt:item name="customfields"
+                                                                            param="Read_Category_ID( l.settings:frpartner:id, 'subctgy_image', l.settings:category_image_name )" />
+                                                                        <mvt:if
+                                                                            expr="NOT l.settings:category_image_name">
+                                                                            <mvt:assign
+                                                                                name="l.settings:category_image_name"
+                                                                                value="l.settings:category_image" />
+                                                                        </mvt:if>
+                                                                    </mvt:if>
+
+                                                                    <!-- aveto start  #87992   -->
+
+                                                                    <a href="&mvt:frpartner:link;" rel="nofollow"><img
+                                                                            src="&mvt:mkt_img;" border="0"
+                                                                            class="img-responsive sub-cat-image"
+                                                                            data-id="&mvt:frpartner:id;" /></a>
+                                                                    <mvt:comment>
+                                                                        <h2 class="subcat-name"><a
+                                                                                href="&mvt:frpartner:link;"
+                                                                                rel="nofollow"></a></h2>
+                                                                    </mvt:comment>
+
+                                                                    <!-- aveto end -->
+
+                                                                </div>
+
+                                                                <div class="black-overlay"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </mvt:foreach>
+                                                </mvt:if>
+
+
+
+
+
+                                            </mvt:if>
+                                        </mvt:foreach>
+                                    </div>
+                                    <mvt:else>
+                                        <div class="cust-sub-category">
+
+                                            <mvt:foreach iterator="scatonly" array="scatsonly">
+
+                                                <mvt:assign name="l.settings:category_matched" value="0" />
+                                                <mvt:assign name="l.settings:frbrands" value="''" />
+                                                <mvt:assign name="l.settings:frpartners" value="''" />
+                                                <mvt:assign name="l.settings:current_category1" value="''" />
+                                                <mvt:assign name="l.settings:current_category2" value="''" />
+                                                <mvt:do name="l.settings:result" file="g.Module_Library_DB"
+                                                    value="Category_Load_Code(l.settings:scatonly,l.settings:scato)" />
+                                                <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                                <mvt:assign name="l.uri:cat_id" value="l.settings:scato:id" />
+                                                <mvt:do file="g.Module_Feature_URI_DB" name="l.have_urisc"
+                                                    value="URI_Load_Item_Canonical( l.uri, l.settings:scatonly_uri )" />
+                                                <mvt:if expr="l.have_urisc">
+                                                    <mvt:assign name="l.settings:scatonly:link"
+                                                        value="l.settings:scatonly_uri:uri" />
+                                                </mvt:if>
+
+                                                <mvt:assign name="g.category_codes" value="''" />
+                                                <mvt:if expr="l.settings:scato:active">
+                                                    <mvt:assign name="g.counter" value="g.counter + 1" />
+
+
+                                                    <mvt:if expr="l.settings:scato:code EQ 'fr-brands'">
+                                                        <mvt:assign name="g.category_codes" value="'fr-brands'" />
+                                                        <mvt:elseif
+                                                            expr="l.settings:scato:code EQ 'featured-test' AND g.category_codes EQ ''">
+                                                            <mvt:assign name="g.category_codes"
+                                                                value="'featured-test'" />
+                                                    </mvt:if>
+
+
+
+                                                    <mvt:if expr="g.category_codes EQ 'fr-brands'">
+                                                        <div class="col-lg-12 sortnew" data-sort="1">
+                                                            <h5 class="header1">Food Related Brands</h5>
+
+
+                                                            <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                                                                value="Category_Load_Code( l.settings:scato:code, l.settings:current_category1 )" />
+                                                            <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+                                                                value="CategoryList_Load_Parent( l.settings:current_category1:id, l.settings:frbrands )" />
+                                                            <mvt:assign name="l.settings:category_matched" value="1" />
+                                                            <mvt:foreach iterator="frcategory" array="frbrands">
+
+
+
+
+                                                                <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                                                <mvt:assign name="l.uri:cat_id"
+                                                                    value="l.settings:frcategory:id" />
+                                                                <mvt:do file="g.Module_Feature_URI_DB"
+                                                                    name="l.have_urisc"
+                                                                    value="URI_Load_Item_Canonical( l.uri, l.settings:frcategory_uri )" />
+                                                                <mvt:if expr="l.have_urisc">
+                                                                    <mvt:assign name="l.settings:frcategory:link"
+                                                                        value="l.settings:frcategory_uri:uri" />
+                                                                </mvt:if>
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frcategory:id, 'market_cat_order_desktop', l.settings:market_cat_order_desktop )" />
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frcategory:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                                <mvt:assign name="g.hidecategory" value="''" />
+                                                                <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                                <mvt:if
+                                                                    expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                                    <mvt:if
+                                                                        expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:else>
+                                                                            <mvt:assign name="g.hidecategory"
+                                                                                value="'hidden'" />
+                                                                            <mvt:assign name="g.hidewholesalecategory"
+                                                                                value="''" />
+                                                                    </mvt:if>
+                                                                    <mvt:elseif
+                                                                        expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                        <mvt:if
+                                                                            expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                            <mvt:assign name="g.hidewholesalecategory"
+                                                                                value="'hidden'" />
+                                                                            <mvt:else>
+
+                                                                                <mvt:assign name="g.hidecategory"
+                                                                                    value="'show'" />
+                                                                                <mvt:assign
+                                                                                    name="g.hidewholesalecategory"
+                                                                                    value="'show'" />
+                                                                        </mvt:if>
+                                                                </mvt:if>
+
+
+                                                                <div class="cat-listing  sort-listing 1 &mvt:market_cat_order_desktop; &mvt:global:hidecategory; &mvt:global:hidewholesalecategory;"
+                                                                    data-sort="&mvt:market_cat_order_desktop;">
+                                                                    <div>
+                                                                        <div class="image-wrapper">
+                                                                            <mvt:item name="216_MonkeyWrench"
+                                                                                param="represent-category-with-product-image-machine-image|l.all_settings:frcategory:id" />
+                                                                            <mvt:if expr="l.settings:category_image">
+                                                                                <mvt:item name="customfields"
+                                                                                    param="Read_Category_ID( l.settings:frcategory:id, 'subctgy_image', l.settings:category_image_name2 )" />
+                                                                                <mvt:if
+                                                                                    expr="NOT l.settings:category_image_name2">
+                                                                                    <mvt:assign
+                                                                                        name="l.settings:category_image_name2"
+                                                                                        value="l.settings:category_image" />
+                                                                                </mvt:if>
+                                                                            </mvt:if>
+
+
+
+                                                                            <!-- aveto start  #87992   -->
+
+
+                                                                            <a href="&mvt:frcategory:link;"
+                                                                                rel="nofollow"><img
+                                                                                    src="&mvt:category_image_name2;"
+                                                                                    border="0"
+                                                                                    class="img-responsive sub-cat-image"
+                                                                                    data-id="&mvt:frcat:id;" /></a>
+                                                                            &mvt:frcat;
+                                                                            <mvt:comment>
+                                                                                <h2 class="subcat-name"><a
+                                                                                        href="&mvt:frcategory:link;"
+                                                                                        rel="nofollow">&mvt:market_cat_order_desktop;</a>
+                                                                                </h2>
+                                                                            </mvt:comment>
+
+                                                                            <!-- aveto end -->
+
+                                                                        </div>
+
+                                                                        <div class="black-overlay"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </mvt:foreach>
+                                                        </div>
+                                                    </mvt:if>
+
+
+
+                                                    <mvt:if expr="g.category_codes EQ 'featured-test'">
+                                                        <div class="col-lg-12 sortnew" data-sort="2">
+                                                            <h5 class="header1">Partner Brands</h5>
+
+
+                                                            <mvt:do name="g.sub_cat_check" file="g.Module_Library_DB"
+                                                                value="Category_Load_Code( l.settings:scato:code, l.settings:current_category2 )" />
+                                                            <mvt:do name="g.subcatcount" file="g.Module_Library_DB"
+                                                                value="CategoryList_Load_Parent( l.settings:current_category2:id, l.settings:frpartners )" />
+                                                            <mvt:assign name="l.settings:category_matched" value="1" />
+                                                            <mvt:foreach iterator="frpartner" array="frpartners">
+
+
+
+
+                                                                <mvt:assign name="l.uri:store_id" value="g.Store:id" />
+                                                                <mvt:assign name="l.uri:cat_id"
+                                                                    value="l.settings:frpartner:id" />
+                                                                <mvt:do file="g.Module_Feature_URI_DB"
+                                                                    name="l.have_urisc"
+                                                                    value="URI_Load_Item_Canonical( l.uri, l.settings:frpartner_uri )" />
+                                                                <mvt:if expr="l.have_urisc">
+                                                                    <mvt:assign name="l.settings:frpartner:link"
+                                                                        value="l.settings:frpartner_uri:uri" />
+                                                                </mvt:if>
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frpartner:id, 'market_cat_order_desktop', l.settings:market_cat_order_desktop )" />
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                                <mvt:item name="customfields"
+                                                                    param="Read_Category_ID( l.settings:frpartner:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                                <mvt:assign name="g.hidecategory" value="''" />
+                                                                <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                                <mvt:if
+                                                                    expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                                    <mvt:if
+                                                                        expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:else>
+                                                                            <mvt:assign name="g.hidecategory"
+                                                                                value="'hidden'" />
+                                                                            <mvt:assign name="g.hidewholesalecategory"
+                                                                                value="''" />
+                                                                    </mvt:if>
+                                                                    <mvt:elseif
+                                                                        expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+
+                                                                        <mvt:if
+                                                                            expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                            <mvt:assign name="g.hidewholesalecategory"
+                                                                                value="'hidden'" />
+                                                                            <mvt:else>
+
+                                                                                <mvt:assign name="g.hidecategory"
+                                                                                    value="'show'" />
+                                                                                <mvt:assign
+                                                                                    name="g.hidewholesalecategory"
+                                                                                    value="'show'" />
+                                                                        </mvt:if>
+                                                                </mvt:if>
+
+
+                                                                <div class="cat-listing  sort-listing 1 &mvt:market_cat_order_desktop; &mvt:global:hidecategory; &mvt:global:hidewholesalecategory;"
+                                                                    data-sort="&mvt:market_cat_order_desktop;">
+                                                                    <div>
+                                                                        <div class="image-wrapper">
+                                                                            <mvt:item name="216_MonkeyWrench"
+                                                                                param="represent-category-with-product-image-machine-image|l.all_settings:frpartner:id" />
+                                                                            <mvt:if expr="l.settings:category_image">
+                                                                                <mvt:item name="customfields"
+                                                                                    param="Read_Category_ID( l.settings:frpartner:id, 'subctgy_image', l.settings:category_image_name1 )" />
+                                                                                <mvt:if
+                                                                                    expr="NOT l.settings:category_image_name1">
+                                                                                    <mvt:assign
+                                                                                        name="l.settings:category_image_name1"
+                                                                                        value="l.settings:category_image" />
+                                                                                </mvt:if>
+                                                                            </mvt:if>
+
+
+
+                                                                            <!-- aveto start  #87992   -->
+
+
+                                                                            <a href="&mvt:frpartner:link;"
+                                                                                rel="nofollow"><img
+                                                                                    src="&mvt:category_image_name1;"
+                                                                                    border="0"
+                                                                                    class="img-responsive sub-cat-image"
+                                                                                    data-id="&mvt:frcat:id;" /></a>
+                                                                            &mvt:frcat;
+                                                                            <mvt:comment>
+                                                                                <h2 class="subcat-name"><a
+                                                                                        href="&mvt:frpartner:link;"
+                                                                                        rel="nofollow">&mvt:market_cat_order_desktop;</a>
+                                                                                </h2>
+                                                                            </mvt:comment>
+
+                                                                            <!-- aveto end -->
+
+                                                                        </div>
+
+                                                                        <div class="black-overlay"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </mvt:foreach>
+                                                        </div>
+                                                    </mvt:if>
+
+
+
+
+
+
+                                                    <mvt:comment>
+                                                        <mvt:if expr="g.counter EQ '8'">
+                                                            <img src="graphics/00000001/3/swcs.png" data-sort="8"
+                                                                class="swcs_image sort-listing hidden">
+                                                            <mvt:assign name="g.counter" value="0" />
+                                                        </mvt:if>
+
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:scato:id, 'hide_category_forretail', l.settings:hide_category_forretail )" />
+                                                        <mvt:item name="customfields"
+                                                            param="Read_Category_ID( l.settings:scato:id, 'hide_category_forwholesale', l.settings:hide_category_forwholesale )" />
+                                                        <mvt:assign name="g.hidecategory" value="''" />
+                                                        <mvt:assign name="g.hidewholesalecategory" value="''" />
+                                                        <mvt:if
+                                                            expr="(l.settings:hide_category_forretail EQ 1 OR l.settings:hide_category_forretail EQ 'yes')">
+                                                            <mvt:if
+                                                                expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                <mvt:assign name="g.hidecategory" value="'show'" />
+                                                                <mvt:else>
+                                                                    <mvt:assign name="g.hidecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="''" />
+                                                            </mvt:if>
+                                                            <mvt:elseif
+                                                                expr="(l.settings:hide_category_forwholesale EQ 1 OR l.settings:hide_category_forwholesale EQ 'yes')">
+                                                                <mvt:if
+                                                                    expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                                                                    <mvt:assign name="g.hidewholesalecategory"
+                                                                        value="'hidden'" />
+                                                                    <mvt:else>
+                                                                        <mvt:assign name="g.hidecategory"
+                                                                            value="'show'" />
+                                                                        <mvt:assign name="g.hidewholesalecategory"
+                                                                            value="'show'" />
+                                                                </mvt:if>
+                                                        </mvt:if>
+                                                    </mvt:comment>
+
+                                                </mvt:if>
+                                            </mvt:foreach>
+                                        </div>
+
+                                </mvt:if>
+
+                            </mvt:if>
+                        </div>
+                    </mvt:if>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
+                        <mvt:item name="readytheme" param="productlisting( 'gifts-products' )" />
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+        <div id="page-footer">
+            <mvt:item name="hdft" param="footer" />
+        </div>
+
+    </div>
+    <div id="bottom-wrap"></div>
+    <div class="clearfix"></div>
+    <div id="global-footer">
+        <mvt:item name="hdft" param="global_footer" />
+    </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            var breadcum_len = $('#breadcrumbs ul li').length;
+            if (breadcum_len > 2) {
+                var dividecol = 'col-xs-6 col-sm-4 col-md-4 col-lg-4'
+                $('.image-wrapper .img-responsive').removeClass("sub-cat-image");
+                $('.image-wrapper .img-responsive').addClass("sub-cat-image1");
+
+                $('.cust-sub-category .cat-listing').addClass(dividecol);
+                $('.cust-sub-category .cat-listing').addClass('width33');
+
+            } else {
+                var dividecol = 'col-xs-6 col-sm-12 col-md-3 col-lg-2'
+                $('.image-wrapper .img-responsive').addClass("sub-cat-image");
+                $('.image-wrapper .img-responsive').removeClass("sub-cat-image1");
+                $('.cust-sub-category .cat-listing').addClass(dividecol);
+                $('.cust-sub-category .cat-listing').addClass('width20');
+            }
+
+            // Sort by Inventory
+            let divList = $(".product-item");
+            let inventory = [];
+            let outofstock = [];
+            console.log("divListdivList", divList)
+
+            divList.each(function () {
+                let stock = 0;
+                $(this).find(".form-check input").each(function () {
+                    stock += parseInt(this.dataset.stock);
+                });
+                if (stock) {
+                    inventory.push(this);
+                } else {
+                    outofstock.push(this);
+                }
+            });
+            console.log("inventory", inventory.length);
+            console.log("outofstock", outofstock);
+            Array.prototype.push.apply(inventory, outofstock);
+            $("#category-listing .expanded").html(inventory);
+
+            $("#catprodlisting").html(divList);
+            $('.product-item a.product-item-link').click(function () {
+                window.location = $(this).attr('href');
+            });
+            $('.waitlistbtn').click(function () {
+                $('#WaitlistProductCode').val($(this).attr('data-product_code'));
+                $('#WaitlistVariantID').val($(this).closest(".product-item").find(".form-check input:checked").attr("data-product_variant"));
+            });
+
+        });
+        //  $(".loader").show();
+        $(window).load(function () {
+            $(".loader").hide();
+            $(".loaderContainer").hide();
+            $(".background-container").show();
+        });
+
+        if (screen.width <= 767) {
+            divArr = $(".sort-listing");
+            divArr.sort(function (a, b) {
+                return $(a).attr('data-sort') - $(b).attr('data-sort');
+            });
+            $(".fr-brand-cat ,.fr-partner-cat").append(divArr)
+            // console.log(divArr)
+        }
+
+        var sortnew = $(".sortnew");
+        sortnew.sort(function (a, b) {
+            return $(a).attr('data-sort') - $(b).attr('data-sort');
+        });
+        if(screen.width > 767){
+        $(".cust-sub-category").append(sortnew);
+        }
+    </script>
+</body>
+
+</html>

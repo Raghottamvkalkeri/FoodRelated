@@ -20,6 +20,11 @@
         border: none;
     }
 
+    #openImageModal .modal-dialogs {
+        max-width: 90%;
+        width: 100%;
+    }
+
     /* #loadallcategorys {
      scrollbar-width: thin;
      } */
@@ -91,13 +96,6 @@
         .img-size {
             min-width: 130px;
         }
-
-        /* .SFNT #loadallcategorys .owl-nav .owl-prev {
-            top: 0px
-        }
-        .SFNT #loadallcategorys .owl-nav .owl-next {
-            top: 0px
-        } */
 
     }
 </style>
@@ -178,35 +176,44 @@
   }
 </script-->
 <script>
-    function openImage(url,label) {
-       
-    //     setTimeout(function(){
-    //     $('#openImageModal').modal('show', function () {
-            
-    //     });
-    //     $('#imagelabel').text(label);
-    //     $('#modalIframe').attr('src', url);
+    function openImage(url, label) {
+
+            setTimeout(function(){
+            $('#openImageModal').modal('show', function () {
+
+            });
+            $('#imagelabel').text(label);
+            $('#modalIframe').attr('src', url);
 
 
-    //     $('#myModal').on('hidden.bs.modal', function () {
-    //         $('#modalIframe').attr('src', ''); // Clear iframe to stop loading when closed
-    //     });
-    // },1000);
-    // window.open(url,'_blank');
-    openOrFocusTab(url);
+            $('#myModal').on('hidden.bs.modal', function () {
+                $('#modalIframe').attr('src', ''); // Clear iframe to stop loading when closed
+            });
+        },1000);
+        // window.open(url,'_blank');
+        // openOrFocusTab(url);
     }
 
     let openTabs = {};
 
-function openOrFocusTab(url) {
-    if (openTabs[url] && !openTabs[url].closed) {
-        openTabs[url].focus(); // Focus on the existing tab
-    } else {
-        openTabs[url] = window.open(url, "_blank"); // Open new tab
-    }
-}
+    function openOrFocusTab(url) {
 
-// Example Usage
+        if ('ontouchstart' in window || navigator.maxTouchPoints) {
+            openTabs[url] = window.open(url, "_blank"); // Open new tab
+        } else {
+            // Code to execute if it is not a touch device
+            
+            if (openTabs[url] && !openTabs[url].closed) {
+                openTabs[url].focus(); // Focus on the existing tab
+            } else {
+                openTabs[url] = window.open(url, "_blank"); // Open new tab
+            }
+        }
+
+
+    }
+
+
 
 
 </script>

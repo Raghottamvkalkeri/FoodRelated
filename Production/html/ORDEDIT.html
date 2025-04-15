@@ -3,8 +3,18 @@
     <!-- <span class="ft-14p bold-ft">Order: #&mvt:global:order_id;</span> -->
     <!-- {{orderSummary.data}} -->
     <mvt:item name="customfields" param="Read_Order(g.order_id,'edit_order',g.edit_order)" />
+    <!-- Shipping Data sets -->
+    <mvt:item name="customfields" param="Read_Order(g.order_id,'curbsy_data',g.curbsy_data)" />
+    <mvt:item name="customfields" param="Read_Order(g.order_id,'curbsy_date',g.curbsy_date)" />
+    <mvt:item name="customfields" param="Read_Order(g.order_id,'delivery_date',g.delivery_date)" />
+    <mvt:item name="customfields" param="Read_Order(g.order_id,'Formatted_deliverydate',g.formatted_delivery_date)" />
+    <!-- Shipping Data sets -->
     <div id="ordersummary">
         <input type="hidden" id="editOrder" value="&mvt:global:edit_order;">
+        <input type="hidden" id="curbsy_data" value='&mvt:global:curbsy_data;'>
+        <input type="hidden" id="curbsy_date" value="&mvt:global:curbsy_date;">
+        <input type="hidden" id="delivery_date" value="&mvt:global:delivery_date;">
+        <input type="hidden" name="formatted_delivery_date" id="formatted_delivery_date" value="&mvt:global:formatted_delivery_date;">
         <h5 class="bold-ft">Order Summary</h5>
         <div class="section" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
             :key="index">
@@ -38,48 +48,64 @@
             <span class="ft-12p ord-summary bold-ft">Total: <span
                     class="ft-md">${{(item.total).toFixed(2)}}</span></span>
         </div>
-        <div id="shippingmethods" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]" :key="index">
-            <h5 class="bold-ft ft-12p mar-zero">Available Delivery Methods - </h5>
-            <span span v-for="(charges ,index) in orderDetails.ordercharges">
-                <span class="ft-md ft-10p" v-for="(chargelist ,index) in charges" v-if="chargelist.descrip.includes('Shipping')" v-html="chargelist.descrip.replace(/Shipping: \s*/gi, ' ')" class="bold-ft ft-12p"></span>
-                        
-                </span>
-            </span>
+        <!-- <div id="selectedDeliveryContentforFedExShipping" class="txt-orange ft-12p"></div> -->
+         <div id="errorMessage">
+           1 Shipping Method is not available for this order please check product and adjust the quantity (if product added with more than eligible weight and previously selected shipping is not available to continue) Example : FedEx Ground
+           2 Edit order is not allowed as there is no shipping option available for this order. ( If there is no shipping available before editing the order)
+           3 Please Change the shipping method to continue the order as selected shipping method is not avilable or adjust the cart to get same shipping method ( If user is added the products or edited and there is no selected shipping avilable but other method are avialbe to continue the shipping)
+        </div>
+         </div>
+        <div id="selectedDeliveryContent" class="txt-orange ft-12p"></div>
+        <div id="shippingmethods" v-for="(item, index) in orderDetails[document.querySelector('#order_id').value]"
+            :key="index">
+            <h3 v-if="orderDetails.shipping_methods && orderDetails.shipping_methods.length"
+                class="bold-ft ft-12p mar-zero">Available Shipping - <i class="shipping-find fa fa-angle-down"
+                    onclick="toggleShippingInfo(this)"></i></h3>
+            
+                <span id="selectedshipping" class="ft-md ft-10p hidden" 
+                    
+                    v-html="orderDetails[document.querySelector('#order_id').value][0].ship_data" class="bold-ft ft-12p"></span>
+         
+            
             <div v-if="orderDetails.shipping_methods && orderDetails.shipping_methods.length">
                 <div v-for="method in orderDetails.shipping_methods" :key="method.method_code">
-                   
-                    <!-- <label class="form-check-label shipping-label">
-                        <input type="radio" 
-                        name="shipping_method" 
-                        :value="method.method_code" 
-                        >
-                      <div class="">
-                        <span class="ft-md ft-12p">{{method.method_name}}</span>
-                        <span class="txt-orange ft-md ft-12p">{{method.formatted_price}}</span> 
-                      </div>
-                    </label> -->
                     <label v-bind:data-method="method.method_code"
-                    v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping' : method.method_code.split(':').pop()"
-                    class="form-check-label" v-bind:for="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'">
-                    <div class="ht-75 methodcard shipping-label" > 
-                        <input type="radio" required name="ShippingMethod" class=""  v-bind:class="method.method_name.includes('FedEx') || method.method_name.includes('Free Ground') ? 'shippingMethodRadioNew' : 'curbsyShippingRadio'"
-                            v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'" v-bind:value="method.method_code"
-                            v-bind:shiping-method="method.method_code.split(':').pop()" v-bind:shipping-name="method.method_name" v-bind:data-estimated-date="method.fedEXInternalDateCheck">
+                        v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping' : method.method_code.split(':').pop()"
+                        class="form-check-label"
+                        v-bind:for="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'">
+                        <div class="ht-75 methodcard shipping-label">
+                            <input type="radio" required name="ShippingMethod" class=""
+                                v-bind:class="method.method_name.includes('FedEx') || method.method_name.includes('Free Ground') ? 'shippingMethodRadioNew' : 'curbsyShippingRadio'"
+                                v-bind:id="method.method_name === 'FedEx Flat Rate' || method.method_name === 'Free Ground Shipping' ? 'flatrate_shipping-shipping' : method.method_code.split(':').pop()+'-shipping'"
+                                v-bind:value="method.method_code" v-bind:data-method_module="method.method_module"
+                                v-bind:data-ship_price="method.price"
+                                v-bind:shiping-method="method.method_code.split(':').pop()"
+                                v-bind:shipping-name="method.method_name"
+                                v-bind:data-shipname="method.method_name.includes('FedEx') || method.method_name.includes('FedEx') ? method.fedEXInternationdate : method.shippingname"
+                                v-bind:data-estimated-date="method.fedEXInternalDateCheck"
+                                v-bind:checked="method.method_code == userData?.[document.querySelector('#order_id').value][0].ship_data ? true : ''">
                             <div class="shipping-details">
-                                <!-- <span class="ft-md ft-12p">{{method.method_name}}</span> -->
-                            <p class="ft-14p marginzero ltr-sp-0p5 ft-md mb-ft-12p shippingname" v-bind:class="method.shippingname ? 'frtuckclass' : ''" v-html="method.shippingname"></p>
-                            <span class="shipping-price txt-orange "> {{method.formatted_price}} <span class="txt-hover" v-if="productweightcheck > 0 && (method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')) && vueUserTypes !== 'Wholesale'"> + $40*</span> </span>
-                            <span v-if="method.method_name.includes('FedEx International Economy') || method.method_name.includes('FedEx International Priority')" v-html="method.fedEXInternationdate"></span>
-                            <span v-bind:class="{'getestimateddelivery':method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')}" class="ft-14p ltr-sp-0p5"></span>
+                                <p class="ft-14p marginzero ltr-sp-0p5 ft-md mb-ft-12p shippingname"
+                                    v-bind:class="method.shippingname ? 'frtuckclass' : ''"
+                                    v-html="method.shippingname"></p>
+                                <span class="shipping-price txt-orange ft-12p "> {{method.formatted_price}} <span
+                                        class="txt-hover"
+                                        v-if="productweightcheck > 0 && (method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')) && vueUserTypes !== 'Wholesale'">
+                                        + $40*</span> </span>
+                                <span
+                                    v-if="method.method_name.includes('FedEx International Economy') || method.method_name.includes('FedEx International Priority')"
+                                    v-html="method.fedEXInternationdate"></span>
+                                <span
+                                    v-bind:class="{'getestimateddelivery':method.method_name.includes('FedEx') || method.method_name.includes('Free Ground')}"
+                                    class="ft-14p ltr-sp-0p5"></span>
                             </div>
-                    </div>
-                </label>
+                        </div>
+                    </label>
                 </div>
             </div>
-            
+
         </div>
-        <div id="selectedDeliveryContentforFedExShipping" class="hidden"></div>                                        
-        <div id="selectedDeliveryContent"></div>
+
     </div>
     <div class="order-list">
         <!-- Modal Component -->
@@ -457,11 +483,17 @@
         display: flex;
         align-items: center;
         gap: 8px;
+        padding: 0;
+    }
+
+    .shipping-label input {
+        margin-left: 5px;
     }
 
     .shipping-details {
         display: flex;
         flex-direction: column;
+        padding: 0
     }
 
     .methodcard {

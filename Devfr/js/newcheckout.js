@@ -178,17 +178,17 @@ $("body").on("submit", "#opay", function (e) {
           data.trim().search(/class="error-message"/i) != -1 ||
           data.trim().search(/class="information-message"/i) != -1
         ) {
-          if($(data).find(".error-message").html() && $(data).find(".error-message").html().includes('Invalid shipping method.') === true ) {
+          if ($(data).find(".error-message").html() && $(data).find(".error-message").html().includes('Invalid shipping method.') === true) {
             $(".new-error-message.error-message").show().html('Selected Delivery Method is not valid anymore. Please change the Delivery Method, Click <a class="refreshshipping" onclick="getShippingMethods();">here to</a> refresh');
             $(".new-error-message.error-message").show().html($(data).find(".information-message").html());
             $("#paymentAccordianHeader").find(".paymentloaderbox").hide();
             console.log($(data).find(".error-message").html());
             const messagecontent = document.querySelector(".new-error-message.error-message");
             messagecontent.scrollIntoView({
-           behavior: "smooth",
-           block: "end",
-            inline: "nearest",
-          });
+              behavior: "smooth",
+              block: "end",
+              inline: "nearest",
+            });
             $("#changeShipping").click();
             getShippingMethods();
           } else {
@@ -237,12 +237,12 @@ $("body").on("submit", "#opay", function (e) {
               document.querySelector("input[name=curbsy_datenew]").value
             );
             $("input[name=delivery_date]").val(
-              $('input[name="ShippingMethod"]').val() == 'flatrate:FR Truck Delivery' ? 
-              document
-                .querySelector("input[name=curbsy_datenew]")
-                .value.replace(":", "") : document
-                .querySelector("input[name=curbsy_datenew]")
-                .value.replace(":", ",")
+              $('input[name="ShippingMethod"]').val() == 'flatrate:FR Truck Delivery' ?
+                document
+                  .querySelector("input[name=curbsy_datenew]")
+                  .value.replace(":", "") : document
+                    .querySelector("input[name=curbsy_datenew]")
+                    .value.replace(":", ",")
             );
           }
           $("#getfromwhichsection").val();
@@ -293,11 +293,11 @@ $("body").on("submit", "#opay", function (e) {
           }
           console.log(
             "Address State " +
-              addressState +
-              " Shipping State " +
-              DeliveryState +
-              " Payment State " +
-              PaymentState
+            addressState +
+            " Shipping State " +
+            DeliveryState +
+            " Payment State " +
+            PaymentState
           );
         }
         //LoadCouponForm();
@@ -337,7 +337,7 @@ $("body").on("submit", "#opay", function (e) {
           /*$('#reviewFirstName').html($('#BillFirstNameL').text()+ '<span class="txt-orange"> - Shipping</span>');*/
           $("#reviewFirstName").html(
             $("#shipFirstNameL").text() +
-              '<span class="txt-orange"> - Shipping</span>'
+            '<span class="txt-orange"> - Shipping</span>'
           );
           /*$('#reviewAddress').text($('#BillAddress1L').text());*/
           $("#reviewAddress").text($("#ShipAddress1L").text());
@@ -400,11 +400,11 @@ $("body").on("submit", "#opay", function (e) {
           showCheckBox();
           console.log(
             "Address State " +
-              addressState +
-              " Shipping State " +
-              DeliveryState +
-              " Payment State " +
-              PaymentState
+            addressState +
+            " Shipping State " +
+            DeliveryState +
+            " Payment State " +
+            PaymentState
           );
           // 18-12-2023 changes 3
           $("#reviewoderTabContent").show();
@@ -413,12 +413,12 @@ $("body").on("submit", "#opay", function (e) {
         });
         var newList = [];
         $.getJSON("/GLOBALBASK_JSON.html", function (dataval) {
-        // Assuming data.items is an array
-        dataval.items.forEach((item) => {
-        newList.push({ item });
+          // Assuming data.items is an array
+          dataval.items.forEach((item) => {
+            newList.push({ item });
+          });
+          console.log(newList);
         });
-        console.log(newList);
-      });
 
         // Check for Product weight and Delivery Method to add $40 Fees
         // console.log($('input[name="ShippingMethod"]:checked').val());
@@ -571,12 +571,12 @@ $("body").on("change", "#redeemablebalance", function () {
 
 /*code to submit payment and form */
 var onclick_submit = function (event) {
-  if(jQuery("body")
+  if (jQuery("body")
     .find(".selectedPaymentMethods")
     .val()
-    .split(":")[0] !== 'frcreditterms'){
-  $("#paymentmethodForm").show();
-    }
+    .split(":")[0] !== 'frcreditterms') {
+    $("#paymentmethodForm").show();
+  }
   setTimeout(function () {
     let checkout_store_data = showCheckBox();
     if (checkout_store_data == 1) {
@@ -631,16 +631,16 @@ var onclick_submit = function (event) {
               sessionStorage.removeItem("CardValue");
               sessionStorage.removeItem("DiscountApplied");
               sessionStorage.removeItem("guestaddressDetails");
-	            localStorage.removeItem('couponcode');
+              localStorage.removeItem('couponcode');
             });
           }
         } else if (payment_terms[0] == "paypalcp") {
           getCreditfeeSummary();
-          setTimeout(function(){
+          setTimeout(function () {
             var form;
             form = document.getElementById("opay_form3");
             form.submit();
-          },3000);
+          }, 3000);
         } else {
           var form = document.getElementById("opay_form");
           form.submit();
@@ -691,15 +691,15 @@ var getCreditfeeSummary = () => {
     isredeemed = "";
   }
   var url = '';
-    if(PaymentMethod == 'paypalcp:paypal'){
-      url = "/ajax.html?CustomerAction=getbasketcharges&displayType=raw&PaymentMethod="+PaymentMethod+"&redeemed=" +
+  if (PaymentMethod == 'paypalcp:paypal') {
+    url = "/ajax.html?CustomerAction=getbasketcharges&displayType=raw&PaymentMethod=" + PaymentMethod + "&redeemed=" +
       isredeemed;
-    }else{
-      url = "/ajax.html?CustomerAction=getbasketcharges&displayType=raw&redeemed=" +
+  } else {
+    url = "/ajax.html?CustomerAction=getbasketcharges&displayType=raw&redeemed=" +
       isredeemed;
-    }
-      
-    
+  }
+
+
   $.get(url, (response) => {
     $("#showbasketCharges").html(response);
     if (screen.width < 768) {
@@ -767,11 +767,11 @@ $("#changeAddress").click(() => {
   // Added on 18-12-2023
   console.log(
     "Address State " +
-      addressState +
-      " Shipping State " +
-      DeliveryState +
-      " Payment State " +
-      PaymentState
+    addressState +
+    " Shipping State " +
+    DeliveryState +
+    " Payment State " +
+    PaymentState
   );
   if (PaymentState == 0) {
     $(".continueOrder,.newcard,#reviewoderTabContent").hide();
@@ -814,9 +814,9 @@ $("#CloseChangeAddress").on("click", function () {
     isAccordainopen("ispaymentAccordianHeaderVisible");
   } else if (
     $("#CloseChangeAddress").hasClass("isdeliveryAccordianBodyvisible") ==
-      true ||
+    true ||
     $("#closeMObAddresssection").hasClass("isdeliveryAccordianBodyvisible") ==
-      true
+    true
   ) {
     isAccordainopen("isdeliveryAccordianBodyvisible");
   }
@@ -830,11 +830,11 @@ $("#CloseChangeAddress").on("click", function () {
   // Added on 18-12-2023
   console.log(
     "Address State " +
-      addressState +
-      " Shipping State " +
-      DeliveryState +
-      " Payment State " +
-      PaymentState
+    addressState +
+    " Shipping State " +
+    DeliveryState +
+    " Payment State " +
+    PaymentState
   );
   if (PaymentState == 0) {
     $(".continueOrder,.newcard,#reviewoderTabContent").hide();
@@ -1327,7 +1327,7 @@ function CheckRouteGroup(zicode) {
     url:
       "/?Screen=RouteGroupAJAX&customerAction=getRoutegroup&getzipcode=" +
       zicode,
-    beforeSend: function () {},
+    beforeSend: function () { },
     success: function (data) {
       var parsedResponse = $.parseHTML(data);
       var getroutegroup = $(parsedResponse).filter("#routegroup").html();
@@ -1444,7 +1444,7 @@ function getFreeShippingInfo() {
     showLoader: true,
     dataType: "json",
     cache: false,
-    beforeSend: function () {},
+    beforeSend: function () { },
     success: function (data) {
       if (
         data.length > 1 &&
@@ -1556,11 +1556,11 @@ function showCopuonss() {
   var sessionId = $("#sessionid").val();
   $.get(
     "/ajax.html?CustomerAction=getCustomerCoupon&customer_id=" +
-      customerId +
-      "&customer_type=" +
-      customerType +
-      "&session_id=" +
-      sessionId,
+    customerId +
+    "&customer_type=" +
+    customerType +
+    "&session_id=" +
+    sessionId,
     function (response) {
       var json = JSON.parse(response);
       navObject = new Vue({
@@ -1645,14 +1645,16 @@ function GetCurbsySLots() {
 
   $.get(url, function (dataval) {
     if (
-      deliverymethod == "Home Delivery" || deliverymethod == "Home Delivery Premium" ||  
+      deliverymethod == "Home Delivery" || deliverymethod == "Home Delivery Premium" ||
       deliverymethod == "flatrate:Home Delivery" || deliverymethod == "flatrate:Home Delivery Premium" ||
       deliverymethod == "flatrate:FR Truck Delivery" ||
       deliverymethod == "FR Truck Delivery"
     ) {
       var newList = dataval;
-      var currentDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
-      var currentDay = new Date(currentDate).getDay(); // Get current weekday (0 = Sunday, 6 = Saturday)
+      var today = new Date();
+      var currentDaydate = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(today);
+      today.setDate(today.getDate() + 1);
+      var nextday = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(today);
       for (var i = 0; i < newList.length; i++) {
         var dates = new Date(newList[i].day).toLocaleString("en-us", {
           weekday: "short",
@@ -1666,13 +1668,15 @@ function GetCurbsySLots() {
           day: "2-digit",
           timeZone: "America/New_York",
         });
-        var getday = new Date(newList[i].day).getDay();
+        var getday = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(new Date(newList[i].day));
         var displayDay = dates; // Default is the short weekday name
-    if (getday === currentDay) {
-        displayDay = "Today";
-    } else if (getday === (currentDay + 1) % 7) {
-        displayDay = "Tomorrow";
-    }
+        if (getday === currentDaydate) {
+          displayDay = "Today";
+        } else if (getday === nextday) {
+          displayDay = "Tomorrow";
+        } else {
+          displayDay = dates; // Default is the short weekday name
+        }
         newList[i].dates = displayDay;
         newList[i].month = month;
         newList[i].days = day;
@@ -1698,8 +1702,14 @@ function GetCurbsySLots() {
         });
       });
 
-      var currentDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
-      var currentDay = new Date(currentDate).getDay(); // Get current weekday (0 = Sunday, 6 = Saturday)
+      var today = new Date();
+      var currentDaydate = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(today);
+      today.setDate(today.getDate() + 1);
+      var nextday = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(today);
+      if (getPageCode == 'ORDEDIT') {
+        var todaydate = new Date().toISOString().split('T')[0];
+      }
+      newList = newList.filter(item => !item.day.startsWith(todaydate));
       for (var i = 0; i < newList.length; i++) {
         var dates = new Date(newList[i].day).toLocaleString("en-us", {
           weekday: "short",
@@ -1713,15 +1723,18 @@ function GetCurbsySLots() {
           day: "2-digit",
           timeZone: "America/New_York",
         });
-        var getday = new Date(newList[i].day).getDay();
+        var getday = new Intl.DateTimeFormat("en-US", { timeZone: 'America/New_York' }).format(new Date(newList[i].day));
 
-            // Compare days to determine "Today" or "Tomorrow"
-    var displayDay = dates; // Default is the short weekday name
-    if (getday === currentDay) {
-        displayDay = "Today";
-    } else if (getday === (currentDay + 1) % 7) {
-        displayDay = "Tomorrow";
-    }
+        // Compare days to determine "Today" or "Tomorrow"
+        var displayDay = dates; // Default is the short weekday name
+        console.log(getday + ' ' + currentDaydate);
+        if (getday === currentDaydate) {
+          displayDay = "Today";
+        } else if (getday === nextday) {
+          displayDay = "Tomorrow";
+        } else {
+          displayDay = dates; // Default is the short weekday name
+        }
         newList[i].dates = displayDay;
         newList[i].month = month;
         newList[i].days = day;
@@ -1764,7 +1777,7 @@ function GetCurbsySLots() {
 
           var getYear = new Date(day).getFullYear();
           var formatted_delivery_date = date_display + " ," + getYear;
-          var selectedslot =  date_display + " ," + getYear + time_display;
+          var selectedslot = date_display + " ," + getYear + time_display;
           sessionStorage.setItem(
             "SelectedShippingMethod",
             $(".curbsyShippingRadio:checked").val()
@@ -1772,10 +1785,10 @@ function GetCurbsySLots() {
           $("#applyCouponForm")
             .find("input[name=ShippingMethod]")
             .val(sessionStorage.getItem("SelectedShippingMethod"));
-            if(deliverymethod == 'FR Truck Delivery' || deliverymethod == 'flatrate:FR Truck Delivery'){
-              time_display = '';
-              selectedslot =  date_display + " ,," + getYear + time_display
-            }
+          if (deliverymethod == 'FR Truck Delivery' || deliverymethod == 'flatrate:FR Truck Delivery') {
+            time_display = '';
+            selectedslot = date_display + " ,," + getYear + time_display
+          }
           var selectedDelivery =
             '<h5 class="ft-w-6s mb-ft-12p ltr-sp-1s ltr-sp-0p5 ft-md">' +
             method +
@@ -1790,10 +1803,10 @@ function GetCurbsySLots() {
           ) {
             document.querySelector("input[name=curbsy_datanew]").value =
               JSON.stringify(r);
-              document.querySelector("input[name=curbsy_datenew]").value = 
-              (deliverymethod === 'FR Truck Delivery' || deliverymethod === 'flatrate:FR Truck Delivery') 
-                  ? date_display + " " + time_display 
-                  : date_display + ": " + time_display;
+            document.querySelector("input[name=curbsy_datenew]").value =
+              (deliverymethod === 'FR Truck Delivery' || deliverymethod === 'flatrate:FR Truck Delivery')
+                ? date_display + " " + time_display
+                : date_display + ": " + time_display;
           }
           document.querySelector("#selectedDeliveryContent").innerHTML =
             selectedDelivery;
@@ -1805,6 +1818,20 @@ function GetCurbsySLots() {
           );
           $("#deliveryAccordianBody").hide();
           $("#loadcurbsydata").modal("hide");
+          if (getPageCode == 'ORDEDIT') {
+            document.querySelector("input[name=formatted_delivery_date]").value = formatDeliveryDate(formatted_delivery_date);
+            var requestData = {
+              curbsy_data: JSON.stringify(r),
+              delivery_date:
+                curbsy_date = deliverymethod === 'FR Truck Delivery'
+                  ? document.querySelector("input[name=curbsy_datenew]").value.replace(":", "")
+                  : document.querySelector("input[name=curbsy_datenew]").value,
+              curbsy_date,
+              formatted_delivery_date: formatDeliveryDate(formatted_delivery_date),
+            }
+            viewOrderDetails.addHeadTag();
+            this.UpdateShippingData(requestData);
+          }
           $("#opay").submit();
         },
       },
@@ -1943,8 +1970,8 @@ function GetDeliveryMethods() {
     document.getElementById("hiddenBillFirstName") === null
       ? shipFirstname
       : encodeURIComponent(
-          document.getElementById("hiddenBillFirstName").value
-        );
+        document.getElementById("hiddenBillFirstName").value
+      );
   var BillLastName =
     document.getElementById("hiddenBillLastName") === null
       ? ShipLastName
@@ -1973,8 +2000,8 @@ function GetDeliveryMethods() {
     document.getElementById("hiddenBillStateSelect") === null
       ? ShipStateSelect
       : encodeURIComponent(
-          document.getElementById("hiddenBillStateSelect").value
-        );
+        document.getElementById("hiddenBillStateSelect").value
+      );
   var BillCountry =
     document.getElementById("hiddenBillCountry") === null
       ? ShipCountry
@@ -2040,7 +2067,7 @@ function GetDeliveryMethods() {
     BillZip +
     "&customer_type=" +
     customertype +
-    "&pointspayment=true&session_id="+sessionId;
+    "&pointspayment=true&session_id=" + sessionId;
   var handleErrors = "";
   $.get(url, function (dataval) {
     if (dataval.shipping_methods.length == 0) {
@@ -2160,13 +2187,13 @@ function GetDeliveryMethods() {
                         .find("#GROUND_HOME_DELIVERY .getestimateddelivery")
                         .html(
                           ': Est Delivery: <span class="fedExDates txt-orange">' +
-                            month +
-                            " " +
-                            day +
-                            "," +
-                            " " +
-                            year +
-                            "</span>"
+                          month +
+                          " " +
+                          day +
+                          "," +
+                          " " +
+                          year +
+                          "</span>"
                         );
                       $("body")
                         .find("#GROUND_HOME_DELIVERY-shipping")
@@ -2176,37 +2203,37 @@ function GetDeliveryMethods() {
                         .find("#GROUND_HOME_DELIVERY .getestimateddelivery")
                         .html(
                           ': Est Delivery: <span class="fedExDates txt-orange">' +
-                            month +
-                            " " +
-                            day +
-                            "," +
-                            " " +
-                            year +
-                            "</span>"
+                          month +
+                          " " +
+                          day +
+                          "," +
+                          " " +
+                          year +
+                          "</span>"
                         );
                       $("body")
                         .find("#FEDEX_GROUND .getestimateddelivery")
                         .html(
                           ': Est Delivery: <span class="fedExDates txt-orange">' +
-                            month +
-                            " " +
-                            day +
-                            "," +
-                            " " +
-                            year +
-                            "</span>"
+                          month +
+                          " " +
+                          day +
+                          "," +
+                          " " +
+                          year +
+                          "</span>"
                         );
                       $("body")
                         .find("#flatrate_shipping .getestimateddelivery")
                         .html(
                           ': Est Delivery: <span class="fedExDates txt-orange">' +
-                            month +
-                            " " +
-                            day +
-                            "," +
-                            " " +
-                            year +
-                            "</span>"
+                          month +
+                          " " +
+                          day +
+                          "," +
+                          " " +
+                          year +
+                          "</span>"
                         );
                       $("body")
                         .find("#GROUND_HOME_DELIVERY-shipping")
@@ -2222,13 +2249,13 @@ function GetDeliveryMethods() {
                         .find("#" + key + " .getestimateddelivery")
                         .html(
                           ': Est Delivery: <span class="fedExDates txt-orange">' +
-                            month +
-                            " " +
-                            day +
-                            "," +
-                            " " +
-                            year +
-                            "</span>"
+                          month +
+                          " " +
+                          day +
+                          "," +
+                          " " +
+                          year +
+                          "</span>"
                         );
                       $("body")
                         .find("#" + key + "-shipping")
@@ -2366,17 +2393,17 @@ function GetDeliveryMethods() {
         loadBasketWeight() {
           // var filteredValues = pwcheck.filter(value => value === '1' || value === '0');
           var filteredValues = pwcheck.filter(value => value === '1' || value === '0');
-          if(filteredValues.includes('1')){
+          if (filteredValues.includes('1')) {
             $.getJSON("/GLOBALBASK_JSON.html", function (data) {
               var counter = 1;
               var codes = data.groups
                 .filter(item => item.weight) // Filter items that have a weight
-                .map((item, index) => ({ 
-                  weight: item.weight, 
+                .map((item, index) => ({
+                  weight: item.weight,
                   name: item.name,
                   filteredValue: filteredValues[index % filteredValues.length] // Assign filtered value in a cyclic manner
                 }));
-                    // Now filter the codes to only include those with filteredValue '1'
+              // Now filter the codes to only include those with filteredValue '1'
               codes = codes.filter(code => code.filteredValue === '1');
               counter = codes.length;
               loadBaskWeights = new Vue({
@@ -2396,7 +2423,7 @@ function GetDeliveryMethods() {
                 },
                 mounted() {
                   this.$nextTick(() => {
-                    if(codes.length > 0){
+                    if (codes.length > 0) {
                       $('#loadbasketweight').show();
                     }
                   });
@@ -2404,8 +2431,8 @@ function GetDeliveryMethods() {
               });
             });
           }
-          
-        
+
+
         },
       },
       computed: {},
@@ -2511,11 +2538,11 @@ function GetDeliveryMethods() {
             // Added on 18-12-2023
             console.log(
               "Address State " +
-                addressState +
-                " Shipping State " +
-                DeliveryState +
-                " Payment State " +
-                PaymentState
+              addressState +
+              " Shipping State " +
+              DeliveryState +
+              " Payment State " +
+              PaymentState
             );
             if (PaymentState == 0) {
               $(".continueOrder,.newcard,#reviewoderTabContent").hide();
@@ -2544,11 +2571,11 @@ function GetDeliveryMethods() {
           // getFreeShippingInfo();
           console.log(
             "Address State " +
-              addressState +
-              " Shipping State " +
-              DeliveryState +
-              " Payment State " +
-              PaymentState
+            addressState +
+            " Shipping State " +
+            DeliveryState +
+            " Payment State " +
+            PaymentState
           );
 
           $("body").on("change", "#hdordernote", function () {
@@ -2619,7 +2646,7 @@ function GetDeliveryMethods() {
       var zipcode = $("#hiddenShipZip").val();
       CheckRouteGroup(zipcode);
     }
-    if($('#changeShipping').is(":visible") == true) {
+    if ($('#changeShipping').is(":visible") == true) {
       $('#changeShipping').hide();
     }
   });
@@ -2641,7 +2668,7 @@ function getShippingMethods() {
       if (data) {
         $(".shippingContentloaderbox").hide();
         $("#loadShippingSelection").html(data);
-        if($(".new-error-message.error-message").is(':visible') === true){
+        if ($(".new-error-message.error-message").is(':visible') === true) {
           $(".new-error-message.error-message").delay(2000).fadeOut(500);
         }
         $("#selectedAddress").find(".selectedAddressloaderbox").hide();
@@ -2649,8 +2676,8 @@ function getShippingMethods() {
           GetDeliveryMethods();
           updateDetailsTextWithJquery();
           // checkWineAccountProducts();
-          if(isUserLoggedIn === 1 && document.querySelector('.customertype').value =='Wholesale'){
-          splitwineorder.viewWineItemsfromBasket();
+          if (isUserLoggedIn === 1 && document.querySelector('.customertype').value == 'Wholesale') {
+            splitwineorder.viewWineItemsfromBasket();
           }
           DeliveryState = 0;
           PaymentState = 0;
@@ -2877,12 +2904,12 @@ $("body").on("change", ".RewardsavedPaymentMethod", function () {
         $("#mivapay_frame").css("visibility", "visible");
         $("#cardDetail").html(
           '<p class="redeemededpoints">Redeemed Points $' +
-            usedpoints +
-            "\n" +
-            "</p>" +
-            "<p>" +
-            card +
-            "</p>"
+          usedpoints +
+          "\n" +
+          "</p>" +
+          "<p>" +
+          card +
+          "</p>"
         );
         $("#customerPointsInfo").val("Redeemed Points " + usedpoints);
         var cardnameandnumber = radioValue.replace("paymentcard:", "");
@@ -2932,135 +2959,135 @@ $("body").on("change", ".savedPaymentMethod", function () {
 
 
   var cardnameandnumber = $(this).attr("data-prompt");
-  if(getPaypalFees() === true) {
-  $("#getfromwhichsection").val("payment");
-  $(".usenewcard").removeAttr("checked");
-  if (radioValue == "points:points") {
-    // sessionStorage.removeItem("CardValue");
-    $(".nonsavedcardnote,.savedcardnote").hide();
-    $(".paymentcardcontainer").hide();
-    $("#opay_form").hide();
-    $(".payment-type-wrapper").addClass("marltp-15s");
-  } else {
-    $(".paymentcardcontainer").show();
-    $(".savedcardnote").show();
-    $("#opay_form").show();
-    $("#mivapay_frame").css("visibility", "hidden");
-  }
-  $("#editcard .modal-body").html("");
-  let url = $("#opay-saved").attr("action");
-  let dataPost = $("#opay-saved").serialize();
-  jQuery.ajax({
-    url: url,
-    type: "POST",
-    showLoader: true,
-    data: dataPost,
-    cache: false,
-    beforeSend: function () {
-      $(".loaderbox").show();
-    },
-    success: function (data) {
-      if (
-        data.trim().search(/class="error-message"/i) != -1 ||
-        data.trim().search(/class="information-message"/i) != -1
-      ) {
-        $(".new-error-message.error-message")
-          .show()
-          .html($(data).find(".error-message").html());
-        $(".new-error-message.error-message")
-          .show()
-          .html($(data).find(".information-message").html());
-        $(".loaderContainer").hide();
-      } else {
-        $("#savedCardDetails").html(data + "");
-        $(".nonsavedcardnote").hide();
-        $(".loaderbox").hide();
+  if (getPaypalFees() === true) {
+    $("#getfromwhichsection").val("payment");
+    $(".usenewcard").removeAttr("checked");
+    if (radioValue == "points:points") {
+      // sessionStorage.removeItem("CardValue");
+      $(".nonsavedcardnote,.savedcardnote").hide();
+      $(".paymentcardcontainer").hide();
+      $("#opay_form").hide();
+      $(".payment-type-wrapper").addClass("marltp-15s");
+    } else {
+      $(".paymentcardcontainer").show();
+      $(".savedcardnote").show();
+      $("#opay_form").show();
+      $("#mivapay_frame").css("visibility", "hidden");
+    }
+    $("#editcard .modal-body").html("");
+    let url = $("#opay-saved").attr("action");
+    let dataPost = $("#opay-saved").serialize();
+    jQuery.ajax({
+      url: url,
+      type: "POST",
+      showLoader: true,
+      data: dataPost,
+      cache: false,
+      beforeSend: function () {
+        $(".loaderbox").show();
+      },
+      success: function (data) {
+        if (
+          data.trim().search(/class="error-message"/i) != -1 ||
+          data.trim().search(/class="information-message"/i) != -1
+        ) {
+          $(".new-error-message.error-message")
+            .show()
+            .html($(data).find(".error-message").html());
+          $(".new-error-message.error-message")
+            .show()
+            .html($(data).find(".information-message").html());
+          $(".loaderContainer").hide();
+        } else {
+          $("#savedCardDetails").html(data + "");
+          $(".nonsavedcardnote").hide();
+          $(".loaderbox").hide();
 
-        $(".savedcardheader").text("Saved Card");
-        sessionStorage.setItem("CardValue", radioValue);
-        sessionStorage.setItem("Cardlastfourname", cardnameandnumber);
-        console.log("card name " + sessionStorage.getItem("Cardlastfourname"));
-        if (radioValue != "points:points") {
-          $("#opay_form").show();
-          $("#mivapay_frame").css("visibility", "visible");
+          $(".savedcardheader").text("Saved Card");
+          sessionStorage.setItem("CardValue", radioValue);
+          sessionStorage.setItem("Cardlastfourname", cardnameandnumber);
+          console.log("card name " + sessionStorage.getItem("Cardlastfourname"));
+          if (radioValue != "points:points") {
+            $("#opay_form").show();
+            $("#mivapay_frame").css("visibility", "visible");
+          }
+
+          if (radioValue == "points:points") {
+            $(".payment-type-wrapper").addClass("marltp-15");
+            if (screen.width > 767 && screen.width <= 768) {
+              $(".removepadding").addClass("marltp-15");
+            }
+            var amounttopay =
+              parseFloat($(".paymentbaskettotal").val()) -
+              parseFloat($(".pointstoreddem").text());
+            $(".finalpay").text(" $" + amounttopay.toFixed(2));
+          } else {
+            $(".removepadding").addClass("nopadding");
+            if (screen.width > 767 && screen.width <= 768) {
+              $(".removepadding").addClass("marltp-15");
+            }
+            $(".payment-type-wrapper").addClass("marltp-15");
+          }
+          $("#payment-balance-amount").change(function () {
+            if ($(this).val() < 0 || $(this).val() == "") {
+              $(".RewardsavedPaymentMethod").css("pointer-events", "none");
+            } else {
+              $(".RewardsavedPaymentMethod").css("pointer-events", "all");
+            }
+          });
+
+
         }
 
         if (radioValue == "points:points") {
-          $(".payment-type-wrapper").addClass("marltp-15");
-          if (screen.width > 767 && screen.width <= 768) {
-            $(".removepadding").addClass("marltp-15");
-          }
-          var amounttopay =
-            parseFloat($(".paymentbaskettotal").val()) -
-            parseFloat($(".pointstoreddem").text());
-          $(".finalpay").text(" $" + amounttopay.toFixed(2));
+          $(".nonsavedcardnote,.savedcardnote").hide();
         } else {
-          $(".removepadding").addClass("nopadding");
-          if (screen.width > 767 && screen.width <= 768) {
-            $(".removepadding").addClass("marltp-15");
-          }
-          $(".payment-type-wrapper").addClass("marltp-15");
+          $(".savedcardnote").show();
         }
-        $("#payment-balance-amount").change(function () {
-          if ($(this).val() < 0 || $(this).val() == "") {
-            $(".RewardsavedPaymentMethod").css("pointer-events", "none");
-          } else {
-            $(".RewardsavedPaymentMethod").css("pointer-events", "all");
-          }
-        });
 
-
-      }
-
-      if (radioValue == "points:points") {
-        $(".nonsavedcardnote,.savedcardnote").hide();
-      } else {
-        $(".savedcardnote").show();
-      }
-
-      if (
-        $("#savedCardDetails").find('input[name="AmountType"]').val() == "total"
-      ) {
-        $("#placeOrderBtn ,.placeOrderBtn").attr(
-          "onclick",
-          "onclick_submit();"
-        );
-        var totalPoints = $(".entrietotal").html();
-        sessionStorage.removeItem("RewardPoints");
-        $("#cardDetail").html("<span>Redeemed Points " + totalPoints);
-        $("#customerPointsInfo").val("Redeemed Points " + totalPoints);
-      } else {
-        $("#placeOrderBtn , .placeOrderBtn").attr(
-          "onclick",
-          "onclick_submit();"
-        );
-      }
-      // 18-12-2023 changes 2
-      $("#reviewoderTabContent").hide();
-      // 18-12-2023 changes 2
-      $(".closePaymentMethod,#closePaymentMethod").hide();
-      // $('.continueOrder,.newcard').show();
-      if (radioValue !== "mivapay:") {
-        $("#placeOrderBtn,.placeOrderBtn").prop("disabled", false);
-        PaymentState = 1;
-      }
-      $(".orderSummaryMainContainer").show();
-      if (radioValue == "mivapay:") {
-        setTimeout(function () {
-          $("#mivapay_frame").css("visibility", "visible");
-          console.log("open automatically");
-          $("#paymentmodal").modal(
-            { backdrop: "static", keyboard: false },
-            "show"
+        if (
+          $("#savedCardDetails").find('input[name="AmountType"]').val() == "total"
+        ) {
+          $("#placeOrderBtn ,.placeOrderBtn").attr(
+            "onclick",
+            "onclick_submit();"
           );
-        }, 1500);
-      }
+          var totalPoints = $(".entrietotal").html();
+          sessionStorage.removeItem("RewardPoints");
+          $("#cardDetail").html("<span>Redeemed Points " + totalPoints);
+          $("#customerPointsInfo").val("Redeemed Points " + totalPoints);
+        } else {
+          $("#placeOrderBtn , .placeOrderBtn").attr(
+            "onclick",
+            "onclick_submit();"
+          );
+        }
+        // 18-12-2023 changes 2
+        $("#reviewoderTabContent").hide();
+        // 18-12-2023 changes 2
+        $(".closePaymentMethod,#closePaymentMethod").hide();
+        // $('.continueOrder,.newcard').show();
+        if (radioValue !== "mivapay:") {
+          $("#placeOrderBtn,.placeOrderBtn").prop("disabled", false);
+          PaymentState = 1;
+        }
+        $(".orderSummaryMainContainer").show();
+        if (radioValue == "mivapay:") {
+          setTimeout(function () {
+            $("#mivapay_frame").css("visibility", "visible");
+            console.log("open automatically");
+            $("#paymentmodal").modal(
+              { backdrop: "static", keyboard: false },
+              "show"
+            );
+          }, 1500);
+        }
 
-        setTimeout(function(){
-              getCreditfeeSummary();
-        },500);
-    },
-  });
+        setTimeout(function () {
+          getCreditfeeSummary();
+        }, 500);
+      },
+    });
   }
 
 });
@@ -3073,7 +3100,7 @@ function LoadCouponForm() {
     if (
       $(".discountcodeinput").val() != "" &&
       capitalize($(".discountcodeinput").val()) ==
-        $.trim(capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text()))
+      $.trim(capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text()))
     ) {
       $("#applycoupon .error-message")
         .text("This coupon code has already been applied")
@@ -3154,11 +3181,11 @@ $("body").on("click", "#AdditionalPaymentMethodUsenewCard", function () {
 
 console.log(
   "Address State " +
-    addressState +
-    " Shipping State " +
-    DeliveryState +
-    " Payment State " +
-    PaymentState
+  addressState +
+  " Shipping State " +
+  DeliveryState +
+  " Payment State " +
+  PaymentState
 );
 // checkout code merge
 /* show error popup if home delivery is less than 30 */
@@ -3270,9 +3297,9 @@ $(document).ready(function () {
       if (
         $(".discountcodeinput").val() != "" &&
         capitalize($(".discountcodeinput").val()) ==
-          $.trim(
-            capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text())
-          )
+        $.trim(
+          capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text())
+        )
       ) {
         $("#applycoupon .error-message")
           .text("This coupon code has already been applied")
@@ -3918,7 +3945,7 @@ $(document).ready(function () {
         (iframe.contents().find("#curbsy-app .error-message").text() ==
           "Please select an available day" ||
           iframe.contents().find("#curbsy-app .error-message").text() ==
-            "Please select a time slot")
+          "Please select a time slot")
       ) {
         console.log("shipping error");
       } else {
@@ -3983,7 +4010,7 @@ $(document).ready(function () {
     $("#reviewBillingZip").text($("#BillZipL").text());
     $("#reviewFirstName").html(
       $("#shipFirstNameL").text() +
-        '<span class="txt-orange"> - Shipping</span>'
+      '<span class="txt-orange"> - Shipping</span>'
     );
     $("#reviewAddress").text($("#ShipAddress1L").text());
     $("#reviewZip").text($("#ShipZipL").text());
@@ -4045,11 +4072,11 @@ $(document).ready(function () {
     showCheckBox();
     console.log(
       "Address State " +
-        addressState +
-        " Shipping State " +
-        DeliveryState +
-        " Payment State " +
-        PaymentState
+      addressState +
+      " Shipping State " +
+      DeliveryState +
+      " Payment State " +
+      PaymentState
     );
     // 18-12-2023 changes 3
     $("#reviewoderTabContent").show();
@@ -4188,7 +4215,7 @@ $("body").on("mousedown", ".qtybox", function (event) {
   if (window.innerWidth < 900 || is_touch_device) event.preventDefault();
 });
 
-var timer_id = setTimeout(function () {}, 1);
+var timer_id = setTimeout(function () { }, 1);
 
 var changeBasketQty = function (element, sign) {
   event.preventDefault();
@@ -4241,7 +4268,9 @@ var changeBasketQty = function (element, sign) {
 /*check if user logged  then load this */
 if (isUserLoggedIn == 1) {
   $(window).on("load", function () {
-    UserIdleTime();
+    if (getPageCode.includes('opco')) {
+      UserIdleTime();
+    }
     $("#STANDARD_OVERNIGHT").children().addClass("paddingZero");
     var allowCheckout = 1;
     console.log("the allowed " + allowCheckout);
@@ -4270,7 +4299,9 @@ if (isUserLoggedIn == 1) {
 }
 $(window).on("load", function () {
   if ($(".guestaddress").text() == 1) {
-    UserIdleTime();
+    if (getPageCode.includes('opco')) {
+      UserIdleTime();
+    }
   }
   if ($("#shipFirstNameL").text().length > 1) {
     $("#useForShipping").prop("checked", true);
@@ -4573,7 +4604,7 @@ $("#curbsy").on("load", function () {
         (iframe.contents().find("#curbsy-app .error-message").text() ==
           "Please select an available day" ||
           iframe.contents().find("#curbsy-app .error-message").text() ==
-            "Please select a time slot")
+          "Please select a time slot")
       ) {
         console.log("shipping error");
       } else {
@@ -5058,11 +5089,11 @@ let storedData = 0;
 function showCheckBox() {
   console.log(
     "Address State " +
-      addressState +
-      " Shipping State " +
-      DeliveryState +
-      " Payment State " +
-      PaymentState
+    addressState +
+    " Shipping State " +
+    DeliveryState +
+    " Payment State " +
+    PaymentState
   );
   var wholesaleuser = $(".wholesaleuser").text();
   if (wholesaleuser != 1) {
@@ -5171,7 +5202,7 @@ function removeCoupon(couponcode) {
       type: "POST",
       showLoader: true,
       cache: false,
-      beforeSend: function () {},
+      beforeSend: function () { },
       success: function (data) {
         if (data.message == "Coupon removed") {
           $(".showdiscounts").show();
@@ -5189,16 +5220,16 @@ function removeCoupon(couponcode) {
               .find(".redeemededpoints")
               .html(
                 "Redeemed Points " +
-                  $("#redee").find("#OrderSummaryShipping").text() +
-                  ""
+                $("#redee").find("#OrderSummaryShipping").text() +
+                ""
               );
           }, 1500);
           getCreditfeeSummary();
           localStorage.removeItem('couponcode');
-          if($('#loadShippingSelection').length > 0){
-          $('#changeShipping').hide();
-          getShippingMethods();
-          $("#changeShipping").click();
+          if ($('#loadShippingSelection').length > 0) {
+            $('#changeShipping').hide();
+            getShippingMethods();
+            $("#changeShipping").click();
           }
         }
         $('#changeShipping').hide();
@@ -5494,7 +5525,7 @@ function getCardInforofuser(id) {
     url: "/cudet.html?CustomerAction=getPaymentInfo&payment_id=" + id,
     success: function (card) {
       $("#customerPaymentInfo").val(card);
-$("#customerPaymentInfomation").val(card);
+      $("#customerPaymentInfomation").val(card);
     },
   });
 }
@@ -5676,7 +5707,7 @@ function ApplyCoupon(elemet) {
     if (
       $(".discountcodeinput").val() != "" &&
       capitalize($(".discountcodeinput").val()) ==
-        $.trim(capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text()))
+      $.trim(capitalize($("#sidebarcart-DISCOUNT .col-xs-6").first().text()))
     ) {
       $("#applycoupon .error-message")
         .text("This coupon code has already been applied")
@@ -5823,7 +5854,7 @@ function AddNotestoOrder(value) {
     beforeSend: function () {
       $(".loaderContainer").show();
     },
-    success: function (data) {},
+    success: function (data) { },
   });
 }
 
@@ -5833,7 +5864,7 @@ function getCustomerCoupon() {
   console.log(isCouponApplied);
   $.get(
     "/?Screen=majax&mobileAction=checkCouponUsage&emailAddress=" +
-      customerEmail,
+    customerEmail,
     function (response) {
       var json = response;
       if (!response.coupon.includes("already used") && isCouponApplied === null) {
@@ -5843,7 +5874,7 @@ function getCustomerCoupon() {
             allcoupons: json,
           },
           mounted() {
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
               $('#couponlists').show();
             })
           }
@@ -5855,7 +5886,7 @@ function getCustomerCoupon() {
 
 function ApplyCouponDiscount(couponcode) {
   jQuery.ajax({
-    url: "/coupon-ajax.html?CustomerAction=coupenRedemption&ACTION=ACPN&Coupon_Code="+couponcode,
+    url: "/coupon-ajax.html?CustomerAction=coupenRedemption&ACTION=ACPN&Coupon_Code=" + couponcode,
     type: "POST",
     showLoader: true,
     cache: false,
@@ -5869,7 +5900,7 @@ function ApplyCouponDiscount(couponcode) {
           .text($(data).filter(".errormessageshow").text())
           .show();
         return false;
-      } else{
+      } else {
         localStorage.setItem('couponcode', 'applied');
         getCreditfeeSummary();
       }
@@ -5879,19 +5910,19 @@ function ApplyCouponDiscount(couponcode) {
 
 function getPaypalFees() {
   var PaymentMethod = $(".savedPaymentMethod:checked").val();
-  var url = '/Merchant5/merchant.mvc?Screen=AJAX&CustomerAction=addPaypaldFee&PaymentMethod='+PaymentMethod;
+  var url = '/Merchant5/merchant.mvc?Screen=AJAX&CustomerAction=addPaypaldFee&PaymentMethod=' + PaymentMethod;
   var checkpayment = '';
   jQuery.ajax({
     url: url,
     type: "POST",
     showLoader: true,
     cache: false,
-    async:false,
+    async: false,
     beforeSend: function () {
     },
 
     success: function (data) {
-      if(data) {
+      if (data) {
         getCreditfeeSummary();
         checkpayment = true;
       }
@@ -5901,19 +5932,19 @@ function getPaypalFees() {
 }
 
 function checkProductWeight(shippingmethod) {
-  if(shippingmethod.includes('FedEX') === true){
-      shippingmethod = 'FedEX'
+  if (shippingmethod.includes('FedEX') === true) {
+    shippingmethod = 'FedEX'
   }
-  var url = '/?Screen=CUDET&CustomerAction=basketfees&Shipping_Method='+shippingmethod;
+  var url = '/?Screen=CUDET&CustomerAction=basketfees&Shipping_Method=' + shippingmethod;
   $.ajax({
-      url:url,
-      beforeSend: function(){
+    url: url,
+    beforeSend: function () {
 
-      },
-      success: function(data){
-          console.log(data);
+    },
+    success: function (data) {
+      console.log(data);
 
-      }
+    }
   })
 }
 
@@ -5921,18 +5952,18 @@ function updateDetailsTextWithJquery() {
   var zipcode = $('#hiddenShipZip').val();
   var specialshipping = $('input[name="SpecialShipping"]').val();
   var nofedex = $('input[name="nofedex"]').val();
-  var iswinepresent= $('input[name="iswinepresent"]').val();
+  var iswinepresent = $('input[name="iswinepresent"]').val();
   var ship_state = $('#hiddenShipStateSelect').val();
-  const url = "/?Screen=checkout-ajax&customerAction=checkoutmessages&ship_zip="+zipcode+'&specialshipping='+specialshipping+"&nofedex="+nofedex+"&ship_state="+ship_state+"&iswinepresent="+iswinepresent;
+  const url = "/?Screen=checkout-ajax&customerAction=checkoutmessages&ship_zip=" + zipcode + '&specialshipping=' + specialshipping + "&nofedex=" + nofedex + "&ship_state=" + ship_state + "&iswinepresent=" + iswinepresent;
 
   $.ajax({
     url: url,
     type: 'GET', // or 'POST' if needed
-    success: function(response) {
+    success: function (response) {
       $('.detailsText').html(response);
-$('.fam-main').show();
+      $('.fam-main').show();
     },
-    error: function(xhr, status, error) {
+    error: function (xhr, status, error) {
       console.error('Error fetching data:', error);
     }
   });

@@ -1,0 +1,1025 @@
+/* address alignment fixes 09-11-2022*/
+#useAddress {
+    margin-top: 20px;
+    font-weight: 100;
+}
+
+.hiddenforcheckout { visibility : hidden !important; }
+
+.frtruckhide { display: none !important; }
+
+.paypalmessage {margin-top: -10px;}
+
+.label-align {
+    display: inline-flex;
+    gap: 5px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.couponbtn {
+border-radius: 25px;
+    border: dotted;
+    border-color: #f47a44;
+    border-width: 2px;
+    /*padding: 5px 10px;*/
+}
+
+#couponlists {
+display: grid;
+    padding: 10px 6px;
+    margin: 0.8rem;
+    justify-content: start;
+}
+
+.disabled {
+    color:#d1d2d3;
+}
+
+.btn.continueOrder:hover,
+#useAddress:hover {
+    color: #ffffff !important;
+    background-color: #d9764a !important;
+}
+
+.selectedShipping.ft-14p>h5,
+.bill_wrap>h5 {
+    line-height: 23px;
+}
+
+#shipFirstNameL {
+    line-height: 23px;
+}
+
+.closenewaddrForm,
+#closeGusetAddress {
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 600 !important;
+    font-family: ITCAvantGardePro-Bk !important;
+}
+
+/* address alignment fixes ends*/
+.truncate {
+    line-height: 18px;
+}
+
+#DeliveryAccordianHeader #closeeDeliverty,
+#DeliveryAccordianHeader #changeDeliverty,
+#paymentAccordianHeader #closePaymentMethod,
+ {
+     right: 5px;
+}
+
+.changeSection {
+    white-space: nowrap;
+}
+
+.methodcard {
+    background: #fff;
+    box-sizing: border-box;
+    border: solid 2px #ccc;
+    margin: 0;
+    padding: 10px;
+    width: 300px;
+    max-width: 602px;
+    border-radius: 5px;
+    font-family: 'ITCAvantGardePro-md';
+    font-weight: initial;
+}
+
+.methodcard:hover {
+    background: #eee;
+}
+
+.slectedMethod {
+    border: solid 2px #f47a44;
+}
+
+.ht-60 {
+    height: 60px;
+}
+
+.ht-70 {
+    height: 70px;
+}
+
+.ht-75 {
+    height: 75px;
+}
+
+.ht-20 {
+min-height:20px;
+}
+
+#loadShippingSelection {
+ margin: 10px 0;
+}
+
+.wd500 {
+    width: 500px;
+}
+
+.wd-180 {
+width: 180px;
+}
+
+.marneg30 {
+margin-top:-30px;
+}
+.mar4p{
+margin:4px 0;
+}
+
+#couponDisclaimer {
+margin:10px 0;
+}
+
+.displaytable {display: table;width:75%;}
+
+.shipcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+}
+
+.selectedShipping.ft-14p>h5,
+.bill_wrap>h5 {
+    /* display:-webkit-box; */
+    /* -webkit-line-clamp:2; */
+    /* -webkit-box-orient: vertical; */
+    /* overflow: hidden; */
+}
+
+.selectedShipping.ft-14p>h5 span.bold-ft,
+.bill_wrap>h5 span.bold-ft {
+    min-height: 25px;
+    margin-right: 10px;
+    min-width: 90px;
+    font-size: 14px;
+    font-family: 'ITCAvantGardePro-Demi';
+    letter-spacing: 0.5px;
+    font-weight: unset;
+}
+
+.selectedShipping.ft-14p>h5 #shipFirstNameL,
+.bill_wrap>h5 #BillFirstNameL {
+    vertical-align: top;
+    float: none;
+    font-size: 14px;
+    font-family: 'ITCAvantGardePro-Md';
+    font-weight: unset;
+    letter-spacing: 0.5px;
+}
+
+#shipFirstNameL,
+#BillFirstNameL {
+    margin-left: 0px;
+}
+
+.ht-45 {
+    height: 45px;
+}
+
+#orderDetailTabContent .col-xs-12.col-sm-12.col-lg-6.left-pading {
+    margin-left: 240px;
+}
+
+.newcard-container .btn {
+    margin-left: 15px;
+}
+
+.osel-page-checkout-form-saved .savedcardheaders {
+    margin-left: 15px;
+}
+
+.orderInvoiveMain {
+    word-wrap: break-word;
+}
+
+#closeeDeliverty,
+#updateClass,
+.changeBtnshowOnlyMobile {
+    padding-left: 0px !important;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.shipbillwidth {
+    width: 70px;
+}
+
+.mar16p {
+    margin: 8px 0;
+}
+
+.text-container {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-container {
+    display: flex;
+    gap: 16px;
+    margin:10px 0;
+}
+
+#addnewAddress.changeSection.floatRight {
+    position: absolute;
+    right: 5px;
+    top: 12px;
+}
+
+#shipping-payment .deliveryMethodFont {
+    padding-left: 21% !important;
+}
+
+#shippingAddress #seletHeaderContent {
+    padding-left: 25%;
+    margin-bottom: 0 !important;
+    word-wrap: break-word;
+}
+
+#shippingAccordianBody .bill_address_hidestyle {
+    padding-left: 23%;
+    word-wrap: break-word;
+}
+
+.back_cart_btn {
+    margin-top: 20px;
+}
+
+.paddingZeroDesk {
+    padding: 0px;
+}
+
+.instruction-text {
+    width: 100%;
+    padding: 10px;
+    resize: vertical;
+    border-radius: 5px;
+    border: solid 1px #d1d3d4;
+    font-weight: 300;
+    font-family: ITCAvantGardePro-Bk;
+}
+
+:focus {
+    outline: none !important;
+    outline-style: none !important;
+    outline-width: 1px;
+}
+
+label {
+    display: inline !important;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+
+.curbsy .active {
+    background-color: #f47a44;
+    color: white;
+    font-weight: bold !important;
+}
+
+.card-body P {
+    font-weight: bold;
+}
+
+.continueDelivery:hover {
+    color: #fff !important;
+}
+
+
+/* slide tab */
+
+.slidingTabs {
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.slidingTabs .tab {
+    width: 100%;
+    display: inline-block;
+}
+
+
+/* end slide */
+
+.saveorderbutton {
+    display: block;
+    width: 80%;
+    background-color: #f47a44;
+    color: #fff !important;
+    border: 0;
+    border-radius: 3rem;
+    line-height: 3.5rem;
+}
+
+.btnApply {
+    padding: 2px 20px;
+    font-family: 'ITCAvantGardePro-Bk';
+}
+
+.left-space {
+    margin-left: 20px;
+}
+
+#shipping-payment table {
+    display: none;
+}
+
+.prod-container {
+    max-height: 512px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#cartmodal .prod-container {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    margin-right: -10px;
+}
+
+.prod-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.prod-container::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 10px;
+}
+
+.prod-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#Address_StateSelect {
+    background-color: inherit;
+    /* changed from #fbfbfb to inherit */
+    padding-left: 18px;
+    color: #414042;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 45px !important;
+    padding-left: 10px !important;
+    background-position: calc(100% - .5rem), 100% 0;
+    background-size: 1em 1em !important;
+    background-repeat: no-repeat;
+    font-weight: 300 !important;
+    border: solid 1px #d1d2d3;
+    /* line-height: 1 !important; */
+}
+
+.form_row input,
+select {
+    border-radius: 5px !important;
+    background-color: inherit;
+    /* changed from #fbfbfb to inherit */
+    font-size: 14px;
+}
+
+.modal-content {
+    font-size: inherit !important;
+}
+
+.wd-75 {
+    width: 76%;
+}
+
+.fa-angle-left:before {
+    content: "\f104";
+    font-size: 18px;
+}
+
+@media(max-width: 1023px) {
+    .wd-75 {
+        width: 100%;
+    }
+}
+
+@media(max-width: 768px) {
+
+    /* address alignment fixes */
+    .opco.CABK .mobile-search {
+        margin-left: 0px;
+    }
+
+    /*div.mob-items-container.sticky{margin-top: 3%;}*/
+    /* address alignment fixes ends*/
+    .opco .form-check label.font8 {
+        font-size: 12px !important;
+    }
+
+    #Address_Default_Shipping {
+        vertical-align: baseline;
+    }
+
+    .selectedShipping.ft-14p>h5,
+    .bill_wrap>h5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .selectedShipping.ft-14p>h5 span.bold-ft,
+    .bill_wrap>h5 span.bold-ft {
+        height: 50px;
+        margin-right: 10px;
+        min-width: 80px;
+    }
+
+    .selectedShipping.ft-14p>h5 #shipFirstNameL,
+    .bill_wrap>h5 #BillFirstNameL {
+        float: none;
+        height: auto;
+    }
+
+    #shipFirstNameL,
+    #BillFirstNameL {
+        margin-left: 0px;
+    }
+
+    .save-button.btn-height.pull-right {
+        /* height: auto; */
+    }
+
+    .addnewAddressContainer.visible-xs {
+        margin-bottom: 20px;
+    }
+
+    #seletHeaderContent .paddingZero.heightMin {
+        margin-bottom: 5px !important;
+        min-height: 55px !important;
+    }
+
+    #seletHeaderContent .paddingZero.heightMin .col-sm-10.col-xs-9 {
+        padding-right: 0 !important;
+    }
+
+    #orderDetailTabContent .col-xs-12.col-sm-12.col-lg-6.left-pading {
+        margin-left: 0;
+    }
+
+    .newcard-container .btn {
+        margin-left: 0;
+    }
+
+    .opco .newsLetterTypeContainer label.form-check-label {
+        font-size: 12px !important;
+        letter-spacing: 0.5px !important;
+        white-space: nowrap;
+    }
+
+    #shippingAddress #seletHeaderContent .col-sm-6.col-xs-6.col-lg-5.col-md-5.paddingZero,
+    #shippingAccordianBody .bill_address_hidestyle .col-sm-6.col-xs-6.col-lg-5.col-md-5.paddingZero {
+        height: auto !important;
+        min-height: 150px;
+        max-height: auto !important;
+    }
+
+    .changeBtnshowOnlyMobile {
+        text-align: right;
+    }
+
+    .deliveryMethodFont {
+        margin-top: 20px
+    }
+
+    #shipping-payment .deliveryMethodFont {
+        padding-left: 0 !important;
+    }
+
+    #shippingAddress #seletHeaderContent {
+        padding-left: 0 !important;
+    }
+
+    #shippingAccordianBody .bill_address_hidestyle {
+        padding-left: 0 !important;
+    }
+
+    .paddingZeroDesk {
+        padding: 0px 15px;
+    }
+
+    body {
+        background-color: #fff !important;
+    }
+
+    .wd-75 {
+        width: 100%;
+    }
+}
+
+.closeCss {
+    color: white;
+    position: absolute;
+    top: -14px !important;
+    right: 0;
+    background: #f47a44 !important;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    font-size: 18px !important;
+    opacity: 1;
+    transform: translate(-50%, -50%) !important;
+}
+
+#opay-saved {
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.BASK .basket-header {
+    margin-bottom: 10px;
+    background-color: #fff;
+    text-transform: uppercase;
+    padding: initial;
+    border-bottom: 1px solid #D1D3D4;
+}
+
+.BASK .basket-header h3 {
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    color: #414042;
+    margin: inherit;
+    text-transform: capitalize;
+}
+
+
+#mobileOrderSummary {
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    align-content: stretch;
+    text-align: justify;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ccc;
+    opacity: 1;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #ccc;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #ccc;
+}
+
+/* for guest billing address */
+#changeBillingaddress {
+    position: absolute;
+    top: 88px;
+    right: 5px;
+    float: right;
+}
+
+
+/* used for shipping and billing address select box */
+body #shipping_addressselect,
+#billing_addressselect {
+    height: 39px;
+    letter-spacing: .5px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-image: url(/Merchant5/graphics/00000001/up-and-down-arrow-icon-15.jpg) !important;
+}
+
+/* used for shipping and billing address select box */
+
+.checkout-button-align {
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    width: 100%;
+    float: right;
+    gap: 12px;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.coupon-container {
+    /* causes absolute icon div to be positioned correctly */
+    position: relative;
+
+    width: initial;
+    height: 3.2rem;
+    box-sizing: border-box;
+}
+
+.coupon-container .form-control {
+    height: 100%;
+    width: 100%;
+    padding-right: 3.65rem;
+    box-sizing: border-box;
+}
+
+.coupon-container .icon {
+    position: absolute;
+    right: 0.3rem;
+    top: 0.8rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.coupon-container .iconloader {
+    background: url(/Merchant5/graphics/00000001/loading_2.gif) center center no-repeat;
+    background-size: 15px;
+    transition: none;
+}
+
+.coupon-container {
+    margin: 0.8rem;
+}
+
+.coupon-container .form-control {
+    padding-left: 1.2rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+
+.coupon-container .icon {
+    border: none;
+}
+
+#slotscarousels {
+    /* max-width: 550px; */
+    /* width: max-content; */
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dayslots {
+    padding: 5px;
+    border: solid 1px #ccc;
+    text-align: center;
+    /* flex: 129px; */
+    width: 140px;
+    border-radius: 5px;
+}
+
+.activeslot {
+    background-color: #f47a44;
+    color: #fff;
+}
+
+.timeslot {
+    border: solid 1px #ccc;
+    text-align: center;
+    /* min-height: 50px; */
+    padding: 4px;
+    width: 139.5px;
+    /* max-width: 602px; */
+    display: inline-block;
+    align-items: center;
+    /* flex: 150px; */
+}
+
+.timeslot-container {
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    gap: 9px;
+    /* overflow: scroll; */
+    flex-direction: row;
+    margin: 16px 0;
+}
+
+.time {
+    vertical-align:sub;
+}
+
+.txt-hover:hover {
+    font-family: 'ITCAvantGardePro-Demi';
+    font-weight: unset;
+}
+
+
+/* ipad Landscape */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    #orderDetailTabContent .col-xs-12.col-sm-12.col-lg-6.left-pading {
+        margin-left: 0;
+    }
+
+    .checkoutaddress.checkoutaddressContainer {
+        display: flex;
+    }
+
+    #closeeDeliverty,
+    #updateClass {
+        padding-left: 0px !important;
+    }
+
+    #shipping-payment .deliveryMethodFont {
+        padding-left: 19% !important;
+    }
+
+    .checkoutaddressContainer {
+        width: 100%;
+        padding: 0 15px;
+    }
+}
+
+
+/* ipad Landscape ends */
+
+
+/* ipad Portrait */
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    #orderDetailTabContent .col-xs-12.col-sm-12.col-lg-6.left-pading {
+        margin-left: 0;
+    }
+
+    .checkoutaddressContainer {
+        width: 100%;
+        padding: 0 5px;
+        justify-content: center;
+    }
+
+    .prod-container {
+        height: auto !important;
+    }
+
+    #tabContent {
+        margin-top: 2% !important;
+    }
+}
+
+
+/* ipad Portrait ends*/
+
+@media only screen and (min-width: 750px) and (max-width: 980px) {
+    #closeMObAddresssection {
+        display: none;
+    }
+
+    .selectedShipping.ft-14p>h5,
+    .bill_wrap>h5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .selectedShipping.ft-14p>h5 span.bold-ft,
+    .bill_wrap>h5 span.bold-ft {
+        min-height: 30px;
+        margin-right: 10px;
+        min-width: 80px;
+    }
+
+    .selectedShipping.ft-14p>h5 #shipFirstNameL,
+    .bill_wrap>h5 #BillFirstNameL {
+        float: none;
+        height: auto;
+    }
+
+    #shipFirstNameL,
+    #BillFirstNameL {
+        margin-left: 0px;
+    }
+
+    .row.mobDisp {
+        padding: 0 20px;
+    }
+
+    .changeSection.visible-sm {
+        margin-top: 35px;
+    }
+
+    .divContainers.addnewAddressContainers {
+        margin-bottom: 20px;
+    }
+
+    .save-button {
+        padding-right: 15px !important;
+    }
+
+    .checkoutaddress.checkoutaddressContainer {
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .address-container,
+    .acordiancardContainer {
+        padding: 30px;
+	font-size:14px;
+    }
+
+    .changeBtnshowOnlyMobile {
+        text-align: right;
+    }
+
+    #closeeDeliverty,
+    #updateClass {
+        padding-left: 0px !important;
+    }
+
+    #shipping-payment .deliveryMethodFont {
+        padding-left: 0 !important;
+    }
+
+    #shippingAddress #seletHeaderContent {
+        padding-left: 25% !important;
+    }
+
+    #shippingAccordianBody .bill_address_hidestyle {
+        padding-left: 0 !important;
+    }
+
+    .paddingZeroDesk {
+        padding: 0px 15px;
+    }
+
+    #selectedAddress #seletedHeaderContent .col-sm-6.col-xs-6.col-lg-4.col-md-4.ft-14p {
+        width: 46%;
+    }
+
+    div.card-body.sham>h5 {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1280px) {
+    .bill_address_hidestyle div.col-xs-12 div.col-xs-9 h5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0 !important;
+    }
+
+    #seletHeaderContent .paddingZero.heightMin {
+        margin-bottom: 5px !important;
+        min-height: 55px !important;
+    }
+
+    #orderDetailTabContent .col-xs-12.col-sm-12.col-lg-6.left-pading {
+        margin-left: 0;
+    }
+
+    .save-button {
+        /* height: auto !important; */
+        /* padding-top: 15px !important; */
+    }
+
+    .add-address-btn {
+        /* margin-bottom: 20px; */
+    }
+
+    .maxWidthDiv {
+        max-width: 500px !important;
+    }
+
+    /*.address-container,.acordiancardContainer {padding:30px;}*/
+    #closeeDeliverty,
+    #updateClass,
+    #deliveryAddress .changeDeliverty.txt-green,
+    .changeBtnshowOnlyMobile {
+        padding-left: 0px !important;
+        font-size: 12px;
+    }
+
+    /* #applyCouponForm .textfield.light-ft.nowidth {
+        width: 55% !important;
+        font-size: 11px;
+    } */
+
+
+    .methodcard {
+        width:235px;
+        height: 80px;
+	font-size:12px;
+}
+
+.methodcard span , .methodcard p {
+font-size: 12px;
+}
+
+}
+
+
+@media(max-width: 767px) {
+    #opay-saved {
+        padding: 15px;
+    }
+
+   #loadcurbsyshipping {
+    max-height: 500px;
+    overflow-x: scroll;
+}
+
+#loadcurbsyshipping::-webkit-scrollbar-thumb {
+
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5); 
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+#loadcurbsyshipping::-webkit-scrollbar {
+  width: 2px;
+}
+
+#loadcurbsyshipping::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+#loadcurbsyshipping::-webkit-scrollbar-thumb {
+  background: #707070;
+}
+
+#loadcurbsyshipping::-webkit-scrollbar-thumb:hover {
+  background: #355cc9;
+}
+#loadcurbsyshipping::-webkit-overflow-scrolling:touch; {
+background:#707070;
+width: 2px;
+}
+
+
+
+
+    #changeDeliverty,
+    #closeeDeliverty {
+        margin: -6% 0;
+    }
+
+    #shippingAccordianBody {
+        width: 100%;
+    }
+
+    .mbmargin {
+        margin-top: -5%;
+    }
+
+    .bill_address_hidestyle div.col-xs-12 div.col-xs-9 h5 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0 !important;
+    }
+
+    .prod-container {
+        height: auto;
+        max-height: none;
+        /* margin-top: 50px; */
+    }
+
+    #tabContent {
+        margin: 2% 0;
+    }
+
+    .checkoutaddressContainer {
+        display: flex;
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .mwd293 {
+        width: 293px;
+    }
+.displaytable {display: table;width:100%;}
+/*fix safari input issue in popup */
+.form_row input,
+select {
+    border-radius: 5px !important;
+    background-color: inherit;
+    /* changed from #fbfbfb to inherit */
+    font-size: 16px;
+}
+/*fix safari input issue in popup */
+
+.paypalmessage {margin: -28px 0 0 12px;}
+}
+
+.disabledslots { 
+   background-color: #ccc;
+     pointer-events:none; }

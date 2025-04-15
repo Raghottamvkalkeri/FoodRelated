@@ -1,1137 +1,1778 @@
-<script>
-
-var SearchProductslist = new Vue({
-    el: "#app-search",
-    data: {
-        orderguideProducts: [],
-        SearchProductslist: [],
-        products: [],
-        savedforlater1: [],
-        debounceTimeout: null,
-        loading: false, // Loader state
-    },
-    methods: {
-
-        getallproducts(cat_id) {
-            var seturl = '';
-            if (cat_id == '') {
-                // cat_id = categoryCode;
-                cat_id = $("#categoryCode").val();
-                var offset = parseInt($("#defaultoffset").val()) + 16;
-            } else {
-                var offset = 0;
-            }
-            var getcount = 0;
-            var processing = $("#category-listing").html();
-            var sortBy = $("input[name='Sort_By']:checked").val();
-            var per_page = "16";
-            var UOM = [];
-            $("#getResponse").val(0);
-            seturl = getPageCode !== 'SRCH' ? `/Merchant5/merchant.mvc?Screen=CTGYJSON&Category_Code=${cat_id}&CatListingOffset=${offset}&Offset=${offset}&Per_Page=${per_page}&Sort_By=${sortBy}&facets=1&${queryString}` : `https://${location.hostname}/SRCHJSON.html?Search=${searchKey}&SearchOffset=${offset}&Sort_By=${sortKey}${queryString}&Per_Page=${per_page}&recipes=No&x=0&y=0`;
-            $.get(
-                seturl,
-                function (dataval) {
-                    var myObject = this;
-                    $(".load-content").css("display", "flex");
-                }
-            )
-                .then(function (response, status, xhr) {
-                    //console.log(xhr.status);
-                    $("#getResponse").val(xhr.status);
-                    //myObject.products = this.products.push(response);
-                    if (xhr.status == 200) {
-
-                        if (response.length > 0) {
-                            for (let i = 0; i < response.length; i++) {
-                                var lowestUOM = "";
-                                var pack_size = 9999;
-                                var lowestprice = "";
-                                var highestpacksize = "";
-                                var highestprice = "";
-                                var pricediscount = "";
-                                var casesaving = "";
-                                var isSale = "";
-                                var isChildSale = "";
-                                getcount++;
-                                $("#getCount").val(getcount);
-                                myObjects.products.push(response[i]);
-                            }
-                            //products.push(response);
-                            setTimeout(function () {
-                                getProductresponse(response);
-                            }, 100)
-                            $("#defaultoffset").val(offset);
-                            $(".load-content").css("display", "none");
-                        }
-                    }
-                })
-                .done(function (html, status, xhr) {
-                    $("#category-listing").attr("data-proccessed", "complete");
-                    if (getcount == 0) {
-                        $("#getCount").val(getcount);
-                        $(".load-content").css("display", "none");
-                    }
-                });
-        },
-        getUomforInventorymessage(element) {
-            return element.split("of")[0];
-        },
-        loadJqueryAssets() {
-            $("#recipeFilter").click(function () {
-                $(".filterContainer").removeClass("displayNone");
-            });
-            $(".Fclose").click(function () {
-                $(".filterContainer").addClass("displayNone");
-            });
-            $(".applyFilter").on("click", function () {
-                $(".filterContainer").addClass("displayNone");
-            });
-
-            jQuery(".showmore").click(function () {
-                var facetClass = jQuery(this).attr("data-class");
-                jQuery(".hidefacet." + facetClass).css("display", "block");
-                jQuery(".collapse-" + facetClass).show();
-                jQuery(this).hide();
-            });
-            jQuery(".collapse")
-                .not(".alt_row")
-                .click(function () {
-                    var facetClass = jQuery(this).attr("data-class");
-                    jQuery(".hidefacet." + facetClass).css("display", "none");
-                    jQuery(".show-" + facetClass).show();
-                    jQuery(this).hide();
-                });
-
-            $(".sortby").click(function () {
-                $(".sort-by-options-wrappers").toggle();
-                if ($(".sort-by-options-wrappers").is(":visible") == true) {
-                    $(".sortby").text("-");
-                } else {
-                    $(".sortby").text("+");
-                }
-            });
-            $('.dropdown').click(function () {
-                var _this = this;
-                setTimeout(function () {
-
-                    if ($(_this).hasClass('open') == true) {
-                        $(_this).find('.dropdown-item').find('.slacdiscounttext').show();
-                    } else {
-                        $(_this).find('.dropdown-item').find('.slacdiscounttext').hide();
-                        $(_this).find('.dLabel1').find('.slacdiscounttext').hide();
-                    }
-                }, 10);
-            });
-
-            $(".loginClick").click(function () {
-                $(".newLoginContainer").removeClass("displayNone");
-                $("#signinForm").removeClass("displayNone");
-                $(".signUpForm").addClass("displayNone");
-                $("#signUpMsg").addClass("displayNone");
-                $(".Guest").css("display", "none");
-                $(".ajaxmsg").html("");
-                $("#login").find("input[type=password], input[type=email]").val("");
-                $("#login").find("input[type=hidden]").val("login");
-                $("#login").removeClass("checkoutlogin");
-                $("#singUpNewsLetter").prop("checked", false);
-                $(".accountLinked").addClass("displayNone");
-            });
-
-            jQuery('.loginClick, .createAccount, .businessaccount , .checkoutloginClick').click(function () {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-                jQuery('body').addClass("noscroll");
-
-
-                jQuery("#closelogin,.Lclose").click(function () {
-                    jQuery('body').removeClass("noscroll");
-                });
-            });
-
-
-
-        },
-        capitalizeText(s) {
-            return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-            //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
-        },
-        roundNumbers(s) {
-            // console.log(s);
-            var number = parseFloat(s).toFixed(2);
-            return number;
-        },
-        removehype(s) {
-            if (s.match("-") == null) {
-                console.log(s.replace("avg", ""));
-                return s.replace("avg", "").replace("(", "").replace(")", "");
-            } else {
-                /*console.log(
-                s
-                    .replace(/^[^-]+ - /, "")
-                    .replace("(", "")
-                    .replace(")", "")
-                );*/
-                return s
-                    .replace(/^[^-]+ - /, "")
-                    .replace("(", "")
-                    .replace(")", "");
-            }
-            //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
-        },
-        getCurrenctRestockDate(d) {
-            // Convert date string to Date object
-            var dDate = new Date(d);
-
-            // Get current date with America/New_York timezone
-            var currentDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
-            currentDate = new Date(currentDate);
-            // Set the time parts to zero to compare only the date parts
-            dDate.setHours(0, 0, 0, 0);
-            currentDate.setHours(0, 0, 0, 0);
-            // Compare dates
-            if (dDate < currentDate) {
-                return false;
-            } else {
-                return true;
-            }
-        },
-        getpacSize() {
-            let pack_size = 9999;
-            let uom = "";
-            for (let i = 0; i < dataval.length; i++) {
-                for (let j = 0; j < dataval[i].data.variants.length; j++) {
-                    if (
-                        dataval[i].data.variants[j].pack_size < pack_size &&
-                        this.vueUserType == "Retail"
-                    ) {
-                        pack_size = dataval[i].data.variants[j].pack_size;
-                        uom = dataval[i].data.variants[j].UOM;
-                    } else {
-                        uom = "";
-                        pack_size = 9999;
-                    }
-                    return uom;
-                    //console.log(uom);
-                }
-            }
-        },
-        getProductInputValcheck(element, formId) {
-            element.target.value.replace(/\D/g, "");
-            //console.log(element.target.value.replace(/\D/g, ''));
-            var getProductCode = formId;
-            getProductCode = getProductCode.replace("addProduct-", "");
-            if (
-                element.target.value.replace(/\D/g, "") == "" ||
-                element.target.value.replace(/\D/g, "") == "0"
-            ) {
-                $(".ProductDetail-" + getProductCode)
-                    .find(".addbtn")
-                    .prop("disabled", true);
-            } else if (element.target.value.replace(/\D/g, "") == "1") {
-                $(".ProductDetail-" + getProductCode)
-                    .find(".addbtn")
-                    .prop("disabled", false);
-            } else {
-                $(".ProductDetail-" + getProductCode)
-                    .find(".addbtn")
-                    .prop("disabled", false);
-                var newvalue = parseInt(element.target.value.replace(/\D/g, ""));
-                var qtySize = parseInt(
-                    $(".ProductDetail-" + formId)
-                        .find(".form-check-input")
-                        .attr("data-min")
-                );
-                var getdataStock = parseInt(
-                    $(".ProductDetail-" + formId)
-                        .find(".form-check-input")
-                        .attr("data-stock-raw")
-                );
-                var acttualdataStock = parseInt(
-                    $(".ProductDetail-" + formId)
-                        .find(".form-check-input")
-                        .attr("data-stock-raw")
-                );
-                var qtyinCart = parseInt(
-                    $(".ProductDetail-" + formId)
-                        .find(".QtyVal")
-                        .attr("data-qtycart")
-                );
-                $(".ProductDetail-" + formId)
-                    .find("[name=Quantity")
-                    .attr("data-added", newvalue);
-                $(".ProductDetail-" + formId)
-                    .find("[name=Quantity")
-                    .val(newvalue);
-                $(".ProductDetail-" + formId)
-                    .find(".form-check-input")
-                    .attr("data-added", newvalue);
-                $(".ProductDetail-" + formId)
-                    .find(".addbtn")
-                    .prop("disabled", false);
-            }
-        },
-        getsubstitutionInventory(productcode, codes) {
-            var responsedata
-            $.ajax({
-                async: false,
-                url: "/Merchant5/merchant.mvc?Screen=CUDET&ProductAction=substitution&Productcode=" + productcode + "&substitutioncode=" + codes,
-                success: function (response) {
-                    var responsedata = response;
-                    if (responsedata < 1 || responsedata == '') {
-                        setTimeout(function () {
-                            $('.ProductDetail-' + productcode).find('#viewSubstitutions').hide();
-                        }, 500);
-                    } else {
-                        setTimeout(function () {
-                            $('.ProductDetail-' + productcode).find('#viewSubstitutions').show();
-                        }, 500);
-                    }
-
-                },
-            });
-            return responsedata;
-        },
-        BasketData() {
-            setTimeout(function () {
-                basketApp.CheckBasketItemss();
-            }, 100);
-        },
-        convertUOM(variant) {
-            const uomMapping = {
-                EA: "EACH",
-                CS: `CASE`,
-                BAG: `BAG`,
-                BX: `Box`,
-                PK: `Pack`,
-                TUB: `TUB`,
-            };
-            return uomMapping[variant.UOM] || variant.UOM;
-        },
-
-        roundNumbers(number) {
-            return parseFloat(number).toFixed(2);
-        },
-
-        processProducts(result) {
-            result.forEach((item) => {
-                const newProductPrices = [];
-                item.data.variants.forEach((variant) => {
-                    variant.UOM = this.convertUOM(variant);
-                    variant.newproductprice = `${variant.code}=${this.roundNumbers(variant.price)}`;
-                    newProductPrices.push(variant.newproductprice);
-                });
-                item.data.newprices = newProductPrices.join("|");
-            });
-        },
-
-
-        makeAjaxRequest(url, jsonRequest, showLoader = true, toggleVisibility = true, source) {
-            $('.loader').show();
-            const self = this;
-            if (showLoader) { this.loading = true; } // Show loader only if flag is true
-
-
-
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json",
-                data: jsonRequest,
-                dataType: "json",
-                beforeSend() {
-                    if (toggleVisibility) {
-                        document.querySelector('.searchproductlist').style.display = 'none'; // Hide only if the flag is true
-                    }
-                },
-                success(result) {
-                    self.SearchProductslist = result;
-                    self.products = result;
-                    self.savedforlater1 = result;
-                    self.orderguideProducts = [];
-                    setTimeout(function () {
-                        getProductresponse(result);
-                        addProductNew();
-                    }, 100)
-                },
-                complete() {
-                    if (toggleVisibility) {
-                        document.querySelector('.searchproductlist').style.display = 'block'; // Show only if the flag is true
-                    }
-                    if (showLoader) {
-                        document.querySelector('.searchproductlist').scrollTo({
-                            top: 0
-                        });
-                    }
-                    if (showLoader) { self.loading = false; } // Hide loader only if it was shown
-                    $(".productListing").show();
-
-
-                },
-            });
-        },
-
-        searchProducts(searchKey) {
-            const sort_by = setWholesaleuser === 1 ? 'customfield:customfields:wprice' : 'customfield:customfields:pprprice';
-            this.makeAjaxRequest(`/?Screen=SRCHJSON&Search=${searchKey}&SearchOffset=0&Sort_By=${sort_by}&per_page=24&recipes=No&x=0&y=0&`);
-        },
-
-        onSearchKeyup() {
-            var SearchKey = $("#searchproducts").val();
-            clearTimeout(this.debounceTimeout);
-            this.debounceTimeout = setTimeout(() => {
-                this.searchProducts();
-            }, 2500); // 3 seconds
-        },
-
-        onSearchSubmit() {
-            var SearchKey = $("#searchproducts").val();
-            this.searchProducts(SearchKey);
-
-            // Trigger blur to close the keyboard on mobile
-            document.querySelector("#searchproducts").blur();
+jQuery(document).ready(function () {
+  /*$('.showallinvoice').click(function() {
+        $('#orderhistory_list_open').hide();
+        $('#orderhistory_list').show();
+        $('.heading').toggle();
+        $('.heading').removeClass('hidden');
+        $('.show-search-error').hide();
+        $('.heading').addClass('show');
+        $('.alt_row').removeClass('in');
+        $('.ordernumber-list').removeClass('selected-order');
+        $('.showallinvoice').addClass('selected-order');
+        if (window.screen.width > 767) {
+            $('.heading').removeClass('visible-xs');
+        } else {
+  
         }
-    },
-    computed: {
-        gridClass: function () {
-            var gridClass = '';
-            if ((getPageCodes != 'SFNT') && getPageCodes != 'BASK' && getPageCodes != 'MSHIP' && getPageCodes != 'ShelfLP' && getPageCode != 'ShelfLP_copy' || getPageCode == 'Origins') {
-                gridClass = 'col-xs-6s col-sm-6s col-md-4s col-lg-3s gridclass ' + getPageCode;
-            }
-            return gridClass;
-        }
-    },
+    });*/
 
-    mounted() {
+  $(".ordernumber-list,.ordernumber-lists").on("click", function () {
+    $("#searchKeyElementMob").val("");
+    $("#searchKeyElement").val("");
+    $("#orderhistory_list_open").hide();
+    $("#orderhistory_list").show();
+    $(".heading").addClass("visible-xs");
+  });
 
-        addProductNew();
-        // Attach event listener for Enter key
-        const self = this;
-        document
-            .querySelector("#searchproducts")
-            .addEventListener("keypress", function (event) {
-                if (event.key === "Enter") {
-                    self.onSearchSubmit();
-                }
-            });
-
-        // Attach click listener for search icon
-        document
-            .querySelector(".searchOrders") // Update with your actual search icon selector
-            .addEventListener("click", function () {
-                self.onSearchSubmit();
-            });
-    },
+  GetNextSetofOrdersMobileFromJSON();
 });
 
-function getProductresponse(dataval) {
-    if (dataval.length < 1) {
-        $('.noprouctsmsg').css('display', 'flex');
-    } else {
-        $('.noprouctsmsg').css('display', 'none');
-    }
-    var products = [];
-    var productprice = [];
-    var allPrices = '';
-    var uom = "";
-    var addclass = "";
-    for (let i = 0; i < dataval.length; i++) {
-        var lowestUOM = "";
-        var pack_size = 9999;
-        var lowestprice = "";
-        var highestpacksize = "";
-        var highestprice = "";
-        var pricediscount = "";
-        var casesaving = "";
-        var casesavingwholesale = "";
-        var isSale = "";
-        var isChildSale = "";
-        var checkdealflags = "";
-        var getpacksize;
-        var restockdate;
-        var totalcount = "";
-        getpacksize = Math.min.apply(null, dataval[i].data.variants.map(function (item) {
-            return item.pack_size;
-        }));
-
-        totalcount = dataval[i].data.total;
-
-        //  check restock date and format the in US Standard
-        restockdate = new Date(dataval[i].data.restock_date);
-        dataval[i].restock_month = restockdate.toLocaleString('en-US', { month: '2-digit' });
-        dataval[i].restock_day = restockdate.toLocaleString('en-US', { day: '2-digit' });
-        dataval[i].restock_year = restockdate.toLocaleString('en-US', { year: 'numeric' });
-        dataval[i].data.restock_date_formatted = dataval[i].restock_year + '-' + dataval[i].restock_month + '-' + dataval[i].restock_day;
-        dataval[i].data.restock_date_formattednew = new Date(dataval[i].data.restock_date_formatted + 'T12:00:00');
-        dataval[i].data.restock_date_formattednew = dataval[i].data.restock_date_formattednew.toLocaleString('en-US', { timeZone: 'America/New_York', month: '2-digit' }) + '/' + dataval[i].data.restock_date_formattednew.toLocaleString('en-US', { timeZone: 'America/New_York', day: '2-digit' }) + '/' + dataval[i].data.restock_date_formattednew.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
-
-        for (let j = 0; j < dataval[i].data.variants.length; j++) {
-            if (getpacksize < pack_size) {
-                lowestUOM = dataval[i].data.variants[j].UOM;
-                pack_size = dataval[i].data.variants[j].pack_size;
-                isChildSale = dataval[i].data.variants[j].sale;
-                if (isChildSale == 0) {
-                    lowestprice = dataval[i].data.variants[j].price;
-                }
-            }
-        }
-
-
-
-        for (let j = 0; j < dataval[i].data.variants.length; j++) {
-            var specificProductCode = dataval[i].data.variants[j].code;
-            if (dataval[i].data.variants[j].pack_size != getpacksize) {
-                dataval[i].data.variants[j].addclass = "hidden";
-                dataval[i].data.variants[j].default = "0";
-                isSale = dataval[i].data.variants[j].sale;
-
-                if (dataval[i].data.variants[j].slac == "1" || dataval[i].data.variants[j].slac_retail == "1") {
-                    checkdealflags = 'yes';
-                    dataval[i].data.variants[j].checkdealflags = "yes";
-                } else {
-                    checkdealflags = 'yes';
-                }
-
-
-
-
-                if (dataval[i].data.variants[j].slacdiscount == 0 && setWholesaleuser != 1) {
-                    highestprice = parseFloat(dataval[i].data.variants[j].price);
-                    msrpprice = parseFloat(dataval[i].data.variants[j].msrp);
-
-                    var caseprice = parseFloat(pricediscount - highestprice).toFixed(2);
-
-                    getcaspriceadded = parseFloat(pricediscount + highestprice).toFixed(2);
-                    casesaving = 100 * (msrpprice - highestprice) / (msrpprice);
-                    if (casesaving.toFixed(2) > 0 && dataval[i].data.variants[j].slacdiscount <= '0') {
-                        // dataval[i].data.variants[j].notes = "Save " + parseFloat(casesaving.toFixed(2)) + '%';
-                        dataval[i].data.variants[j].slacdiscount = parseFloat(casesaving.toFixed(2));
-                    }
-                    if (dataval[i].data.variants[j].notes != '' && dataval[i].data.variants[j].UOM_TEXT != 'Threebie' && dataval[i].data.variants[j].sale == '1' && setWholesaleuser != 1) {
-                        dataval[i].data.variants[j].notes = dataval[i].data.variants[j].notes;
-                    }
-                    else if (dataval[i].data.variants[j].sale != '1' && setWholesaleuser != 1) {
-                        dataval[i].data.variants[j].notes = '';
-                    }
-                    else if (dataval[i].data.variants[j].sale != '1' && setWholesaleuser === 1) {
-                        dataval[i].data.variants[j].notes = '';
-                    }
-                }
-
-                else if (isSale == 0 && isChildSale == 0) {
-                    highestpacksize = dataval[i].data.variants[j].pack_size;
-                    highestprice = parseFloat(dataval[i].data.variants[j].price);
-                    pricediscount = parseFloat(lowestprice * highestpacksize);
-                    var caseprice = parseFloat(pricediscount - highestprice).toFixed(2);
-                    // 100 x (each price * no of items - case price) / (each price * no of items)
-                    getcaspriceadded = parseFloat(pricediscount + highestprice).toFixed(2);
-                    casesavingwholesale = 100 * (pricediscount - highestprice) / (pricediscount);
-                    if (casesavingwholesale.toFixed(2) > 0 && dataval[i].data.variants[j].catch_weight != '1' && dataval[i].data.variants[j].notes == '') {
-                        dataval[i].data.variants[j].notes = "Save " + parseFloat(casesavingwholesale.toFixed(2)) + '%';
-                    } else {
-                        dataval[i].data.variants[j].notes = "";
-                    }
-                }
-            }
-            else {
-                dataval[i].data.variants[j].default = "1";
-                if (dataval[i].data.variants[j].notes != '' && dataval[i].data.variants[j].UOM_TEXT != 'Threebie' && dataval[i].data.variants[j].sale == '1' && setWholesaleuser != 1) {
-                    dataval[i].data.variants[j].notes = dataval[i].data.variants[j].notes;
-                }
-                else if (dataval[i].data.variants[j].notes != '' && dataval[i].data.variants[j].vip_sale === 1) {
-                    dataval[i].data.variants[j].notes = dataval[i].data.variants[j].notes;
-                }
-                else if (dataval[i].data.variants[j].sale != '1' && setWholesaleuser != 1) {
-                    dataval[i].data.variants[j].notes = '';
-                }
-                else if (dataval[i].data.variants[j].sale != '1' && setWholesaleuser === 1) {
-                    dataval[i].data.variants[j].notes = '';
-                }
-
-            }
-
-            if (dataval[i].data.variants[j].UOM == "EA") {
-                dataval[i].data.variants[j].UOM = "EACH";
-            } else if (dataval[i].data.variants[j].UOM == "CS") {
-                dataval[i].data.variants[j].UOM =
-                    "CASE" + " of " + dataval[i].data.variants[j].pack_size;
-            } else if (dataval[i].data.variants[j].UOM == "BAG") {
-                dataval[i].data.variants[j].UOM =
-                    "BAG" + " of " + dataval[i].data.variants[j].pack_size;
-            } else if (dataval[i].data.variants[j].UOM == "BX") {
-                dataval[i].data.variants[j].UOM =
-                    "Box" + " of " + dataval[i].data.variants[j].pack_size;
-            } else if (dataval[i].data.variants[j].UOM == "PK") {
-                dataval[i].data.variants[j].UOM =
-                    "Pack" + " of " + dataval[i].data.variants[j].pack_size;
-            } else if (dataval[i].data.variants[j].UOM == "TUB") {
-                dataval[i].data.variants[j].UOM =
-                    "TUB" + " of " + dataval[i].data.variants[j].pack_size;
-            } else {
-                dataval[i].data.variants[j].UOM = dataval[i].data.variants[j].UOM;
-            }
-
-            if (dataval[i].data.variants[j].sale == 0 && dataval[i].data.variants[j].sale_offer == 1) {
-                dataval[i].data.variants[j].sale = 2;
-            }
-            else if ((dataval[i].data.variants[j].sale == 0 && dataval[i].data.variants[j].vip_sale == 1) || dataval[i].data.variants[j].sale == 1 && dataval[i].data.variants[j].vip_sale == 1) {
-                dataval[i].data.variants[j].sale = 3;
-            }
-            else {
-                dataval[i].data.variants[j].sale = dataval[i].data.variants[j].sale;
-            }
-
-
-            //   dataval[i].data.variants[j].newproductprice = `${dataval[i].data.variants[j].code}-${dataval[i].data.variants[j].price}`
-            //   if (dataval[i].data.variants[j].code === specificProductCode) {
-            //     productprice.push(dataval[i].data.variants[j].newproductprice);
-            //     allPrices = productprice.join('|');
-            //     console.log(dataval[i].data.variants[j].newproductprice);
-            // }
-
-        }
-
-        for (let i = 0; i < dataval.length; i++) {
-            let newProductPrices = []; // Array to store newproductprice values
-
-            for (let j = 0; j < dataval[i].data.variants.length; j++) {
-                var specificProductCode = dataval[i].data.variants[j].code;
-                dataval[i].data.variants[j].newproductprice = `${dataval[i].data.variants[j].code}=${dataval[i].data.variants[j].price}`;
-
-                if (dataval[i].data.variants[j].code === specificProductCode) {
-                    newProductPrices.push(dataval[i].data.variants[j].newproductprice); // Add newproductprice to array
-                }
-            }
-
-            let joinedPrices = newProductPrices.join('|'); // Join array with '|'
-            //console.log(joinedPrices); // Log the joined string
-            dataval[i].data.newprices = joinedPrices;
-            // console.log(dataval[i].data.newprices);
-        }
-
-
-
-
-
-        setTimeout(function () {
-            if (dataval[i].data.product_inventory <= 0 && dataval[i].data.substitute != '') {
-                myObjects.getsubstitutionInventory(dataval[i].data.code, dataval[i].data.substitute);
-            }
-        }, 10);
-
-
-
-    }
-    // console.log(dataval);
-    //console.log(products);
-    if (urlpath === "https://www.foodrelated.com" & getPageCode === 'SRCH') {
-        dataLayer.push({
-            searchTerm: searchKey, //pass the search term
-            numberOfSearchResult: totalcount, //number of searches appeared
-            event: "internalSearch",
-        });
-        // console.log(dataLayer);
-    }
+function resetCollapse(element) {
+  $(element).on("hide.bs.collapse", function () {
+    setTimeout(function () {
+      $(element).addClass("in");
+    }, 500);
+  });
 }
 
-var viewOrderDetails = new Vue({
-    el: '#orderDetails', // Specify the element to bind to
+function calculateInvoiceDueDate() {
+  //console.log(dueDays);
+  jQuery(".orders-list")
+    .find(".invoicelist")
+    .each(function () {
+      if (
+        jQuery(this).attr("data-invoice_date") != undefined &&
+        jQuery(this).attr("data-amount_due") != undefined &&
+        jQuery(this).attr("data-amount_due") > 0
+      ) {
+        var invoiceDate = new Date(jQuery(this).attr("data-invoice_date"));
+        var dueDate = invoiceDate;
+        dueDate.setDate(dueDate.getDate() + dueDays);
+        var dd = dueDate.getDate();
+        var mm = dueDate.getMonth() + 1;
+        var y = dueDate.getFullYear();
+        var dueFormattedDate = mm + "/" + dd + "/" + y;
+        jQuery(this).attr("data-invoice_duedate", dueFormattedDate);
+        var getduedate = $(
+          ".getduedate-" + jQuery(this).attr("data-orderid")
+        ).text(dueFormattedDate);
+        var currentDate = new Date();
+        var Difference_In_Time = currentDate.getTime() - invoiceDate.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        Difference_In_Days = Difference_In_Days + dueDays - 1;
+        //console.log("Due Days:" + Difference_In_Days);
+        if (Difference_In_Days > dueDays) {
+          jQuery(this).addClass("invoice-due open-invoice");
+          jQuery(".filter-" + jQuery(this).attr("data-orderid"))
+            .find(".pastdue-check")
+            .removeClass("hidden");
+          jQuery(".filter-" + jQuery(this).attr("data-orderid"))
+            .find(".getduedate-amount")
+            .addClass("pastdue-check-amount");
+        }
+      }
+    });
+}
+calculateInvoiceDueDate();
 
-    data: {
-        Store_Code: "G",
-        Function: "Module",
-        Module_Code: "frjsonfunctions",
-        Module_Function: "FR_CustomerOrderList_Load_Query",
-        Session_Type: "runtime",
-        customer_session: document.querySelector('#sessionid').value,
-        Customer_ID: document.querySelector('#customerIdcheck').value,
-        Customer_Type: document.querySelector('.customertype').value,
-        Order_Id: {
-            id: document.querySelector('#order_id').value,
-        },
-        showLoader: false, // Loader state
-        orderDetails: {}, // Placeholder for the order data
-        orderSummary: [] // Placeholder for the order summary
-    },
+$("body").click(function () {
+  $(".error-message").hide();
+});
 
-    methods: {
-        // Method to load the order details via AJAX
-        loadOrderDetails: function () {
-            var self = this; // Reference to the Vue instance
-            var requestData = {
-                Store_Code: self.Store_Code,
-                Function: self.Function,
-                Module_Code: self.Module_Code,
-                Module_Function: self.Module_Function,
-                Session_Type: self.Session_Type,
-                customer_session: self.customer_session,
-                Customer_ID: self.Customer_ID,
-                Customer_Type: self.Customer_Type,
-                Order_Id: self.Order_Id
-            };
+function qtyupdate(qtyboxid, type) {
+  var qty = parseInt(document.getElementById(qtyboxid).value);
+  if (type == "plus") {
+    document.getElementById(qtyboxid).value = qty + 1;
+  } else {
+    if (qty < 2) document.getElementById(qtyboxid).value = 0;
+    else document.getElementById(qtyboxid).value = qty - 1;
+  }
+}
 
-            // Perform AJAX call
-            $.ajax({
-                url: '/Merchant5/json.mvc',
-                type: 'POST',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                success: function (response) {
-                    response.data[0].orderitems.forEach((item) => {
+$("div .ordernumber-list:eq(0)").addClass("selected-order");
+if (screen.width > 767) {
+  $("div .collapse:eq(0)").addClass("in");
+}
+$("div .showOrderInfo .order-summary:eq(0)").show("slow");
+$(".collapse").on("show.bs.collapse", function (e) {
+  //$('.heading').hide();
+  // $('.fa-angle-down').css('transform', 'rotate(180deg)');
+  $(".open-invoice-for-orders").hide();
+});
+$(".collapse").on("hide.bs.collapse", function (e) {
+  $(".alt_row").removeClass("in");
+  // $('.fa-angle-down').css('transform', 'rotate(180deg)');
+  $(".open-invoice-for-orders").show();
+});
 
-                        if (item.product) {
-                            item.product.forEach(variant => {
-                                variant.data.variants.forEach(variant => {
-                                    if (variant.UOM_TEXT !== "Threebie") { 
-                                    variant.UOM = self.convertUOM(variant);
-                                    }
-                                    console.log(variant); // Logs each variant
-                                });
-                            });
-                        }
+$(".collapse").on("hidden.bs.collapse", function (e) {
+  var className = $(this).attr("data-class");
+  $(".order-summary" + className).hide();
+  $(".fa-angle-down").css("transform", "rotate(0deg)");
+  $(".open-invoice-for-orders").show();
+});
 
-                    });
-                    self.orderDetails = response.data[0].orderitems || [];
-                    viewOrderDetails.loadOrderSummary();
-                },
-                error: function (error) {
-                    console.error('Error fetching order details:', error);
-                }
-            });
-        },
-        convertUOM(variant) {
-            const uomMapping = {
-                EA: "EACH",
-                CS: `CASE`,
-                BAG: `BAG`,
-                BX: `Box`,
-                PK: `Pack`,
-                TUB: `TUB`,
-            };
-            return uomMapping[variant.UOM] || variant.UOM;
-        },
-        processProducts(result) {
-            console.log(result);
-            result.forEach((item) => {
-                const newProductPrices = [];
-                item.data.variants.forEach((variant) => {
-                    variant.UOM = this.convertUOM(variant);
-                    variant.newproductprice = `${variant.code}=${this.roundNumbers(variant.price)}`;
-                    newProductPrices.push(variant.newproductprice);
-                });
-                item.data.newprices = newProductPrices.join("|");
-            });
-        },
-        loadOrderSummary: function () {
-            var self = this; // Reference to the Vue instance
-            var requestData = {
-                Store_Code: self.Store_Code,
-                Function: self.Function,
-                Module_Code: self.Module_Code,
-                Module_Function: self.Module_Function,
-                Session_Type: self.Session_Type,
-                customer_session: self.customer_session,
-                Customer_ID: self.Customer_ID,
-                Customer_Type: self.Customer_Type,
-                Order_Id: self.Order_Id
-            };
+$(".heading").click(function () {
+  $(this).find(".find").css("transform", "rotate(180deg)");
+});
 
-            // Perform AJAX call
-            $.ajax({
-                url: '/Merchant5/json.mvc',
-                type: 'POST',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                success: function (response) {
-                    if (response.data && response.data.length > 0) {
-                        // Access the data using the key '66672'
-                        self.orderSummary = response.data[0]; // Assign the data to orderSummary
-                    } else {
-                        self.orderSummary = []; // Clear if no data found
-                    }
-                    console.log(self.orderSummary);
-                },
-                error: function (error) {
-                    console.error('Error fetching order details:', error);
-                }
-            });
-        },
-        getUomforInventorymessage(element) {
-            return element.split("of")[0];
-        },
-        capitalizeText(s) {
-            return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-            //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
-        },
-        roundNumbers(s) {
-            // console.log(s);
-            var number = parseFloat(s).toFixed(2);
-            return number;
-        },
-        removehype(s) {
-            if (s.match("-") == null) {
-                console.log(s.replace("avg", ""));
-                return s.replace("avg", "").replace("(", "").replace(")", "");
-            } else {
-                /*console.log(
-        s
-          .replace(/^[^-]+ - /, "")
-          .replace("(", "")
-          .replace(")", "")
-      );*/
-                return s.replace(/^[^-]+ - /, "").replace("(", "").replace(")", "");
-            }
-            //console.log(s.charAt(0).toUpperCase() + s.slice(1).toLowerCase());
-        },
-        // Increase quantity
-        qtyupdateDesk(qtyboxid, type, ele, newelement) {
-            console.log(qtyboxid);
-            var getProductCode = newelement;
-            let qty_selected = 0;
-            let element = $("." + qtyboxid);
-            if (element.val() == "" || element.val() == NaN) {
-                element.val(0);
-            }
-            var dispalyUOM = [];
-            var showDisplay = "";
-            var availableStock = "";
-            qty = parseInt(element.val());
-            let parentprodcode = $(element).attr("data-productcode");
-            let elementCode = $("." + ele)
-                .find(".displayUom")
-                .text();
-            let parentuom = $(element).attr("data-uom");
-            var checkedAttr = $(
-                "input[data-product_code=" + parentprodcode + "][type=radio]:checked"
-            );
-            var radioCheck = $(
-                "input[data-product_code=" + parentprodcode + "][type=radio]"
-            ).val();
-            var selected = $("." + ele).find("input[type=radio]:is(:checked)");
-            var notselected = $("." + ele).find("input[type=radio]:not(:checked)");
-            dataStock = parseInt($(checkedAttr).attr("data-stock"));
-            var totalQntyAvailable = parseInt($.trim($(checkedAttr).attr("data-stock")));
-            minQnty = parseInt($(checkedAttr).attr("data-min"));
-            var reorderDataStock = $(".ProductDetail-" + getProductCode + ":visible").find(".data-min").attr(
-                "data-reorderstock");
+$("h5").click(function () {
+  $(this).find(".find").css("transform", "rotate(180deg)");
+});
 
-            var NewMinQty = [];
-            var NewMinQtyNew = "";
-            var showDisplay = "";
-            if (type == "plus") {
-                var getNewUOm = [];
-                var CheckUOM = [];
-                var CheckUOMS = [];
-                $(".ProductDetail-" + getProductCode + ":visible")
-                    .find(".data-min")
-                    .each(function () {
-                        NewMinQtyNew = $(this).val();
-                        availableStock = Math.floor(totalQntyAvailable / NewMinQtyNew);
-                        if (CheckUOMS.includes(availableStock)) {
-                            getNewUOm = $(this).attr("data-newuom");
-                        } else {
-                            getNewUOm = $(this).attr("data-newuom");
-                            CheckUOMS.push(availableStock);
-                            NewMinQty.push(NewMinQtyNew);
-                        }
+$(".collapse").on("hidden.bs.collapse", function (e) {
+  $(".find").css("transform", "rotate(0deg)");
+});
 
-                        if (CheckUOM.includes(getNewUOm)) {//Skip
-                            //console.log(CheckUOM.includes(getNewUOm));
-                        } else {
-                            CheckUOM.push(getNewUOm);
-                            if (getNewUOm != "") {
-                                showDisplay = dispalyUOM.unshift(getNewUOm + " - " + availableStock);
-                            }
-                        }
-                    });
+jQuery("input.searchall").on("input", function (e) {
+  var type = "";
+  jQuery(".filterkey").each(function () {
+    if (jQuery(this).is(":checked")) type = jQuery(this).val();
+  });
+  if (type) sortProducts(type);
+});
 
-                qty = qty + 1;
-                if (dataStock < minQnty * qty) {
-                    showDisplay = dispalyUOM.toString().replace(/,/g, "<br>");
-                    var errorMsg =
-                        "Sorry, we do not have enough quantity to fulfill your order.\r\nPlease adjust the quantity and try again.<br>";
-                    $("#new_globalerrorpopup .gpoperror").html(
-                        errorMsg +
-                        '<br/>  <p>Quantity Available:</p> ' +
-                        showDisplay
-                    );
-                    $("#new_globalerrorpopup").modal("show");
-
-                    if (selected) {
-                        ShowUOM = $("." + ele)
-                            .find(".displayUom")
-                            .eq(1)
-                            .text();
-                        var remaingQnty = Math.floor(dataStock / minQnty);
-                        $(selected).each(function () {
-                            console.log("selectes" + availableStock);
-                        });
-                        showDisplay = dispalyUOM.unshift(ShowUOM + " - " + availableStock);
-                        element.val(remaingQnty);
-                    }
-                    return false;
-                } else {
-                    element.val(qty);
-                    //    var item =     this.orderDetails[index];
-                    //    console.log(miltiattrvalue);
-                    $(".qty-" + getProductCode + ":visible").find('.QtyVal').val();
-                    console.log(element.val());
-                    // console.log($(".ProductDetail-" + getProductCode + ":visible").find('.miltiattrvalue:checked').val());
-                    $(".ProductDetail-" + getProductCode).find('.miltiattrvalue:checked').each(function () {
-                        let orderItemData = {
-                            line_id: $(this).data('line_id'),
-                            Code: $(this).data('code'),
-                            Name: $(this).data('name'),
-                            SKU: $(this).data('sku'),
-                            Quantity: qty,
-                            Price: $(this).data('price'),
-                            Weight: $(this).data('weight'),
-                            Taxable: $(this).data('taxable'),
-                            Attributes: [
-                                {
-                                    attr_code: $(this).data('attr_code'),
-                                    opt_code_or_data: $(this).data('opt_code_or_data'),
-                                    price: $(this).data('attr_price'),
-                                    weight: $(this).data('attr_weight')
-                                }
-                            ]
-                        };
-
-                        viewOrderDetails.editOrderItem(orderItemData);
-                    });
-
-
-                }
-            } else {
-                qty = qty > 0 ? qty - 1 : 0;
-                element.val(qty);
-            }
-
-            jQuery(".qtybox").each(function () {
-                qty_selected = qty_selected + parseInt(jQuery(this).val());
-                //updating qtyselected variable to global gbl_qty_selected
-                gbl_qty_selected = qty_selected;
-            });
-            if (qty_selected > 0) {
-                $("#addtocart").attr("disabled", false);
-                if (screen.width <= 1024) {
-                    $(".footer_addcart").css("display", "block");
-                    $("#responsiveButton").css("z-index", "99");
-                }
-            } else {
-                $("#addtocart").attr("disabled", true);
-                if (screen.width <= 1024) {
-                    $(".footer_addcart").css("display", "none");
-                    $("#responsiveButton").css("z-index", "1001");
-                }
-            }
-        },
-
-        // Decrease quantity
-        decreaseQuantity(index) {
-            let item = this.orderDetails[index];
-            if (item.Quantity > item.minqty) {
-                item.Quantity--;
-                this.editOrderItem(item);
-            } else {
-                alert(`Minimum quantity required: ${item.minqty}`);
-            }
-        },
-
-        // Validate input to allow only numbers
-        isNumber(evt) {
-            let charCode = evt.which ? evt.which : evt.keyCode;
-            if (charCode < 48 || charCode > 57) {
-                evt.preventDefault();
-                return false;
-            }
-            return true;
-        },
-
-        addOrderItem: function (newItem) {
-            var self = this;
-            var requestData = {
-                Store_Code: self.Store_Code,
-                Session_Type: self.Session_Type,
-                Function: "Module",
-                Module_Code: self.Module_Code,
-                Module_Function: "FR_OrderItem_Add",
-                customer_session: self.customer_session,
-                order_id: self.Order_Id.id,
-                customer_id: self.Customer_ID,
-                Code: newItem.Code,
-                Name: newItem.Name,
-                SKU: newItem.SKU,
-                Quantity: newItem.Quantity,
-                Price: newItem.Price,
-                Weight: newItem.Weight,
-                Taxable: newItem.Taxable,
-                Attributes: newItem.Attributes
-            };
-
-            $.ajax({
-                url: '/Merchant5/json.mvc',
-                type: 'POST',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                success: function (response) {
-                    if (response) {
-                        console.log('Item added successfully:', newItem);
-                        self.loadOrderDetails();
-                    } else {
-                        console.error('Failed to add item:', response.message);
-                    }
-                },
-                error: function (error) {
-                    console.error('Error adding order item:', error);
-                }
-            });
-        },
-
-        editOrderItem: function (updatedItem) {
-            var self = this;
-            var requestData = {
-                Store_Code: self.Store_Code,
-                Session_Type: self.Session_Type,
-                Function: "Module",
-                Module_Code: self.Module_Code,
-                Module_Function: "FR_OrderItem_Update",
-                customer_session: self.customer_session,
-                order_id: self.Order_Id.id,
-                customer_id: self.Customer_ID,
-                line_id: updatedItem.line_id,
-                Code: updatedItem.Code,
-                Name: updatedItem.Name,
-                SKU: updatedItem.SKU,
-                Quantity: updatedItem.Quantity,
-                Price: updatedItem.Price,
-                Weight: updatedItem.Weight,
-                Taxable: updatedItem.Taxable,
-                Attributes: updatedItem.Attributes
-            };
-
-            var cleanRequestData = JSON.parse(JSON.stringify(requestData));
-            self.showLoader = true;
-            $.ajax({
-                url: '/Merchant5/json.mvc',
-                type: 'POST',
-                dataType: 'text',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                beforeSend: function () {
-                    console.log('Updating order item:', updatedItem);
-                    self.showLoader = true;
-                },
-                success: function (response) {
-                    console.log(requestData);
-                    // console.log(error);
-                    if (response) {
-                        console.log('Order item updated successfully:', updatedItem);
-                        self.loadOrderDetails();
-                    } else {
-                        console.error('Failed to update order item:', response.message);
-                    }
-                },
-                complete: function () {
-                    self.showLoader = false;
-                },
-                error: function (error) {
-                    console.error('Error updating order item:', error);
-                    console.log('Error details:', error.status, error.statusText);
-                    console.error('Error updating order item:', error);
-                }
-            });
-        },
-
-        // Method to delete an order item
-        deleteOrderItem: function (lineId) {
-            var self = this;
-            var requestData = {
-                Store_Code: self.Store_Code,
-                Function: "Module",
-                Module_Code: self.Module_Code,
-                Module_Function: "FR_OrderItem_Delete",
-                Session_Type: self.Session_Type,
-                customer_session: self.customer_session,
-                Customer_ID: self.Customer_ID,
-                Order_Id: self.Order_Id.id,
-                line_ids: [lineId]
-            };
-
-            // Perform AJAX call to delete the item
-            $.ajax({
-                url: '/Merchant5/json.mvc',
-                type: 'POST',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                success: function (response) {
-                    if (response) {
-                        console.log('Item deleted successfully:', lineId);
-                        // Reload order details to reflect the changes
-                        self.loadOrderDetails();
-                    } else {
-                        console.error('Failed to delete item:', response.message);
-                    }
-                },
-                error: function (error) {
-                    console.error('Error deleting order item:', error);
-                }
-            });
-        },
-
-        // Method to handle order editing
-        editOrder: function (newOrderDetails) {
-            var self = this;
-
-            // Update order details or make changes
-
-            // Once order is edited, re-load the order details to reflect the changes
-            self.loadOrderDetails();
-        },
-        UserIdleTime() {
+//show all open invoice
+$(".seeall-invoice").on("click", function () {
   var counter = 1;
-  var TotalCounter = $("#countdowntime").val();
-  var checkoutcounter = $("#countdowntime").val();
-  var message =
-    "You will be redirected to cart page as your session was idle for too long";
-  var timer = setInterval(function () {
-    if (counter <= TotalCounter) {
-      var showTimer = new Date(checkoutcounter-- * 1000)
-        .toISOString()
-        .slice(14, -5);
-      $(".checkoutcounter").text("Please complete order within " + showTimer);
-      document.title = 'ORDEDIT | ' + showTimer;
-    //   $('title').append(+new Date(checkoutcounter-- * 1000).toISOString().slice(14, -5));
-    } else {
-      //  location.reload();
-      clearInterval(timer);
-      $("#customerIdleTimeModal").modal("hide");
-      location.href = "/?Screen=ORDHN&Store_Code=G";
-    }
-    if (counter > TotalCounter - 5) {
-      $("#showidletimeerror").html(message);
-      $("#customerIdleTimeModal").modal("show");
-      playAudio();
-    }
-    counter++;
-  }, 1000);
-}
-    },
-
-    // Load order details when the Vue instance is created
-    created: function () {
-        this.loadOrderDetails(); // Initial call to load order details
-        this.UserIdleTime();
-        
-    }
+  var duecount = $(".getduecount").text();
+  var counters = 0;
+  $(".getduecount").each(function () {
+    counters++;
+  });
+  if (counters == 0) {
+    $(".invoice-error").removeClass("hidden");
+    $(".show-search-error").hide();
+    $(".heading").removeClass("show");
+    $(".heading").hide();
+    $(".alt_row").hide();
+    $(".alt_row").removeClass("in");
+  } else {
+    $(".invoice-error").addClass("hidden");
+    $(".show-search-error").hide();
+    $(".heading").removeClass("show");
+    $(".heading").hide();
+    $(".alt_row").hide();
+    $(".alt_row").removeClass("in");
+    $(".open-invoice").each(function () {
+      $(".show-search-error").hide();
+      //console.log(counter++);
+      $(".seeall-invoice").addClass("selected-order");
+      $(".seeall-invoice").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice-text").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".invoice-due").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice").removeClass("hidden");
+      $(".tabs").removeClass("selected-order");
+      $(".ordernumber-list").removeClass("selected-order");
+      $(".open-invoice").show();
+      $(".open-invoice-for-orders").show();
+      //$('.open-invoice').css('display', 'block');
+    });
+  }
 });
 
-var alerts = document.getElementById("alert");
-function playAudio() {
-  alerts.play();
+function SeeallInvoice() {
+  var counter = 1;
+  var duecount = $(".getduecount").text();
+  var counters = 0;
+  $(".getduecount").each(function () {
+    counters++;
+  });
+  if (counters == 0) {
+    $(".invoice-error").removeClass("hidden");
+    $(".show-search-error").hide();
+    $(".heading").removeClass("show");
+    $(".heading").hide();
+    $(".alt_row").hide();
+    $(".alt_row").removeClass("in");
+  } else {
+    $(".invoice-error").addClass("hidden");
+    $(".show-search-error").hide();
+    $(".heading").removeClass("show");
+    $(".heading").hide();
+    $(".alt_row").hide();
+    $(".alt_row").removeClass("in");
+    $(".open-invoice").each(function () {
+      $(".show-search-error").hide();
+      counter++;
+      $(".seeall-invoice").addClass("selected-order");
+      $(".seeall-invoice").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice-text").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".invoice-due").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice").removeClass("hidden");
+      $(".tabs").removeClass("selected-order");
+      $(".ordernumber-list").removeClass("selected-order");
+      $(".open-invoice").show();
+      $(".open-invoice-for-orders").show();
+      //$('.open-invoice').css('display', 'block');
+    });
+  }
+  //console.log(counter);
 }
 
+// var totalamount = 0
+// $('.openinvoice-total').each(function() {
+//     var total = parseFloat($(this).text());
+//     totalamount += total;
+//     //console.log(totalamount);
+//     $('#totalamountdue').text('$' + totalamount.toFixed(2));
+// })
 
+var roundamount = 0;
+$(".roundamount").each(function () {
+  var total = parseFloat($(this).text());
+  roundamount = total;
+  $(this).text(roundamount.toFixed(2));
+});
 
+function RoundOfAmount() {
+  var balanceround = 0;
+  $(".balanceround").each(function () {
+    var total = parseFloat($(this).text());
+    balanceround = total;
+    $(this).text(balanceround.toFixed(2));
+  });
 
+  var roundamount = 0;
+  $(".roundamount").each(function () {
+    var total = parseFloat($(this).text());
+    roundamount = total;
+    $(this).text(roundamount.toFixed(2));
+  });
+}
+RoundOfAmount();
 
-</script>
+$(".selected-order").on("click", function () {
+  $(".in").collapse("show");
+});
+
+// function for datepicker
+jQuery(function () {
+  var strVal = $.trim($(".orderdatenew").text());
+  var lastChar = strVal.slice(-1);
+  var strVal = strVal.split(/\s*,\s*/);
+  if (lastChar == ",") {
+    // check last character is string
+    strVal = strVal.slice(0, -1); // trim last character
+  }
+  var enableDays = strVal;
+
+  function enableAllTheseDays(date) {
+    var sdate = $.datepicker.formatDate("dd-m-yy", date);
+    if ($.inArray(sdate, enableDays) != -1) {
+      return [true];
+    }
+    return [false];
+  }
+
+  $("#datepicker").datepicker({
+    dateFormat: "dd-m-yy",
+    showOtherMonths: true,
+    beforeShowDay: enableAllTheseDays,
+    dayNamesMin: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    monthNamesShort: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    buttonImage: "graphics/CalendarIcon_vv copy.png",
+    buttonImageOnly: true,
+    changeMonth: true,
+    changeYear: true,
+    showOn: "both",
+    showButtonPanel: true,
+    closeText:
+      "<span class='material-icons' style='position: relative; top: 5px;'>close</span>",
+    onSelect: function (dateText) {
+      // write your logic here
+      //console.log(dateText);
+      $(".alt_row").hide();
+      $(".order-summary").hide();
+      $(".orderdate-" + dateText).addClass("highlightdate  active");
+      $(".collapse").removeClass("in");
+      $(".heading").addClass("hidden");
+      $(".heading-" + dateText).addClass("highlightdate  active");
+      $(".highlightdate").removeClass("active");
+      $(".heading-" + dateText).addClass("highlightdate  active");
+      $(".heading-" + dateText).removeClass("hidden");
+      $(".heading-" + dateText).show();
+      $(".show-search-error").hide();
+      $(".date-" + dateText).addClass("highlightdate  active");
+      $(".allproduct-r").removeClass("active");
+      $(".orderdipslay").hide();
+      $(".open-invoice-for-orders").show();
+      $(".background-container").css("opacity", "1");
+    },
+    beforeShow: function () {
+      setTimeout(function () {
+        $(".background-container").css("opacity", "0.6");
+      }, 0);
+    },
+    onClose: function () {
+      setTimeout(function () {
+        $(".background-container").css("opacity", "1");
+      }, 0);
+    },
+  });
+}); // function for datepicker
+
+$("#mobileArrowUp1").click(function () {
+  $(this).toggleClass("fa-angle-down");
+  if ($(this).hasClass("fa-angle-down")) {
+    $(".mobileview-summary").addClass("mobileview-height2");
+    $(".mobileview-summary").removeClass("mobileview-height1");
+  } else {
+    $(".mobileview-summary").addClass("mobileview-height1");
+    $(".mobileview-summary").removeClass("mobileview-height2");
+  }
+});
+
+$("#mobileArrowUp2").click(function () {
+  $(this).toggleClass("fa-angle-down");
+  if ($(this).hasClass("fa-angle-down")) {
+    $(".mobileview-summary").addClass("mobileview-height2");
+    $(".mobileview-summary").removeClass("mobileview-height1");
+  } else {
+    $(".mobileview-summary").addClass("mobileview-height1");
+    $(".mobileview-summary").removeClass("mobileview-height2");
+  }
+});
+
+$("#mobileArrowUp3").click(function () {
+  $(this).toggleClass("fa-angle-down");
+  if ($(this).hasClass("fa-angle-down")) {
+    $(".mobileview-summary").addClass("mobileview-height2");
+    $(".mobileview-summary").removeClass("mobileview-height1");
+  } else {
+    $(".mobileview-summary").addClass("mobileview-height1");
+    $(".mobileview-summary").removeClass("mobileview-height2");
+  }
+});
+
+$("#mobileArrowUp4").click(function () {
+  $(this).toggleClass("fa-angle-down");
+  if ($(this).hasClass("fa-angle-down")) {
+    $(".mobileview-summary").addClass("mobileview-height2");
+    $(".mobileview-summary").removeClass("mobileview-height1");
+  } else {
+    $(".mobileview-summary").addClass("mobileview-height1");
+    $(".mobileview-summary").removeClass("mobileview-height2");
+  }
+});
+
+$(".due-slide").click(function () {
+  var slide = $(this).attr("id");
+  ////alert(slide);
+  if (slide === "due-up") {
+    $(".show-due").html(
+      'Amount Due <sup style="color: #fff;"><i class="fa fa-question-circle showbubbletotal"></i></sup>'
+    );
+    $(".total-display").css("background-color", "#f47a44");
+    var totalDue = parseFloat($("#totalamountdue").attr("data-due"));
+    $(".past-due").text("$" + totalDue.toFixed(2));
+    $(".showbubbletotal").click(function () {
+      $(".bubble")
+        .toggle()
+        .html(
+          '<p class="txt-gray due-up-text" style="color: #000;font-size: 10px;text-align: unset;position: relative;top: 24px;bottom: 10%;width: 98%;left: 0;right: 0;">This is the total amount for all open invoices on your account</p>'
+        );
+      $(".due-up-text-past").hide();
+      $(".due-up-text").show();
+    });
+  } else {
+    $(".show-due").html(
+      'Past Amount Due <sup style="color: #fff;"><i class="fa fa-question-circle showbubblepast"></i></sup>'
+    );
+    $(".total-due").addClass("past-due");
+    $(".total-display").css("background-color", "red");
+    var totalPastDue = 0;
+    if ($("#totalamountdue").attr("data-postdue") > 0) {
+      totalPastDue = parseFloat($("#totalamountdue").attr("data-postdue"));
+    }
+    $(".past-due").text("$" + totalPastDue.toFixed(2));
+    $(".showbubblepast").click(function () {
+      $(".due-up-text").hide();
+      $(".due-up-text-past").show();
+      $(".bubble")
+        .toggle()
+        .html(
+          '<p class="txt-gray due-up-text-past" style="color: #000;font-size: 10px;text-align: unset;position: relative;top: 24px;bottom: 10%;width: 98%;left: 0;right: 0;">This is the past due balance on your account. Please contact our accounting team to make a payment as soon as possible.</p>'
+        );
+    });
+    /*
+        var totalamount = 0
+        $('.pastdue-check-amount').each(function() {
+            var total = parseFloat($(this).text());
+            totalamount += total;
+            //console.log(totalamount);
+            $('.past-due').text('$' + totalamount.toFixed(2));
+        })*/
+  }
+});
+
+var showbubble = $(".bubble").attr("style");
+if (showbubble == "display: block;") {
+  $("body").click(function () {
+    $(".bubble").toggle();
+  });
+}
+
+function loadMore() {
+  //console.log("More loaded");
+  $(".order-list").append("<div>");
+  $(window).bind("scroll", bindScroll);
+}
+
+function GetNextSetofOrders() {
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  $("#defaultoffset").val(offset);
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=5&SortBy=OrdDtDesc",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getOrderdetails")
+          .each(function () {
+            getcount++;
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            var dataadsinvoice = $(this).attr("data-adsinvoice");
+            var item = `<div data-orderid="${dataorderid}" data-adsinvoice="${dataadsinvoice}" data-invoice="${dategetInvoice}" data-invoice_date="${datainvoicedate}" data-invoice_amount="${datainvoice_amount}" data-payments="${dataPayments}" data-write_offs="${dataWriteoff}" data-amount_due="${dataAmtDue}" data-modified_dt="${datamodified_dt}" onclick="GetNextSetofOrdersOnclick(${dataorderid});getOrderStatus(${dataorderid});Trackmyorder(${dataorderid}); " class=" invoicelist filter${dataorderid}">
+                        <div class="collapse${dataorderid} tabs item-${dataorderid} orders-wrapper" style="width: max-content;margin-left: .8rem;">
+                        <p class="ordernumber-list collapse-${dataorderid}">
+                        ${dataDate} | Order: #${dataorderid}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        </div>`;
+            $(".scroll-view").append(item).fadeIn("slow");
+            $(".orderscroll-view").find("searchedordersummary").hide();
+            $(".showOrderInfo").show();
+            RoundOfAmount();
+          });
+        //console.log("the final value is " + getcount);
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {});
+}
+
+function GetNextSetofOrdersFromJSON() {
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  $("#defaultoffset").val(offset);
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=5&SortBy=OrdDtDesc&devicetype=desktop",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            var dataadsinvoice = $(this).attr("data-adsinvoice");
+            var item = `<div data-orderid="${dataorderid}" data-adsinvoice="${dataadsinvoice}" data-invoice="${dategetInvoice}" data-invoice_date="${datainvoicedate}" data-invoice_amount="${datainvoice_amount}" data-payments="${dataPayments}" data-write_offs="${dataWriteoff}" data-amount_due="${dataAmtDue}" data-modified_dt="${datamodified_dt}" onclick="GetNextSetofOrdersOnclick(${dataorderid});getOrderStatus(${dataorderid});Trackmyorder(${dataorderid}); " class=" invoicelist filter${dataorderid}">
+                        <div class="collapse${dataorderid} tabs item-${dataorderid} orders-wrapper" style="width: max-content;margin-left: .8rem;">
+                        <p class="ordernumber-list collapse-${dataorderid}">
+                        ${dataDate} | Order: #${dataorderid}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        </div>`;
+            $(".scroll-view").append($(this).html()).fadeIn("slow");
+            $(".orderscroll-view").find("searchedordersummary").hide();
+            $(".showOrderInfo").show();
+            RoundOfAmount();
+          });
+        //console.log("the final value is " + getcount);
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {});
+}
+function GetNextSetofOrdersMobileFromJSON() {
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 10;
+  $("#defaultoffset").val(offset);
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=10&SortBy=OrdDtDesc&devicetype=mobile",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            var dataadsinvoice = $(this).attr("data-adsinvoice");
+            var item = `<div data-orderid="${dataorderid}" data-adsinvoice="${dataadsinvoice}" data-invoice="${dategetInvoice}" data-invoice_date="${datainvoicedate}" data-invoice_amount="${datainvoice_amount}" data-payments="${dataPayments}" data-write_offs="${dataWriteoff}" data-amount_due="${dataAmtDue}" data-modified_dt="${datamodified_dt}" onclick="GetNextSetofOrdersOnclick(${dataorderid});getOrderStatus(${dataorderid});Trackmyorder(${dataorderid}); " class=" invoicelist filter${dataorderid}">
+                        <div class="collapse${dataorderid} tabs item-${dataorderid} orders-wrapper" style="width: max-content;margin-left: .8rem;">
+                        <p class="ordernumber-list collapse-${dataorderid}">
+                        ${dataDate} | Order: #${dataorderid}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        </div>`;
+            $(".orderlists").append($(this).html()).fadeIn("slow");
+            $(".orderscroll-view").find("searchedordersummary").hide();
+            // $(".showOrderInfo").hide();
+            RoundOfAmount();
+          });
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {});
+}
+
+function GetNextSetofOrdersOnclick(ordernumber) {
+  var getcount = 0;
+  var getdevice = "";
+  $(".ordloader").css("display", "flex");
+  $(".load-content").show();
+  $(".invo_tabn").hide();
+  $("#orderhistory_list").hide();
+  $(".orderscroll-view").html("");
+  $("body").find(".order-list-productscheck").addClass("order-list-products");
+  $(".seeallinvoice-text").css("color", "#414042");
+  if (screen.width > 767) {
+    getdevice = "desktop";
+  } else {
+    getdevice = "mobile";
+  }
+
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=particularinvoice&searchKey=" +
+        ordernumber +
+        "&devicetype=" +
+        getdevice,
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").html(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $(".order-list-products #orderhistory_list").hide();
+        $(".order-list-products #orderhistory_list")
+          .find(".alt_row")
+          .removeClass("collapse");
+        $(".order-list-products #orderhistory_list").show();
+        var dataorderid = "";
+
+        if (getdevice == "desktop") {
+          $(parsedResponse)
+            .find(".getOrderdetails")
+            .each(function () {
+              getcount++;
+              dataorderid = $(this).attr("data-orderid");
+              $(".filter-" + dataorderid).addClass("collapses" + dataorderid);
+              $(".filter-collapse-" + dataorderid).addClass("in");
+              RoundOfAmount();
+            });
+
+          RoundOfAmount();
+          if (getcount > 0) {
+            if (window.screen.width < 767) {
+              $(".orderscroll-view")
+                .find(".order-summary")
+                .addClass("searchedordersummary");
+              $(".foropeninvoice .mobile-open-invoice").html(
+                $(parsedResponseOS).filter(".getorderSummary").html()
+              );
+            } else {
+              $(".orderscroll-view")
+                .find(".order-summary")
+                .addClass("searchedordersummary");
+              $(".foropeninvoice .orderscroll-view").html(
+                $(parsedResponseOS).filter(".getorderSummary").html()
+              );
+            }
+            $(".order-list-products #orderhistory_list").show();
+            $(".order-list-products #orderhistory_list").html(
+              $(parsedResponse).filter(".b2b-customers").html()
+            );
+          } else {
+          }
+          $(".selected-order").removeClass("selected-order");
+          $(".filter-collapse-" + dataorderid).addClass("in");
+          $(".collapse-" + dataorderid).addClass("selected-order");
+
+          $("#getCount").val(getcount);
+          $(".showOrderInfo").show();
+          $(".order-summary").hide();
+          $(".order-summary" + dataorderid).show();
+          getOrderStatus(dataorderid);
+        } else {
+          invoiceListToggle(ordernumber);
+        }
+        getCustomerOrderPoints(ordernumber);
+      }
+    )
+  ).then(function () {
+    $(".ordloader").css("display", "none");
+    $(".load-content").hide();
+    $(".invo_tabn").show();
+    $(".invoice-error").hide();
+    var text = $(".customerpoints").text();
+    $(".customerpoints").text(text.substring(15, "Redeemed Points"));
+    var customerpointstotal = $(".customerpointstotal").text();
+    $(".customerpointstotal").text(
+      customerpointstotal.split("Redeemed Points")[1]
+    );
+        $('body').find('.track_num').html(`
+  Order: #${ordernumber} 
+  <span class='pointer' onclick='viewwineorders.fetchWineOrderItems();'>
+    ${
+      $('.filter' + ordernumber).attr('data-wineorder') !== '' 
+        ? `Wine Order: #<span class='getwineorder'>${$('.filter' + ordernumber).attr('data-wineorder')}</span>` 
+        : ''
+    }
+  </span>
+  ${
+    $('.filter' + ordernumber).attr('data-editorder') === '1' && $('.SL2-' + ordernumber).attr('data-isadmin') == '1' 
+      ? `<span>
+          <button type='button' class='btn btn-yellow btn-sm' 
+                  onclick="location.href='/ordedit.html?order_id=${ordernumber}'">
+            Edit Order
+          </button>
+         </span>` 
+      : ''
+  }
+      ${
+        ($('body').find('.SL2-' + ordernumber).attr('data-editorder') === '0' || $('body').find('.SL2-' + ordernumber).attr('data-editorder') === '' && $('.SL2-' + ordernumber).attr('data-isadmin') == 1) && $('body').find('.SL2-' + ordernumber).attr('data-datestatus')  === 'Today' && $('body').find('.SL2-' + ordernumber).attr('data-shippingdata') === 'Will Call' && $('.SL2-' + ordernumber).attr('data-wineaccount') !== '1'
+      ? `<span class="ft-12p txt-orange" style="
+    width: 75%;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+">
+          *Same-day orders cannot be edited.
+          Please contact support for assistance.
+         </span>` 
+      : (['0', '2'].includes($(`.SL2-${ordernumber}`).attr('data-editorder')) || $('body').find('.SL2-' + ordernumber).attr('data-editorder') === '' && $('.SL2-' + ordernumber).attr('data-isadmin') == '1') && $('body').find('.SL2-' + ordernumber).attr('data-datestatus')  === 'notToday' && $('.SL2-' + ordernumber).attr('data-wineaccount') !== '1'
+      ? `<span class="ft-12p txt-orange" style="
+    width: 70%;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+">
+          *This order can no longer be changed as the editing window has expired.
+         </span>` : ''
+  }
+`);
+        
+  });
+
+  $("body").each(function () {
+    var pcode = $(".checksubstituionproducts").val();
+    var scode = $(".checksubstituionproductcode").val();
+    getsubstitutionInventory(pcode, scode);
+  });
+}
+
+function GetNextSetofOrdersMobileOnclick(ordernumber) {
+  var getcount = 0;
+  var getdevice = "";
+  $(".ordloader").css("display", "flex");
+  $(".load-content").show();
+  $(".invo_tabn").hide();
+  $("#orderhistory_list").hide();
+  $(".orderscroll-view").html("");
+  $("body").find(".order-list-productscheck").addClass("order-list-products");
+  $(".seeallinvoice-text").css("color", "#414042");
+  var dataorderid = "";
+  if (screen.width > 767) {
+    getdevice = "desktop";
+  } else {
+    getdevice = "mobile";
+  }
+
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=particularinvoice&searchKey=" +
+        ordernumber +
+        "&devicetype=" +
+        getdevice,
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+
+        $(".orderscroll-view").html(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $(".mobileview-summary").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $(".order-list-products #orderhistory_list").hide();
+        $(".order-list-products #orderhistory_list").show();
+        var dataorderid = "";
+
+        $(parsedResponse)
+          .find(".getOrderdetails")
+          .each(function () {
+            getcount++;
+            dataorderid = $(this).attr("data-orderid");
+            //console.log(dataorderid);
+            $(".filter-" + dataorderid).addClass("collapses" + dataorderid);
+            $(".filter-collapse-" + dataorderid).addClass("in");
+            RoundOfAmount();
+          });
+
+        if (getcount > 0) {
+          $(".orderscroll-view")
+            .find(".order-summary")
+            .addClass("searchedordersummary");
+          $(".foropeninvoice .mobile-open-invoice").html(
+            $(parsedResponseOS).filter(".getorderSummary").html()
+          );
+          $(".line-items.b2b-customers").html(
+            $(parsedResponse).filter(".b2b-customers").html()
+          );
+          mobileOrderrRetailDetail(dataorderid);
+        } else {
+        }
+
+        if (UserType == 2) {
+          mobileOrderrRetailDetail(dataorderid);
+        } else {
+          mobileOrderDetail(dataorderid);
+        }
+
+        /*if (getcount > 0) {
+                if (window.screen.width < 767) {
+                    $(".orderscroll-view").find('.order-summary').addClass('searchedordersummary');
+                    $(".foropeninvoice .mobile-open-invoice").html($(parsedResponseOS).filter('.getorderSummary').html());
+                } else {
+                    $(".orderscroll-view").find('.order-summary').addClass('searchedordersummary');
+                    $(".foropeninvoice .orderscroll-view").html($(parsedResponseOS).filter('.getorderSummary').html());
+                }
+                $(".order-list-products #orderhistory_list").show();
+                $(".order-list-products #orderhistory_list").html($(parsedResponse).filter('.b2b-customers').html());
+                
+                
+                
+            }else{
+                
+            }*/
+
+        $("#getCount").val(getcount);
+        $(".showOrderInfo").show();
+        $(".order-summary").hide();
+        $(".order-summary" + dataorderid).toggle();
+        $(".search-order").hide();
+      }
+    )
+  ).then(function () {
+    $(".ordloader").css("display", "none");
+    $(".load-content").hide();
+    $(".invo_tabn").show();
+    MobileOrderSummary();
+    $("body").each(function () {
+      var pcode = $(".checksubstituionproducts").val();
+      var scode = $(".checksubstituionproductcode").val();
+      getsubstitutionInventory(pcode, scode);
+    });
+    getCustomerOrderPoints(ordernumber);
+  });
+}
+
+function MobileOrderSummary() {
+  $(".mobileArrowUp4").click(function () {
+    $(this).toggleClass("fa-angle-down");
+    if ($(this).hasClass("fa-angle-down")) {
+      $(".mobileview-summary").addClass("mobileview-height2");
+      $(".mobileview-summary").removeClass("mobileview-height1");
+    } else {
+      $(".mobileview-summary").addClass("mobileview-height1");
+      $(".mobileview-summary").removeClass("mobileview-height2");
+    }
+  });
+}
+
+function GetNextSetofOrdersMobile() {
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  $("#defaultoffset").val(offset);
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=5&SortBy=OrdDtDesc",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".mobileview-summary").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+
+        $(parsedResponse)
+          .find(".getOrderdetails")
+          .each(function () {
+            getcount++;
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            $("#heading-filter-" + dataorderid).removeClass("hidden");
+            var item = `<div data-orderid="${dataorderid}" data-invoice="${dategetInvoice}" data-invoice_date="${datainvoicedate}" data-invoice_amount="${datainvoice_amount}" data-payments="${dataPayments}" data-write_offs="${dataWriteoff}" data-amount_due="${dataAmtDue}" data-modified_dt="${datamodified_dt}" onclick="invoiceListToggle(${dataorderid});getOrderStatus(${dataorderid});Trackmyorder(${dataorderid}); " class=" invoicelist filter${dataorderid}">
+                        <div class="collapse${dataorderid} tabs item-${dataorderid} orders-wrapper" style="width: max-content;margin-left: .8rem;">
+                        <p class="ordernumber-list collapse-${dataorderid}">
+                        ${dataDate} | Order: #${dataorderid}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        </div>`;
+            $(".scroll-view").append(item).fadeIn("slow");
+            RoundOfAmount();
+            SeeallInvoice();
+          });
+
+        //console.log("the final value is " + getcount);
+        $("#getCount").val(getcount);
+        if (getcount == 0) {
+          $(".smbtn").css("visibility", "hidden");
+        } else {
+          $(".smbtn").css("visibility", "visible");
+        }
+      }
+    )
+  ).then(function () {});
+}
+
+function GetOpenInvoicesOld() {
+  //alert(2);
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  $("#defaultoffset").val(offset);
+  $("#searchKeyElement").val("");
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=openOrders&Per_Page=-1",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $("#orderhistory_list_open").show();
+        $("#orderhistory_list").hide();
+        ResetMainContainer();
+
+        $(parsedResponse)
+          .find(".getOrderdetails")
+          .each(function () {
+            getcount++;
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            RoundOfAmount();
+          });
+
+        if (getcount > 0) {
+          if (window.screen.width < 767) {
+            $(".foropeninvoice .mobile-open-invoice").html(
+              $(parsedResponseOS).filter(".getorderSummary").html()
+            );
+          } else {
+            $(".foropeninvoice .orderscroll-view").html(
+              $(parsedResponseOS).filter(".getorderSummary").html()
+            );
+            if (screen.width > 767) {
+              setTimeout(function () {
+                $("#orderhistory_list_open .heading").removeClass("visible-xs");
+              }, 200);
+            }
+          }
+          $("#orderhistory_list_open").html(
+            $(parsedResponse).filter(".b2b-customers").html()
+          );
+          $("#orderhistory_list_open .heading").removeClass("hidden");
+          RoundOfAmount();
+          $(".showOrderInfo").hide();
+        }
+
+        //console.log("the final value is " + getcount);
+        $("#getCount").val(getcount);
+        if (getcount == 0 || getcount < 0) {
+          $(".order-summary").hide();
+          $(".invoice-error").removeClass("hidden");
+          $(".show-search-error").hide();
+          $(".invoice-error").show();
+        } else {
+          $(".invoice-error").addClass("hidden");
+          $(".invoice-error").hide();
+        }
+      }
+    )
+  ).then(function () {
+    /* to make red color font */
+    $(".open-invoice").each(function () {
+      $(".show-search-error").hide();
+
+      $(".seeall-invoice").addClass("selected-order");
+      $(".seeall-invoice").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice-text").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".invoice-due").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice").removeClass("hidden");
+      $(".tabs").removeClass("selected-order");
+      $(".ordernumber-list").removeClass("selected-order");
+      $(".open-invoice").show();
+      $(".open-invoice-for-orders").show();
+    });
+  });
+}
+
+function GetOpenInvoices() {
+  //alert(3)
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  var per_page = "-1";
+  $("#defaultoffset").val(offset);
+  $("#searchKeyElement").val("");
+  $(".scroll-view").html("");
+  $(".scroll-view").css('visibility','hidden');
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=openOrders&Per_Page=" + per_page,
+      function (html) {
+        
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            var content = $(this).html();
+            $(".scroll-view").append(content).css('visibility','visible');
+            $(".showOrderInfo").show();
+            RoundOfAmount();
+          });
+          // $("div .invoicelist:visible:eq(0)").first().click();
+        $(".showOrderInfo").show();
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {
+    /* to make red color font */
+    if (getcount > 0) {
+      // $("div .ordernumber-list:visible:eq(0)").first().click();
+      $(".show-search-error").css("display", "none");
+      $(".invoice-error").removeClass("hidden");
+      $(".invoice-error").hide();
+      $(".invo_tabn").show();
+      $("div .invoicelist:visible:eq(0)").first().click();
+    } else {
+      $(".invoice-error").show();
+      $(".invoice-error").css({
+        display: "flex",
+        height: "30rem",
+        "justify-content": "center",
+        "align-items": "center",
+      });
+      $(".invo_tabn").hide();
+      $(".showOrderInfo").hide();
+    }
+    $(".open-invoice").each(function () {
+      $(".show-search-error").hide();
+
+      // $(".seeall-invoice").addClass("selected-order");
+      $(".seeall-invoice").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice-text").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".invoice-due").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice").removeClass("hidden");
+      $(".tabs").removeClass("selected-order");
+      $(".ordernumber-list").removeClass("selected-order");
+      $(".open-invoice").show();
+      $(".open-invoice-for-orders").show();
+    });
+  });
+}
+
+function GetMobileOpenInvoices() {
+  //alert(4)
+  var getcount = 0;
+  var offset = parseInt($("#defaultoffset").val()) + 5;
+  var per_page = "-1";
+  $("#defaultoffset").val(offset);
+  $("#searchKeyElement").val("");
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=MobileopenOrders&Per_Page=" + per_page,
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        ResetMainContainer();
+        $(".orderlists").html("");
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            //console.log("final count is " + getcount);
+            var content = $(this).html();
+            $(".orderlists").append(content).fadeIn("slow");
+            RoundOfAmount();
+          });
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {
+    /* to make red color font */
+
+    if (getcount > 0) {
+      $(".show-search-error").css("display", "none");
+      $(".invoice-error").removeClass("hidden");
+      $(".invoice-error").hide();
+      $(".invo_tabn").show();
+    } else {
+      $(".invoice-error").show();
+      $(".invoice-error").removeClass('hidden');
+      $(".invo_tabn").hide();
+      $(".showOrderInfo").hide();
+    }
+
+    $(".open-invoice").each(function () {
+      $(".show-search-error").hide();
+
+      $(".seeall-invoice").addClass("selected-order");
+      $(".seeall-invoice").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice-text").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".invoice-due").css({
+        color: "red",
+        "font-weight": "normal",
+      });
+      $(".open-invoice").removeClass("hidden");
+      $(".tabs").removeClass("selected-order");
+      $(".ordernumber-list").removeClass("selected-order");
+      $(".open-invoice").show();
+      $(".open-invoice-for-orders").show();
+    });
+  });
+}
+
+function NewSearchInovice() {
+  //alert(5)
+  var getcount = 0;
+  if (window.screen.width < 767) {
+    var searchKey = $("#searchKeyElementMob").val();
+  } else {
+    var searchKey = $("#searchKeyElement").val();
+  }
+
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=searchOrders&searchKey=" +
+        searchKey +
+        "&Per_Page=-1",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".order-list-products #orderhistory_list").hide();
+        $(".order-list-products #orderhistory_list")
+          .find(".alt_row")
+          .removeClass("collapse");
+        /*$(".order-list-products #orderhistory_list_open").show();*/
+        $(parsedResponse)
+          .find(".getOrderdetails")
+          .each(function () {
+            getcount++;
+            // //console.log($(this).attr('data-date'));
+            var dataDate = $(this).attr("data-orderdate");
+            var dataorderid = $(this).attr("data-orderid");
+            var dategetInvoice = $(this).attr("data-getinvoice");
+            var datamodified_dt = $(this).attr("data-modified_dt");
+            var dataAmtDue = $(this).attr("data-amount_due");
+            var dataWriteoff = $(this).attr("data-write_offs");
+            var dataPayments = $(this).attr("data-payments");
+            var datainvoice_amount = $(this).attr("data-invoice_amount");
+            var datainvoicedate = $(this).attr("data-invoice_date");
+            $(".filter-" + dataorderid).addClass("collapses" + dataorderid);
+            $(".ordernumber-list").hide();
+            //console.log(dataorderid);
+            setTimeout(function () {
+              $("div .ordernumber-list:visible:eq(0)").first().click();
+            }, 500);
+            function resetCollapse(element) {
+              $(element).on("hide.bs.collapse", function () {
+                setTimeout(function () {
+                  $(element).addClass("in");
+                }, 500);
+              });
+            }
+            RoundOfAmount();
+          });
+
+        if (getcount > 0) {
+          if (window.screen.width < 767) {
+            $(".orderscroll-view")
+              .find(".order-summary")
+              .addClass("searchedordersummary");
+            $(".foropeninvoice .mobile-open-invoice").html(
+              $(parsedResponseOS).filter(".getorderSummary").html()
+            );
+          } else {
+            $(".orderscroll-view")
+              .find(".order-summary")
+              .addClass("searchedordersummary");
+            $(".foropeninvoice .orderscroll-view").html(
+              $(parsedResponseOS).filter(".getorderSummary").html()
+            );
+            if (screen.width > 767) {
+              setTimeout(function () {
+                $("#orderhistory_list_open .heading").removeClass(
+                  "visible-xsss"
+                );
+              }, 200);
+            }
+          }
+          $("div .ordernumber-list:visible:eq(0)").first().click();
+          $(".order-list-products #orderhistory_list_open").show();
+          $(".order-list-products #orderhistory_list_open").html(
+            $(parsedResponse).filter(".b2b-customers").html()
+          );
+          $(
+            ".order-list-products #orderhistory_list_open .heading"
+          ).removeClass("hidden");
+          $(".invoice-error").hide();
+        } else {
+          $(".order-list-products #orderhistory_list_open").hide();
+        }
+
+        if (getcount == "0" || getcount == 0) {
+          if (checkOrderDetails() === true) {
+          } else {
+            $(".show-search-error").css("display", "flex");
+          }
+          $(".invoice-error").hide();
+          $(".ord-summary").hide();
+          $(".ordernumber-list").removeClass("selected-order");
+          $(".smbtn").css("visibility", "hidden");
+        } else {
+          $(".show-search-error").css("display", "none");
+          $(".ordernumber-list").removeClass("selected-order");
+          $(".smbtn").css("visibility", "hidden");
+        }
+        $("#getCount").val(getcount);
+        $(".showOrderInfo").hide();
+      }
+    )
+  ).then(function () {});
+}
+
+function SearchInovice() {
+  //alert(6)
+  var getcount = 0;
+  var per_page = "";
+  if (window.screen.width < 767) {
+    var searchKey = $("#searchKeyElementMob").val();
+  } else {
+    var searchKey = $("#searchKeyElement").val();
+  }
+  if (searchKey == "") {
+    per_page = 10;
+    searchKey = "null";
+    $("#allOpenInvoices").css("display", "block");
+  } else {
+    per_page = "-1";
+    $("#allOpenInvoices").css({
+      display: "none",
+      "pointer-events": "none",
+      cursor: "default",
+    });
+    $(".invoice-error").css("display", "none");
+  }
+
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoiceSearch&Per_Page=" +
+        per_page +
+        "&SearchKey=" +
+        searchKey +
+        "&devicetype=desktop",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(".scroll-view").html("");
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            //console.log("final count is " + getcount);
+            var content = $(this).html();
+            $(".scroll-view").append(content);
+            RoundOfAmount();
+          });
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {
+    if (getcount > 0) {
+      $("div .invoicelist:visible:eq(0)").first().click();
+      $(".show-search-error").css("display", "none");
+    } else {
+      if (checkOrderDetails() == true) {
+      } else {
+        $(".show-search-error").css("display", "flex");
+      }
+      $("#orderhistory_list").hide();
+      $(".invo_tabn").hide();
+      $(".showOrderInfo").hide();
+      $("body")
+        .find(".order-list-products")
+        .addClass("order-list-productscheck");
+      $("body").find(".order-list-products").removeClass("order-list-products");
+    }
+  });
+}
+
+function SearchInoviceMobile() {
+  //alert(7)
+  var getcount = 0;
+  var per_page = "";
+  if (window.screen.width < 1023) {
+    var searchKey = $("#searchKeyElementMob").val();
+  } else {
+    var searchKey = $("#searchKeyElement").val();
+  }
+  if (searchKey == "") {
+    per_page = 10;
+    searchKey = "null";
+  } else {
+    per_page = "-1";
+  }
+
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=mobileinvoiceSearch&Per_Page=" +
+        per_page +
+        "&SearchKey=" +
+        searchKey +
+        "&devicetype=mobile",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        ResetMainContainer();
+        $(".orderlists").html("");
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            //console.log("final count is " + getcount);
+            var content = $(this).html();
+            $("#orderhistory_list").show();
+            $(".orderlists").append(content).fadeIn("slow");
+
+            RoundOfAmount();
+          });
+
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {
+    if (getcount > 0) {
+      $(".show-search-error").css("display", "none");
+    } else {
+      $(".show-search-error").css("display", "flex");
+      $("#orderhistory_list").hide();
+      $(".invo_tabn").hide();
+      $(".showOrderInfo").hide();
+      $("body")
+        .find(".order-list-products")
+        .addClass("order-list-productscheck");
+      $("body").find(".order-list-products").removeClass("order-list-products");
+    }
+  });
+}
+
+function SellAllInvoices(element) {
+  $(element).addClass("bold-ft");
+  var getcount = 0;
+  var offset = 0;
+  $("#defaultoffset").val(offset);
+  $(".ordernumber-list").removeClass("selected-order");
+  $(".invo_tabn").hide();
+  $("#orderhistory_list").hide();
+  $(".seeallinvoicemsg").css("display", "flex");
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=5&SortBy=OrdDtDesc",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            $(".scroll-view").append($(this).html()).fadeIn("slow");
+            $(".orderscroll-view").find("searchedordersummary").hide();
+            $(".showOrderInfo").show();
+            RoundOfAmount();
+          });
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {});
+}
+
+function SellAllMobileInvoices(element) {
+  $(element).addClass("bold-ft");
+  var getcount = 0;
+  var offset = 0;
+  $("#defaultoffset").val(offset);
+  $(".ordernumber-list").removeClass("selected-order");
+  $(".invo_tabn").hide();
+  $("#orderhistory_list").hide();
+  $(".seeallinvoicemsg").css("display", "flex");
+  $.when(
+    $.get(
+      "/invoice-ajax.html?CustomerAction=invoice&Offset=" +
+        offset +
+        "&Per_Page=5&SortBy=OrdDtDesc",
+      function (html) {
+        var parsedResponseOS = $.parseHTML(html);
+        var parsedResponse = $.parseHTML(html);
+        $(".orderscroll-view").append(
+          $(parsedResponseOS).filter(".getorderSummary").html()
+        );
+        $("#orderhistory_list .b2b-customers").append(
+          $(parsedResponse).filter(".b2b-customers").html()
+        );
+        ResetMainContainer();
+        $(parsedResponse)
+          .find(".getInvoiceDetailsusingajax")
+          .each(function () {
+            getcount++;
+            $(".scroll-view").append($(this).html()).fadeIn("slow");
+            $(".orderscroll-view").find("searchedordersummary").hide();
+            $(".showOrderInfo").show();
+            RoundOfAmount();
+          });
+        //console.log("the final value is " + getcount);
+        $("#getCount").val(getcount);
+      }
+    )
+  ).then(function () {});
+}
+
+function remove() {
+  $("#searchKeyElement").val("");
+  $("#filterOrders").attr("onclick", "SearchInovice()");
+  $("#filterOrders").html('<i class="fa  fa-search"></i>');
+  $("div .collapse:eq(0)").addClass("in");
+  $("div .alt_row .collapse").eq(0).addClass("in");
+  $(".heading").addClass("hidden");
+  $(".ordernumber-list").eq(0).addClass("selected-order");
+}
+
+function ResetMainContainer() {
+  $(".ordernumber-list,.ordernumber-lists").on("click", function () {
+    $("#searchKeyElementMob").val("");
+    $("#searchKeyElement").val("");
+    $("#orderhistory_list_open").hide();
+    $("#orderhistory_list").show();
+    $(".foropeninvoice").hide();
+    $(".showOrderInfo").show();
+  });
+}
+
+function bindScroll() {
+  if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+    $(window).unbind("scroll");
+    /* loadMore();*/
+    setTimeout(calculateInvoiceDueDate(), 1000);
+  }
+}
+
+$(window).scroll(bindScroll);
+
+var ppp = 8;
+var count = ppp - 1;
+$("div.tabs:gt(" + count + ")").addClass("hide");
+$(".scroll-view").on("scroll", function () {
+  if (
+    $(".orders-list").scrollTop() + $(window).height() >
+    $(".orders-list").height() - 100
+  ) {
+    // $('.scroll-view').addClass('loading');
+    setTimeout(function () {
+      $("div.tabs.hide:lt(" + ppp + ")").removeClass("hide");
+      // $('.scroll-view').removeClass('loading');
+    }, 1000);
+  }
+});
+
+const myDiv = document.querySelector(".scroll-view");
+myDiv.addEventListener("scroll", () => {
+  if (myDiv.offsetHeight + myDiv.scrollTop >= myDiv.scrollHeight) {
+    if ($("#getCount").val() > 0) {
+      GetNextSetofOrdersFromJSON();
+    }
+  }
+});
+
+if (screen.width < 767) {
+  const myDivmob = document.querySelector(".orderlists");
+  myDivmob.addEventListener("touchmove", () => {
+    if (myDivmob.offsetHeight + myDivmob.scrollTop >= myDivmob.scrollHeight) {
+      if ($("#getCount").val() > 0) {
+        GetNextSetofOrdersMobileFromJSON();
+      }
+    }
+  });
+}
+
+function onScrollMobile() {
+  if ($(window).scrollTop() > $(document).height() - $(window).height() - 100) {
+    var Status = $("#Status").val();
+
+    if ($("#orderhistory_list").hasClass("loadingcontent")) {
+    } else {
+      GetNextSetofOrdersMobileFromJSON();
+    }
+
+    if ($("#getCount").val() == 0) {
+      $(".load-content").css("display", "none");
+    }
+  }
+}
+
+$(document).on("touchmove", onScrollMobile); // for mobile
+
+//billing arrow button
+$(".billingInfo").on("shown.bs.collapse", function () {
+  $(".billing-find").css("transform", " rotate(180deg)");
+});
+
+$(".billingInfo").on("hidden.bs.collapse", function () {
+  $(".billing-find").css("transform", " rotate(0)");
+});
+
+$(".shippingInfo").on("shown.bs.collapse", function () {
+  $(".shipping-find").css("transform", " rotate(180deg)");
+});
+
+$(".shippingInfo").on("hidden.bs.collapse", function () {
+  $(".shipping-find").css("transform", " rotate(0)");
+});
+
+/* Check whether wholsale user has past due */
+var pastdueamount = 0;
+$(".pastdue-check-amount").each(function () {
+  var total = parseFloat($(this).text());
+  pastdueamount += total;
+  //console.log(pastdueamount);
+
+  if (pastdueamount > 0) {
+    $(".total-due").addClass("past-due");
+    $(".total-display").css("background-color", "red");
+    $(".seeallinvoice-text").css("color", "red");
+    $(".show-due").html(
+      'Past Amount Due <sup style="color: #fff;"><i class="fa fa-question-circle showbubblepast"></i></sup>'
+    );
+    $(".past-due").text("$" + pastdueamount.toFixed(2));
+    $("#totalamountdue").attr("data-postdue", pastdueamount);
+  }
+});
+
+/* check for credit amount */
+var amt = 0;
+$(".invoicelist").each(function () {
+  if (
+    $(this).attr("data-amount_due") != undefined &&
+    $(this).attr("data-amount_due") != ""
+  ) {
+    var total = $(this).attr("data-amount_due");
+    amt = parseFloat(amt) + parseFloat(total);
+  }
+});
+$(".total-dues").text("(" + amt.toFixed(2) + ")");
+
+function showDropdown(code) {
+  $("." + code).on("shown.bs.dropdown", function () {
+    $("." + code)
+      .find(".caret")
+      .css("transform", "rotate(180deg)");
+  });
+  $("." + code).on("hide.bs.dropdown", function () {
+    $("." + code)
+      .find(".caret")
+      .css("transform", "rotate(360deg)");
+  });
+}
+
+function SearchToggleInvoices(orderid) {
+  setTimeout(function () {
+    $(".order-summary").hide();
+    $(".open-invoice-for-orders").hide();
+    $("#orderhistory_list_open .open-invoice-for-orders").hide();
+    $("#orderhistory_list_open .collapse" + orderid).addClass("collapses");
+    $("#orderhistory_list_open #collapse" + orderid).collapse("toggle");
+    $("#orderhistory_list_open .collapse").removeClass("in");
+    $("#orderhistory_list_open #collapse" + orderid).addClass("ins");
+    $(".showOrderInfo").show();
+    $(".showOrderInfo .order-summary" + orderid)
+      .first()
+      .show();
+    $(".foropeninvoice").hide();
+    /*$('.foropeninvoice .order-summary' + orderid).first().show();*/
+    RoundOfAmount();
+  }, 100);
+}
+
+function OpenToggleInvoices(orderid) {
+  //alert(8)
+  setTimeout(function () {
+    $(".order-summary").hide();
+    $(".open-invoice-for-orders").hide();
+    $("#orderhistory_list_open .open-invoice-for-orders").hide();
+    $("#orderhistory_list_open .collapse" + orderid).addClass("collapses");
+    $("#orderhistory_list_open #collapse" + orderid).collapse("toggle");
+    $("#orderhistory_list_open .collapse").removeClass("in");
+    $("#orderhistory_list_open #collapse" + orderid).addClass("ins");
+    $(".showOrderInfo").hide();
+    $(".foropeninvoice").show();
+    $(".foropeninvoice .order-summary" + orderid)
+      .first()
+      .show();
+    RoundOfAmount();
+  }, 100);
+}
+
+function invoiceListToggle(orderid) {
+  $(".showallinvoice").removeClass("bold-ft");
+  setTimeout(function () {
+    if (orderid) {
+      if (screen.width > 767) {
+        $(".alt_row").hide();
+        $(".alt_row").removeClass("in");
+        $(".heading").addClass("hidden");
+        $("#collapse" + orderid).collapse("show");
+        $("#collapse" + orderid).show();
+        $("#collapse" + orderid).addClass("visible");
+        $(".selected-order").removeClass("selected-order");
+        $(".collapse-" + orderid).addClass("selected-order");
+        $(".collapse").removeClass("ins");
+        $(".order-summary").hide();
+        $(".open-invoice-for-orders").hide();
+        $(".order-summary" + orderid).show();
+        $(".collapse").removeClass("ins");
+        $(".open-invoice").css("display", "block");
+        $(".credit-summary").hide();
+        $(".heading").hide();
+        $(".invoice-error").addClass("hidden");
+        $(".collapse" + orderid).addClass("in");
+        $(".show-search-error").hide();
+        $(".foropeninvoice").hide();
+        $(".showOrderInfo").show();
+        $(".showOrderInfo .order-summary" + orderid)
+          .first()
+          .show();
+      } else {
+        $("#collapse" + orderid).collapse("toggle");
+        $(".order-summary").hide();
+        $(".order-summary" + orderid).toggle();
+        $(".collapse").removeClass("in");
+        $(".open-invoice-for-orders").show();
+        $(".open-invoice-for-orders").hide();
+        $("#collapse" + orderid).addClass("ins");
+        $("#collapse" + orderid).collapse("toggle");
+      }
+      RoundOfAmount();
+      Trackmyorder(orderid);
+    }
+  }, 500);
+}
+
+/*to check credit orders and make credit heading changes */
+$(".orders-wrapper").on("click", function () {
+  if ($(this).hasClass("credits")) {
+    $(".invoice-heading").css("color", "#ddd");
+    $(".credit-heading").css("color", "#414042");
+  } else {
+    $(".credit-heading").css("color", "#ddd");
+    $(".invoice-heading").css("color", "#414042");
+  }
+});
+
+$(document).ready(function () {
+  if ($(".orders-wrapper").hasClass("credits")) {
+    $(".invoice-heading").css("color", "#ddd");
+    $(".credit-heading").css("color", "#414042");
+  } else {
+    $(".credit-heading").css("color", "#ddd");
+    $(".invoice-heading").css("color", "#414042");
+  }
+});
+
+function checkOrderDetails() {
+  if ($(".ordermessage").length > 0) {
+    $(".show-search-error").hide();
+    return true;
+  }
+}
+checkOrderDetails();
+
+function getsubstitutionInventory(productcode, codes) {
+  var responsedata;
+  $.ajax({
+    async: false,
+    url:
+      "/Merchant5/merchant.mvc?Screen=CUDET&ProductAction=substitution&Productcode=" +
+      productcode +
+      "&substitutioncode=" +
+      codes,
+    success: function (response) {
+      var responsedata = response;
+      if (responsedata < 1 || responsedata == "") {
+        //console.log(productcode + responsedata);
+        setTimeout(function () {
+          $(".ProductDetail-" + productcode)
+            .find(".viewSubstitutions")
+            .hide();
+        }, 500);
+      } else {
+        $(".ProductDetail-" + productcode)
+          .find(".viewSubstitutions")
+          .show();
+      }
+    },
+  });
+  return responsedata;
+}
+
+$("body").each(function () {
+  var pcode = $(".checksubstituionproducts").val();
+  var scode = $(".checksubstituionproductcode").val();
+  getsubstitutionInventory(pcode, scode);
+});

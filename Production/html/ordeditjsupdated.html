@@ -29,6 +29,7 @@
                     curbsy_data: curbsy_data,
                     Formatted_deliverydate: data.formatted_delivery_date
                 };
+                let newOrderData = [];
                 $.ajax({
                     url: "/Merchant5/merchant.mvc",
                     type: "GET",
@@ -38,14 +39,59 @@
                     },
                     success: function (response) {
                         console.log("Order data updated:", response);
+                        self.orderDetails.orderitems = [];
+                        newOrderData = response.data[0] || {};
+                        viewOrderDetails.hasShippingDataFetched = false;
                     },
                     complete: function () {
                         viewOrderDetails.isShippingupdated = true;
+                        viewOrderDetails.hasShippingDataFetched  = true;
                         document.querySelector('#searchproducts').value = '';
                         document.querySelector('.productsearcherror').style.display = 'none';
                         SearchProductslist.products = [];
                         viewOrderDetails.isOrderEdited = true;
-                        viewOrderDetails.loadOrderDetails();
+                        //  viewOrderDetails.loadOrderDetails();
+                        
+                        newOrderData.orderitems.forEach((item, i) => {
+                            // let OrderdedUOM = null;
+                            if (item.product) {
+                                item.product.forEach(product => {
+                                    setTimeout(function () {
+                                        if (product.data.product_inventory <= 0 && product.data.substitute != '') {
+                                            SearchProductslist.getsubstitutionInventory(product.data.code, product.data.substitute);
+                                        }
+                                    }, 10);
+                                    product.data.variants.forEach(variant => {
+                                        if (item.code == variant.code) {
+                                            item.OrderdedUOM = self.convertUOM(variant);
+                                        }
+                                        variant.UOM = self.convertUOM(variant);
+                                    });
+                                });
+                            }
+
+                        });
+                        // Calculate the subtotal
+                        const subtotal = newOrderData.orderitems.reduce((acc, item) => {
+                            return acc + (item.price * item.quantity);
+                        }, 0);
+                        self.$nextTick(() => {
+                            self.orderDetails = {
+                                ...newOrderData,
+                                orderitems: [...(newOrderData.orderitems || [])],
+                                subtotal: subtotal,
+
+                            };
+                        });
+
+
+                        // Store updated order values for later use
+                        storeOrderedValues = newOrderData.orderitems;
+                        document.querySelector('input[name="curbsy_datanew"]').value !== '' ? document.querySelector('#curbsy_data').value = document.querySelector('input[name="curbsy_datanew"]').value : '';
+                        document.querySelector('input[name="curbsy_datenew"]').value !== '' ? document.querySelector('#curbsy_date').value = document.querySelector('input[name="curbsy_datenew"]').value : '';
+                        document.querySelector('input[name="formatted_delivery_date"]').value !== '' ? document.querySelector('#formatted_delivery_date').value = document.querySelector('input[name="formatted_delivery_date"]').value : '';
+                        viewOrderDetails.loadShippingInfo();
+                        
                     },
                     error: function (xhr, status, error) {
                         console.error("Error updating order data:", status, error);
@@ -1285,7 +1331,6 @@
                     success: function (response) {
                         if (response) {
                             $(".ProductDetail-" + updatedItem.ParentCode).find(".addbtn").removeClass('adding').html('Add');
-
                             self.loadOrderDetails();
                         } else {
                             console.error('Failed to update order item:', response.message);
@@ -1403,7 +1448,6 @@
                     success: function (response) {
                         if (response) {
                             $(".ProductDetail-" + updatedItem.ParentCode).find(".addbtn").removeClass('adding').html('Add');
-
                             self.loadOrderDetails();
                         } else {
                             console.error('Failed to update order item:', response.message);

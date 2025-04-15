@@ -1,0 +1,78 @@
+[{"title":"Menus Made Easy","data":[
+<mvt:if expr="NOT ISNULL l.settings:readytheme:navigationitems">
+<mvt:assign name="l.settings:navcounter" value="1"/>
+<mvt:foreach iterator="navigationitem" array="readytheme:navigationitems">
+    <mvt:if expr="l.settings:navcounter GT 1">,</mvt:if>
+    <mvt:if expr="l.settings:navigationitem:link_type EQ 'C'">
+        <mvt:assign name="l.settings:category" value="''"/>
+        <mvt:do name="l.return" file="g.Module_Library_DB" value="Category_Load_Code(l.settings:navigationitem:link_dest, l.settings:category )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mob_menu_image', l.settings:mob_menu_image )" />
+	<mvt:if expr="trim(tolower(g.device)) NE 'web'">
+		<mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mob_menu_image_2', l.settings:mob_menu_image )" />
+	</mvt:if>
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_banner_name', l.settings:mkt_banner_name )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_banner_text', l.settings:mkt_banner_text )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'cat_banner_textcol', l.settings:cat_banner_textcol )" />
+        <mvt:item name="customfields" param="Read_Category_ID(l.settings:category:id, 'hide_deals', l.settings:hide_deals )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_banner_desktop', l.settings:app_category_banner )" />
+        <mvt:if expr="'mkt-' CIN l.settings:category:code">
+            <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_banner_responsive', l.settings:app_category_banner_responsive )" />
+            <mvt:if expr="l.settings:app_category_banner_responsive">
+                <mvt:assign name="l.settings:app_category_banner" value="l.settings:app_category_banner_responsive"/>
+            </mvt:if>           
+        </mvt:if>
+        <mvt:assign name="l.settings:loadedcategoryimage" value="''"/>
+        <mvt:do file="g.Module_Root $ '/modules/component/cmp-cssui-cattitle.mvc'" name="l.success" value="CSSUI_CatTitle_Load(l.settings:category:id, l.settings:loadedcategoryimage)" />
+                        
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+        <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+        <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_img', l.settings:mkt_img )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_img_size', l.settings:mkt_img_size )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Category_ID( l.settings:module, '', l.settings:category:id, 'mkt_order', l.settings:mkt_order )" />                
+        
+        <mvt:assign name="l.settings:navigationitem:image" value="l.settings:mob_menu_image"/>
+        <mvt:assign name="l.settings:navigationitem:label" value="l.settings:category:name"/>
+        <mvt:assign name="l.settings:navigationitem:video" value="l.settings:cat_video_mobile"/>
+        <mvt:assign name="l.settings:navigationitem:banner_image" value="l.settings:app_category_banner"/>
+        <mvt:assign name="l.settings:navigationitem:banner_text" value="l.settings:app_category_banner_text"/>
+        <mvt:assign name="l.settings:navigationitem:mkt_img_size" value="l.settings:mkt_img_size"/>
+        <mvt:assign name="l.settings:navigationitem:mkt_order" value="l.settings:mkt_order"/>
+        <mvt:if expr="l.settings:mkt_img">
+            <mvt:assign name="l.settings:navigationitem:img" value="l.settings:mkt_img"/>
+        <mvt:else>
+            <mvt:assign name="l.settings:navigationitem:img" value="l.settings:loadedcategoryimage:image"/>
+        </mvt:if>
+        <mvt:assign name="l.settings:navigationitem:banner_title" value="l.settings:mkt_banner_name"/>
+        <mvt:assign name="l.settings:navigationitem:banner_text" value="l.settings:mkt_banner_text"/>
+        <mvt:assign name="l.settings:navigationitem:banner_text_color" value="l.settings:cat_banner_textcol"/>
+        <mvt:assign name="l.settings:navigationitem:hide_deals" value="l.settings:hide_deals"/>
+    <mvt:elseif expr="l.settings:navigationitem:link_type EQ 'P'">
+        <mvt:assign name="l.settings:imagedata" value="''"/>
+        <mvt:assign name="l.settings:product" value="''"/>
+        <mvt:do name="l.return" file="g.Module_Library_DB" value="Runtime_Product_Load_Code(l.settings:navigationitem:link_dest, l.settings:product )" />
+        <mvt:do name="l.null" file="g.Module_Root $ '/modules/util/customfld.mvc'" value="Read_Product_ID( l.settings:module, '', l.settings:product:id, 'altrproduct_image', l.settings:altrproduct_image )" />
+        <mvt:if expr="l.settings:altrproduct_image">
+            <mvt:assign name="l.settings:navigationitem:image" value="l.settings:altrproduct_image"/>
+        <mvt:else>
+            <mvt:do name="l.image_count" file="g.Module_Library_DB" value="ProductImageDataList_Load_Product(l.settings:product:id, l.settings:imagedata)" />
+            <mvt:assign name="l.settings:navigationitem:image" value="l.settings:imagedata[1]:image:image"/>
+        </mvt:if>
+        <mvt:assign name="l.settings:navigationitem:label" value="l.settings:product:name"/>
+         <mvt:elseif expr="l.settings:navigationitem:link_type EQ 'G'">
+        <mvt:assign name="l.settings:imagedata" value="''"/>
+        <mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'page_image', l.settings:page_image )" />
+        <mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'page_label', l.settings:page_label )" />
+        <mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'page_url', l.settings:page_url )" />
+        <mvt:assign name="l.settings:navigationitem:label" value="l.settings:page_label"/>
+        <mvt:assign name="l.settings:navigationitem:image" value="l.settings:page_image"/>
+        <mvt:assign name="l.settings:navigationitem:link_dest" value="'web_view'"/>
+        <mvt:assign name="l.settings:navigationitem:link" value="l.settings:page_url"/>
+        <mvt:assign name="l.settings:navigationitem:url" value="l.settings:page_url"/>
+    </mvt:if>
+    <mvt:do file="g.Module_JSON" name="l.success" value="JSON_Output(l.settings:navigationitem)" />
+    <mvt:assign name="l.settings:navcounter" value="l.settings:navcounter+1"/>
+</mvt:foreach>
+</mvt:if>
+]}]

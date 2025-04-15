@@ -1,0 +1,3 @@
+1 Shipping Method is not available for this order please check product and adjust the quantity (if product added with more than eligible weight and previously selected shipping is not available to continue) Example : FedEx Ground
+2 Edit order is not allowed as there is no shipping option available for this order. ( If there is no shipping available before editing the order)
+3 Please Change the shipping method to continue the order as selected shipping method is not available or adjust the cart to get same shipping method ( If user is added the products or edited and there is no selected shipping available but other method are available to continue the shipping)
