@@ -1,0 +1,687 @@
+<mvt:assign name="l.result" value="miva_output_header( 'Content-Type', 'application/json' )" />
+<mvt:if expr="g.type EQ 'wholesale'">
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WSlider_1',g.Mobile_APP_WSlider_1 )" />
+    <mvt:if expr="g.Mobile_APP_WSlider_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WSlider_1:link_dest, 'app_page_id', g.Mobile_APP_WSlider_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WSlider_2',g.Mobile_APP_WSlider_2 )" />
+    <mvt:if expr="g.Mobile_APP_WSlider_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WSlider_2:link_dest, 'app_page_id', g.Mobile_APP_WSlider_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WSlider_3',g.Mobile_APP_WSlider_3 )" />
+    <mvt:if expr="g.Mobile_APP_WSlider_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WSlider_3:link_dest, 'app_page_id', g.Mobile_APP_WSlider_3:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WSlider_4',g.Mobile_APP_WSlider_4 )" />
+    <mvt:if expr="g.Mobile_APP_WSlider_4:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WSlider_4:link_dest, 'app_page_id', g.Mobile_APP_WSlider_4:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WC_1',g.Mobile_APP_WC_1 )" />
+    <mvt:if expr="g.Mobile_APP_WC_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WC_1:link_dest, 'app_page_id', g.Mobile_APP_WC_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WC_2',g.Mobile_APP_WC_2 )" />
+    <mvt:if expr="g.Mobile_APP_WC_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WC_2:link_dest, 'app_page_id', g.Mobile_APP_WC_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WC_3',g.Mobile_APP_WC_3 )" />
+    <mvt:if expr="g.Mobile_APP_WC_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WC_3:link_dest, 'app_page_id', g.Mobile_APP_WC_3:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WC_4',g.Mobile_APP_WC_4 )" />
+    <mvt:if expr="g.Mobile_APP_WC_4:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WC_4:link_dest, 'app_page_id', g.Mobile_APP_WC_4:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WBanner_1',g.Mobile_APP_WBanner_1 )" />
+    <mvt:if expr="g.Mobile_APP_WBanner_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WBanner_1:link_dest, 'app_page_id', g.Mobile_APP_WBanner_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WBanner_2',g.Mobile_APP_WBanner_2 )" />
+    <mvt:if expr="g.Mobile_APP_WBanner_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WBanner_2:link_dest, 'app_page_id', g.Mobile_APP_WBanner_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_WBanner_3',g.Mobile_APP_WBanner_3 )" />
+    <mvt:if expr="g.Mobile_APP_WBanner_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_WBanner_3:link_dest, 'app_page_id', g.Mobile_APP_WBanner_3:app_page_id )" /> 
+    </mvt:if>
+<mvt:else>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Slider_1',g.Mobile_APP_Slider_1 )" />
+    <mvt:if expr="g.Mobile_APP_Slider_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Slider_1:link_dest, 'app_page_id', g.Mobile_APP_Slider_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Slider_2',g.Mobile_APP_Slider_2 )" />
+    <mvt:if expr="g.Mobile_APP_Slider_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Slider_2:link_dest, 'app_page_id', g.Mobile_APP_Slider_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Slider_3',g.Mobile_APP_Slider_3 )" />
+    <mvt:if expr="g.Mobile_APP_Slider_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Slider_3:link_dest, 'app_page_id', g.Mobile_APP_Slider_3:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_C_1',g.Mobile_APP_C_1 )" />
+    <mvt:if expr="g.Mobile_APP_C_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_C_1:link_dest, 'app_page_id', g.Mobile_APP_C_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_C_2',g.Mobile_APP_C_2 )" />
+    <mvt:if expr="g.Mobile_APP_C_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_C_2:link_dest, 'app_page_id', g.Mobile_APP_C_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_C_3',g.Mobile_APP_C_3 )" />
+    <mvt:if expr="g.Mobile_APP_C_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_C_3:link_dest, 'app_page_id', g.Mobile_APP_C_3:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Banner_1',g.Mobile_APP_Banner_1 )" />
+    <mvt:if expr="g.Mobile_APP_Banner_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Banner_1:link_dest, 'app_page_id', g.Mobile_APP_Banner_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Banner_2',g.Mobile_APP_Banner_2 )" />
+    <mvt:if expr="g.Mobile_APP_Banner_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Banner_2:link_dest, 'app_page_id', g.Mobile_APP_Banner_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Banner_3',g.Mobile_APP_Banner_3 )" />
+    <mvt:if expr="g.Mobile_APP_Banner_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Banner_3:link_dest, 'app_page_id', g.Mobile_APP_Banner_3:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Reward_1',g.Mobile_APP_Reward_1 )" />
+    <mvt:if expr="g.Mobile_APP_Reward_1:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Reward_1:link_dest, 'app_page_id', g.Mobile_APP_Reward_1:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Reward_2',g.Mobile_APP_Reward_2 )" />
+    <mvt:if expr="g.Mobile_APP_Reward_2:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Reward_2:link_dest, 'app_page_id', g.Mobile_APP_Reward_2:app_page_id )" /> 
+    </mvt:if>
+    <mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_Reward_3',g.Mobile_APP_Reward_3 )" />
+    <mvt:if expr="g.Mobile_APP_Reward_3:link_type EQ 'G'">
+       <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_Reward_3:link_dest, 'app_page_id', g.Mobile_APP_Reward_3:app_page_id )" /> 
+    </mvt:if>
+</mvt:if>
+<mvt:if expr="ISNULL g.type">
+   <mvt:assign name="g.type" value="'retail'" />
+</mvt:if>
+<mvt:if expr="g.type EQ 'wholesale'">
+   <mvt:do file="g.Module_Root $ '/modules/util/FR_Messages.mvc'" name="l.settings:totalmessages" value="FR_Get_Messages('Wholesale',l.settings:frmessages)" />
+<mvt:else>
+   <mvt:do file="g.Module_Root $ '/modules/util/FR_Messages.mvc'" name="l.settings:totalmessages" value="FR_Get_Messages('Retail',l.settings:frmessages)" />
+</mvt:if>
+<mvt:assign name="g.texasTimeZone"                  value="timezone()-1" />
+<mvt:assign name="g.dayoftheweek"                   value="time_t_dayofweek( s.time_t, g.texasTimeZone )" />
+<mvt:assign name="l.settings:excludeshipping"       value="0" />
+<mvt:if expr="(g.dayoftheweek EQ 1) OR (g.dayoftheweek EQ 6) OR (g.dayoftheweek EQ 7)">
+    <mvt:assign name="l.settings:excludeshipping"       value="1" />
+</mvt:if>
+<mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_TR_Slider_1',g.Mobile_APP_TR_Slider_1 )" />
+<mvt:if expr="g.Mobile_APP_TR_Slider_1:link_type EQ 'G'">
+   <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_TR_Slider_1:link_dest, 'app_page_id', g.Mobile_APP_TR_Slider_1:app_page_id )" /> 
+</mvt:if>
+<mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_TR_Slider_2',g.Mobile_APP_TR_Slider_2 )" />
+<mvt:if expr="g.Mobile_APP_TR_Slider_2:link_type EQ 'G'">
+   <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_TR_Slider_2:link_dest, 'app_page_id', g.Mobile_APP_TR_Slider_2:app_page_id )" /> 
+</mvt:if>
+<mvt:item name="readytheme" param="Load_Image( 'Mobile_APP_TR_Slider_3',g.Mobile_APP_TR_Slider_3 )" />
+<mvt:if expr="g.Mobile_APP_TR_Slider_3:link_type EQ 'G'">
+   <mvt:item name="customfields" param="Read_Page_Code( g.Mobile_APP_TR_Slider_3:link_dest, 'app_page_id', g.Mobile_APP_TR_Slider_3:app_page_id )" /> 
+</mvt:if>
+<mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('ws-specials', l.settings:wsspecials )" />
+<mvt:item name="customfields" param="Read_Category_ID(l.settings:wsspecials:id, 'hide_deals', l.settings:wsshidedeals )" />
+<mvt:if expr="g.type EQ 'wholesale'">
+    <mvt:assign name="l.settings:mobcategories" value="'wines,featured-test,fr-brands,gifts'" />
+<mvt:else>
+    <mvt:assign name="l.settings:mobcategories" value="'mkt-wines,featured-test,market,fr-brands,gifts'" />
+</mvt:if>
+<mvt:do file="g.Module_Root $ '/modules/util/FR_CouponDeals.mvc'" name="l.settings:totaldeals" value="FR_Get_Coupon_Deals(g.type,l.settings:coupondeals)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'giftbox_warning', l.settings:giftbox_warning )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'giftbox_warning_cart', l.settings:giftbox_warning_cart )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'giftbox_warning_title', l.settings:giftbox_warning_title )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'giftbox_warning_icon', l.settings:giftbox_warning_icon )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'edit_cutofftime', l.settings:edit_cutofftime )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MDATA', 'edit_cutofftime_text', l.settings:edit_cutofftime_text )" />
+<mvt:do file="g.Module_Feature_PGR_DB" name="l.success" value="PriceGroup_Load_Name('15% Basket Savings', l.settings:pricegroup)" />
+<mvt:do file="g.Module_Library_Utilities" name="l.success" value="SplitString(l.settings:mobcategories, ',', l.settings:loadcategories )" />
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.success" value = "Customer_Load_ID(g.customer_id, l.settings:loadCustomer)" />
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.success" value = "BusinessAccount_Load( l.settings:loadCustomer:account_id, l.settings:businessaccount )"/>
+<mvt:capture variable="l.settings:categoriesjson">
+    <mvt:foreach iterator="loadcategory" array="loadcategories">
+        <mvt:if expr="l.settings:loadcategory">
+            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code(l.settings:loadcategory, l.settings:loadedcategorydata )" />
+            <mvt:if expr="l.settings:loadedcategorydata:id">
+                <mvt:assign name="l.settings:loadedcategories" value="''"/>
+                <mvt:assign name="l.settings:loadcategory" value="glosub(l.settings:loadcategory,'-test','')"/>
+                <mvt:assign name="l.settings:loadcategory" value="glosub(l.settings:loadcategory,'mkt-wines','wines')"/>
+                <mvt:do name="l.result" file="g.Module_Library_DB" value="CategoryList_Load_Parent( l.settings:loadedcategorydata:id, l.settings:loadedcategories )" />
+                <mvt:item name="customfields" param="Read_Category_CODE(l.settings:loadcategory, 'cat_header', l.settings:cat_header_mobile )" />
+                <mvt:assign name="l.settings:facetcounter" value="1"/>
+                ,<mvt:if expr="l.settings:loadcategory EQ 'fr-brands'">
+                    "fr_brand_title" : "&mvt:cat_header_mobile;",
+                </mvt:if>
+                    <mvt:if expr="l.settings:loadcategory EQ 'featured'">
+                        "partner_title" : "&mvt:cat_header_mobile;",
+                    </mvt:if>
+                "&mvt:loadcategory;  ":[
+                    <mvt:foreach iterator="loadedcategory" array="loadedcategories">
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_category_mobile', l.settings:hide_category_mobile )" />
+                        <mvt:if expr="(tolower(l.settings:hide_category_mobile) EQ 'yes' OR l.settings:hide_category_mobile EQ 1) OR l.settings:loadedcategory:active EQ 0">
+                            <mvt:foreachcontinue/>
+                        </mvt:if>
+
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mob_menu_image', l.settings:mob_menu_image )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_banner_name', l.settings:mkt_banner_name )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_banner_text', l.settings:mkt_banner_text )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_banner_textcol', l.settings:cat_banner_textcol )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                        <mvt:if expr="l.settings:loadcategory EQ 'market'">
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_banner_responsive', l.settings:app_category_banner )" />
+                        <mvt:else>
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                        </mvt:if>
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                        <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                        <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_img', l.settings:mkt_img )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_img_size', l.settings:mkt_img_size )" />
+                        <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'mkt_order', l.settings:mkt_order )" />
+                        <mvt:assign name="l.settings:loadedcategoryimage" value="''"/>
+                        <mvt:do file="g.Module_Root $ '/modules/component/cmp-cssui-cattitle.mvc'" name="l.success" value="CSSUI_CatTitle_Load(l.settings:loadedcategory:id, l.settings:loadedcategoryimage)" />
+                        <mvt:if expr="l.settings:facetcounter GT 1">,</mvt:if>
+                        <mvt:assign name="l.settings:loaded_category" value="''"/>
+                        {"id":"&mvt:loadedcategory:id;","code":"&mvt:loadedcategory:code","label":"&mvt:loadedcategory:name;","image":"<mvt:if expr="l.settings:mkt_img">&mvt:mkt_img;<mvt:else>&mvte:loadedcategoryimage:image;</mvt:if>","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","active":&mvt:loadedcategory:active;,"mkt_img_size":"&mvt:mkt_img_size;","mkt_order":"&mvt:mkt_order;","img":"&mvt:mob_menu_image;","type":"C","banner_title":"&mvtj:mkt_banner_name;","banner_text":"&mvtj:mkt_banner_text;","banner_text_color":"&mvt:cat_banner_textcol;","hide_deals":"&mvt:hide_deals;"}
+                        <mvt:assign name="l.settings:facetcounter" value="l.settings:facetcounter+1"/>
+                    </mvt:foreach>
+                ]
+            </mvt:if>
+        </mvt:if>
+    </mvt:foreach>
+</mvt:capture>
+<mvt:capture variable="l.settings:tea_program">
+  <mvt:item name="readytheme" param="Load_Image( 'app_main_tea_banner',g.main_tea_banner )" />
+  <mvt:item name="readytheme" param="Load_Banner( 'why_tea_program' ,g.why_tea_program )" />
+  <mvt:assign name="l.settings:imagecounter" value="1"/>
+  <mvt:assign name="l.settings:tc_imagesdata" value="''"/>
+  <mvt:while expr="l.settings:imagecounter LE 10">
+      <mvt:assign name="g.tbanner" value="''"/>
+      <mvt:item name="readytheme" param="Load_Image('TP_Banner_'$l.all_settings:imagecounter,g.tbanner)" />
+      <mvt:if expr="g.tbanner">
+        <mvt:if expr="l.settings:imagecounter GT 1"><mvt:assign name="l.settings:tc_imagesdata" value="l.settings:tc_imagesdata$','"/></mvt:if>
+        <mvt:do file="g.Module_JSON" name="g.tbanner:image_alt" value="JSON_Encode(tbanner:image_alt)" />
+        <mvt:assign name="l.settings:tc_imagesdata" value="l.settings:tc_imagesdata $ '{\"image\":\"'$g.tbanner:image$'\",\"link\":\"'$g.tbanner:link_dest$'\",\"type\":\"'$g.tbanner:link_type$'\",\"description\":\"'$g.tbanner:image_alt$'\"}'"/>
+      </mvt:if>
+      <mvt:assign name="l.settings:imagecounter" value="l.settings:imagecounter+1"/>
+  </mvt:while>
+  <mvt:item name="readytheme" param="Load_Banner( 'whats_tea_program' ,g.whats_tea_program )" />
+  <mvt:assign name="l.settings:imagecounter" value="1"/>
+  <mvt:assign name="l.settings:tc_imagesdata_2" value="''"/>
+  <mvt:while expr="l.settings:imagecounter LE 10">
+      <mvt:assign name="g.tbanner" value="''"/>
+      <mvt:item name="readytheme" param="Load_Image('T_Banner_'$l.all_settings:imagecounter,g.tbanner)" />
+      <mvt:if expr="g.tbanner">
+        <mvt:if expr="l.settings:imagecounter GT 1"><mvt:assign name="l.settings:tc_imagesdata_2" value="l.settings:tc_imagesdata_2$','"/></mvt:if>
+        <mvt:do file="g.Module_JSON" name="g.tbanner:image_alt" value="JSON_Encode(tbanner:image_alt)" />
+        <mvt:assign name="l.settings:tc_imagesdata_2" value="l.settings:tc_imagesdata_2 $ '{\"image\":\"'$g.tbanner:image$'\",\"link\":\"'$g.tbanner:link_dest$'\",\"type\":\"'$g.tbanner:link_type$'\",\"description\":\"'$g.tbanner:image_alt$'\"}'"/>
+      </mvt:if>
+      <mvt:assign name="l.settings:imagecounter" value="l.settings:imagecounter+1"/>
+  </mvt:while>
+  <mvt:item name="readytheme" param="Load_ProductListing('tea-program', g.teaprogram )" />
+  ,"tea_program":{"banner":[{"title":"&mvt:global:main_tea_banner:name;","link":"&mvt:global:main_tea_banner:link;","image":"&mvt:global:main_tea_banner:image;"}],"data":[{"title":"&mvt:global:why_tea_program:message;","data":[&mvt:tc_imagesdata_2;]},{"title":"&mvt:global:whats_tea_program:message;","data":[&mvt:tc_imagesdata;]}],"tea_products":{"title":"&mvt:global:teaprogram:name;","category_code":"&mvt:global:teaprogram:prod_cat;","image":""}}
+</mvt:capture>
+<mvt:capture variable="l.settings:coffee_program">
+  <mvt:item name="readytheme" param="Load_Image( 'app_main_coffee_banner',g.main_coffee_banner )" />
+  <mvt:item name="readytheme" param="Load_Banner( 'why_coffee_program' ,g.why_coffee_program )" />
+  <mvt:assign name="l.settings:imagecounter" value="1"/>
+  <mvt:assign name="l.settings:tc_imagesdata" value="''"/>
+  <mvt:while expr="l.settings:imagecounter LE 10">
+      <mvt:assign name="g.tbanner" value="''"/>
+      <mvt:item name="readytheme" param="Load_Image('Coffee_Banner_'$l.all_settings:imagecounter,g.tbanner)" />
+      <mvt:if expr="g.tbanner">
+        <mvt:if expr="l.settings:imagecounter GT 1"><mvt:assign name="l.settings:tc_imagesdata" value="l.settings:tc_imagesdata$','"/></mvt:if>
+        <mvt:do file="g.Module_JSON" name="g.tbanner:image_alt" value="JSON_Encode(tbanner:image_alt)" />
+        <mvt:assign name="l.settings:tc_imagesdata" value="l.settings:tc_imagesdata $ '{\"image\":\"'$g.tbanner:image$'\",\"link\":\"'$g.tbanner:link_dest$'\",\"type\":\"'$g.tbanner:link_type$'\",\"description\":\"'$g.tbanner:image_alt$'\"}'"/>
+      </mvt:if>
+      <mvt:assign name="l.settings:imagecounter" value="l.settings:imagecounter+1"/>
+  </mvt:while>
+  <mvt:item name="readytheme" param="Load_Banner( 'whats_coffee_program' ,g.whats_coffee_program )" />
+  <mvt:assign name="l.settings:imagecounter" value="1"/>
+  <mvt:assign name="l.settings:tc_imagesdata_2" value="''"/>
+  <mvt:while expr="l.settings:imagecounter LE 10">
+      <mvt:assign name="g.tbanner" value="''"/>
+      <mvt:item name="readytheme" param="Load_Image('CoffeeProgram_Banner_'$l.all_settings:imagecounter,g.tbanner)" />
+      <mvt:if expr="g.tbanner">
+        <mvt:if expr="l.settings:imagecounter GT 1"><mvt:assign name="l.settings:tc_imagesdata_2" value="l.settings:tc_imagesdata_2$','"/></mvt:if>
+        <mvt:do file="g.Module_JSON" name="g.tbanner:image_alt" value="JSON_Encode(tbanner:image_alt)" />
+        <mvt:assign name="l.settings:tc_imagesdata_2" value="l.settings:tc_imagesdata_2 $ '{\"image\":\"'$g.tbanner:image$'\",\"link\":\"'$g.tbanner:link_dest$'\",\"type\":\"'$g.tbanner:link_type$'\",\"description\":\"'$g.tbanner:image_alt$'\"}'"/>
+      </mvt:if>
+      <mvt:assign name="l.settings:imagecounter" value="l.settings:imagecounter+1"/>
+  </mvt:while>
+  <mvt:item name="readytheme" param="Load_ProductListing('coffee-program', g.coffeeprogram )" />
+  ,"coffee_program":{"banner":[{"title":"&mvt:global:main_coffee_banner:name;","link":"&mvt:global:main_coffee_banner:link;","image":"&mvt:global:main_coffee_banner:image;"}],"data":[{"title":"&mvt:global:why_coffee_program:message;","data":[&mvt:tc_imagesdata;]},{"title":"&mvt:global:whats_coffee_program:message;","data":[&mvt:tc_imagesdata_2;]}],"coffee_products":{"title":"&mvt:global:coffeeprogram:name;","category_code":"&mvt:global:coffeeprogram:prod_cat;","image":""}}
+</mvt:capture>
+<mvt:do file="g.Module_Root $ '/modules/util/FRMobileAPPVersions.mvc'" name="l.settings:checkProduct" value="FR_MobileAppVersions(l.settings:appversions)" />
+<mvt:do file="g.Module_Root $ '/modules/util/FRJsonFunctions.mvc'" name="l.settings:checkProduct" value="FR_Read_Filters(l.settings:filters)" />
+<mvt:if expr="g.product_code">
+    <mvt:assign name="l.settings:pcodes" value="g.product_code" />
+    <mvt:item name="customfields" param="Read_Product_Code(trim(l.settings:pcodes), 'non-fedex', l.settings:non_fedex)" />
+    <mvt:if expr="l.settings:non_fedex EQ 1 OR l.settings:non_fedex EQ 'Yes'">
+        <mvt:assign name="g.nonfedex" value="1" />
+    </mvt:if>
+</mvt:if>
+<mvt:item name="readytheme" param="Load_ContentSection('specialShipping_disclaimer')" />
+<mvt:capture variable="l.settings:specialshippingtext">
+    <mvt:do name="l.return" file="g.Module_Feature_TUI_DB" value="ManagedTemplate_Load_ID( l.settings:readytheme:loaded:templ_id, l.loaded_template )" />
+    <mvt:do name="l.null" file="g.Store_Template_Path $ l.loaded_template:filename" value="Template_Render( l.null, l.all_settings )" />
+</mvt:capture>
+<mvt:if expr="g.brand">
+    <mvt:assign name="l.settings:brand" value="g.brand"/>
+    <mvt:capture variable="l.settings:producerspotlighttxt">
+    <mvt:item name="readytheme" param="contentsection('producer_spotlight_content')" />
+    </mvt:capture>
+</mvt:if>
+<mvt:capture variable="l.settings:catchweighttext">
+    <mvt:item name="readytheme" param="Load_ContentSection('catch_weight_disclaimer')" />
+    <mvt:do name="l.return" file="g.Module_Feature_TUI_DB" value="ManagedTemplate_Load_ID( l.settings:readytheme:loaded:templ_id, l.loaded_template )" />
+    <mvt:do name="l.null" file="g.Store_Template_Path $ l.loaded_template:filename" value="Template_Render( l.null, l.all_settings )" />
+</mvt:capture>
+<mvt:item name="customfields" param="Read_Page_Code('mdata', 'cat_deals_title', g.cat_deals_title)" /> 
+<mvt:item name="readytheme" param="Load_Banner( 'holiday-list',g.holidays )" />
+<Mvt:CAPTURE VARIABLE = "l.settings:jsonData">
+            {
+            <mvt:if expr="g.type EQ 'wholesale'">
+                "carousel":[
+                  <mvt:if expr="g.Mobile_APP_WSlider_1:active">
+                     {"img":"&mvt:global:Mobile_APP_WSlider_1:image;","code":"&mvt:global:Mobile_APP_WSlider_1:link_dest;","type":"&mvt:global:Mobile_APP_WSlider_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_WSlider_1:app_page_id;"}
+                  </mvt:if>
+                  <mvt:if expr="g.Mobile_APP_WSlider_2:active">
+                     <mvt:if expr="g.Mobile_APP_WSlider_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_WSlider_2:image;","code":"&mvt:global:Mobile_APP_WSlider_2:link_dest;","type":"&mvt:global:Mobile_APP_WSlider_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_WSlider_2:app_page_id;"}
+                  </mvt:if>
+                  <mvt:if expr="g.Mobile_APP_WSlider_3:active">
+                     <mvt:if expr="g.Mobile_APP_WSlider_1:active OR g.Mobile_APP_WSlider_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_WSlider_3:image;","code":"&mvt:global:Mobile_APP_WSlider_3:link_dest;","type":"&mvt:global:Mobile_APP_WSlider_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_WSlider_3:app_page_id;"}
+                  </mvt:if>
+                  <mvt:if expr="g.Mobile_APP_WSlider_4:active">
+                     <mvt:if expr="g.Mobile_APP_WSlider_1:active OR g.Mobile_APP_WSlider_2:active OR g.Mobile_APP_WSlider_3:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_WSlider_4:image;","code":"&mvt:global:Mobile_APP_WSlider_4:link_dest;","type":"&mvt:global:Mobile_APP_WSlider_4:link_type;","app_page_id":"&mvt:global:Mobile_APP_WSlider_4:app_page_id;"}
+                  </mvt:if>
+                ],
+                "slider":[
+                     <mvt:if expr="g.Mobile_APP_WC_1:active">
+                        {"img":"&mvt:global:Mobile_APP_WC_1:image;","code":"&mvt:global:Mobile_APP_WC_1:link_dest;","type":"&mvt:global:Mobile_APP_WC_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_WC_1:app_page_id;"}
+                     </mvt:if>
+                     <mvt:if expr="g.Mobile_APP_WC_2:active">
+                        <mvt:if expr="g.Mobile_APP_WC_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_WC_2:image;","code":"&mvt:global:Mobile_APP_WC_2:link_dest;","type":"&mvt:global:Mobile_APP_WC_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_WC_2:app_page_id;"}
+                     </mvt:if>
+                     <mvt:if expr="g.Mobile_APP_WC_3:active">
+                        <mvt:if expr="g.Mobile_APP_WC_1:active OR g.Mobile_APP_WC_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_WC_3:image;","code":"&mvt:global:Mobile_APP_WC_3:link_dest;","type":"&mvt:global:Mobile_APP_WC_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_WC_3:app_page_id;"}
+                     </mvt:if>
+                     <mvt:if expr="g.Mobile_APP_WC_4:active">
+                        <mvt:if expr="g.Mobile_APP_WC_1:active OR g.Mobile_APP_WC_2:active OR g.Mobile_APP_WC_3:active">,</mvt:if>
+                        {"img":"&mvt:global:Mobile_APP_WC_4:image;","code":"&mvt:global:Mobile_APP_WC_4:link_dest;","type":"&mvt:global:Mobile_APP_WC_4:link_type;","app_page_id":"&mvt:global:Mobile_APP_WC_4:app_page_id;"}
+                    </mvt:if>
+                ],
+                "categories":[{"key":"every-day-values","label":"NEW IN EVERY DAY VALUES"},{"key":"takeout-catering","label":"TO GO IN STYLE"},{"key":"for-the-chef","label":"QUALITY SOLUTIONS FOR THE CHEF"}]
+                <mvt:if expr="g.Mobile_APP_WBanner_1:active">
+                    ,"banner_1":{"img":"&mvt:global:Mobile_APP_WBanner_1:image;","code":"&mvt:global:Mobile_APP_WBanner_1:link_dest;","type":"&mvt:global:Mobile_APP_WBanner_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_WBanner_1:app_page_id;"}
+                </mvt:if>
+                <mvt:if expr="g.Mobile_APP_WBanner_2:active">
+                    ,"banner_2":{"img":"&mvt:global:Mobile_APP_WBanner_2:image;","code":"&mvt:global:Mobile_APP_WBanner_2:link_dest;","type":"&mvt:global:Mobile_APP_WBanner_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_WBanner_2:app_page_id;"}
+                </mvt:if>
+                <mvt:if expr="g.Mobile_APP_WBanner_3:active">
+                    ,"banner_3":{"img":"&mvt:global:Mobile_APP_WBanner_3:image;","code":"&mvt:global:Mobile_APP_WBanner_3:link_dest;","type":"&mvt:global:Mobile_APP_WBanner_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_WBanner_3:app_page_id;"}
+                </mvt:if>
+                ,"specials":[<mvt:do file="g.Module_JSON" name="l.settings:wsspecials:name" value="JSON_Encode(l.settings:wsspecials:name)" />{"id":"&mvt:wsspecials:id;","code":"&mvt:wsspecials:code","label":"&mvt:wsspecials:name;","hide_deals":"&mvt:wsshidedeals;"}]
+
+               <mvt:item name="readytheme" param="Load_ProductListing('wstreat-yourself', g.featured_categories_1 )" />
+               ,"featured_categories_1":{"title":"&mvt:global:featured_categories_1:name;","category_code":"&mvt:global:featured_categories_1:prod_cat;","image":""}
+               <mvt:item name="readytheme" param="Load_ProductListing('ws-essentail-bulk', g.featured_categories_2 )" />
+               ,"featured_categories_2":{"title":"&mvt:global:featured_categories_2:name;","category_code":"&mvt:global:featured_categories_2:prod_cat;","image":""}
+               <mvt:item name="readytheme" param="Load_ProductListing('wscreateMeal', g.featured_categories_3 )" />
+               <mvt:item name="readytheme" param="Load_Image( 'ws_mealsToGo',g.mealsToGo )" />
+               ,"featured_categories_3":{"title":"&mvt:global:featured_categories_3:name;","category_code":"&mvt:global:featured_categories_3:prod_cat;","image":"&mvt:global:mealsToGo:image;"}
+               <mvt:item name="readytheme" param="Load_Image( 'program_01',g.reward_01 )" />
+               <mvt:item name="readytheme" param="Load_Image( 'program_02',g.reward_03 )" />
+               <mvt:if expr="g.reward_01:link_type EQ 'G'">
+                  <mvt:item name="customfields" param="Read_Page_Code( g.reward_01:link_dest, 'app_page_id', g.reward_01:app_page_id )" /> 
+               </mvt:if>
+               <mvt:if expr="g.reward_03:link_type EQ 'G'">
+                  <mvt:item name="customfields" param="Read_Page_Code( g.reward_03:link_dest, 'app_page_id', g.reward_03:app_page_id )" /> 
+               </mvt:if>
+               ,"save_option":{"title":"Solutions Programs","images":[{"image":"&mvt:global:reward_01:image;","link":"&mvt:global:reward_01:link_dest;","type":"U","app_page_id":"&mvt:global:reward_01:app_page_id;"},{"image":"&mvt:global:reward_03:image;","link":"&mvt:global:reward_03:link_dest;","type":"U","app_page_id":"&mvt:global:reward_03:app_page_id;"}]}
+               <mvt:item name="readytheme" param="Load_Image( 'app_ws_others_1',g.save_others_1 )" />
+               <mvt:if expr="g.save_others_1:link_type EQ 'G'">
+                  <mvt:item name="customfields" param="Read_Page_Code( g.save_others_1:link_dest, 'app_page_id', g.save_others_1:app_page_id )" /> 
+               </mvt:if>
+               <mvt:item name="readytheme" param="Load_Image( 'app_ws_others_2',g.save_others_2 )" />
+               <mvt:if expr="g.save_others_2:link_type EQ 'G'">
+                  <mvt:item name="customfields" param="Read_Page_Code( g.save_others_2:link_dest, 'app_page_id', g.save_others_2:app_page_id )" /> 
+               </mvt:if>
+               <mvt:item name="readytheme" param="Load_Image( 'app_ws_others_3',g.save_others_3 )" />
+               <mvt:if expr="g.save_others_3:link_type EQ 'G'">
+                  <mvt:item name="customfields" param="Read_Page_Code( g.save_others_3:link_dest, 'app_page_id', g.save_others_1:app_page_id )" /> 
+               </mvt:if>
+               ,"save_more":{"title":"More Menu Inspiration","images":[{"link":"&mvt:global:save_others_1:link_dest;","image":"&mvt:global:save_others_1:image;","type":"&mvt:global:save_others_1:link_type;","app_page_id":"&mvt:global:save_others_1:app_page_id;"},
+               {"link":"&mvt:global:save_others_2:link_dest;","image":"&mvt:global:save_others_2:image;","type":"&mvt:global:save_others_2:link_type;","app_page_id":"&mvt:global:save_others_2:app_page_id;"},
+               {"link":"&mvt:global:save_others_3:link_dest;","image":"&mvt:global:save_others_3:image;","type":"&mvt:global:save_others_3:link_type;","app_page_id":"&mvt:global:save_others_3:app_page_id;"}]}
+            <mvt:else>
+                "carousel":[
+                    <mvt:if expr="g.Mobile_APP_Slider_1:active">
+                        {"img":"&mvt:global:Mobile_APP_Slider_1:image;","code":"&mvt:global:Mobile_APP_Slider_1:link_dest;","type":"&mvt:global:Mobile_APP_Slider_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_Slider_1:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Slider_2:active">
+                        <mvt:if expr="g.Mobile_APP_Slider_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_Slider_2:image;","code":"&mvt:global:Mobile_APP_Slider_2:link_dest;","type":"&mvt:global:Mobile_APP_Slider_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_Slider_2:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Slider_3:active">
+                        <mvt:if expr="g.Mobile_APP_Slider_1:active OR g.Mobile_APP_Slider_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_Slider_3:image;","code":"&mvt:global:Mobile_APP_Slider_3:link_dest;","type":"&mvt:global:Mobile_APP_Slider_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_Slider_3:app_page_id;"}
+                    </mvt:if>
+                    ],
+                    "slider":[
+                        <mvt:if expr="g.Mobile_APP_C_1:active">
+                            {"img":"&mvt:global:Mobile_APP_C_1:image;","code":"&mvt:global:Mobile_APP_C_1:link_dest;","type":"&mvt:global:Mobile_APP_C_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_C_1:app_page_id;"}
+                        </mvt:if>
+                        <mvt:if expr="g.Mobile_APP_C_2:active">
+                            <mvt:if expr="g.Mobile_APP_C_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_C_2:image;","code":"&mvt:global:Mobile_APP_C_2:link_dest;","type":"&mvt:global:Mobile_APP_C_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_C_2:app_page_id;"}
+                        </mvt:if>
+                        <mvt:if expr="g.Mobile_APP_C_3:active">
+                            <mvt:if expr="g.Mobile_APP_C_1:active OR g.Mobile_APP_C_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_C_3:image;","code":"&mvt:global:Mobile_APP_C_3:link_dest;","type":"&mvt:global:Mobile_APP_C_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_C_3:app_page_id;"}
+                        </mvt:if>
+                    ],
+                    "categories":[{"key":"wedge-cheese","label":"WEDGE IN SOME TIME FOR CHEESE"},{"key":"treat-yourself","label":"TREAT YOURSELF"},{"key":"sweet-satisfaction","label":"SWEET SATISFACTION"}]
+                    <mvt:if expr="g.Mobile_APP_Banner_1:active">
+                        ,"banner_1":{"img":"&mvt:global:Mobile_APP_Banner_1:image;","code":"&mvt:global:Mobile_APP_Banner_1:link_dest;","type":"&mvt:global:Mobile_APP_Banner_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_Banner_1:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Banner_2:active">
+                        ,"banner_2":{"img":"&mvt:global:Mobile_APP_Banner_2:image;","code":"&mvt:global:Mobile_APP_Banner_2:link_dest;","type":"&mvt:global:Mobile_APP_Banner_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_Banner_2:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Banner_3:active">
+                        ,"banner_3":{"img":"&mvt:global:Mobile_APP_Banner_3:image;","code":"&mvt:global:Mobile_APP_Banner_3:link_dest;","type":"&mvt:global:Mobile_APP_Banner_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_Banner_3:app_page_id;"}
+                    </mvt:if>
+            ,"reward_banner":
+                [
+                    <mvt:if expr="g.Mobile_APP_Reward_1:active">
+                        {"img":"&mvt:global:Mobile_APP_Reward_1:image;","code":"&mvt:global:Mobile_APP_Reward_1:link_dest;","type":"&mvt:global:Mobile_APP_Reward_1:link_type;","app_page_id":"&mvt:global:Mobile_APP_Reward_1:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Reward_2:active">
+                        <mvt:if expr="g.Mobile_APP_Reward_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_Reward_2:image;","code":"&mvt:global:Mobile_APP_Reward_2:link_dest;","type":"&mvt:global:Mobile_APP_Reward_2:link_type;","app_page_id":"&mvt:global:Mobile_APP_Reward_2:app_page_id;"}
+                    </mvt:if>
+                    <mvt:if expr="g.Mobile_APP_Reward_3:active">
+                        <mvt:if expr="g.Mobile_APP_Reward_1:active OR g.Mobile_APP_Reward_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_Reward_3:image;","code":"&mvt:global:Mobile_APP_Reward_3:link_dest;","type":"&mvt:global:Mobile_APP_Reward_3:link_type;","app_page_id":"&mvt:global:Mobile_APP_Reward_3:app_page_id;"}
+                    </mvt:if>
+                ]
+                 <mvt:item name="readytheme" param="Load_ProductListing('treat-yourself', g.featured_categories_1 )" />
+                ,"featured_categories_1":{"title":"&mvt:global:featured_categories_1:name;","category_code":"&mvt:global:featured_categories_1:prod_cat;","image":"","description":"&mvt:global:featured_categories_1:descrip;"}
+                <mvt:item name="readytheme" param="Load_ProductListing('essentail-bulk', g.featured_categories_2 )" />
+                ,"featured_categories_2":{"title":"&mvt:global:featured_categories_2:name;","category_code":"&mvt:global:featured_categories_2:prod_cat;","image":"","description":"&mvt:global:featured_categories_2:descrip;"}
+                <mvt:item name="readytheme" param="Load_ProductListing('createMeal', g.featured_categories_3 )" />
+                <mvt:item name="readytheme" param="Load_Image( 'mealsToGo',g.mealsToGo )" />
+                ,"featured_categories_3":{"title":"&mvt:global:featured_categories_3:name;","category_code":"&mvt:global:featured_categories_3:prod_cat;","image":"&mvt:global:mealsToGo:image;","description":"&mvt:global:featured_categories_3:descrip;"}
+                <mvt:item name="readytheme" param="Load_Image( 'reward_01',g.reward_01 )" />
+                <mvt:item name="readytheme" param="Load_Image( 'reward_03',g.reward_03 )" />
+                ,"save_option":{"title":"How to save at Food Related","images":[{"image":"&mvt:global:reward_01:image;","video":"graphics/videos/Food_Related_Threebie_Square_(Website).mp4","type":"U","code":"threebie_video"},{"image":"&mvt:global:reward_03:image;","video":"graphics/videos/Food_Related_STCS_Video_Anim_1350x1350.mp4","type":"U","code":"slac_video"}]}
+                <mvt:item name="readytheme" param="Load_Image( 'app_famie_club',g.famie_club )" />
+                ,"famie_club":{"link":"&mvt:global:famie_club:link_dest;","image":"&mvt:global:famie_club:image;","type":"G","code":"MBEN"}
+                <mvt:item name="readytheme" param="Load_Image( 'app_others_1',g.save_others_1 )" />
+             <mvt:if expr="g.save_others_1:link_type EQ 'G'">
+                <mvt:item name="customfields" param="Read_Page_Code( g.save_others_1:link_dest, 'app_page_id', g.save_others_1:app_page_id )" /> 
+             </mvt:if>
+             <mvt:item name="readytheme" param="Load_Image( 'app_others_2',g.save_others_2 )" />
+             <mvt:if expr="g.save_others_2:link_type EQ 'G'">
+                <mvt:item name="customfields" param="Read_Page_Code( g.save_others_1:link_dest, 'app_page_id', g.save_others_1:app_page_id )" /> 
+             </mvt:if>
+             <mvt:item name="readytheme" param="Load_Image( 'app_others_3',g.save_others_3 )" />
+             <mvt:if expr="g.save_others_3:link_type EQ 'G'">
+                <mvt:item name="customfields" param="Read_Page_Code( g.save_others_3:link_dest, 'app_page_id', g.save_others_3:app_page_id )" /> 
+             </mvt:if>
+                ,"save_more":{"title":"More Ways to Save","images":[{"link":"&mvt:global:save_others_1:link_dest;","image":"&mvt:global:save_others_1:image;","type":"&mvt:global:save_others_1:link_type;","app_page_id":"&mvt:global:save_others_1:app_page_id;"},
+                {"link":"&mvt:global:save_others_2:link_dest;","image":"&mvt:global:save_others_2:image;","type":"&mvt:global:save_others_2:link_type;","app_page_id":"&mvt:global:save_others_2:app_page_id;"},
+                {"link":"&mvt:global:save_others_3:link_dest;","image":"&mvt:global:save_others_3:image;","type":"&mvt:global:save_others_3:link_type;","app_page_id":"&mvt:global:save_others_3:app_page_id;"}]}
+            </mvt:if>
+            ,"tr_slider":[
+                <mvt:if expr="g.Mobile_APP_TR_Slider_1:active">
+                    {"img":"&mvt:global:Mobile_APP_TR_Slider_1:image;","code":"&mvt:global:Mobile_APP_TR_Slider_1:link_dest;","type":"&mvt:global:Mobile_APP_TR_Slider_1:link_type;"}
+                </mvt:if>
+                <mvt:if expr="g.Mobile_APP_TR_Slider_2:active">
+                    <mvt:if expr="g.Mobile_APP_TR_Slider_1:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_TR_Slider_2:image;","code":"&mvt:global:Mobile_APP_TR_Slider_2:link_dest;","type":"&mvt:global:Mobile_APP_TR_Slider_2:link_type;"}
+                </mvt:if>
+                <mvt:if expr="g.Mobile_APP_TR_Slider_3:active">
+                    <mvt:if expr="g.Mobile_APP_TR_Slider_1:active OR g.Mobile_APP_TR_Slider_2:active">,</mvt:if>{"img":"&mvt:global:Mobile_APP_TR_Slider_3:image;","code":"&mvt:global:Mobile_APP_TR_Slider_3:link_dest;","type":"&mvt:global:Mobile_APP_TR_Slider_3:link_type;"}
+                </mvt:if>
+            ]
+            <mvt:if expr="l.settings:specialshippingtext">,"special_shipping":"<mvt:item name="ga_jsencode" param="specialshippingtext" />"</mvt:if>
+            <mvt:if expr="l.settings:producerspotlighttxt">,"producer_spotlight":"<mvt:item name="ga_jsencode" param="producerspotlighttxt" />"</mvt:if>
+            <mvt:if expr="l.settings:catchweighttext">,"catch_weight":"<mvt:item name="ga_jsencode" param="catchweighttext" />"</mvt:if>
+            <mvt:if expr="g.type EQ 'wholesale'">
+
+                ,"sortfilters":[{"code":"dt_created","text":"Default"},{"code":"-dt_created","text":"Newest"},{"code":"-bestsellers","text":"Bestseller"},{"code":"name","text":"Name: A to Z"},{"code":"-name","text":"Name: Z to A"},{"code":"wprice","text":"Price: Low to High"},{"code":"-wprice","text":"Price: High to Low"},{"code":"perlb","text":"Low to High Price per lb"}]
+                ,"app_menu":[ { "id": 1, "label": "Shelves", "subMenu": [] },
+                            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('wines', l.settings:loadedcategory )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                              { "id": "&mvt:loadedcategory:id;", "label": "Wine", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                              { "id": 2, "label": "Origins","subMenu": []},
+                            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('enrique-tomas', l.settings:loadedcategory )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                              { "id": "&mvt:loadedcategory:id;", "label": "Featured Brands", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                              { "id": 31, "label": "Specials" },
+                              { "id":"15", "label": "Gifts" },
+                              { "id": 4, "label": "Tasting Room" },
+                              { "id": 7, "label": "Newsletter" },
+                              {"id": 12, "label": "Who Are We?","subMenu": 
+                                 [
+                                    {"id": 1, "name": "Our Story", "link": "/about-food-related.html"},
+                                    {"id": 2, "name": "About Our Service", "link": "/ABUS.html"}
+                                 ]
+                              },
+                              { "id": 9, "label": "Policies and Terms","subMenu": 
+                                [
+                                    {"id":1,"name":"Privacy Policy","link":"/privacy-policy.html"},
+                                    {"id":2,"name":"Shipping & Delivery Policies","link":"/shipping-policy.html"},
+                                    {"id":4,"name":"Refund Policy","link":"/SARP.html"},
+                                    {"id":5,"name":"Terms of Service","link":"/terms-conditions.html"},
+                                    {"id":6,"name":"FamClub Terms & Conditions","link":"/famclub-terms-conditions.html"}
+                                ]
+                              }, 
+                              {"id": 13,"label": "Customer Services","subMenu":
+                                 [
+                                      {"id": 10, "name": "Contact Us", "link": "/connect-with-us.html"},
+                                      {"id": 2,  "name": "Help &FAQs", "link": "/help-and-FAQs.html"},
+                                      {"id": 3,  "name": "FamClub Rewards Program", "link": "/famclub-terms-conditions.html"}
+                                 ]
+                              }
+                            ]
+                    <mvt:item name="readytheme" param="Load_ProductListing('WSLoadFirstcategory', g.WSLoadFirstcategory )" />
+                    <mvt:item name="readytheme" param="Load_ProductListing('WSLoadSecondcategory', g.WSLoadSecondcategory )" />
+                    <mvt:if expr="g.WSLoadFirstcategory:active">,"shelves_first_cat":{"title":"&mvt:global:WSLoadFirstcategory:name;","category_code":"&mvt:global:WSLoadFirstcategory:prod_cat;"}</mvt:if>
+                    <mvt:if expr="g.WSLoadSecondcategory:active">,"shelves_second_cat":{"title":"&mvt:global:WSLoadSecondcategory:name;","category_code":"&mvt:global:WSLoadSecondcategory:prod_cat;"}</mvt:if>
+                    <mvt:item name="readytheme" param="Load_ProductListing('WSLoadFirstOrigincategory', g.WSLoadFirstcategory )" />
+                    <mvt:item name="readytheme" param="Load_ProductListing('WSLoadSecondOrigincategory', g.WSLoadSecondcategory )" />
+                    <mvt:if expr="g.WSLoadFirstcategory:active">,"origins_first_cat":{"title":"&mvt:global:WSLoadFirstcategory:name;","category_code":"&mvt:global:WSLoadFirstcategory:prod_cat;"}</mvt:if>
+                    <mvt:if expr="g.WSLoadSecondcategory:active">,"origins_second_cat":{"title":"&mvt:global:WSLoadSecondcategory:name;","category_code":"&mvt:global:WSLoadSecondcategory:prod_cat;"}</mvt:if>        
+            <mvt:else>
+                ,"sortfilters":[{"code":"dt_created","text":"Default"},{"code":"-dt_created","text":"Newest"},{"code":"-bestsellers","text":"Bestseller"},{"code":"name","text":"Name: A to Z"},{"code":"-name","text":"Name: Z to A"},{"code":"price","text":"Price: Low to High"},{"code":"-price","text":"Price: High to Low"}]
+                ,"app_menu":
+                        [
+                            { "id": 1, "label": "Shelves","subMenu": []},
+                            { "id": 3, "label": "Market" },
+                            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('mkt-wines', l.settings:loadedcategory )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                            { "id": "&mvt:loadedcategory:id;", "label": "Wine", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                            { "id": 2, "label": "Origins","subMenu": []},
+                            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('great-deals', l.settings:loadedcategory )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                            { "id": "&mvt:loadedcategory:id;", "label": "&mvt:loadedcategory:name;", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                            { "id":"15", "label": "Gifts" },
+                            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('enrique-tomas', l.settings:loadedcategory )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                            <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                              { "id": "&mvt:loadedcategory:id;", "label": "Featured Brands", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                            <mvt:if expr="g.type EQ 'premium'">
+                                <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('premium-great-deals', l.settings:loadedcategory )" />
+                                <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'cat_video_mobile', l.settings:cat_video_mobile )" />
+                                <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner', l.settings:app_category_banner )" />
+                                <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'app_category_banner_text', l.settings:app_category_banner_text )" />
+                                <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategory:id, 'hide_deals', l.settings:hide_deals )" />
+                                <mvt:do file="g.Module_JSON" name="l.settings:app_category_banner_text" value="JSON_Encode(l.settings:app_category_banner_text)" />
+                                <mvt:do file="g.Module_JSON" name="l.settings:market_category:name" value="JSON_Encode(l.settings:market_category:name)" />
+                                  { "id": "&mvt:loadedcategory:id;", "label": "VIP Famie Specials", "categoryCode": "&mvt:loadedcategory:code;","image":"&mvte:loadedcategoryimage:image;","video":"&mvt:cat_video_mobile;","banner_image":"&mvt:app_category_banner;","banner_text":"&mvt:app_category_banner_text;","hide_deals":"&mvt:hide_deals;"},
+                            </mvt:if>
+                            <mvt:if expr="g.customer_id EQ 999999999"> { "id": 11, "label": "Track Order", "link":"" },</mvt:if>
+                           { "id": 7, "label": "Newsletter" },
+                           { "id": 12, "label": "Who Are We?","subMenu": 
+                              [
+                                 {"id": 1, "name": "Our Story", "link": "/about-food-related.html"},
+                                 {"id": 2, "name": "About Our Service", "link": "/ABUS.html"}
+                              ]
+                           },
+                           { "id": 9, "label": "Policies and Terms","subMenu": 
+                             [
+                                 {"id":1,"name":"Privacy Policy","link":"/privacy-policy.html"},
+                                 {"id":2,"name":"Shipping & Delivery Policies","link":"/shipping-policy.html"},
+                                 {"id":4,"name":"Refund Policy","link":"/SARP.html"},
+                                 {"id":5,"name":"Terms of Service","link":"/terms-conditions.html"},
+                                 {"id":6,"name":"FamClub Terms & Conditions","link":"/famclub-terms-conditions.html"}
+                             ]
+                           }, 
+                           {"id": 13,"label": "Customer Services","subMenu":
+                              [
+                                   {"id": 10, "name": "Contact Us", "link": "/connect-with-us.html"},
+                                   {"id": 2,  "name": "Help &FAQs", "link": "/help-and-FAQs.html"},
+                                   {"id": 3,  "name": "FamClub Rewards Program", "link": "/famclub-terms-conditions.html"}
+                              ]
+                           }
+                        ]
+                    <mvt:item name="readytheme" param="Load_ProductListing('LoadFirstcategory', g.LoadFirstcategory )" />
+                    <mvt:item name="readytheme" param="Load_ProductListing('LoadSecondcategory', g.LoadSecondcategory )" />
+                    <mvt:if expr="g.LoadFirstcategory:active">,"shelves_first_cat":{"title":"&mvt:global:LoadFirstcategory:name;","category_code":"&mvt:global:LoadFirstcategory:prod_cat;"}</mvt:if>
+                    <mvt:if expr="g.LoadSecondcategory:active">,"shelves_second_cat":{"title":"&mvt:global:LoadSecondcategory:name;","category_code":"&mvt:global:LoadSecondcategory:prod_cat;"}</mvt:if>
+                    <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('Threebies', l.settings:loadedcategorytb )" />
+                  ,"threebie_data":{ "id": "&mvt:loadedcategorytb:id;", "label": "&mvt:loadedcategorytb:name;", "categoryCode": "&mvt:loadedcategorytb:code;","video":"graphics/videos/Food_Related_Threebie_Square_(Website).mp4"}
+                    <mvt:item name="readytheme" param="Load_ProductListing('LoadFirstOrigincategory', g.LoadFirstcategory )" />
+                    <mvt:item name="readytheme" param="Load_ProductListing('LoadSecondOrigincategory', g.LoadSecondcategory )" />
+                    <mvt:if expr="g.LoadFirstcategory:active">,"origins_first_cat":{"title":"&mvt:global:LoadFirstcategory:name;","category_code":"&mvt:global:LoadFirstcategory:prod_cat;"}</mvt:if>
+                    <mvt:if expr="g.LoadSecondcategory:active">,"origins_second_cat":{"title":"&mvt:global:LoadSecondcategory:name;","category_code":"&mvt:global:LoadSecondcategory:prod_cat;"}</mvt:if>
+            </mvt:if>
+            <mvt:if  expr="g.group EQ 'Austin'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Mon, Tues, Weds, Thurs, Fri,Sat"}
+            <mvt:elseif  expr="g.group EQ 'Boerne'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Weds, Sat"}     
+            <mvt:elseif  expr="g.group EQ 'Hill Country'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Weds"}       
+            <mvt:elseif  expr="g.group EQ 'McAllen'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Bi Weekly - Weds"}       
+            <mvt:elseif  expr="g.group EQ 'South Texas'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Tues"}   
+            <mvt:elseif  expr="g.group EQ 'Houston'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Thurs"}    
+            <mvt:elseif  expr="g.group EQ 'Dallas'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Fri"}
+            <mvt:elseif  expr="g.group EQ 'San Antonio'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Mon, Tues, Weds, Thurs, Fri, Sat"}
+            <mvt:elseif  expr="g.group EQ 'Round Rock'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"Mon, Weds, Fri"}
+            <mvt:elseif  expr="g.group EQ 'Shipouts'">
+                ,"route_groups":{"Will Call":"Available","FR Truck":"Available","FedEx":"Available","FR Truck (available days)":"N/A"}
+            </mvt:if>
+        <mvt:do file="g.Module_Feature_SHP_DB" name="l.success" value="ShippingMethodRules_Load_Method('flatrate', 'Home Delivery', l.settings:shippingmethodrules)" />
+            <mvt:do name="l.result" file="g.Module_Library_DB" value="Module_Load_Code('points', l.settings:pointsmodule )" />
+            <mvt:if expr="l.settings:pointsmodule">,"points_module":<mvt:do file="g.Module_JSON" name="l.success" value="JSON_Output(l.settings:pointsmodule)" /></mvt:if>
+            <mvt:item name="readytheme" param="Load_ProductListing('gifts-products', g.giftsproducts )" />
+            <mvt:item name="customfields" param="Read_Category_Code(g.giftsproducts:prod_cat, 'cat_video_mobile', l.settings:gift_cat_video_mobile )" />
+            <mvt:item name="customfields" param="Read_Category_Code(g.giftsproducts:prod_cat, 'app_category_banner', l.settings:gift_app_category_banner )" />
+            <mvt:item name="customfields" param="Read_Category_Code(g.giftsproducts:prod_cat, 'app_category_banner_text', l.settings:gift_app_category_banner_text )" />
+            <mvt:item name="customfields" param="Read_Category_Code(g.giftsproducts:prod_cat, 'hide_deals', l.settings:gift_hide_deals )" />
+            <mvt:do file="g.Module_JSON" name="l.settings:gift_category_banner_text" value="JSON_Encode(l.settings:gift_app_category_banner_text)" />
+            ,"gift_products":{"title":"&mvt:global:giftsproducts:name;","category_code":"&mvt:global:giftsproducts:prod_cat;","image":"","video":"&mvt:gift_cat_video_mobile;","banner_image":"&mvt:gift_app_category_banner;","banner_text":"&mvt:gift_category_banner_text;","hide_deals":"&mvt:gift_hide_deals;","id":"1689"}
+            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('premium-great-deals', l.settings:loadedcategoryms )" />
+            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategoryms:id, 'hide_deals', l.settings:hide_deals )" />
+            ,"membership_specials":{ "id": "&mvt:loadedcategoryms:id;", "label": "&mvt:loadedcategoryms:name;", "categoryCode": "&mvt:loadedcategoryms:code;","banner":"graphics/00000001/3/membershipbanner.png","hide_deals":"&mvt:hide_deals;"}
+            <mvt:do name="l.result" file="g.Module_Library_DB" value="Category_Load_Code('great-deals', l.settings:loadedcategorygd )" />
+            <mvt:item name="customfields" param="Read_Category_ID(l.settings:loadedcategorygd:id, 'hide_deals', l.settings:hide_deals )" />
+            ,"great_deals":{ "id": "&mvt:loadedcategorygd:id;", "label": "&mvt:loadedcategorygd:name;", "categoryCode": "&mvt:loadedcategorygd:code;","banner":"","hide_deals":"&mvt:hide_deals;"}
+            ,"uom":{"EA":"Each","CS":"Case","PK":"Pack","BX":"Box","BAG":"Bag","LB":"Lb","OZ":"Oz","TUB":"Tub","PLT":"Pallet","TRY":"Tray"}
+            ,"countries": [ {"label": "United States", "value": "US"},   {"label": "Canada", "value": "CA"}]
+            ,"featured-brand":"enrique-tomas"
+            ,"placeholder":"graphics/00000001/Photo Coming Soon.jpg"
+            ,"closeicon":"graphics/00000001/CloseButton.png"
+            ,"slac_banner":"graphics/00000001/3/slacicongreen.png"
+            ,"sale_icon_o":"graphics/00000001/3/SaleFlagWholesale.png"
+            ,"sale_icon_g":"graphics/00000001/3/SaleFlag.png"
+            ,"threebie_banner":"graphics/00000001/app3bicon.png"
+            ,"vip_icon":"graphics/00000001/VIP-FlagIcon.png"
+            ,"fam_club_white_img":"graphics/00000001/3/FamClub-logo-Whitepng.png"
+            ,"featured_brand_banner_img":"graphics/00000001/4/FeaturedBrands-1280x548.png"
+            ,"wholesale_min":"300"
+            ,"cat_deals_title":"&mvt:global:cat_deals_title;"
+            ,"shipping_banner":{"code":"shipping_banner","image":"graphics/00000001/3/ShippineBannerMobile_640x150%20copy.webp","type": "U"}
+            ,"wholesale_min_group":{"Austin":200,"Boerne":200,"Dallas":300,"Hill Country":200,"Houston":300,"McAllen":300,"San Antonio":200,"Shipouts":300,"South Texas":300,"Round Rock":200}
+            ,"app_details":{"version":"&mvt:appversions[1]:app_version;","date_published":"&mvt:appversions[1]:date_published;","upgrade_req":"&mvt:appversions[1]:upgrade_req;"}
+            ,"delivery_minfee":{"basic_flatrate":"75","basic_homedelivery":"50","premium_flatrate":"0","premium_homedelivery":"50"}
+            ,"home_delivery_zipcodes":"&mvt:shippingmethodrules:zips;"
+            ,"market_viedo":"graphics/videos/1920x350_HighSaturation_copy2.mp4"
+            ,"slac_viedo":"graphics/videos/Food_Related_STCS_Video_Anim_1350x1350.mp4"
+            ,"min_donate":"50"
+            ,"deals_count":"&mvt:totaldeals;"
+            ,"heavy_weight":{"title":"Heavy Item Shipping","description":"<b>Please Note: </b>FedEx charges an additional $40 fee for overweight items. The fee will not apply to the following delivery methods: Curbside, Express Curbside, FR Home Delivery"}
+            ,"coupon_retail_discount":"<mvt:eval expr="gettoken(l.settings:pricegroup:config:discount,'.',1)"/>%"
+            ,"giftbox_warning_title":"<mvt:item name="ga_jsencode" param="giftbox_warning_title" />"
+            ,"giftbox_warning":"<mvt:item name="ga_jsencode" param="giftbox_warning" />"
+            ,"giftbox_warning_cart":"<mvt:item name="ga_jsencode" param="giftbox_warning_cart" />"
+            ,"giftbox_warning_icon":"&mvt:giftbox_warning_icon;"
+            ,"benefit_images":[{"img_1":"graphics/00000001/3/FAMCLUB.png"},{"img_2":"graphics/00000001/3/Capture.png"},{"img_3":"graphics/00000001/3/Capture.png"},{"img_4":""}]
+            ,"whats_new":"&mvt:totalmessages;"
+            ,"whats_new":"&mvt:totalmessages;"
+            ,"whats_new":"&mvt:totalmessages;"
+            ,"holidays":"&mvt:global:holidays:message;"
+            ,"exclude_shipping":"&mvt:excludeshipping;"
+	    ,"tax_exempt_global":"&mvt:businessaccount:tax_exempt;"
+            ,"nonfedex_message":"This item is unavailable to ship via Fedex. Please check available shipping options."
+	    ,"edit_cutofftime":"&mvt:edit_cutofftime;"
+	    ,"edit_cutofftime_text":"&mvt:edit_cutofftime_text;"
+            ,"discount_check":[{"descrip":"Threebies","label":"Threebies","discount":0},{"descrip":"Threebies Market","label":"Threebies","discount":0}]
+            ,"facets":[<mvt:assign name="l.settings:facetcounter" value="1"/><mvt:foreach iterator="customfield" array="filters"><mvt:do file="g.Module_JSON" name="l.settings:customfield:name" value="JSON_Encode(l.settings:customfield:name)" /><mvt:if expr="(l.settings:customfield:code EQ 'isThisthreebieProduct' OR l.settings:customfield:code EQ 'flag' OR l.settings:customfield:code EQ 'vip_flag')  AND g.type EQ 'wholesale'"><mvt:elseif expr="(l.settings:customfield:code EQ 'flag' OR l.settings:customfield:code EQ 'ws_flag')  AND g.type EQ 'premium'"><mvt:elseif expr="(l.settings:customfield:code EQ 'vip_flag' OR l.settings:customfield:code EQ 'ws_flag')  AND g.type EQ 'retail'"><mvt:else><mvt:if expr="l.settings:facetcounter GT 1">,</mvt:if>{"code":"&mvt:customfield:code","label":"&mvt:customfield:name;"}<mvt:assign name="l.settings:facetcounter" value="l.settings:facetcounter+1"/></mvt:if></mvt:foreach>]
+            ,"customer_testimonials":[{"testimonial":"Through all these years Food Related has not only been able to provide us with the finest delicacies but they have also delivered outstanding customer service.","name":"Chef Luca Della Casa","location":"NONNA Osteria"}]
+            &mvt:categoriesjson;
+            &mvt:tea_program;
+            &mvt:coffee_program;
+    }
+
+</Mvt:CAPTURE>
+&mvt:jsonData;
+<mvt:comment>SLAC ASSIGNMENT AND UNASSIGNMENT FIX START</mvt:comment>
+<mvt:if expr="g.customer_id AND g.type EQ 'premium'">
+    <mvt:do file="g.Module_Feature_CUS_DB" name="l.success" value="Customer_Load_ID(g.customer_id, l.settings:checkCustomer)" />
+    <mvt:if expr="l.settings:checkCustomer:account NE 2">
+        <mvt:do name="l.return" file="g.Module_Feature_PGR_DB" value="PriceGroup_Load_Name( 'SLAC', l.pricegroup )" />
+        <mvt:if expr="l.return EQ 1">
+            <mvt:do name="l.exists" file="g.Module_Feature_PGR_DB" value="PriceGroupXCustomer_Load( l.pricegroup:id, g.customer_id, l.null )" />
+            <mvt:do name="l.eof" file="g.Module_Library_DB" value="Error_Is_EOF()" />
+            <mvt:if expr="NOT l.exists AND ( l.eof )">
+                <mvt:do name="l.insert" file="g.Module_Feature_PGR_DB" value="PriceGroupXCustomer_Insert( l.pricegroup:id, g.customer_id )" />
+            </mvt:if>
+        </mvt:if>
+    </mvt:if>
+<mvt:elseif expr="g.customer_id">
+    <mvt:do name="l.return" file="g.Module_Feature_PGR_DB" value="PriceGroup_Load_Name( 'SLAC', l.pricegroup )" />
+    <mvt:if expr="l.return EQ 1">
+        <mvt:do name="l.exists" file="g.Module_Feature_PGR_DB" value="PriceGroupXCustomer_Load( l.pricegroup:id, g.customer_id, l.null )" />
+        <mvt:if expr="l.exists">
+          <mvt:do file="g.Module_Feature_PGR_DB" name="l.success" value="PriceGroupXCustomer_Delete(l.pricegroup:id, g.customer_id)" /> <mvt:comment> </mvt:comment>
+        </mvt:if>
+    </mvt:if>   
+</mvt:if>
+<mvt:comment>SLAC ASSIGNMENT AND UNASSIGNMENT FIX END</mvt:comment>  

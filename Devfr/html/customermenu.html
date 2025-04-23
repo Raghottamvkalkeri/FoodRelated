@@ -1,0 +1,1059 @@
+<style>
+    .account-pages .margin-container .col-xs-12.col-sm-12.col-md-9.col-lg-9.c-menu div.ipad-track-wrap .button.track.track_btn {
+        right: 30px;
+    }
+    
+    div.ipad-track-wrap .trackorder-tab {
+        left: 20%;
+    }
+    
+    .nav-divider {
+        border-bottom: 1px solid #ddd;
+   bottom: 1px;
+    }
+    
+    .nav-tabs {
+        border-bottom: unset
+    }
+    
+    .height-lg {
+        height: 5rem;
+    }
+    .VIF-main {
+        background-color: #F9F9F9;
+    }
+    .VIF-info span {
+        display: block;
+        padding-bottom: initial;
+        font-size: 14px;
+    }
+    .ORDS .row {
+        margin-bottom: 10px;
+        margin-top: 20px;
+    }
+    .new-features-main button {
+       width: 190px;
+       padding: 10px;
+       border-radius: 10px;
+   border: none;
+       line-height: 1.3;
+     }
+    @media (max-width: 768px) {
+        .track-wrap {
+            margin: 10px 0;
+        }
+        .wsvclass br {
+            display: none;
+        }
+        .VIF-change.mobiles span {
+            font-size: 18px;
+        }
+        .VIF-info .vif-info p,
+        .VIF-info .vif-info .light-ft,
+        .VIF-info .ltr-sp-1p,
+        .VIF-info .ltr-sp-1p a {
+            font-size: 12px !important;
+            /* text-align: left; */
+            padding-left: 8px;
+        }
+        .height-sm {
+            height: auto;
+        }
+    }
+    
+    #account-cart {
+        margin-bottom: 4%;
+        margin-top: 30px;
+        padding: 10px;
+        display: block;
+        box-shadow: 0 6px 8px -6px rgba(0, 0, 0, .2);
+        border: solid 1px #e2e2e2;
+        background-color: #fff;
+    }
+    
+    #account-cart .card-body {
+        overflow-x: hidden;
+    }
+    
+    #account-cart .account-cart-menu {
+        display: block;
+        padding: 6px 0px;
+    }
+    
+    #account-cart h4 {
+        text-align: center;
+    }
+    
+    #account-cart p.email {
+        position: relative;
+        top: -9px;
+        font-size: 0.7em;
+        text-align: center;
+    }
+    
+    #account-cart .account-cart-menu {
+        display: block;
+        padding: 6px 0px;
+        border: solid 1px #EEE;
+        margin: 2px 0;
+        padding-left: 10px;
+    }
+    
+    #account-cart .account-cart-menu.active {
+        border: solid 1px #628e83;
+        ;
+    }
+    
+    @media (max-width: 600px) {
+        #account-cart .account-cart-menu {
+            display: block;
+            padding: 6px 0px;
+            padding-left: 10px;
+            width: 48%;
+            display: inline-block;
+            margin-right: 2px;
+        }
+    }
+    
+    .trackorder {
+        width: 143px;
+        height: 33px;
+        border-radius: 9px;
+        border-right: 0;
+        position: absolute;
+        left: 13%;
+        border: 1px solid #d4d4d4;
+        z-index: 4;
+        /*font:-webkit-control*/
+        font-size: 14px;
+    }
+    
+    .modal-open .track.track_btn.trackbig {
+        z-index: 1;
+    }
+    
+    .track.track_btn.trackbig {
+        right: 30px;
+    }
+    
+    .trackorder-tab {
+        width: 143px;
+        height: 33px;
+        border-radius: 9px;
+        border-right: 0;
+        position: relative;
+        left: 5%;
+        border: 1px solid #d4d4d4;
+        z-index: 4;
+        font-size: .8em;
+        font: -webkit-control
+    }
+    
+    .track {
+        opacity: 1;
+    }
+
+    #account-cart {
+        margin-bottom: 4%;
+        margin-top: 30px;
+        padding: 10px;
+        display: block;
+        box-shadow: 0 6px 8px -6px rgba(0, 0, 0, .2);
+        border: solid 1px #e2e2e2;
+        background-color: #fff;
+    }
+    
+    #account-cart .card-body {
+        overflow-x: hidden;
+    }
+    
+    #account-cart  {
+        display: block;
+        padding: 6px 0px;
+    }
+    
+    #account-cart h4 {
+        text-align: center;
+    }
+    
+    #account-cart p.email {
+        position: relative;
+        top: -9px;
+        font-size: 0.7em;
+        text-align: center;
+    }
+    
+    #account-cart  {
+        display: block;
+        padding: 6px 0px;
+        border: solid 1px #EEE;
+        margin: 2px 0;
+        padding-left: 10px;
+    }
+    
+    #account-cart .active {
+        border: solid 1px #628e83;
+        ;
+    }
+    
+    @media (max-width: 600px) {
+        #account-cart {
+            display: block;
+            padding: 6px 0px;
+            padding-left: 10px;
+            width: 48%;
+            display: inline-block;
+            margin-right: 2px;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .cu-menu {
+            width: max-content;
+        }
+    }
+    
+    .nav-tabs>li>a {
+        /*margin-right: 2px;*/
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 1px;
+        font-family: 'ITCAvantGardePro-Bk';
+        /*font-weight: 600;*/
+    }
+    
+    .actives {
+        color: #000;
+        cursor: default;
+        border-bottom: solid 5px #f47a44 !important;
+        /* font-weight: 900; PS-26775 Consolidation of Global CSS */
+        font-family: 'ITCAvantGardePro-Bold' !important;
+    }
+    
+    .nav>li>a {
+        position: relative;
+        display: block;
+        padding: 5px 15px;
+    }
+    
+    .orders_account_box_new {
+        margin: 20px 0px;
+        margin-top: 31px;
+        border: solid 1px #DDD;
+        padding: 10px 0px;
+        font-size: 16px;
+    }
+    
+    .orangeButDiv {
+        border: none;
+        border-radius: 0;
+        color: #fff !important;
+        font-size: 16px;
+        font-weight: 400;
+        background-color: #f47a44;
+        width: max-content;
+        padding: 8px 19px;
+        display: inline-block;
+        margin-right: 10px;
+        min-width: 125;
+        margin-bottom: 4px;
+    }
+    
+    .orangeButDiv a,
+    .orangeButDiv a:visited {
+        color: white;
+    }
+    
+    @media (max-width:800px) {
+        .orders_account_box_new div {
+            padding: 2px;
+            font-size: 14px;
+        }
+        .orangeButDiv {
+            padding: 8px 10px;
+            font-size: 14px;
+            width: 44%;
+        }
+    }
+    
+    @media (max-width:767px) {
+   .new-features-main {
+       text-align: center;
+   }
+   .new-features-main button {
+           width: 100%;
+           padding: 10px;
+            border-radius: 10px;
+       margin: 15px 0px;
+            border: none;
+            line-height: inherit;
+   }
+        .orangeButDiv {
+            width: 100%;
+        }
+        .trackorder {
+            left: 8%;
+        }
+        .VIF-info span {
+            display: initial;
+            font-size: 14px;
+            padding-bottom: 0px;
+        }
+        VIF-info {
+            font-weight: unset;
+            padding: initial;
+            <mvt:if expr="l.settings:page:name CIN 'Order History List | Invoices'">
+            text-align: left;
+                <mvt:else>
+            text-align: center;
+            </mvt:if>
+        }
+    }
+    
+    .track {
+        border-radius: 3rem !important;
+    }
+    /* to remove scrollbar for customer menu tabs */
+    
+    .c-menu {
+        -ms-overflow-style: none;
+        /* Internet Explorer 10+ */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+    
+    .c-menu::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
+ 
+    .app-container {
+    background-color: #ffc841;
+    border-radius: 5px;
+    width: 300px;
+    }
+    
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+        .trackorder-tab {
+            left: 5%;
+            top: 0;
+            position: absolute;
+        }
+        .ipad-track-wrap .track_btn {
+            right: 30px;
+        }
+        div.ipad-track-wrap .button.track.track_btn {
+            right: 30px;
+        }
+        div.ipad-track-wrap .trackorder-tab {
+            left: 20%;
+        }
+    }
+    
+    @media (min-width: 992px) and (max-width: 1200px) {
+        #CustomerMenu .col-xs-12.col-sm-12.col-md-9.col-lg-9.c-menu .nav li a {
+            padding: 10px;
+        }
+    }
+    /* ipad landsape css here */
+    
+    @media screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+        .ipad-track-wrap-landscap .trackorder {
+            left: 1%;
+        }
+    }
+    
+       @media (min-width:1020px) and (max-width:1366px) {
+        #CustomerMenu .col-xs-12.col-sm-12.col-md-9.col-lg-9.c-menu .nav li a {
+            padding: 10px;
+        }
+        #CustomerMenu {
+            margin-top: 40px; /* issue from excel sheet sr. #386 */
+        }
+        .account-pages .margin-container .col-xs-12.col-sm-12.col-md-9.col-lg-9.c-menu {
+            width: auto !important;
+            padding: 0;
+        }
+        .account-pages .margin-containers .col-xs-12.col-sm-12.col-md-9.col-lg-9.c-menu {
+            width: auto !important;
+        }
+    }
+ 
+    @media screen and (max-width:768px){
+        .app-container {
+    background-color: #ffc841;
+    border-radius: 5px;
+    width: 100%;
+    }
+ 
+    .mar4p{
+        margin-top: 4%;
+    }
+    
+    }
+ 
+ .app-container-no-visible {
+ visibility: hidden;
+ }
+ 
+</style>
+ <mvt:assign name="l.settings:ordsearch" value="''" />
+ <mvt:if expr="l.settings:page:code EQ 'ORDS'">
+    <mvt:assign name="l.settings:ordsearch" value="g.Order_ID" />
+ </mvt:if>
+ <mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+ <mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+ <div class="row">
+ <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+    
+ 
+        <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'Sales_Manager_Num', l.settings:sales_manager_num)" />
+        <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'Sales_Manager_Email', l.settings:sales_manager_email)" />
+        <mvt:do file="g.Module_Root $ '/modules/system/FRFunctions.mvc'" name="l.settings:salemanagercount" value="FRSaleManager_Load_By_SMN(l.settings:sales_manager_num,l.settings:salesmanagers)" />
+        <mvt:if expr="l.settings:salemanagercount">
+            <mvt:foreach iterator="salesmanager" array="salesmanagers">
+                <div class="VIF-info hidden-xs col-lg-3 col-md-3 VIF-main">
+                    <div class="vif-info ltr-sp-1p ft-12p">Your Sales Manager</div>
+                    <span style="color: #000 !important;" class="ft-14p ft-demi ltr-sp-0p5">&nbsp;&mvt:salesmanager:fname; &mvt:salesmanager:lname;</span>
+                    <span class="ft-md ft-14p ltr-sp-0p5"><a href="tel:&mvt:sales_manager_num;"> <!-- <script type="text/javascript">document.write(formatPhoneNumbers('&mvt:salesmanager:phone_number;'))</script> -->&mvt:salesmanager:phone_number</a>,  
+                    <a href="mailto: &mvt:salesmanager:email_address;">&mvt:salesmanager:email_address;</a></span>
+                </div>
+                <mvt:if expr="l.settings:page:name CIN 'Order History List | Invoices |' OR l.settings:page:code EQ 'ORDHNMOBILE'">
+                    <mvt:else>    
+                <div class="VIF-info visible-xs mar4p VIF-main">
+                    <div class="vif-info ft-14p">
+                        <p class="light-ft ft-12p ltr-sp-0p5" style="margin: 0px !important;">Your Sales Manager </p>
+                        <span class="ft-demi ft-14p ltr-sp-0p5">&nbsp;&mvt:salesmanager:fname; &mvt:salesmanager:lname;</span>
+                    </div>
+                    <p class="ft-14p ltr-sp-0p5 ft-md">
+                        <a href="tel:&mvt:sales_manager_num;" style="font-size: 14px;">
+                            <script type="text/javascript">
+                                document.write(formatPhoneNumbers('&mvt:salesmanager:phone_number;'))
+                            </script>
+                        </a>, <a href="mailto: &mvt:salesmanager:email_address;" style="font-size: 14px;">&mvt:salesmanager:email_address;</a></p>
+                </div>
+                </mvt:if>
+            </mvt:foreach>
+        </mvt:if>
+    
+    </mvt:if>
+ 
+    <mvt:if expr="l.settings:page:code EQ 'ACED' OR l.settings:page:code EQ 'CABK' OR l.settings:page:code EQ 'manage-card'">
+    <div class="col-sm-5 <mvt:if expr='l.settings:salemanagercount'>col-lg-9 col-md-9<mvt:else>col-lg-12 col-md-12</mvt:if> new-features-main">
+     <!-- PS-26775 Consolidation of Global CSS -->
+        <button class="btn-yellow float-rt ltr-sp-0p5 getFeatureDetails" hidden data-target="#new-features" onclick="$('#new-features').modal('show');" >New Features at Food Related</button>
+    </div>
+    </mvt:if>
+</div>
+ 
+    </div>
+ 
+ 
+    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+    <div class="col-sm-7 col-lg-5 height-lg height-sm col-md-9 hidden-md  <mvt:if expr=" l.settings:page:name CIN 'Order History List | Invoices' "> col-xs-12</mvt:if>" style=""><mvt:comment>added class hidden-md</mvt:comment>
+ 
+ 
+    </div>
+    </mvt:if>
+    <mvt:if expr="l.settings:page:name CIN 'Order History List | Invoices |' OR l.settings:page:code EQ 'ORDHNMOBILE'">
+        <mvt:do file="g.Module_Root $ '/modules/util/FROrderInvoices.mvc'" name="l.settings:null" value="FROrderInvoices_Dues(g.Basket:Cust_ID)" />
+        <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+            <mvt:item name="customfields" param="Read_Customer_ID( g.basket:cust_id, 'total_credits', l.settings:total_credits )" />
+            <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'Sales_Manager_Num', l.settings:sales_manager_num)" />
+            <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'Sales_Manager_Email', l.settings:sales_manager_email)" />
+            <mvt:do file="g.Module_Root $ '/modules/system/FRFunctions.mvc'" name="l.settings:salemanagercount" value="FRSaleManager_Load_By_SMN(l.settings:sales_manager_num,l.settings:salesmanagers)" />
+            <mvt:if expr="l.settings:salemanagercount">
+                <mvt:foreach iterator="salesmanager" array="salesmanagers">
+                    <div class="VIF-info hidden-xs col-lg-3 col-md-3">
+                        <div class="vif-info ltr-sp-1p ft-12p">Your Sales Manager</div>
+                        <span style="color: #000 !important;" class="ft-14p ft-demi ltr-sp-0p5">&nbsp;&mvt:salesmanager:fname; &mvt:salesmanager:lname;</span>
+                        <span class="ft-md ft-14p ltr-sp-0p5"><a href="tel:&mvt:sales_manager_num;"> <!-- <script type="text/javascript">document.write(formatPhoneNumbers('&mvt:salesmanager:phone_number;'))</script> -->&mvt:salesmanager:phone_number</a>, 
+                            <a href="mailto: &mvt:salesmanager:email_address;">&mvt:salesmanager:email_address;</a></span>
+                    </div>
+                    <div class="VIF-info visible-xs col-xs-6">
+                        <div class="vif-info ltr-sp-1p ft-14p">
+                            <p class="light-ft ft-12p ltr-sp-0p5" style="margin: 0px !important;">Your Sales Manager </p>
+                            <span class="ft-demi ft-14p ltr-sp-0p5" style="">&nbsp;&mvt:salesmanager:fname; &mvt:salesmanager:lname;</span>
+                        </div>
+                        <p class="ft-14p ltr-sp-0p5 ft-md" style="">
+                            <a href="tel:&mvt:sales_manager_num;" style="font-size: 14px;">
+                                <script type="text/javascript">
+                                    document.write(formatPhoneNumbers('&mvt:salesmanager:phone_number;'))
+                                </script>
+                            </a>, <a href="mailto: &mvt:salesmanager:email_address;" style="font-size: 14px;">&mvt:salesmanager:email_address;</a></p>
+                    </div>
+                </mvt:foreach>
+            </mvt:if>
+            <div class="col-sm-3 col-lg-3 col-xs-6 hidden-md hidden-lg">
+                <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                    <!-- orange box -->
+                    <mvt:assign name="g.FROrderInvoicesDues:amts"
+                    value="rnd(g.FROrderInvoicesDues:amt, 2)" />
+                <mvt:do file="g.Module_Store_Module_Currency"
+                    name="g.FROrderInvoicesDues:formattedamount"
+                    value="CurrencyModule_AddFormatting(g.Store:currncy_mod, g.FROrderInvoicesDues:amts)" />
+                    <div class="total-display">
+                        <h5 class="show-due">Amount Due</h5>
+                        <div class="bubble"></div>
+                        <div class="amount-container">
+                            <mvt:comment>left changed from 10% to 15% #538</mvt:comment>
+                            <div class="arrows-holder">
+                                <span class="due-slide" id="due-up" style="height:12px;"><i
+                                        class="fa fa-caret-up"></i></span>
+                                <span class="due-slide" id="due-down"><i class="fa fa-caret-down"></i></span>
+                            </div>
+                            <h4 id="totalamountdue" class="total-due"
+                                data-due="&mvt:global:FROrderInvoicesDues:amt;">
+                                &mvt:global:FROrderInvoicesDues:formattedamount;</h4>
+                        </div>
+                        <p style="font-weight: initial !important;" class="show-due-term">(Terms -
+                            <mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'payment_terms', g.payment_terms)" /> &mvt:global:payment_terms;)</p>
+                    </div>
+                </mvt:if>
+                <!-- orange box -->
+            </div>
+            <div class="col-xs-12 col-sm-12">
+                <mvt:if expr="l.settings:total_credits">
+                                <mvt:assign name="l.settings:creditvalue" value="l.settings:total_credits round 2" />
+                                <mvt:do file="g.Module_Store_Module_Currency"
+                                    name="l.settings:credits"
+                                    value="CurrencyModule_AddFormatting(g.Store:currncy_mod, l.settings:creditvalue)" />
+                                <div id="creditdisplay" class="bg-green mr-bt-2r txt-center txt-white">
+                                    <h5 class="ft-12p">Credit Amount</h5>
+                                    <h4>&mvt:credits</h4>
+                                </div>
+                            </mvt:if>
+            </div>
+        </mvt:if>
+        <!-- track my order hidded for tablet portait -->
+            <mvt:comment>
+        <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+            <mvt:else>
+                <div class="col-sm-5 col-lg-3">
+                    <div class="ipad-track-wrap">
+                        <form method="post" class="visible-sm" action="&mvte:urls:ORDS:auto;">
+                            <input class="trackorder-tab" type="text" maxlength="10" name="Order_ID" placeholder=" Order #" value="&mvt:ordsearch;" required />
+                            <input type="submit" value="Track My Order" class="button track track_btn" />
+                        </form>
+                    </div>
+                </div>
+        </mvt:if>
+        </mvt:comment>
+            <!-- track my order hidded for tablet portait ends-->
+        <mvt:else>
+            <!-- track my order hidded for tablet portait -->
+            <mvt:comment>
+            <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                <mvt:else>
+                    <div class="col-sm-5 col-lg-3">
+                        <div class="ipad-track-wrap">
+                            <form method="post" class="visible-sm" action="&mvte:urls:ORDS:auto;">
+                                <input class="trackorder-tab" type="text" maxlength="10" name="Order_ID" placeholder=" Order #" value="&mvt:ordsearch;" required />
+                                <input type="submit" value="Track My Order" class="button track track_btn" />
+                            </form>
+                        </div>
+                    </div>
+            </mvt:if>
+            </mvt:comment>
+            <!-- track my order hidded for tablet portait ends-->
+ 
+ 
+ 
+ </div>
+ </mvt:if>
+ 
+ <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+    <mvt:if expr="l.settings:page:name CIN 'Order History List | Invoices'">
+        <!-- <div class="col-sm-12 col-lg-12" style="height: 5rem!important;">
+                    &nbsp; &nbsp;
+                    <br />
+                </div> -->
+        <div class="col-sm-12 col-lg-12 hidden-xs invoice-desc" style="height: 5rem;">
+            <!-- invoices -->
+            <div class="description">
+                <p style="display: block;justify-content: center;align-content: center;align-items: center;text-align: center;width: auto;font-size: .9em;">
+                    This statement may not reflect pending credits or orders placed through the Food Related office or <br /> your Sales Manager. Contact our accounting department with any questions or concerns.
+                    <br /> <b>210-277-7930 ext. 309 or</b>
+                    <a href="mailto:accounting@foodrelated.com"><b>accounting@foodrelated.com</b></a>
+                </p>
+            </div>
+            <!-- invoices -->
+        </div>
+    </mvt:if>
+ </mvt:if>
+ 
+ </div>
+ <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+    <mvt:assign name="l.settings:wsvclass" value="'visible-sm wsvclass'" />
+    <mvt:else>
+        <mvt:assign name="l.settings:wsvclass" value="'hidden-sm'" />
+ </mvt:if>
+ <br />
+ <mvt:if expr="g.basket:cust_id GT 0">
+ <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 c-menu" style="overflow-x: auto;overflow-y:hidden;">
+        <ul class="nav nav-tabs cu-menu ltr-sp-1p">
+            <mvt:comment>
+            <li class="nav-item">
+                <a href="&mvte:urls:ORDHP:auto;&SortBy=OrdDtDesc" class="nav-link <mvt:if expr=" l.settings:page:name CIN 'Order History List by Products' ">actives</mvt:if>">Reorder</a>
+            </li>
+            </mvt:comment>
+            <li class="nav-item">
+                <a class="nav-link <mvt:if expr=" l.settings:page:code CIN 'ORDGUIDE' ">actives</mvt:if>" href="&mvte:urls:ORDGUIDE:auto;&SortBy=OrdDtDesc">
+                    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">Order Guide<mvt:else>Shopping List</mvt:if></a>
+            </li>
+            <mvt:comment>
+            <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                <li class="nav-item">
+                    <a href="&mvte:urls:ORDH:auto;&SortBy=OrdDtDesc" class="nav-link <mvt:if expr=" l.settings:page:name CIN 'Order History List | Invoices' ">actives</mvt:if>"> <span class="invoice-heading">Invoices</span>
+                        <span style="color: #ddd;">& </span> <span class="credit-heading" style="color: #ddd;">
+                            Credits</span></a>
+                </li>
+                <mvt:else>
+                    <li class="nav-item">
+                        <a href="&mvte:urls:ORDH:auto;&SortBy=OrdDtDesc" class="nav-link <mvt:if expr=" l.settings:page:name CIN 'Order History List | Invoices' ">actives</mvt:if>"> <span class="invoice-heading">Invoices</span>
+                        </a>
+                    </li>
+ 
+                    
+            </mvt:if>
+            </mvt:comment>
+            <li class="nav-item">
+                
+                    <a href="&mvte:urls:ORDHN:auto;&SortBy=OrdDtDesc" class="nav-link hidden-xs hidden-sm visible-md visible-lg <mvt:if expr=" l.settings:page:name CIN ' Your Order' ">actives</mvt:if>"> <span class="invoice-heading">Your Order</span>
+                        </a>
+                    <a href="&mvte:urls:ORDHNMOBILE:auto;&SortBy=OrdDtDesc" class="nav-link hidden visible-xs visible-sm hidden-md  <mvt:if expr=" l.settings:page:name CIN ' Your Order' ">actives activesmobile</mvt:if>"> <span class="invoice-heading">Your Order</span>
+                        </a>
+                
+            </li>
+            <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+       <li class="nav-item">
+                <a class="nav-link <mvt:if expr=" l.settings:page:code CIN 'SPECIALS' ">actives</mvt:if>" href="&mvte:urls:SPECIALS:auto;&Category_Code=ws-specials">
+                    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">Specials<mvt:else></mvt:if></a>
+            </li>
+        </mvt:if>
+            <li class="nav-item">
+                <a href="&mvte:urls:WLST:auto;" class="nav-link  <mvt:if expr=" l.settings:page:code CIN 'WLST|WISH|WLED' ">actives</mvt:if>">Wishlists</a>
+            </li>
+            <li class="nav-item hidden">
+                <a href="&mvte:urls:RFLST:auto;" class="nav-link <mvt:if expr=" l.settings:page:code CIN 'RFLST|SRLST' ">actives</mvt:if>">Recipes</a>
+            </li>
+        <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+                <mvt:else>
+            <li class="nav-item">
+                <a href="&mvte:urls:SavedList:auto;" class="nav-link  <mvt:if expr=" l.settings:page:code CIN 'SavedList' ">actives</mvt:if>">Saved Items</a>
+            </li>
+            <li class="nav-item">
+      <!-- WR-19685 - Made the Fam Club into one word -->
+                <a href="&mvte:urls:MSHIP:auto;" class="nav-link  <mvt:if expr=" l.settings:page:code CIN 'MSHIP' ">actives</mvt:if>">FamClub</a>
+            </li>
+        </mvt:if>
+            <li class="nav-item">
+                <a href="&mvte:urls:ACED:auto;" class="nav-link <mvt:if expr=" l.settings:page:code CIN 'CABK|ACED|CEML|CPWD|CADE|manage-card' ">actives</mvt:if>">Account Settings</a>
+            </li>	
+        </ul>
+    </div>
+    <!-- track my order hided for retail and wholesale desktop -->
+    <mvt:comment>
+    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+        <!-- track my order wholesale-->
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 hidden-xs hidden-sm">
+            <div class="ipad-track-wrap-landscap">
+                <form method="post" action="&mvte:urls:ORDS:auto;">
+                    <input class="trackorder track-big" type="text" name="Order_ID" placeholder="  Order #" value="&mvt:ordsearch;" maxlength="10" required />
+                    <input type="submit" value="Track My Order" class="button track track_btn trackbig" />
+                </form>
+            </div>
+        </div>
+        <!-- track my order wholesale ends-->
+        <mvt:else>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 hidden-xs hidden-sm">
+                <div class="ipad-track-wrap-landscap">
+                    <form method="post" action="&mvte:urls:ORDS:auto;">
+                        <input class="trackorder track-big" type="text" name="Order_ID" placeholder="  Order #" value="&mvt:ordsearch;" maxlength="10" required />
+                        <input type="submit" value="Track My Order" class="button track track_btn trackbig" />
+                    </form>
+                </div>
+            </div>
+    </mvt:if>
+  </mvt:comment>
+  <!-- track my order hided for retail and wholesale desktop ends-->
+
+ <mvt:else>
+</div>
+ </mvt:if>
+ <!-- navigations only for loggedin user ends -->
+ 
+ <div class="col-sm-12 nav-divider hidden-xs">
+    <div class="">
+    </div>
+ </div>
+ <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    &nbsp; &nbsp; &nbsp; &nbsp;
+ </div>
+ <mvt:if expr="l.settings:orders_found GT 0">
+    <mvt:if expr=" l.settings:page:name CIN 'Order History List by Products' ">
+        <div class="rows">
+            <div class="col-xs-5 col-sm-2 col-md-2 col-lg-1 col-xs-push-6 col-lg-push-0 col-sm-push-0 col-md-push-0 content-align-center" style="z-index:0;">
+                <!-- removed -5px for datepicker icon -->
+                <span style="display: flex;
+              text-align: center;
+              align-items: center;
+              width: max-content;
+              font-size: 1.3em;
+              font-weight: 900;z-index:99;">
+              <input id="datepicker" type="hidden"> <span class="hidden-lg hidden-sm ft-14p mr-lt-1r">Past Orders</span>
+                </span>
+                <!-- removed -5px for datepicker icon -->
+            </div>
+            <div class="col-xs-7 col-sm-10 col-md-10 col-lg-11 col-xs-pull-5 col-lg-pull-0 col-sm-pull-0 col-md-pull-0 load-item hidden">
+                <mvt:assign name="l.settings:months" value="miva_array_deserialize( 'Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec' )" />
+                <div class="select-order owl-carousel owl-theme" style="">
+                    <!-- changed padding in 10px 20px to 10px 16px -->
+                    <div class="<mvt:if expr='NOT g.order_id'>activeTab</mvt:if> allproduct-r mb-ft-14p recentelyordered" style="padding: 10px 16px;" onclick="$('.alt_row').show(); $('.duplicate-item').hide(); $('.unique-item').show();$('.select-order div').removeClass('activeTab');$(this).addClass('activeTab'); $('.ondateshow').show();$('#orderhistory_list_cal').hide();$('#orderhistory_list').show();">
+                        <b>Recently <br> Ordered Items</b></div>
+                    <!-- changed padding in 10px 20px to 10px 16px -->
+                    <mvt:assign name="l.settings:founded" value="0" />
+                    <mvt:foreach iterator="order" array="orders">
+                        <mvt:item name="customfields" param="Read_Order_Id(l.settings:order:id, 'ads_invoice_number', l.settings:adsorderid )" />
+                        <mvt:assign name="l.settings:order:month" value="time_t_month( l.settings:order:orderdate, 'local' )" />
+                        <mvt:assign name="l.settings:order:months" value="padl( time_t_month( l.settings:order:orderdate, 'local' ), 2, '0' )" />
+                        <mvt:assign name="l.settings:order:day" value="padl( time_t_dayofmonth( l.settings:order:orderdate, 'local' ), 2, '0' )" />
+                        <mvt:assign name="l.settings:order:year" value="time_t_year( l.settings:order:orderdate, 'local' )" />
+ 
+ 
+                        <mvt:if expr='g.order_id EQ l.settings:order:id'>
+                            <mvt:assign name="l.settings:founded" value="1" />
+                        </mvt:if>
+ 
+                        <mvt:assign name="l.settings:orderitems" value="0" />
+                        <mvt:do file="g.Module_Library_DB" name="l.success" value="OrderItemList_Load_Order(l.settings:order:id, l.settings:orderitems)" />
+                        <mvt:assign name="l.settings:founded_items" value="0" />
+ 
+                        <mvt:foreach iterator="oitem" array="orderitems">
+                            <mvt:if expr="'CM' CIN l.settings:adsorderid OR l.settings:oitem:quantity LT 1">
+                                <!-- Dont show anything retalted to credit -->
+                                <mvt:else>
+                                    <mvt:do name="l.settings:psuccess" file="g.Module_Library_DB" value="Runtime_Product_Load_ID( l.settings:oitem:product_id, l.settings:productdata )" />
+                                    <mvt:if expr="l.settings:productdata:active">
+                                        <mvt:assign name="l.settings:founded_items" value="1" />
+                                    </mvt:if>
+                            </mvt:if>
+                        </mvt:foreach>
+ 
+                        <div class="<mvt:if expr='g.order_id EQ l.settings:order:id'>active</mvt:if> hidden-xs date-&mvte:order:day;&mvte:order:months;&mvte:order:year ordersets" style="padding: 10px 5px;" onclick="$('.alt_row').hide();$('.ondateshow').hide(); $('.order-&mvt:order:id;').show(); $('.order-&mvt:order:id;').find('.duplicate-item').show(); $('.select-order div').removeClass('activeTab');$(this).addClass('activeTab');$('#addtocart3').show(); $('.orderdipslay').hide();$('#orderhistory_list_cal').hide();$('#orderhistory_list').show();">
+                            &mvte:order:id;<br/> <b>&mvte:order:month;/&mvte:order:day;/&mvte:order:year;</b></div>
+ 
+                    </mvt:foreach>
+                    <mvt:if expr="l.settings:founded EQ 0 AND g.order_id">
+                        <mvt:do file="g.Module_Library_DB" name="l.success" value="Order_Load_ID(g.order_id, l.settings:custom_order)" />
+                        <mvt:assign name="l.settings:custom_order:month" value="time_t_month( l.settings:custom_order:orderdate, 'local' )" />
+                        <mvt:assign name="l.settings:custom_order:day" value="padl( time_t_dayofmonth( l.settings:custom_order:orderdate, 'local' ), 2, '0' )" />
+                        <mvt:assign name="l.settings:custom_order:year" value="time_t_year( l.settings:custom_order:orderdate, 'local' )" />
+                        <mvt:assign name="l.index" value="miva_array_insert( l.settings:orders, l.settings:custom_order, -1 )" />
+                        <div class="active date-&mvte:order:day;-&mvte:order:month;-&mvte:order:year" style="padding: 10px 20px;" onclick="$('.alt_row').hide(); $('.order-&mvt:global:order_id;').show();$('.order-&mvt:order:id;').find('.duplicate-item').show();$('.select-order div').removeClass('active');$(this).addClass('active');$('#addtocart2').show();">
+                            &mvte:global:order_id;
+                            <b>&mvte:custom_order:month;/&mvte:custom_order:day;/&mvte:custom_order:year;</b></div>
+                        <p id="orderdatenew" class="hidden">
+                            &mvte:custom_order:month;/&mvte:custom_order:day;/&mvte:custom_order:year;</p>
+                    </mvt:if>
+                </div>
+ 
+                <!-- select order carlousel 2 for calendor -->
+                <div class="select-order2 owl-carousel owl-theme" style="display:none;">
+                    <!-- changed padding in 10px 20px to 10px 16px -->
+                    <div class="<mvt:if expr='NOT g.order_id'>activeTab</mvt:if> allproduct-r mb-ft-14p recentelyordered" style="padding: 10px 16px;" onclick="$('.alt_row').show(); $('.duplicate-item').hide(); $('.unique-item').show();$('.select-order div').removeClass('activeTab');$(this).addClass('activeTab'); $('.ondateshow').show();$('#orderhistory_list_cal').hide();$('.select-order').show();$('.select-order2').hide();$('#orderhistory_list_cal').hide();$('#orderhistory_list').show();">
+                        <b>Recently <br> Ordered Items</b></div>
+                    <!-- changed padding in 10px 20px to 10px 16px --> 
+                </div>
+                <!-- select order carlousel 2 for calendor -->
+ 
+ 
+ 
+            </div>
+            <br />
+            <br />
+        </div>
+        <!-- button css and order header is here -->
+        <div class="row buttonmenu">
+            <div class="col-lg-8">
+ 
+            </div>
+            <div class="col-lg-4 col-lg-4-rt-pd">
+                <div class="bottom_tabs">
+                    <div class="addright" style="position:relative">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-pd-3p col-lg-6-grid">
+                            <button class="btn primary-btn btn-orange ltr-sp-1p wd-100" style="" id="addtocart" onclick="addCheckedToCart(this)">Add to
+                    Cart</button>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mb-pd-3p col-lg-6-grid">
+                            <button class="btn primary-btn btn-orange ltr-sp-1p" id="addtocart3" onclick="addtoOrderGUide(this)" style="float: left;">Add to Order
+                    Guide</button>
+                        </div>
+                        <!--button class="btn reorder-btns" id="addtocart2" onclick="addCheckedToCart(this, 1)" style="display:none;">Add all to Cart</button-->
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- hedaer changed to here -->
+            <div class="col-sm-12 col-xs-12 headermenu">
+                <div class="row prod-history-t-header">
+                    <div class="col-sm-2 col-md-2  col-md-1  col-lg-1 hidden-xs hidden-sm pro_history">
+                        <p>Product <br> History</p>
+                    </div>
+                    <div class="col-xs-4 col-sm-2 col-md-4  col-lg-4 hidden-xs hidden-sm">
+                        <p>Items</p>
+                    </div>
+                    <div class="hidden-xs hidden-sm">
+                        <div class="col-md-1 col-lg-1 visible-md visible-lg">
+                            <p style="text-align: center">Last<br>ordered</p>
+                        </div>
+                        <div class="col-md-1 col-lg-1 visible-md visible-lg">
+                            <p style="text-align: center">Size</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-2 col-md-1  col-lg-1">
+                            <p style="text-align: center;">Ordered<br>Qty</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-md-1 col-lg-1">
+                            <p style="text-align: center;">Unit</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-2 col-md-1  col-lg-1">
+                            <p style="text-align: center;">Current<br>Price</p>
+                        </div>
+                        <div class="col-xs-6 col-sm-2 col-md-1  col-lg-1">
+                            <p style="text-align: center;">Order<br>Guide</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-1  col-lg-1">
+                            <p style="text-align: center;">Reorder<br>Qty</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 np">
+                        <hr class="hrordh">
+                    </div>
+                    <!--hr class="hrordh"-->
+                </div>
+            </div>
+        </div>
+        <!-- button css and header is here -->
+    </mvt:if>
+ </mvt:if>
+ <script>
+    $(document).ready(function() {
+ if( document.querySelector(".actives") !== null){
+        document.querySelector("actives");
+        var elmnt = document.querySelector(".actives");
+        elmnt.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
+ 
+ }
+ 
+   if(document.querySelector("activesmobile") !== null){
+        document.querySelector("activesmobile");
+        var elmnt = document.getElementsByClassName("activesmobile");
+        elmnt[0].scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
+      }
+    });
+ </script>
+ <script>
+    $(".trackorder,.trackorder-tab").on('paste', function(e) {
+        $(e.target).keyup();
+        alert()
+    });
+    $('.trackorder,.trackorder-tab').on('input', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    $('.track').attr('disabled', true);
+    $('.track').css('background-color', '#bebebe');
+    $('.track').attr('title', "Please Enter the order Id to enable");
+    $('.trackorder,.trackorder-tab').keyup(function() {
+        if ($('.trackorder,.trackorder-tab').val() == "") {
+            $('.track').attr('disabled', true);
+            $('.track').css('background-color', '#bebebe');
+            $('.track').attr('title', "Please Enter the order Id to enable");
+        } else {
+            $('.track').attr('disabled', false);
+            $('.track').css('background-color', 'rgb(98, 142, 131)');
+            $('.track').attr('title', "Please click track get Order Details");
+        }
+    })
+ 
+ 
+ 
+    $('.trackorders').on('input propertychange paste', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    $('.track').attr('disabled', true);
+    $('.track').css('background-color', '#bebebe');
+    $('.track').attr('title', "Please Enter the order Id to enable");
+    $('.trackorders').bind("change keyup input", function() {
+        if ($('.trackorders').val() == "") {
+            $('.track').attr('disabled', true);
+            $('.track').css('background-color', '#bebebe');
+            $('.track').attr('title', "Please Enter the order Id to enable");
+        } else {
+            $('.track').attr('disabled', false);
+            $('.track').css('background-color', 'rgb(98, 142, 131)');
+            $('.track').attr('title', "Please click track get Order Details");
+        }
+    });
+ 
+    $('.track-big').on('input propertychange paste', function(event) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    $('.trackbig').attr('disabled', true);
+    $('.trackbig').css('background-color', '#bebebe');
+    $('.trackbig').attr('title', "Please Enter the order Id to enable");
+    $('.trackorder').bind("change keyup input", function() {
+        if ($('.track-big').val() == "") {
+            $('.trackbig').attr('disabled', true);
+            $('.trackbig').css('background-color', '#bebebe');
+            $('.trackbig').attr('title', "Please Enter the order Id to enable");
+        } else {
+            $('.trackbig').attr('disabled', false);
+            $('.trackbig').css('background-color', 'rgb(98, 142, 131)');
+            $('.trackbig').attr('title', "Please click track get Order Details");
+        }
+    });
+    /*phone number formatting*/
+    function formatPhoneNumbers(phoneNumberString) {
+        var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+        var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            var intlCode = (match[1] ? '+1 ' : '');
+            return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+        }
+        return phoneNumberString;
+    }
+    /*phone number formatting*/
+ </script>
+ 
+ <script>
+ $("body").on("click", ".getFeatureDetails", function (e) {
+    features.updateNewFeature();
+  });
+ 
+ $(window).on('load',function(){
+    getshelfcouponss();
+ })
+ 
+  function getshelfcouponss() {
+    var userType= vueUserTypes;
+    $.get(
+      "/?Screen=ajax&CustomerAction=getMessages&type="+userType
+        ,
+      function (data) {
+        var newdata = JSON.parse(data);
+        if(newdata ==""){
+          $(".getFeatureDetails").hide();
+        }else{
+          $(".getFeatureDetails").show();
+       }
+        //   let sortOrder = newdata.filter((sortnumber) => {
+        //   return  sortnumber.coupon_order
+        //   });
+   
+ 
+  
+ 
+  
+ 
+        var slidesToShow = 0;
+  
+        features = new Vue({
+          el: "#loadallFeatures",
+          data: { loadFeatures: newdata },
+          methods: {
+            featuresCrousel() {
+              $("#loadallFeatures").owlCarousel({
+                navText: [
+                  "<img src='graphics/00000001/3/Arrow-HighRes-.png' width='20' height='28' style='width: 1rem;transform:rotate(180deg);filter: brightness(0.2);'>",
+                  "<img src='graphics/00000001/3/Arrow-HighRes-.png' width='20' height='28' style='width: 1rem;filter: brightness(0.2);'>",
+                ],
+                items: 1,
+                loop: false,
+                pagination: false,
+                responsiveClass: true,
+                dots: true,
+                margin: 10,
+                nav:false,
+                lazyLoad: true,
+                touchDrag: true,
+                mouseDrag: true,
+                pullDrag: true,
+                responsive: {
+                  0: {
+                    items: 1,
+                    
+                    lazyLoad: true,
+                  },
+                  600: {
+                    items: 1,
+                    
+                    lazyLoad: true,
+                  },
+                  1000: {
+                    items: 1,
+                    
+                    loop: false,
+                    lazyLoad: true,
+                    touchDrag: true,
+                    pullDrag: true,
+                  },
+                },
+              });
+            },
+            updateNewFeature() {
+        var donerCustomer_Id = $("#refferdcustomerid").val();
+        var userType=vueUserTypes;
+        const url =
+          "/?Screen=ajax&CustomerAction=getMessages&type="+userType ;
+          features.newfeaturedata = [];
+        $.get(url, function (json) {
+        }).then(function(){
+        });
+      },
+          },
+          computed: {
+            vueUserLoginDetails: function () {
+              var responsedata = "";
+              $.ajax({
+                async: false,
+                url: "/Merchant5/merchant.mvc?Screen=CUDET&getUserLoginDetail=1",
+                success: function (response) {
+                  var res = response;
+                  responsedata = res.replaceAll(/\s/g, "");
+                },
+              });
+              return responsedata;
+            },
+  
+            vueUserType: function () {
+              var responsedata = "";
+              $.ajax({
+                async: false,
+                url: "/Merchant5/merchant.mvc?Screen=CUDET&getUserDetails=1",
+                success: function (response) {
+                  var res = response;
+                  responsedata = res.replaceAll(/\s/g, "");
+                },
+              });
+              return responsedata;
+            },
+          },
+        });
+        features.featuresCrousel();
+  
+ 
+      }
+    );
+  }
+ 
+ 
+ </script>

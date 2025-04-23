@@ -1,0 +1,12 @@
+
+
+
+
+    Need to create : Email Template page provided by Miva Merchnant 
+    This povides basic setting s for the email template
+    To trigger Email we need to use code
+
+    <mvt:assign name="l.run:override_subject"   value = "'Custom Subject'" />
+    <mvt:assign name="l.run:override_to"        value = "customemail" />
+    <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success" value="TemplateOrderEmail_Load_Code('edit-order-email',l.email_template)" />
+    <mvt:do file="g.Module_Root $ '/modules/fulfill/templateorderemails.mvc'" name="l.success"  value="TemplateOrderEmails_SendEmail(l.run,l.email_template)" />
