@@ -1,0 +1,217 @@
+<mvt:item name="html_profile" />
+
+<head>
+    <mvt:comment> *** page title *** </mvt:comment>
+    <mvt:if expr="NOT ISNULL l.settings:page_metafields:title">
+        <title>&mvt:page_metafields:title;</title>
+        <mvt:assign name="g.noTitle" value="1" />
+    </mvt:if>
+
+    <mvt:comment> *** Description *** </mvt:comment>
+    <mvt:if expr="NOT ISNULL l.settings:page_metafields:description">
+        <meta name="description" content="&mvt:page_metafields:description;" />
+        <mvt:assign name="g.noDescription" value="1" />
+    </mvt:if>
+
+    <mvt:comment> *** Keywords *** </mvt:comment>
+    <mvt:if expr="NOT ISNULL l.settings:page_metafields:keywords">
+        <meta name="keywords" content="&mvt:page_metafields:keywords;" />
+        <mvt:assign name="g.noKeywords" value="1" />
+    </mvt:if>
+
+    <mvt:item name="head" param="head_tag" />
+    <mvt:item name="head" param="css_list" />
+    <!--[if IE]>
+  <link rel="stylesheet" href="css/ie.css" type="text/css"  />
+<![endif]-->
+    <style>
+        p {
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .account-pages .custlisting ul li ul li:before {
+            content: '■';
+            font-size: 20px !important;
+        }
+
+        .abusheart {
+            padding: initial;
+        }
+
+        .abusheart li {
+            list-style: none;
+            line-height: 2;
+            font-size: 14px;
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
+        .abusheart li i {
+            margin-right: 8px;
+        }
+
+        .abusheart li:before {
+            content: "\f004";
+            font-family: 'FontAwesome';
+            color: #f47a44;
+            margin-right: 8px;
+        }
+
+        .abusheart li a {
+            color: #f47a44;
+        }
+
+        .abusheart li a:hover {
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
+        .abuscontentspan {
+            display: block;
+            text-wrap-style: stable;
+            white-space: normal;
+        }
+
+        .abusiconimg {
+            max-width: 100%;
+            width: 20px;
+            height: auto;
+        }
+    </style>
+</head>
+<!-- PS-26775 Consolidation of Global CSS -->
+
+<body class="&mvt:page:code; static-pages footer-container">
+    <mvt:item name="hdft" param="global_header" />
+    <div class="background-container">
+        <div id="page-header">
+            <mvt:item name="hdft" param="header" />
+        </div>
+        <div class="container fr-main-container">
+            <mvt:comment> WR-50995 </mvt:comment>
+            <div class="fr-sub-container">
+                <mvt:comment> WR-50995 </mvt:comment>
+
+                <mvt:comment>Get Image function</mvt:comment>
+                <mvt:item name="readytheme" param="Load_Image('profchef',g.profchef)" />
+                <mvt:item name="readytheme" param="Load_Image('homecook',g.homecook)" />
+                <mvt:item name="readytheme" param="Load_Image('non-profit-service',g.nonprofitservice)" />
+                <mvt:item name="readytheme" param="Load_Image('Threebie_icon',g.threebie_icon)" />
+                <mvt:item name="readytheme" param="Load_Image('slacicongreen',g.slacicongreen)" />
+                <mvt:comment>Get Image function</mvt:comment>
+
+                <div class="margin-container pagecord">
+                    <div class="col-xs-12 visible-xs">&nbsp;</div>
+                    <!-- PS-26775 Consolidation of Global CSS 
+				<div class="col-xs-12 visible-xs">&nbsp;</div> -->
+                    <h1 class="header1 txt-center">Our promise</h1>
+                    <p class="txt-center">To build long-lasting relationships based on trust</p>
+                    <div class="">
+                        <mvt:comment> class was "full-width" </mvt:comment>
+                        <h1 class="header1">Who we are</h1>
+                        <p>Food Related is the place where chefs shop. We are a family-owned business, serving
+                            professional chefs in Texas and across the country, now available to home cooks too. When
+                            you shop with us, we will always go out of our way to serve you with the same care,
+                            attention, and love we show our own family.</p>
+                        <h1 class="header1">What we do</h1>
+                        <div class="imageandtextgrid">
+                            <div class="holder-container">
+                                <div class="imageandtextgrid-image">
+                                    <img src="&mvt:global:profchef:image;"
+                                        alt="who we are" />
+                                    <p>Professional Chefs</p>
+                                </div>
+                                <span class="ft-14p ft-md abuscontentspan">Food Related provides professional chefs with
+                                    everything they
+                                    need for their
+                                    kitchens, including gourmet and everyday food products, disposables, and much more.
+                                    As our true partner, we will always work with you to find the best solutions for
+                                    your kitchen.</span>
+                                <h5 class="ft-14p"><a href="" class="txt-orange">Click Here</a> to see where we deliver
+                                </h5>
+                                <ul class="abusheart">
+                                    <li>Low order minimums and deliveries 6 days a week
+                                    </li>
+                                    <li>Semi broad-liner with over 2500 food products
+                                    </li>
+                                    <li>Full specialty lines, everyday items, and wines
+                                        in stock</li>
+                                    <li>One-of-a-kind <a href="/TastingRoom.html" class="bold-ft txt-orange">Tasting
+                                            Room</a>
+                                        with 700+ items to try</li>
+                                </ul>
+                            </div>
+
+                            <div class="holder-container">
+                                <div class="imageandtextgrid-image">
+                                    <img src="&mvt:global:homecook:image;"
+                                        alt="who we are" />
+                                    <p>Home Cooks</p>
+                                </div>
+                                <span class="ft-14p ft-md abuscontentspan">Home cooks: We now offer FREE FedEx Ground
+                                    shipping in Texas
+                                    and Flat-Rate FedEx
+                                    Ground shipping nationwide! Get everything you need for your home kitchen - from
+                                    gourmet meats, cheese, charcuterie, and more, to everyday items like milk and eggs -
+                                    all with amazing savings!</span>
+                                <h5 class="ft-14p"> Shopping wit h Food Related:</h5>
+                                <ul class="abusheart">
+                                    <li>Join our <a class="bold-ft txt-orange" href="/famclub.html">Fam Club</a> for amazing deals, rewards points, and much
+                                        more - Try us FREE for a year!</li>
+                                    <li>Save 10% on select products when you buy in 3s with <a class="bold-ft txt-orange" onclick="getThreebieVideo('SFNT');">Threebies</a> -
+                                        Just look for the <img src="&mvt:global:threebie_icon:image;" class="abusiconimg" /></li>
+                                    <li>Save up to 25% on chef sized &amp; case products with <a class="bold-ft txt-orange" onclick="getSLACVideo('SFNT');">Shop the Chef
+                                            Size</a> - Just look for the <img src="&mvt:global:slacicongreen:image;" class="abusiconimg" /></li>
+                                    <li>Shop our <a href="/market.html">Market</a> for professional chef favorites in home
+                                        kitchen-friendly sizes, hand-cut and packaged to order</li>
+                                </ul>
+
+                            </div>
+
+                            <div class="holder-container">
+                                <div class="imageandtextgrid-image">
+                                    <img src="&mvt:global:nonprofitservice:image;"
+                                        alt="who we are" />
+                                    <p>Non-Profit Services</p>
+                                </div>
+                                <span class="ft-14p ft-md abuscontentspan">In response to the rising need in our
+                                    community during the
+                                    pandemic, Food Related
+                                    diversified, partnering with non-profit businesses across the country. Today, we
+                                    offer unique, customized programs and food kits designed to meet the needs of each
+                                    community your non-profit serves.</span>
+                                    <h5 class="ft-14p"><a href="" class="txt-orange">Click Here</a> to learn more about partnering with us</h5>
+                                    <ul class="abusheart">
+                                        <li><strong>Bulk full truck loads &amp; Orders by the pallet</strong></li>
+                                        <li><strong>Customizable food kits</strong></li>
+                                        <li><strong>Nutrition-based programs</strong></li>
+                                        <li><strong>Culinary kitchen programs</strong></li>
+                                    </ul>
+                            </div>
+                        </div>
+                        <mvt:item name="hdft" param="footer" />
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <mvt:item name="hdft" param="global_footer" />
+    </div>
+    <script>
+
+        $('.tab-accordion .prv-title').click(function () {
+            var parentDiv = $(this).closest('.tab-accordion').attr('id');
+            $('#' + parentDiv).toggleClass('active');
+            return false;
+        });
+        var hash = location.hash.substr(1);
+        if (hash) {
+            $('#' + hash).toggleClass('active');
+        }
+    </script>
+
+</body>
+
+</html>
+<!--- for merge test -->

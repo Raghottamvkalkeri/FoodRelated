@@ -1,0 +1,152 @@
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:wholesaletaxid)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'dob', l.settings:dateofbirth)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_email', g.membership_email)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'wishlist', g.wishlistid)" />
+<mvt:comment><mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membershiptype', g.membership_type)" /></mvt:comment>
+<mvt:assign name="g.membership_type" value="''" />
+<mvt:item name="customfields" param="Read_Page_Code( 'MSHIP', 'signupcoupon', l.settings:signupcoupon)" />    
+<mvt:if expr="l.settings:load_customer:account_id EQ 2">
+	<input type="hidden" id="signupcouponcode" value="&mvt:signupcoupon;">
+        <input type="hidden" id="custordcnt" value="&mvt:load_customer:order_cnt;" />
+        <mvt:assign name="g.membership_type" value="'Premium'" />
+    <mvt:else>
+        <mvt:if expr="l.settings:taxId EQ ''">
+            <mvt:assign name="g.membership_type" value="'Basic'" />
+        </mvt:if>
+    </mvt:if>
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_amount', g.membership_amount)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_plan', g.membership_plan)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_phone', g.membership_phone)" />
+<mvt:comment> Used to check for retail premium customer </mvt:comment>
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+<input type="hidden" id="globalcustomershipzip" value="&mvt:load_customers:ship_zip;" />
+<!-- &mvt:load_customer:account_id; -->
+<mvt:assign name="g.premium_customer" value="'2'" />
+<input type="hidden" id="custPWEmail" value="&mvt:load_customer:pw_email;" />
+<mvt:if expr="l.settings:load_customer:account_id EQ 2 AND g.membership_type EQ 'Premium'">
+<input type="hidden" class="typeofmembership" value="PremiumAccount">
+<input type="hidden" class="customertype" value="Premium">
+<mvt:elseif expr="l.settings:load_customer:account_id EQ 1 AND l.settings:wholesaletaxid">
+<input type="hidden" class="typeofmembership" value="WholesaleAccount">
+<input type="hidden" class="customertype" value="Wholesale">
+<mvt:elseif expr="l.settings:load_customer:account_id EQ 3">
+<input type="hidden" class="typeofmembership" value="Nonprofitaccount">
+<input type="hidden" class="customertype" value="NonProfit">
+<mvt:else>
+<input type="hidden" class="typeofmembership" value="BasicAccount">
+<input type="hidden" class="customertype" value="Retail">
+</mvt:if>
+<mvt:if expr="g.wishlistid">
+<input type="hidden" id="wishlistid" value="&mvt:global:wishlistid;" />
+<mvt:else>
+<input type="hidden" id="wishlistid" value="0" />
+</mvt:if>
+<mvt:if expr="g.Basket:cust_id">
+<input type="hidden" class="userState" value="&mvt:load_customers:ship_state;">
+<mvt:else>
+<input type="hidden" class="userState" value="&mvt:global:basket:ship_state;">
+</mvt:if>
+
+
+<!--Set Reiview points and birthday points here-->
+<mvt:assign name="g.product_review_points" value="0" />
+<mvt:assign name="g.birthdaypoints" value="0" />
+<mvt:if expr="g.membership_type EQ 'Premium'">
+<mvt:item name="customfields" param="Read_Page_Code( 'MSHIP', 'premium_reward_points', l.settings:premium_reward_points )" />
+<mvt:assign name="g.product_review_points" value="l.settings:premium_reward_points" />
+<mvt:assign name="g.birthdaypoints" value="1500" />
+<mvt:else>
+<mvt:item name="customfields" param="Read_Page_Code( 'MSHIP', 'basic_reward_points', l.settings:basic_reward_points )" />
+<mvt:assign name="g.product_review_points" value="l.settings:basic_reward_points " />
+<mvt:assign name="g.birthdaypoints" value="1000" />
+</mvt:if>
+<!-- Used for exludeing shipping -->
+<mvt:assign name="g.texasTimeZone" value="timezone()-1" />
+<mvt:assign name="g.dayoftheweek" value="time_t_dayofweek( s.time_t, g.texasTimeZone )" />
+<mvt:assign name="g.excludedays" value="''" />
+<mvt:if expr="(g.dayoftheweek EQ 1) OR (g.dayoftheweek EQ 6) OR (g.dayoftheweek EQ 7)">
+<mvt:assign name="g.excludedays" value="'excludeshipping'" />
+<mvt:else>
+<mvt:assign name="g.excludedays" value="'showshipping'" />
+</mvt:if>
+<input type="hidden" id="getTimeZone" value="&mvt:global:texasTimeZone;" />
+<input type="hidden" id="getCurrentDate" value="<mvt:eval expr="time_t_month( s.time_t, g.texasTimeZone )$'/'$time_t_dayofmonth( s.time_t, g.texasTimeZone )$'/'$time_t_year( s.time_t, g.texasTimeZone )"/>" />
+<input type="hidden" id="customerId" value="&mvt:global:basket:cust_id;" />
+<input type="hidden" id="customerSessionId" value="&mvt:global:basket:cussess_id" />
+<input type="hidden" id="sessionid" value="&mvt:global:session_id;" />
+<input type="hidden" id="getweekday" value="&mvt:global:dayoftheweek;" />
+
+<!-- Routegroup cutoff time settings -->
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_austin', g.cutofftime_austin)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_boerne', g.cutofftime_boerne)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_dallas', g.cutofftime_dallas)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_hill_country', g.cutofftime_hill_country)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_houston', g.cutofftime_houston)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_mcallen', g.cutofftime_mcallen)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_round_rock', g.cutofftime_round_rock)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_san_antonio', g.cutofftime_san_antonio)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_shipouts', g.cutofftime_shipouts)" />
+<mvt:item name="customfields" param="Read_Page_Code( 'CHST', 'cutofftime_south_texas', g.cutofftime_south_texas)" />
+<!-- Routegroup cutoff time settings -->
+
+<mvt:item name="customfields" param="Read_Page_Code( 'mdata', 'famie_date', g.famie_date )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'mdata', 'famie_month', g.famie_month )" />
+<mvt:item name="customfields" param="Read_Page_Code( 'mdata', 'famie_year', g.famie_year )" />
+
+<!-- Basket Id -->
+<input type="hidden" name="basket_id" id="basket_id" value="&mvt:global:basket:basket_id;" />
+
+<!-- Used for setting up Dynamic Name  -->
+<mvt:assign name="g.button" value="'Sign up'" />
+<mvt:if expr="g.basket:cust_id">
+<mvt:if expr="g.membership_type NE 'Premium'">
+<mvt:assign name="g.button" value="'Upgrade'" />
+<mvt:elseif expr="g.membership_type EQ 'Premium'">
+<mvt:assign name="g.button" value="''" />
+<mvt:else>
+<mvt:assign name="g.button" value="'Sign up'" />
+</mvt:if>
+</mvt:if>
+<!-- Used for setting up Dynamic Name  -->
+<div class="hidelandscape" hidden></div>
+<mvt:assign name="g.wishlistPageCode" value="l.settings:page:code" />
+
+<!-- Used for Product Individual Weight Check -->
+<mvt:if expr="'BASK' CIN l.settings:page:code OR 'OPCO' CIN l.settings:page:code">
+<mvt:assign name="g.checkweightcounter" value="'0'" />
+<mvt:foreach iterator="group" array="basket:groups">
+<mvt:item name="customfields" param="Read_Product_Code( l.settings:group:code, 'heavy_weight_item', l.settings:heavy_weight_item )" />
+<mvt:if expr="tolower(l.settings:heavy_weight_item) EQ 'yes' OR l.settings:heavy_weight_item EQ '1'">
+<mvt:assign name="g.checkweightcounter" value="1" />
+</mvt:if>
+</mvt:foreach>
+</mvt:if>
+
+
+<mvt:item name="customfields" param="Read_Basket( 'master_userid', g.master_userid )" />
+    <mvt:if expr="g.master_userid">
+        <mvt:item name="customfields" param="Read_Customer_ID(crypto_base64_decode(g.master_userid), 'universal_account',l.settings:universal_account )" />
+    <mvt:else>
+        <mvt:if expr="g.request_cookies:master_userid">
+            <mvt:item name="customfields" param="Read_Customer_ID(crypto_base64_decode(g.request_cookies:master_userid), 'universal_account',l.settings:universal_account )" />
+        </mvt:if>
+    </mvt:if>
+<script>
+var  pwcheck = [];
+<mvt:if expr="'BASK' CIN l.settings:page:code OR 'OPCO' CIN l.settings:page:code">
+<mvt:assign name="g.checkweightcounters" value="'0'" />
+<mvt:foreach iterator="group" array="basket:groups">
+<mvt:item name="customfields" param="Read_Product_Code( l.settings:group:code, 'heavy_weight_item', l.settings:heavy_weight_item )" />
+<mvt:if expr="tolower(l.settings:heavy_weight_item) EQ 'yes' OR l.settings:heavy_weight_item EQ '1'">
+<mvt:assign name="g.checkweightcounters" value="1" />
+<mvt:else>
+<mvt:assign name="g.checkweightcounters" value="0" />
+</mvt:if>
+pwcheck.push('&mvt:global:checkweightcounters;');
+</mvt:foreach>
+
+</mvt:if>
+</script>
+
+<!-- Used for Product Individual Weight Check -->

@@ -1,0 +1,152 @@
+<div class="hello-banner hidden-xs hello-banner-grid">
+    <mvt:item name="customfields" param="Read_Page_Code( 'MSHIP', '', l.settings:allcustomfields )" />
+    <mvt:foreach iterator="customfields" array="allcustomfields">
+        <mvt:if expr="'Premium Flat Rate Shipping' CIN  l.settings:customfields">
+        <mvt:assign name="l.settings:flat_rate_shipping_text" value="glosub(l.settings:customfields:name,'Premium', ' ')" />
+        </mvt:if>
+        <mvt:if expr="'Premium Shop the Chef Size' CIN  l.settings:customfields">
+        <mvt:assign name="l.settings:shop_like_chef_text" value="glosub(l.settings:customfields:name,'Premium', ' ')" />
+        </mvt:if>
+        <mvt:if expr="'Premium Double Point Days' CIN  l.settings:customfields">
+        <mvt:assign name="l.settings:double_point_days_text" value="glosub(l.settings:customfields:name,'Premium', ' ')" />
+        </mvt:if>
+        <mvt:if expr="'Basic Free Curbside' CIN  l.settings:customfields">
+        <mvt:assign name="l.settings:free_curbside_text" value="glosub(l.settings:customfields:name,'Basic', ' ')" />
+        </mvt:if>
+        <mvt:if expr="('Basic Birthday Points' CIN  l.settings:customfields) AND (l.settings:customfields:code EQ 'basic_birthday_points')">
+        <mvt:assign name="l.settings:birthday_points_text" value="glosub(l.settings:customfields:name,'Basic', ' ')" />
+        </mvt:if>
+        <mvt:if expr="'Basic Refer Friends for Rewards' CIN  l.settings:customfields">
+        <mvt:assign name="l.settings:refer_and_get_reward_text" value="glosub(l.settings:customfields:name,'Basic', ' ')" />
+        </mvt:if>
+    </mvt:foreach>
+    <mvt:comment> <mvt:foreach iterator="premium_shop_like_chef" array="premium_shop_like_a_chef">
+        <mvt:assign name="l.settings:shop_like_chef_text" value="l.settings:premium_shop_like_chef:name" />
+    </mvt:foreach>
+    <mvt:foreach iterator="premium_double_point" array="premium_double_point_days">
+        <mvt:assign name="l.settings:double_point_days_text" value="l.settings:premium_double_point:name" />
+    </mvt:foreach> </mvt:comment>
+
+    <div class="free-shipping hidden-xs fr-sub-container" style="font-size: 16px; font-weight: 400; color: #414042;text-align:left;padding:0 10px;">  <mvt:comment> WR-50995 </mvt:comment>
+        <!--aveto start holiday shipping  6-nov-2020-->
+        <mvt:if expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 1  AND l.settings:taxId">
+        <b class="bold-ft"
+            style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">
+            Welcome to your Wholesale Account</b>
+           <mvt:comment>
+            <a class="mb-ft-9p" href="/local-pickup-delivery.html"
+            title="Learn More"
+            style="background-color: #f47a44;padding: 1px 10px 1px;font-weight: 700;color: white;font-size: 16px;position: relative;top: -2px;margin-left: 5px;display: inline-block;">learn
+            more</a></mvt:comment>
+        <mvt:elseif expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 3">
+            <b class="bold-ft" style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+                Welcome to your Non-Profit Account</b>
+        <mvt:elseif expr="l.settings:checkuser EQ 'loggedcustomer' AND (l.settings:load_customer:account_id NE 1 OR l.settings:load_customer:account_id NE 2) AND l.settings:taxId">
+        <b class="bold-ft" 
+            style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+            Welcome to your Wholesale Account</b>
+            <mvt:elseif expr="l.settings:checkuser EQ 'wholesaleguest'">
+                <b class="bold-ft"
+            style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">
+            <span class="loginpop createAccountBtnBusiness vertical-middle" href="javascript:;" style="cursor: pointer;">If you are a chef apply for a business account <span class="subQuote">here</span></span></b>
+            <mvt:elseif expr="g.basket:cust_id">
+             
+            <mvt:if expr="g.membership_type EQ 'Premium' AND g.Basket:cust_id">
+                <mvt:comment><b class="bold-ft"
+            style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">If you are a chef apply for a business account 
+            <span class="loginpop createAccountBtnBusiness vertical-middle" href="javascript:;" style="text-transform: uppercase; text-decoration: underline;cursor: pointer;"> here</span></b>
+        </mvt:comment>
+            <div class="font10 ft-md 1">
+                    <!-- Commented because there is no need to display the customer name on the yellow bar -->
+                    <mvt:comment> Welcome <b id="user_name" style="margin-right: 5px; font-family: ITCAvantGardePro-Md, Arial Bold; margin-right: 5px;letter-spacing: 1px;"> &mvt:global:customer:bill_fname; &mvt:global:customer:bill_lname;. </mvt:comment>
+                    </b>You're a <b>VIP Famie<sup class="ft-8p" style="top: -0.8em;">TM</sup></b>
+                        <a href="&mvte:urls:MSHIP:auto;" class="pointer vipRewards">[See all of your amazing VIP rewards]</a> 
+            </div> 
+            <mvt:elseif expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 3">
+            <b class="bold-ft" style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+                Welcome to your Non-Profit Account</b>                              
+              <mvt:elseif expr="(g.membership_type EQ 'Basic' OR g.membership_type EQ '') AND g.Basket:cust_id AND l.settings:taxid EQ ''" >
+                <span style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">Get <b style="font-family: ITCAvantGardePro-Md, Arial Bold;letter-spacing: 1px;">FREE</b> Home Delivery, FedEx Ground Shipping, plus more exclusive rewards when you upgrade to VIP Famie<sup class="ft-8p"  style="top: -0.8em;">TM</sup> - <b style="font-family: ITCAvantGardePro-Md, Arial Bold;letter-spacing: 1px;">FREE for the first year on sign up!</b> <a href="&mvte:urls:FamClub:auto;" class="pointer learnmore" style=""> [Learn more] </a></span><mvt:comment> R-81869 </mvt:comment>
+              </mvt:if>
+        <mvt:elseif expr="l.settings:checkuser EQ 'wholesaleguest' OR l.settings:checkuser EQ 'loggedcustomer' OR l.settings:checkuser EQ 'guest'">
+        <b class="bold-ft"
+            style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">
+            <span class="loginpop createAccountBtnBusiness vertical-middle" href="javascript:;" style="cursor: pointer;">If you are a chef apply for a business account <span class="subQuote">here</span></span></b>
+
+        </mvt:if>
+    </div>
+
+    <div class="free-shipping hidden-xs fr-sub-container pointer"  style="font-size: 16px; font-weight: 400; color: #414042;text-align:left;padding:0 10px;">  <mvt:comment> WR-50995 </mvt:comment>
+        <mvt:if expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 1  AND l.settings:taxId">
+        <span data-toggle="modal" data-target="#RouteGroupModal">Route group <span class="bold-ft">&mvt:route_groups;</span> <i class="fa-solid fa-circle-info txt-white"></i></span>
+        <mvt:else>
+         <mvt:assign name="g.isbannervisible" value="'visible'" />
+            <mvt:if expr="l.settings:page:code CIN 'INVC|OPCO|BASK|OPCOGUEST'">
+                <mvt:assign name="g.isbannervisible" value="'hidden'" />
+            </mvt:if>
+            <span data-toggle="modal" data-target="#shippingPopup" style="visibility:&mvt:global:isbannervisible;" >Get <span class="bold-ft">Free</span> or <span class="bold-ft">Flat Rate</span> Shipping <i class="fa-solid fa-circle-info txt-white"></i></span>
+    </mvt:if>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="free-shipping visible-xs font10 mob-left-align bold-ft" style="font-size: 12px;margin-bottom: -9px; color: #414042;">
+    <mvt:comment>
+            <b
+            style="margin-right: 5px; font-family: ITCAvantGardePro-Bold; margin-right: 5px;font-weight: bold;letter-spacing: 1px;">CURBSIDE
+            PICKUP & HOME DELIVERY <span>Now Available!</span>
+        </b> 
+        <a class="mb-ft-9p" href="/local-pickup-delivery.html"
+            title="Learn More"
+            style="background-color: #f47a44;padding: 4px 10px 2px;font-weight: 700;color: white;font-size: 13px;position: relative;top: -2px;margin-left: 5px;display: inline-block;">learn
+        more</a>
+    </mvt:comment>
+        <mvt:if expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 1  AND l.settings:taxId">
+        <b class="bold-ft" 
+            style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+            Welcome to your Wholesale Account</b>
+           <mvt:comment>
+            <a class="mb-ft-9p" href="/local-pickup-delivery.html"
+            title="Learn More"
+            style="background-color: #f47a44;padding: 1px 10px 1px;font-weight: 700;color: white;font-size: 16px;position: relative;top: -2px;margin-left: 5px;display: inline-block;">learn
+            more</a></mvt:comment>
+            <mvt:elseif expr="l.settings:checkuser EQ 'loggedcustomer' AND (l.settings:load_customer:account_id NE 1 OR l.settings:load_customer:account_id NE 2) AND l.settings:taxId">
+                <b class="bold-ft"
+            style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+            Welcome to your Wholesale Account</b>
+            <mvt:elseif expr="l.settings:checkuser EQ 'wholesaleguest'">
+                <b class="bold-ft"
+            style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">
+            <span class="loginpop createAccountBtnBusiness vertical-middle" href="javascript:;" style="cursor: pointer;">If you are a chef apply for a business account <span class="subQuote">here</span></span></b>
+        <mvt:elseif expr="g.basket:cust_id">
+             
+        <mvt:if expr="g.membership_type EQ 'Premium' AND g.Basket:cust_id">
+            <mvt:comment> Welcome Premium Member <br/> <span style="visibility:hidden"> Account </span></b> </mvt:comment>
+    <div class="font10 ft-md justify 2">
+	     <!-- Commented because there is no need to display the customer name on the yellow bar -->
+            <mvt:comment> Welcome <b id="user_name" style="margin-right: 5px; font-family: ITCAvantGardePro-Md, Arial Bold; margin-right: 5px;letter-spacing: 1px;"> &mvt:global:customer:bill_fname; &mvt:global:customer:bill_lname;.</mvt:comment>
+	    </b>You're a <b>VIP Famie<sup class="ft-8p" style="top: -0.8em;" >TM</sup></b>
+            <a href="&mvte:urls:MSHIP:auto;" class="pointer" style="">[See all of your amazing VIP rewards]</a>
+    </div>
+    <mvt:elseif expr="l.settings:checkuser EQ 'loggedcustomer' AND l.settings:load_customer:account_id EQ 3">
+            <b class="bold-ft" style="margin-right: 5px;  margin-right: 5px;letter-spacing: 1px;">
+                Welcome to your Non-Profit Account</b>
+     <mvt:elseif expr="(g.membership_type EQ 'Basic' OR g.membership_type EQ '') AND g.Basket:cust_id" >
+                <span style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">Get <b style="font-family: ITCAvantGardePro-Md, Arial Bold;letter-spacing: 1px;">FREE</b> Home Delivery, FedEx Ground Shipping, plus more exclusive rewards when you upgrade to VIP Famie - <b style="font-family: ITCAvantGardePro-Md, Arial Bold; letter-spacing: 1px;">FREE for the first year on sign up</b> <a href="&mvte:urls:FamClub:auto;" class="pointer learnmore" style=""> [Learn more] </a></span><mvt:comment> R-81869 </mvt:comment>
+    </mvt:if>
+
+            
+        <mvt:elseif expr="l.settings:checkuser EQ 'wholesaleguest' OR l.settings:checkuser EQ 'loggedcustomer' OR l.settings:checkuser EQ 'guest'">
+        <b class="bold-ft"
+            style="margin-right: 5px; margin-right: 5px;letter-spacing: 1px;">
+            <span class="loginpop createAccountBtnBusiness vertical-middle" href="javascript:;" style="cursor: pointer;"> If you are a chef apply for a business account <span class="subQuote">here</span></span></b>
+        </mvt:if>
+    </div>
+    <!-- aveto end  holiday shipping   6-nov-2020-->
+</div>

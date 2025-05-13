@@ -1,0 +1,199 @@
+<mvt:item name="customfields" param="Read_Customer_ID(g.Basket:Cust_id, 'tax_id_number', l.settings:taxId)" />
+<mvt:do file="g.Module_Feature_CUS_DB" name="l.settings:loadcustomer" value="Customer_Load_ID(g.Basket:Cust_id, l.settings:load_customer)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'dob', l.settings:dateofbirth)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'customer_age', l.settings:age)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_email', g.membership_email)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membershiptype', g.membership_type)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_amount', g.membership_amount)" />
+<mvt:item name="customfields" param="Read_Customer_ID(g.basket:cust_id, 'membership_plan', g.membership_plan)" />
+<input type="hidden" id="birthday" value="&mvt:dateofbirth;" >
+<div id="myToast" class="toast-popup"></div>
+<mvt:do file="g.Module_Feature_PGR_DB" name="l.success" value="PriceGroupAndModuleList_Load_Customer(g.Basket:cust_id, g.pricegroupassigned)" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+  var urlpath = window.location.origin;
+    <mvt:if expr="g.tab EQ 'reviews'">
+        jQuery('.tab[data-tab="review"]').trigger("click");
+        jQuery('html, body').animate({scrollTop: jQuery('.tab[data-tab="review"]').offset().top-210}, 1000);
+    </mvt:if>
+
+
+    <mvt:if expr="l.setting:modalloaded OR g.Basket:Cust_ID">
+        <mvt:else>
+        /* $(window).load(function() {
+        $('#showLogin').modal('show');
+        ResizeModalHeight()
+        });*/
+        </mvt:if>
+    function addBirthdayPoint(age,id,status){
+    $.ajax({
+        url: '/cudet.html?CustomerAction=UserBirthdayDetail&customer_id='+id+'&age='+age+'&status='+status,
+        success: function (data, textStatus, xhr) {
+        }
+      })
+}
+
+function getBirthdayDetails(dateString) {
+  var today = new Date();
+  var birthDate = new Date(dateString);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  var birthmonth = birthDate.getMonth();
+  var getbi = birthDate.getDate();
+  var birthday = birthDate.getMonth()+1;
+  if(getbi == today.getDate() && birthmonth == today.getMonth()){
+    return 'Birthday';
+  }else{
+return  age;
+}
+  
+}
+
+
+        var getPageCode = '&mvt:page:code;';
+        {/* console.log(getPageCode); */}
+
+        var globalDomainName = 'https://&mvt:global:domain:name;';
+        {/* console.log('This is global URL ' +globalDomainName); */}
+
+        var globalSecureSession = '&mvt:global:secure_sessionurl;';
+        {/* console.log('This is SecureSession ' +globalSecureSession); */}
+
+        var globalScreenName = '&mvt:global:screen;';
+        {/* console.log('This is Global screen Name ' +globalScreenName); */}
+        
+        var globalSFNT = '&mvte:urls:SFNT:auto;Merchant5/merchant.mvc?';
+        {/* console.log('This is Global SFNT ' +globalSFNT); */}
+
+        var categoryCode= '&mvt:global:Category_Code;';
+        {/* console.log('This is Global categoryCode' +categoryCode); */}
+	
+	var customerid = '&mvt:global:basket:cust_id;';
+
+
+	var birthday = "&mvt:dateofbirth;"; 
+	var customerage = "&mvt:age;"
+	var getAges1 = birthDate => Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e+10);
+    if(getBirthdayDetails(birthday) == 'Birthday'){
+    var status = 'Today is my birthday';
+    addBirthdayPoint(getAges1(birthday) ,'&mvt:global:Basket:Cust_id;',status);
+    }
+   else if(customerage < getAges1(birthday)){
+    var status = 'Updated with birthday points';
+    addBirthdayPoint(getAges1(birthday) ,'&mvt:global:Basket:Cust_id;');
+    }
+    else{ 
+    }
+
+        var UserType = '';
+        var TypofUser = '';
+        var isUserLoggedIn = '';
+        var isSlacUser = '';
+        var vueUserTypes = '';
+        var isThisShopAsCustomer = true;
+var globalshopascustomer = '&mvt:global:request_cookies:mm5-g-shopascustomer-session';
+<mvt:assign name="g.cookie_value" value="''" />
+if(globalshopascustomer !== '') {
+	//document.querySelector('.quickorder').style.display = 'block';
+	console.log('&mvt:global:request_cookies:mm5-g-shopascustomer-session');
+    isThisShopAsCustomer = true;
+}
+	var productweightcheck = &mvt:global:checkweightcounter;
+        <mvt:if expr='l.settings:load_customer:account_id EQ 1 AND l.settings:taxId'>
+        UserType = 1;
+	TypofUser = "wholesale";
+	<mvt:elseif expr='l.settings:load_customer:account_id EQ 2'>
+	TypofUser = 'premium';
+  <mvt:elseif expr='l.settings:load_customer:account_id EQ 3'>
+  TypofUser = 'Non-Profit';
+        <mvt:else>
+        UserType = 2;
+        </mvt:if>
+	<mvt:if expr="g.Basket:Cust_id AND l.settings:checkuser NE 'wholesaleguest' ">
+        isUserLoggedIn = 1;
+        <mvt:else>
+        isUserLoggedIn = 0;
+        </mvt:if>
+
+        
+        <mvt:foreach iterator="pricegroup" array="global:pricegroupassigned">
+        <mvt:if expr="'SLAC' CIN l.settings:pricegroup:name">
+          isSlacUser = '&mvt:pricegroup:name;';
+        </mvt:if>
+        </mvt:foreach>
+
+
+
+    <mvt:if expr="l.settings:load_customer:account_id EQ 1 AND l.settings:taxId">
+      vueUserTypes = 'Wholesale';
+    <mvt:else>
+      vueUserTypes = 'Retail';
+    </mvt:if>
+
+
+
+  if (isUserLoggedIn === 1) {
+    if (
+      urlpath === "https://foodrelated.com" ||
+      urlpath === "https://www.foodrelated.com"
+    ) {
+      var customertype = $(".customertype").val();
+      if (customertype == "Premium" || customertype == "Basic") {
+        customertype = "Retail";
+      }
+      console.log(customertype);
+      dataLayer.push({
+        userType: customertype, // pass the user type like Retail, Wholesale
+        userId: $("#customerId").val(),
+      });
+    }
+  }
+    // Added Google Tag Manage Code Please do not remove
+  
+var googleurl = location.href;
+// Convert &amp; to &
+googleurl = googleurl.replace(/&amp;/g, '&');
+
+// Extract the last part of the URL path
+var lastPart = googleurl.split('/').pop();
+console.log(lastPart);  // This will output 'merchant.mvc?Screen=sfnt&opt=2&Session_ID=96b0678c410b2f91155691d44ecf2722'
+
+// Create a URL object
+var urls = new URL(googleurl);
+// Get the value of the 'opt' parameter
+var checkurl = urls.searchParams.get("opt");
+console.log(checkurl);  // This will output '2'
+var googlecustomertype = $(".customertype").val();
+var googlecustomerid = $("#customerId").val();
+      if (googlecustomertype == "Premium" || googlecustomertype == "Basic") {
+        googlecustomertype = "Retail";
+      }
+      
+if(checkurl == 1) {
+  if (urlpath === "https://foodrelated.com" || urlpath === "https://www.foodrelated.com") {
+                dataLayer.push({
+                  userType: googlecustomertype, // pass the user type like Retail, Wholesale
+                  userId: googlecustomerid,
+                  event: "signUp",
+                });
+
+              }
+}else if(checkurl == 2) {
+  if (urlpath === "https://foodrelated.com" || urlpath === "https://www.foodrelated.com") {
+                        dataLayer.push({
+                          userType: googlecustomertype, // pass the user type like Retail, Wholesale
+                          userId: googlecustomerid,
+                          event: "login",
+                        });
+                         history.replaceState(null, '', loadOldUrl()); 
+                        
+                      }
+
+                      //location.href = localStorage.getItem("url");
+}
+
+
+
+
+</script>
