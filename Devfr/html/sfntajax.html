@@ -1,0 +1,951 @@
+<style>
+    select {
+            background: url(graphics/00000001/up-and-down-arrow-icon-15.jpg) no-repeat right center #fff !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 45px !important;
+            background-position: calc(100% - .5rem), 100% 0;
+            background-size: 1em 1em !important;
+            background-repeat: no-repeat;
+            line-height: 1 !important;
+        }
+	
+    </style>
+    
+    <mvt:if expr="g.CustomerAction EQ 'sixthcontent'">
+        <mvt:item name="readytheme" param="contentsection( 'sixth-content' )" />
+        <mvt:exit/>
+        </mvt:if>
+    
+    <mvt:if expr="g.CustomerAction EQ 'loadfirstcategoryProducts'">
+        <mvt:item name="readytheme" param="contentsection( 'LoadAllFirstCategory' )" />
+        <mvt:exit/>
+        </mvt:if>
+    
+    <mvt:if expr="g.CustomerAction EQ 'loadsecondcategoryProducts'">
+        <mvt:item name="readytheme" param="contentsection( 'LoadAllSecondCatergory' )" />
+        <mvt:exit/>
+        </mvt:if>
+
+    <mvt:if expr="g.CustomerAction EQ 'loadfirstorigincategory'">
+        <mvt:item name="readytheme" param="contentsection( 'LoadAllFirstOriginCategory' )" />
+        <mvt:exit/>
+        </mvt:if>
+    
+    <mvt:if expr="g.CustomerAction EQ 'loadsecondorigincategory'">
+        <mvt:item name="readytheme" param="contentsection( 'LoadAllSecondOriginCatergory' )" />
+        <mvt:exit/>
+        </mvt:if>
+    
+    <mvt:if expr="g.CustomerAction EQ 'loadmembershipProducts'">
+        <mvt:item name="readytheme" param="contentsection( 'Loadmembershipcategory' )" />
+        <mvt:exit/>
+        </mvt:if>
+        
+        
+        <mvt:if expr="g.CustomerAction EQ 'fourthcarousselcontent'">
+        <mvt:item name="readytheme" param="contentsection( 'fourth-carousel-content' )" />
+        <mvt:exit/>
+        </mvt:if>
+        
+        <mvt:if expr="g.CustomerAction EQ 'eigthcarousselcontent'">
+        <mvt:item name="readytheme" param="contentsection( 'eighth-content-content' )" />
+        <mvt:exit/>
+        </mvt:if>
+        
+        <mvt:if expr="g.CustomerAction EQ 'UserLogin'">
+
+        <div class="newLoginContent signup-popout" style="">
+            <div><img width="160" height="100" src="graphics/00000001/3/FR-Logo-01.png" alt="Food Related" class="logo desktop-logo"></div>
+                        <span class="Lclose material-icons close" aria-hidden="true"></span>
+                        <div id="signinForm" class="formAlign" class="displayNone">
+                            <div class="newLoginHeder loin LinputContainer">
+                                <p class="txt-left"> Sign In</p>
+                            </div>
+                            <mvt:comment> <div class="headerDevider"></div> </mvt:comment>
+			    <!-- Commented below code because R-82219 Sign Up Upsell has been moved to Sprint Backlog -->
+                	     <!-- <div class="signinFormText" onclick="document.getElementById('createAnAccount').click()" hidden>
+                                <p class="ft-14p ft-md" style="padding: 8px 3px"> Create an account and get 15% off your first order </p>
+                            </div> -->
+    
+                            <!-- login form  UI start -->
+                            <form id="login" class="<mvt:if expr=" l.settings:page:code CIN 'OPCO' ">checkoutlogin1</mvt:if>" novalidate>
+                                <input type="hidden" name="CustomerAction" value="login">
+                                <div class="LinputContainer">
+                                    <div class="ajaxmsg"></div>
+                                    <input type="email" class="LformInput flex-align-center" maxlength="254" id="register_email" required name="register_email" placeholder="Email" onchange="validateLoginFields();" autocomplete="off" value="">
+				     <span class="LinputErrorContainer customer-email-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid email address</span>
+                                </div>
+                                <div class="LinputContainer">
+                                    <input type="password" class="LformInput flex-align-center" required maxlength="50" id="register_password" name="register_password" placeholder="Password" onchange="validateLoginFields();" style="margin-top: -18px" autocomplete="new-password" value="">
+				     <span class="LinputErrorContainer customer-password-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Password is required</span>
+                                </div>
+                                <div class="buttonContainer">
+                                    <p class="forgetPwd ft-md ltr-sp-0p5"><a href="/FPWD.html">Forgot Password? </a> </p>
+                                    <!-- <input type="submit" name="SignIn" value="Login" class="loginBtn btn primary-btn btn-orange "> -->
+                                    <!-- <input type="submit" name="SignIn" value="Login"> -->
+                                    <button type="submit" name="SignIn" class="loginBtn btn btn-lg primary-btn btn-orange pointer" onclick="userLogin(event);">Login</button>
+                                </div>
+                            </form>
+                            <div class="LinputContainer">
+				 <!-- #53 from May sheet --> 
+                                <!-- <a href="&mvt:global:secure_sessionurl;Screen=opcoguest" class="button Guest"> Checkout as a Guest </a> -->
+				  <button type="submit" name="checkoutAsGuest" class="Guest btn btn-lg primary-btn btn-orange pointer" onclick="window.location.href = '&mvt:global:secure_sessionurl;Screen=opcoguest';">Checkout as a Guest</button>
+                            </div>
+
+				            <div class="orOptionContainer">
+                                <mvt:comment><div class="line" style="margin-right: 10px;"></div></mvt:comment>
+                                 <span class="ft-12p ft-md ltr-sp-0p5">OR</span>
+                                <mvt:comment><div class="line" style="margin-left:10px"></div></mvt:comment>
+                            </div>
+
+                            <mvt:if expr="g.Basket:cust_id EQ 0"><div class="content-align-center" id="googlebuttonlogin"></div></mvt:if>
+
+                            <div class="orOptionContainer">
+                                <mvt:comment>
+                                    <div class="line" style="margin-right: 10px;"></div> or
+                                    <div class="line" style="margin-left:10px"></div>                                
+                                </mvt:comment>
+                            </div>
+        
+                            <mvt:if expr="l.settings:checkuser EQ 'wholesaleguest'">
+                            <div class="LinputContainer">
+                                <button id="createAccountBtnBusiness" class="createAccountBtn createAccountBtnBusiness sesseionend">Create Business Account </button>
+                            </div>                 
+                                <div class="nofollow wsmsg txt-center ">* Please create a wholesale account to                       
+                                    <span class="wsmessage"></span>
+                                </div>
+                                <mvt:else>
+                                    <div class="LinputContainer">
+                                        <p class="ft-rt ft-12p ft-md ltr-sp-0p5 txt-right">New to FoodRelated?&nbsp;  <span id="createAnAccount" class="txt-orange ft-18p ft-demi ltr-sp-0p5 pointer" onclick="$('.benefits').css('display','flex'); $('.newLoginContent').css('padding-bottom', '160px');">Sign Up </span></p>
+                                    </div> 
+
+                                    <div class="LinputContainer">
+                                        <button id="createAccountBtnBusiness" class="createAccountBtn createAccountBtnBusiness hidden">Create Business Account </button>
+                                    </div>
+                            </mvt:if>
+                        </div>
+            
+                 <!-- Signup coupon -->
+                            <div id="signupCoupon" class="signupCoupon displayNone">
+                                <div class="couponMsg">
+                                    <p class="ft-md ltr-sp-0p5"
+                                        style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:bold;font-size: 18px;">
+                                        Thank you for signing up.
+                                    </p>
+                                <br>
+                                <p class="ft-16p ft-md ltr-sp-0p5">Sign up Coupon : <span class="coupon_code couponCodeText ft-demi" style="font-size: 16px"></span></p>
+                                </div>
+                            </div>
+    
+                        <!-- coupon form start -->
+                        <div class="couponForm displayNone">
+                            <div class="couponMsg">
+                                <!-- <p> HERE IS YOUR <br> COUPON CODE FOR RETAIL </p> -->
+                    <p class="ft-16p ft-md ltr-sp-0p5">News Letter Sign up Coupon : <span class="couponCodeText ft-demi" style="font-size: 16px"></span> </p>
+                            </div>
+                            <!-- <div style="width:81%" class="linebar"></div> -->
+                            
+                            <div>
+                                <!-- <p class="couponCodeText"> </p> -->
+                     <br>	
+                                <p style="font-size: 12px; text-align:center;letter-spacing: 1px;font-weight: bold;"> Use this at
+                                    checkout with your order.
+                                <p style="font-size: 8px; text-align:center;letter-spacing: 1px;">*Code cannot be combined with any
+                                    other codes. </p>
+                            </div>
+                
+                        </div>
+                
+                        <!-- coupon form end  -->
+                        <!-- success news singup message start -->
+                        <div class="signedUp displayNone">
+                            <div class="couponMsg">
+                                <p class="newsHeader" style="margin-bottom:8px;">THANKS FOR SIGNING UP!</p>
+                
+                                <div style="width:100%" class="linebar">
+                                </div>
+                                <p class="checkouttext "
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:normal;font-size: 14px;">You
+                                    can unsubscribe at anytime using the unsubscribe button at the bottom of every newsletter email.</p>
+                            </div>
+                        </div>
+                        <!-- success news end business  end-->
+                
+                        <!-- user have retail not have business tring to loign  news singup message start -->
+                        <div class="noBAccount displayNone">
+                            <div class="couponMsg">
+                                <p style="margin-bottom:8px;">Oops!</p>
+                
+                                <div style="width:81%" class="linebar">
+                                </div>
+                                <p class="checkouttext "
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:bold;font-size: 12px;">
+                                    In order to receive the Food Related Business Newsletters, please create a</p>
+                
+                            </div>
+                        </div>
+                        <!-- user have retail not have business tring to loign  news singup message start end -->
+                
+                        <!-- existing email enter on creattion -->
+                        <div class="accountLinked displayNone">
+                            <div class="couponMsg">
+                                <p class="newsHeader" style="margin-bottom:8px;">HELLO AGAIN!</p>
+                
+                                <div style="width:100%" class="linebar">
+                                </div>
+                                <p class="checkouttext retialExist "
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:normal;font-size: 14px;">
+                                    There is already a retail account linked to that email address.
+                                </p>
+                                <p class="checkouttext  businessExist"
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:normal;font-size: 14px;">
+                                    There is already a business accont linked to that email address.
+                                </p>
+                                <span style="font-size: 15px;letter-spacing: 2px;">Try <span class="loggingin"
+                                        style="cursor: pointer; color:#f47a44;font-size: 15px;text-decoration: underline;letter-spacing: 2px;">
+                                        logging in
+                                    </span></span>
+                
+                            </div>
+                        </div>
+                        <!-- existing email enter on creattion end -->
+                
+                        <!-- email address linked to Retail account -->
+                        <div class="retailAccount displayNone">
+                            <div class="couponMsg">
+                                <p style="margin-bottom:8px;">Oops!</p>
+                
+                                <div style="width:100%" class="linebar">
+                                </div>
+                                <p class="checkouttext "
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:bold;font-size: 12px;">
+                                    It looks like that email address is linked to a Retail Account. If you think you should have a
+                                    Business Account instead, please contact us at</p>
+                                <p class="couponCodeText">
+                                    <a href="/connect-with-us.html" rel="nofollow"
+                                        style="color:#f47a44;font-size: 15px;text-decoration: underline;letter-spacing: 2px;">
+                                        help@foodrelated.com</a>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- linked to retail end-->
+                
+                        <!-- email exist-->
+                        <div id="emailExistCheck" class="emailExist displayNone">
+                            <div class="couponMsg">
+                                 <p class="newsHeader" style="margin-bottom:8px;">HEY THERE! </p> 
+                
+                                 <div style="width:100%" class="linebar"> 
+                                </div> 
+                                <p class="checkouttext "
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:84%;font-weight:normal !important;font-size: 14px;">
+                                    It looks like you're already signed up for our Newsletters. Check your inbox for our weekly deals!
+                                </p>
+                
+                            </div>
+                        </div>
+    
+                
+                
+                        <!-- user have retail not have business tring to loign  news singup message start end -->
+                
+                
+                        <!-- login form  UI start  end-->
+                
+                        <!-- sign up start -->
+                        <div class="signUpJustify">
+                            <div class="signUpForm formAlign displayNone">
+                                <div id="signupForm" class="newLoginHeder LinputContainer">
+                                    <p class="txt-left"> Join the Family </p>
+                                    <mvt:comment><div class="headerDevider"></div></mvt:comment>
+                                </div>
+                                <div class="FradioContainer">
+                                    <mvt:if expr="g.Basket:cust_id AND l.settings:load_customer:pw_email EQ 'wholesale@wsfs.com'">
+                                        <mvt:else>
+                                        <div class="FradioContainerright">
+                                        <div class="form-check "
+                                            >
+                                            <input type="radio" name="retailSignUp" class="form-check-input" id="retailRadioSignUp"
+                                                value="retailSignUp" checked="checked" onclick="$('.benefits').css('display','flex');" $('.newLoginContent').css('padding-bottom', '160px !important'); />
+                                            <label class="form-check-label retail-label"
+                                                style="font-weight:bold;font-size:12px;letter-spacing:1px;" for="retailRadioSignUp">
+                                                Retail <span class="hidden-xs hidden-sm">Account </span></label><mvt:comment>font8 removed</mvt:comment>
+                                        </div>
+                                        </div>
+                                    </mvt:if>
+                                    <div class="FradioContainerright">
+                                        <div class="form-check "
+                                        >
+                                        <input type="radio" name="retailSignUp" class="form-check-input" id="BusinessRadioSignUp"
+                                        value="businessSignUp" onclick="$('.benefits').css('display','none');" $('.newLoginContent').css('padding-bottom', '0px');/>
+                                        <label class="form-check-label business-label"
+                                            style="font-weight:bold;font-size:12px;letter-spacing:1px;" for="BusinessRadioSignUp">
+                                            Business <span class="hidden-xs hidden-sm">Account </span></label><mvt:comment>font8 removed</mvt:comment>
+                                    </div>
+
+                                    <div class="form-check "
+                                        >
+                                        <input type="radio" name="retailSignUp" class="form-check-input" id="NonProfitRadioSignUp"
+                                        value="businessSignUp" onclick="$('.benefits').css('display','none');" $('.newLoginContent').css('padding-bottom', '0px');/>
+                                        <label class="form-check-label business-label"
+                                            style="font-weight:bold;font-size:12px;letter-spacing:1px;" for="NonProfitRadioSignUp">
+                                            Non-Profit <span class="hidden-xs hidden-sm">Account </span></label><mvt:comment>font8 removed</mvt:comment>
+                                    </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <!-- retailsign form -->
+                                <form id="retailSignupForm" autocomplete="off">
+                                    <div class="ajaxmsg"></div>
+                                    <div class="retailSignUP">
+                              
+                                        <mvt:if expr="g.Basket:cust_id EQ 0"><div class="content-align-center" id="googlebuttonretailsignup"></div></mvt:if>
+                                            <div class="orOptionContainer">
+                                                <mvt:comment><div class="line" style="margin-right: 10px;"></div></mvt:comment> 
+                                                <span class="ft-12p ft-md ltr-sp-0p5">OR</span>
+                                                <mvt:comment><div class="line" style="margin-left:10px"></div></mvt:comment>
+                                        </div>
+
+                                        <input type="hidden" name="CustomerAction" value="signup">
+                                        <div class="signupInputField LinputContainer">
+                                            <input type="text" id="ret_first_name" role="presentation" autocomplete="off" class="LformInput ret_first_name"  name="register_fname" maxlength="50" onkeydown="return /[a-z'\s]/i.test(event.key)" placeholder="First Name*" onblur="SignUpValidation('retailSignUp','.ret_first_name', '.ret-fn-error');" required  value="" autocomplete="name">
+                            <span class="LinputErrorContainer ret-fn-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">First Name is required</span>
+                                        </div>
+                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" id="ret_second_name" role="presentation" autocomplete="off" class="LformInput ret_second_name"  name="register_lname" maxlength="50" onkeydown="return /[a-z'\s]/i.test(event.key)" placeholder="Last Name*" onblur="SignUpValidation('retailSignUp','.ret_second_name', '.ret-sn-error');" required >
+                            <span class="LinputErrorContainer ret-sn-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Last name is required</span>
+                                        </div>
+                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="email" class="LformInput ret_email" role="presentation" autocomplete="off" required name="register_email" id="retailEmail" maxlength="254" onchange="SignUpValidation('retailSignUp','.ret_email', '.ret-email-error');$(this).focus();"
+                                                placeholder="Email*">
+                            <span class="LinputErrorContainer ret-email-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid email address</span>
+                                        </div>
+                        
+                                        <div class="LinputContainer hidden">
+                                            <input type="text" class="LformInput" role="presentation" autocomplete="off" value=""  id="register_phone" name="register_phone" pattern="((\(\d{3}\) ?)|(\d{3}-))?\d{3}\s-\s\d{4}" placeholder="Phone Number*"
+                                                onkeypress="return isNumber(event)"  minlength="5" maxlength="18" oninput="if (typeof this.reportValidity === 'function') {this.reportValidity();}" >
+                                        </div>
+        
+                                        <div class="LinputContainer signupInputField" style="position:relative;">
+                                            <input type="text" class="LformInput datepickerscheck" autocomplete="off" value=""  id="register_dob" name="register_dob" readonly="readonly" placeholder="Date of Birth (Optional)" />
+                                            <i class="fa fa-solid fa-question-circle clicktoseeinfo info-message ltr-sp-0p5 birthday-info" title="Enter your birthday to receive promotional offers and earn membership points. Your birthday cannot be changed once entered. If you need to change your birthday, please send your request to info@foodrelated.com" style=" position: absolute; top: 14px; right: 15px;font-size: 20px; color: #628e83;"></i>
+                                            <p class="doberror txt-orange ft-14p" style="display:none;">Age must be 13 years or more</p>
+                                            <p class="signupdoberror ft-12p info-message ltr-sp-0p5 birthday-info" style="display:none;line-height:initial;text-align: justify; margin-top: 10px; color: #628e83;">Enter your birthday to receive promotional offers and earn membership points. Your birthday cannot be changed once entered. If you need to change your birthday, please send your request to info@foodrelated.com</p>
+                        <span class="LinputErrorContainer ft-md static-msg formerror mar-zero" style="visibility: hidden;">$nbsp;</span>
+                                        </div>
+        
+                                        <div class="LinputMsgContainer"> 
+                                            <p class="ft-12p info-message ltr-sp-0p5">
+                                                Your password must be at least 8 characters and contain a capital letter, a lowercase letter, a number and punctuation
+                                            </p>
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="password" class="LformInput ret_register_password"  autocomplete="new-password" onblur="SignUpValidation('retailSignUp','.ret_register_password', '.ret-pwd-error');" required name="register_password"
+                                                placeholder="Password*" maxlength="50" value="" >
+                            <span class="LinputErrorContainer ret-pwd-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid password</span>
+                                        </div>                   
+                                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="password" class="LformInput retconfrimpswd" role="presentation" autocomplete="new-password" required name="register_cpassword"
+                                                placeholder="Confirm Password*" onblur="SignUpValidation('retailSignUp','.retconfrimpswd', '.confirmpwderror');" maxlength="50">
+                            <span class="LinputErrorContainer ft-md static-msg confirmpwderror formerror mar-zero" style="visibility: hidden;">Entered password didn't match</span>
+                                        </div>
+                                        <input type="hidden" name="register_membership_type" autocomplete="off" class="form-check-input" id="membership_premium" value="Premium" />
+                                        <mvt:comment> WR-54328 - Fam commented 
+                                        <div class="LinputContainer">
+                                            <p class="ft-14p ft-w-6 ltr-sp-0p5 txt-left" style="margin-top: 35px;">
+                                                <span class="bold-ft">FAM Club</span>
+                                            </p>
+                                        </div>
+                                        <div class="LinputContainer">
+                                        <p class="ft-14p ft-w-6 ltr-sp-0p5 txt-left">
+                                            All users who sign up, by default become a Famie and qualify for FAM Rewards
+                                        </p>
+                                        </div>
+                                        </mvt:comment>
+        
+                                        <mvt:comment> WR-54328 - Fam commented
+                                            <div class="LinputContainer" style="display: flex; flex-direction: column;">
+            
+                                                    <div style="display: -webkit-inline-box;float: left;margin-bottom: 15px;">
+                                                        <input type="radio" name="register_membership_type" class="form-check-input" id="membership_basic" value="Basic" checked="checked" onclick="$('.membershipplans').hide();">
+                                                        &nbsp;
+                                                        <p class="ft-14p ft-w-6 ltr-sp-0p5" style="margin-top: 3px;"><mvt:item name="readytheme" param="banner( 'membership-basic-text' )" /></p>
+                                                    </div>
+            
+                                                    <div>
+                                                        <p class="ft-14p mb-ft-18p membership ltr-sp-0p5 ft-demi txt-left" style="float:left;color: #F47A44;" >
+                                                            Upgrade now to VIP Famie for Amazing Rewards
+                                                        </p>
+                                                    </div>
+            
+                                                    <div style="display: -webkit-inline-box;float: left;">
+                                                        <input type="radio" name="register_membership_type" class="form-check-input" id="membership_premium" value="Premium" onclick="$('.membershipplans').hide();">
+                                                        &nbsp;
+                                                        <p class="ft-14p ft-w-6 ltr-sp-0p5" style="margin-top: 3px;"><mvt:item name="readytheme" param="banner( 'membership-premium-text' )" /> </p>
+                                                    </div>
+            
+                                                    <div class="membershipplans" hidden>
+                                                    <div style="display: -webkit-inline-box;float: left;">
+                                                        <input value='<mvt:item name="readytheme" param="banner( 'membership-monthly-price' )" />' id="monthlyplanprice">
+                                                        <input value='<mvt:item name="readytheme" param="banner( 'membership-yearly-price' )" />' id="yearlyplanprice">
+                                                        <input type="radio" name="membership_plan" class="form-check-input" id="membership_plan1" value="Monthly" checked="checked" onclick="$('#membership_amount').val($('#monthlyplanprice').val())">
+                                                        &nbsp;
+                                                        <p class="ft-12p ft-w-6 ltr-sp-0p5" style="margin-top: 3px;"><mvt:item name="readytheme" param="banner( 'membership-monthly-text' )" /></p>
+                                                    </div>
+                                                    &nbsp;
+                                                    <div style="display: -webkit-inline-box;float: left; margin-left: 30px;">
+                                                        <input type="radio" name="membership_plan" class="form-check-input" id="membership_plan2" value="Yearly" checked="checked" onclick="$('#membership_amount').val($('#yearlyplanprice').val())">
+                                                        &nbsp;
+                                                        <p class="ft-12p ft-w-6 ltr-sp-0p5" style="margin-top: 3px;"><mvt:item name="readytheme" param="banner( 'membership-yearly-text' )" /></p>
+                                                    </div>
+                                                    <input type="hidden" name="membership_amount" id="membership_amount" value="" >
+                                                    </div>
+            
+            
+                                                        
+            
+            
+                                            </div>
+                                        </mvt:comment>
+                                        <button type="submit" name="createAccount" value="Create Account" id="showLoader" onclick="loader(this.id, event)"
+                                            class="formBtncreateAccount btn btn-lg btn-orange primary-btn pointer">Create Account </button>
+        
+                                    
+                                    </div> 
+                                    
+                    
+                    
+                                    <!-- </div> -->
+                                </form>
+                                <!-- retailsign form end-->
+                                <form id="businessSignupForm"> 
+                                                    <!-- Hidden field to validate business address -->
+                                <div class="LinputContainer">
+                                    <input type="hidden" id="validate_address" name="validate_address"  value="2">
+                                </div>
+                                <!-- To check if user creating account while checkout -->
+                                <mvt:if expr="l.settings:page:code EQ 'opco'">
+                                    <input type="hidden" id="is_checkout" name="is_checkout"  value="1">
+                                    <mvt:elseif expr="l.settings:page:code EQ 'BASK' OR l.settings:page:code EQ 'Bask' OR l.settings:page:code EQ 'bask'">
+                                        <input type="hidden" id="is_checkout" name="is_checkout"  value="2">
+                                    <mvt:else>
+                                        <input type="hidden" id="is_checkout" name="is_checkout"  value="0">
+                                </mvt:if>
+                                
+                                <!-- To check if user creating account while checkout -->
+                                <!-- Hidden field to validate business address -->
+                                <!-- business form -->
+                                    <div class="ajaxmsg"></div>
+                                    <div class="businessSignUP displayNone">
+                                        <input type="hidden" name="CustomerAction" value="signup">
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput business_first_name" name="register_fname" maxlength="50" onkeydown="return /[a-z'\s]/i.test(event.key)" onblur="SignUpValidation('businessSignUp','.business_first_name', '.business-fn-error');" placeholder="First Name*" required autocomplete="off" value="">
+                                            <span class="LinputErrorContainer business-fn-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">First Name is required</span> 
+                                    </div>
+                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput business_last_name" required name="register_lname" maxlength="50" onkeydown="return /[a-z'\s]/i.test(event.key)" onblur="SignUpValidation('businessSignUp','.business_last_name', '.business-sn-error');" placeholder="Last Name*" autocomplete="off">
+                                            <span class="LinputErrorContainer business-sn-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Second Name is required</span> 
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="email" class="LformInput business_email" required name="register_email" maxlength="254" id="businessEmail" onblur="SignUpValidation('businessSignUp','.business_email', '.business-email-error');"
+                                                placeholder="Email*" autocomplete="off">
+                                                <span class="LinputErrorContainer business-email-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid email address</span>
+                                        </div>
+                        
+                                        <div class="LinputMsgContainer"> 
+                                            <p class="ft-12p info-message ltr-sp-0p5">
+                                                Your password must be at least 8 characters and contain a capital letter, a lowercase letter, a number and punctuation
+                                            </p>
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="password" class="LformInput ws_register_password" autocomplete="off" required name="register_password" onblur="SignUpValidation('businessSignUp','.ws_register_password', '.ws-pwd-error');"
+                                                placeholder="Password*" maxlength="50">
+                                                <span class="LinputErrorContainer ws-pwd-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid password</span>
+                                        </div>
+                                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="password" class="LformInput wsconfrimpswd" autocomplete="off" required name="register_cpassword"
+                                                placeholder="Confirm Password*"  onblur="SignUpValidation('businessSignUp','.wsconfrimpswd', '.confirmpwderror');" maxlength="50">
+                                                <span class="LinputErrorContainer ft-md static-msg confirmpwderror formerror mar-zero" style="visibility: hidden;">Entered password didn't match</span>    
+                                        </div>
+                                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput ws_phone_number" autocomplete="off" required value="" id="register_phone1" name="register_phone" placeholder="Phone Number*" onblur="SignUpValidation('businessSignUp','.ws_phone_number', '.ws-phone-error');"
+                                                onkeypress="return isNumber(event)" minlength="16" maxlength="16" oninput="if (typeof this.reportValidity === 'function') {this.reportValidity();}" autocomplete="off"/>
+                                                <span class="LinputErrorContainer ws-phone-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Enter a valid phone number</span>    
+                                        </div>
+                    
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput ws_business_name" id="register_bname" required name="register_bname" maxlength="200" onblur="SignUpValidation('businessSignUp','.ws_business_name', '.ws-bn-error');" onkeydown="return /[a-zA-Z0-9' _()-]/.test(event.key)"
+                                                placeholder="Business name*" autocomplete="off">
+                                            <span class="LinputErrorContainer ws-bn-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Busiess Name is required</span>    
+                                        </div>
+                    
+                                        <!-- New Business fields added -->
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput ws_business_type" required name="register_btype" maxlength="200" onkeydown="return /[a-zA-Z0-9 ]/.test(event.key)" onblur="SignUpValidation('businessSignUp','.ws_business_type', '.ws-bt-error');"
+                                                placeholder="Business Type*" autocomplete="off">
+                                                <span class="LinputErrorContainer ws-bt-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Busiess Type is required</span>    
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="url" class="LformInput"  name="register_website" maxlength="100"
+                                                placeholder="Website(Optional)" autocomplete="off">
+                        <span class="LinputErrorContainer ft-md static-msg formerror mar-zero" style="visibility: hidden;">$nbsp;</span>
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput ws_business_address" autocomplete="off" id="Address_Address12" required name="register_baddress" maxlength="200" onblur="SignUpValidation('businessSignUp','.ws_business_address', '.ws-ba-error');" onkeydown="return /[a-zA-Z0-9' _()#-]/.test(event.key)"
+                                                placeholder="Business Address*">
+                                                <span class="LinputErrorContainer ws-ba-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Busiess Address is required</span>
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" class="LformInput" id="Address_Address10"  name="register_baddress2" maxlength="200"
+                                                placeholder="Address Line 2" autocomplete="off" onkeydown="return /[a-zA-Z0-9' _()#-]/.test(event.key)">
+                        <span class="LinputErrorContainer ft-md static-msg formerror mar-zero" style="visibility: hidden;">$nbsp;</span>
+                                        </div>
+                                        <!-- New Business fields added -->
+                                        <input type="hidden" name="b_account_type" id="b_account_type" />
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" name="register_taxid" placeholder="Tax ID*" class="LformInput ws_taxid" required id="register_taxid" maxlength="25" onkeydown="return /[a-zA-Z0-9-]/i.test(event.key)" onblur="SignUpValidation('businessSignUp','.ws_taxid', '.ws-tid-error');" autocomplete="off">
+                                            <span class="LinputErrorContainer ws-tid-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">Tax ID is required</span>
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                            <input type="text" name="register_tabc" placeholder="TABC ID (optional)" class="LformInput" maxlength="25" title="Must be min 8, max 9 and no Special Characters" onkeydown="return /[a-zA-Z0-9-]/i.test(event.key)" pattern="[a-zA-Z0-9]+[a-zA-Z0-9]+" autocomplete="off">
+                        <span class="LinputErrorContainer ft-md static-msg formerror mar-zero" style="visibility: hidden;">$nbsp;</span>
+                                        </div>
+                                        
+                                        
+                                        <div class="ft-12p mb-ft-10p" style="margin-top: -22px; padding-bottom: 4px;">
+                                            <span class="input_btm_text">Only for Texas Businesses who plan to order wine</span>
+                                        </div>
+        
+                                        <div class="LinputContainer signupInputField">
+                                            <select name="register_country" id="register_country" class="LformInput register_country" required="" style="line-height:initial; margin-top: 15px" oninput="SignUpValidation('businessSignUp','.register_country', '');">
+                                                <option value="" selectone="" disabled="">Country</option>
+                                                <option value="US" selected>United States</option>
+                                                <option value="CA">Canada</option>
+                                            </select>
+                        <span class="LinputErrorContainer ft-md static-msg formerror mar-zero" style="visibility: hidden;">$nbsp;</span>
+                            
+                                        </div>
+                                        <div style="display: flex;">
+                                            <div class="LinputContainerCityState signupInputField">
+                                                <input type="text" class="LformInput register_city" autocomplete="off" id="register_city" style="margin-right: 0px;" required
+                                                    name="register_city" maxlength="50" onkeydown="return /[a-z-\s]/i.test(event.key)" placeholder="City*" onblur="SignUpValidation('businessSignUp','.register_city', '.ws-city-error');" autocomplete="off">
+                                                    <span class="LinputErrorContainer ws-city-error ft-md static-msg validateAddressForm formerror mar-zero" style="visibility: hidden;">City is required</span>
+                                            </div>
+                                            <div class="LinputContainerCityState signupInputField">
+                                                <input type="text" class="LformInput zipcode" id="register_zipcode" autocomplete="off" name="register_zipcode"
+                                                    placeholder="ZIP Code*" maxlength="10" required onblur="SignUpValidation('businessSignUp','.zipcode', '.ws-zipcode-error');" autocomplete="off">
+                                                <span class="LinputErrorContainer ws-zipcode-error ft-md static-msg invalidmessage validateAddressForm formerror mar-zero" style="visibility: hidden; margin:5px 0px -5px; text-align:left; padding-left:2px;">Enter a valid zip/ postal code</span>    
+                                            </div>
+        
+                                        </div>
+                                        <div class="LinputContainer signupInputField">
+                                                <mvt:comment> <mvt:item name="toolkit" param="states" /> </mvt:comment>
+                                    <mvt:do name="l.state_datalist_count" file="g.Module_Library_DB" value="StateList_Load_All(l.state_datalist)"/>
+                                    <mvt:assign name="g.StateDatalist" value="l.state_datalist"/>
+                                                <select id="register_state" name="register_state" class="LformInput register_state" required style="pointer-events:all; line-height:40px;" oninput="SignUpValidation('businessSignUp','.register_state', '');">
+                                                    <option selected="selected" disabled value="">-State-</option>
+                                                    <mvt:foreach iterator="state" array="global:StateDatalist">
+                                                    <option value="&mvte:state:code;">&mvte:state:name;</option>
+                                                    </mvt:foreach>
+                                                </select>
+                            <span class="LinputErrorContainer ft-md static-msg invalidmessage formerror mar-zero" style="visibility: hidden; margin:5px 0px -5px; text-align:left; padding-left:2px;">&nbsp;</span> 
+                                        </div>
+                                        <button type="submit" name="createAccount" value="Create Account" id="showLoader2" onclick="loader(this.id, event)"
+                                            class="formBtncreateAccount btn btn-lg btn-orange primary-btn pointer">Create Account </button>
+                    
+                    
+                                    </div>
+                                </form>
+                                <!-- business form  end-->
+                    
+                    <!-- PS-41031 - newsletter checkbox only for wholesale user -->
+                                <!-- news letter signup -->
+                                 <div id="signUpMsg" class=" displayNone newsLetterSignUpContainer" style="display:none;width:90%;margin:20px auto;">
+        
+                                    <div style="display: -webkit-inline-box;float: left;margin-bottom: 15px;">
+                                        <input type="checkbox" class="newsLetter news" id="singUpNewsLetter" name="newsLetter">
+                                        &nbsp;
+                                        <p class="ft-14p ft-md ltr-sp-0p5" style="margin-top: 3px;">Sign up for our weekly newsletters </p>
+                                    </div>
+        
+        
+        
+                                    <div style="margin-left:20px;visibility: hidden;">
+                                        <label class="checkboxContainer">
+                                            <!-- <input type="checkbox" class="newsLetter news" id="singUpNewsLetter" name="newsLetter"> -->
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <p class="signUpMsg ft-14p ft-md ltr-sp-0p5">
+                                            Sign up for our weekly newsletters
+                                        </p>
+                                    </div>
+                                    <div class="newslettermessage" style="display: none;">
+                                        By submitting this form, you are consenting to receive marketing emails from: Food Related, 17401
+                                        Triton, Schertz,TX, 78154, US, http://www.foodrelated.com. You can revoke your consent to receive
+                                        emails at any time by using
+                                        the SafeUnsubscribe®link, found at the bottom of every email. Emails are serviced by Constant
+                                        Contact.
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
+        
+                                
+                            </div>
+                <!-- news letter signup -->
+                            
+                    
+                            <!-- sign up end -->
+
+
+
+                            </div>
+
+                        </div>
+                        <mvt:item name="readytheme" param="Load_Image( 'Amazing_Rewards_1',g.Amazing_Rewards_1 )" />
+                        <mvt:item name="readytheme" param="Load_Image( 'Amazing_Rewards_2',g.Amazing_Rewards_2 )" />
+                        <mvt:item name="readytheme" param="Load_Image( 'Amazing_Rewards_3',g.Amazing_Rewards_3 )" />
+                        <mvt:item name="readytheme" param="Load_Image( 'Amazing_Rewards_4',g.Amazing_Rewards_4 )" />
+
+                    <mvt:if expr="g.Amazing_Rewards_1:active NE 1 AND g.Amazing_Rewards_2:active NE 1 AND g.Amazing_Rewards_3:active NE 1 AND g.Amazing_Rewards_4:active NE 1">
+                        
+                        <mvt:else>
+
+                        <div class="benefits" hidden >
+
+                            <span class="ft-md ft-16p ltr-sp-0p5 info mb-ft-14p">Amazing benefits when you <span class="ft-demi ft-16p ltr-sp-0p5">Sign up</span> </span>
+
+                            <i class="fa fa-arrow-right txt-orange" aria-hidden="true"></i>
+                            <mvt:if expr="g.Amazing_Rewards_1:active EQ 1">
+                                <div class="benefit-card ft-14p">
+                                    <mvt:item name="readytheme" param="image( 'Amazing_Rewards_1' )" />
+                                </div>
+                            </mvt:if>
+                            <mvt:if expr="g.Amazing_Rewards_2:active EQ 1">
+                                <div class="benefit-card ft-14p">
+                                    <mvt:item name="readytheme" param="image( 'Amazing_Rewards_2' )" />
+                                </div>
+                            </mvt:if>
+                            <mvt:if expr="g.Amazing_Rewards_3:active EQ 1">
+                                <div class="benefit-card ft-14p">
+                                    <mvt:item name="readytheme" param="image( 'Amazing_Rewards_3' )" />
+                                </div>
+                            </mvt:if>
+                            <mvt:if expr="g.Amazing_Rewards_4:active EQ 1">
+                                <div class="benefit-card ft-14p">
+                                    <mvt:item name="readytheme" param="image( 'Amazing_Rewards_4' )" />
+                                </div>
+                            </mvt:if>
+                        </div>
+                    </mvt:if>
+
+        <mvt:exit/>
+        </mvt:if>
+        
+        <mvt:if expr="g.CustomerAction EQ 'newsletter'">
+            <div class="modal-dialog" id="newletter-modal" role="document">
+                <div class="modal-content">
+                    <a type="button" class="close dismiss-bt" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><span class="material-icons exit hidden">
+                                close
+                            </span></span>
+                    </a>
+                    <div class="modal-body" id="initalNewsPapaerBody" style="background:snow; padding:12px">
+                        <div>
+                            <div class="newstextHeader">
+                                <h1 class="font29">GOOD THINGS...</h1>
+                                <p class="signupforNewsText">come to those who sign up for newsletters.</p>
+                                <div class="goodthingDevider">
+                                </div>
+                                <p class="specialSpaceText">
+                                    special sales, new arrivals and much more.</p>
+                                <form action="" id="newsletter">
+                                    <div class="submitFormContainer">
+        
+                                        <input type="text" class="inputField " id="email" maxlength="50"
+                                            name="nlEmailAddress" /><button type="submit" id="NLFormsubmit"
+                                            class="submitButton btndisabled"  disabled>Submit</button>
+        
+                                    </div>
+        
+                                    <div class="newsLetterTypeContainer radioButonsNewsLetter" style="display:flex; justify-content:center; margin-bottom:19px;gap:8px">
+        
+                                        <div class="form-check">
+                                            <input type="checkbox" name="retail" class="custom_checkbox form-check-input1"
+                                                id="retailNewsRadio" value="newsRetail" disabled/>
+        
+                                            <label for="retailNewsRadio" class="font8 form-check-label" style="font-weight:bold;font-size:12px;letter-spacing:1px;"> Retail
+                                                Newsletter</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="custom_checkbox form-check-input1" type="checkbox" id="businessRadio"
+                                                name="business" value="newsBusiness" disabled/>
+                                            <label for="businessRadio" class="font8 form-check-label" class="font8" style="font-weight:bold;font-size:12px;letter-spacing:1px;"> Business
+                                                Newsletter </label>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div>
+                                    <p class="font10" style="font-size:18px; color:#f47a44; font-weight:bold;letter-spacing:1.4px;margin-bottom:20px">
+                                        GET 15% OFF YOUR RETAIL ORDER WHEN YOU SIGN UP</p>
+                                </div>
+                                <p class="disclimer"> By submitting this form, you are consenting to receive marketing
+                                    emails from: Food Related, 17401 Triton, Schertz,TX, 78154, US,
+                                    http://www.foodrelated.com. You can revoke your consent to receive emails at any
+                                    time by using
+                                    the SafeUnsubscribe&reg;link, found at the bottom of every email. Emails are
+                                    serviced by Constant Contact.
+                                <p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- COUPEN CODE STAET-->
+                    <div class="modal-body displayNone" id="couponCodeId">
+                        <div>
+                            <div class="newstextHeader">
+                                <h1 class="font29">HERE IS YOUR </h1>
+                                <p class="couponcodeheader font29">COUPON CODE</p>
+                                <div class="coupenDevider">
+                                </div>
+                                <p class="couponcode font29" id="couponCodeText"></p>
+                                <p class="checkouttext font12"
+                                    style="margin-bottom:50px;margin-top:22px;font-weight:bold">Use this at checkout
+                                    with your order.</p>
+                                <div>
+                                    <p class="font10">*Code cannot be combined with any other codes.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- COUPEN CODE END-->
+    
+                    <!--  coupon code for Both selected business and retail-->
+            
+                    <div class="modal-body displayNone" id="couponCodeRetailBusiness">
+                        <div class="signedUpContainer">
+                            <div class=" newstextHeader">
+			 	  <!-- Issue - #570 -->
+                                 <h1 class="font29">Thank you for signing up for our newsletters!</h1>
+                                  <div class="coupenDevider"></div>
+                       
+                               <!-- 8-3-2024 Issue #570 -->
+                                <p class="couponcode font29">FRNEWS15</p>
+                                <p class="checkouttext font12" style="margin-top:22px;font-weight:bold">Use this at checkout for 15% off your first Retail order.</p> 
+                                <!-- <p class="couponcode">FRNEWS15</p> -->
+                                
+                               <!-- <p class="couponcode font29" id="couponCodeText"></p> -->
+                               <!-- <p class="checkouttext font12"
+                                    style="margin-bottom:20px;margin-top:20px;font-weight:bold">at checkout for 15% off your first Retail order</p> -->
+                                <div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  coupon code for Both selected business and retail-->
+        
+                    <!-- EMAIL EXIST STAET-->
+                    <div class="modal-body displayNone" id="emailRetailExist">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                 <h1 class="font29">HEY THERE! </h1>
+        
+                                <div style="width:100%" class="linebar">
+                                </div>
+                                <p class="checkouttext font12">It looks like you're already signed up for our
+                                    Newsletter. Check your inbox for our weekly deals!</p>
+                            </div>
+                        </div>
+                    </div>
+    
+                     <div class="modal-body displayNone" id="noEmailBusiness">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                <h1 class="font29">HEY THERE! </h1>
+        
+                                <div style="width:100%" class="linebar">
+                                </div>
+                                <p class="checkouttext font12">It looks like you're already signed up for our
+                                    Newsletter. Check your inbox for our weekly deals!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- EMAIL EXIST END-->
+        
+                    <!-- dont have business account-->
+                    
+                     <div class="modal-body displayNone" id="noBAccount">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                <h1 class="font29">HEY THERE! </h1>
+        
+                                <div style="width:81%" class="linebar">
+                                </div>
+                                <p class="checkouttext font12">For Business Newsletter you will need to sign up for a Business Account  </p>
+                            </div>
+                        </div>
+                    </div>
+                   <!-- <div class="modal-body" id="noBAccount">
+                        <div>
+                            <div class="newstextHeader">
+                                <h1 class="font29">HERE IS YOUR </h1>
+                                <p class="couponcodeheader font29">COUPON CODE</p>
+                                <div class="coupenDevider">
+                                </div>
+                                <p class="couponcode font29" id="couponCodeText"></p>
+                                <p class="checkouttext font12"
+                                    style="margin-bottom:50px;margin-top:22px;font-weight:bold">Use this at checkout
+                                    with your order.</p>
+                                <div>
+                                    <p class="font10">*Code cannot be combined with any other codes.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+        
+                    <!-- <div class="modal-body" id="noBAccount">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                <h1 class="font29" style="margin-bottom:8px;">Oops!</h1>
+        
+                                <div class="linebar">
+                                </div>
+                                <p class="checkouttext font12">
+                                    In order to receive the Food Related Business Newsletters, please create a</p>
+                                <p class="font12" id="Baccount">
+                                    <a href="javascript:;" class="" onclick="$('.businessaccount').click();
+    $('#singUpNewsLetter').prop('checked',true);" rel="nofollow"
+                                        style="color:#f47a44;"> business account.</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- dont have business account end-->
+                    <!-- email address linked to a Retail Account-->
+        
+                    <div class="modal-body displayNone " id="retailAccount">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                <h1 class="font29">Oops!</h1>
+        
+                                <div class="linebar">
+                                </div>
+                                <p>Error  </p>
+                                 
+                               <!-- <p class="checkouttext font12"
+                                    style="margin-top:20px; margin:20px auto 0px auto; width:85%;font-weight:bold;letter-spacing:1px">
+                                    It looks like that email address is linked to a Retail Account. If you think you
+                                    should have a Business Account instead, please contact us at</p> -->
+                               <!-- <p class="font12" id="Baccount">
+                                    <a href="/connect-with-us.html" rel="nofollow" style="color:#f47a44;">
+                                        help@foodrelated.com</a>
+                                </p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- email address linked to a Retail Account end-->
+                    <!-- succes -->
+        
+                    <div class="modal-body displayNone" style="background:snow; padding:12px" id="businessSuccess">
+                        <div class="signedUpContainer">
+                            <div class="newstextHeader">
+                                <h1 class="font29">Thank you for signing up for our newsletter.</h1>
+        
+                              <!--  <div style="width:100%" class="linebar">
+                                </div>
+                                  
+                                <p class="checkouttext font12">You can unsubscribe at anytime using the unsubscribe
+                                    button at the bottom of every newsletter email.</p> -->
+                            </div>
+                        </div>
+                    </div>
+    
+                     
+                    <!-- succes end -->
+        
+                </div>
+            </div>
+        <mvt:exit/>
+        </mvt:if>
+    
+    
+    
+            <mvt:if expr="g.CustomerAction EQ 'threebievideo'">
+                <div class="modal-dialog" role="document">
+    
+                    <!-- Modal content-->
+                    <div class="modal-content video-modal">
+                        <div class="modal-header noborder">
+                            <a class="exitbtn close" data-dismiss="modal" id="exit">
+                            </a>
+                        </div>
+                        <div class="modal-body text-center">
+                            <video class="embed-responsive-item" width="95%" id="threebie-videos" style="object-fit: cover;" loop="" autoplay="" playsinline  muted>
+                                <source src="graphics/videos/Food_Related_Threebie_Square_(Website).mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <!--button class="btn primary-btn btn-height btn-orange ft-14p videobtn hidden" onclick="location.href='/ctgy/Threebies.html'">Get me to Threebie </button-->
+                        </div>
+                        <div class="modal-footer noborder">
+                            <button type="button" class="btn primary-btn btn-orange ltr-sp-1p hidden" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+        <mvt:exit/>
+        </mvt:if>
+    
+    
+    <mvt:if expr="g.CustomerAction EQ 'slacvideo'">
+                <div class="modal-dialog" role="document">
+    
+                    <!-- Modal content-->
+                    <div class="modal-content video-modal">
+                        <div class="modal-header noborder">
+                            <a class="exitbtn close" data-dismiss="modal" id="exit">
+                            </a>
+                        </div>
+                        <div class="modal-body text-center">
+                            <video class="embed-responsive-item" width="95%" id="threebie-videos" style="object-fit: cover;" loop="" autoplay="" playsinline  muted>
+                                <source src="/Merchant5/graphics/videos/Food_Related_STCS_Video_Anim_1350x1350.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <!--button class="btn primary-btn btn-height btn-orange ft-14p videobtn hidden" onclick="location.href='/ctgy/Threebies.html'">Get me to Threebie </button-->
+                        </div>
+                        <div class="modal-footer noborder">
+                            <button type="button" class="btn primary-btn btn-orange ltr-sp-1p hidden" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+        <mvt:exit/>
+        </mvt:if>
+        
+        <!-- init more to love code here -->
+    <mvt:if expr="g.CustomerAction EQ 'loadmoretolove'">
+    
+    
+    
+            <mvt:item name="readytheme" param="contentsection( 'loadlovelyitems' )" />
+            <mvt:exit/>
+        </mvt:if>
+        
+        <mvt:if expr="g.CustomerAction EQ 'mainFooter'">
+            <mvt:item name="readytheme" param="contentsection( 'FooterSection' )" />
+            <mvt:exit/>
+        </mvt:if>
+    

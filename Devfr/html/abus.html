@@ -35,6 +35,14 @@
             font-size: 20px !important;
         }
 
+        .holder-container .abuslinks {
+            color: #f47a44;
+        }
+
+        .abuslinks:hover {
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
         .abusheart {
             padding: initial;
         }
@@ -76,6 +84,102 @@
             width: 20px;
             height: auto;
         }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 75%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #333;
+            z-index: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .timeline-item span {
+            display: block;
+            margin-top: 8px;
+            font-family: 'ITCAvantGardePro-Bold';
+        }
+
+        .dot {
+            width: 20px;
+            height: 20px;
+            background: #fbbf24;
+            border-radius: 50%;
+            margin: 0 auto;
+            border: 3px solid white;
+        }
+
+        .timeline-item.active .dot {
+            background: #f59e0b;
+            transform: scale(1.2);
+        }
+
+        .content-box {
+            position: relative;
+            padding: 20px;
+            border: 3px solid #fbbf24;
+            /* Yellow border */
+            border-radius: 20px;
+            background: white;
+            max-width: 600px;
+            margin: 40px auto;
+            font-family: sans-serif;
+        }
+
+        /* Horizontal part of the elbow arrow */
+        .content-box::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 40px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid #FFCC33;
+        }
+
+        /* Vertical part of the elbow arrow */
+        .content-box::after {
+            width: 3px;
+            height: 40px;
+            top: -20px;
+            left: 20px;
+        }
+
+        .nav-arrows {
+            margin-top: 20px;
+        }
+
+        .nav-arrows button {
+            font-size: 24px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <!-- PS-26775 Consolidation of Global CSS -->
@@ -116,8 +220,7 @@
                         <div class="imageandtextgrid">
                             <div class="holder-container">
                                 <div class="imageandtextgrid-image">
-                                    <img src="&mvt:global:profchef:image;"
-                                        alt="who we are" />
+                                    <img src="&mvt:global:profchef:image;" alt="who we are" />
                                     <p>Professional Chefs</p>
                                 </div>
                                 <span class="ft-14p ft-md abuscontentspan">Food Related provides professional chefs with
@@ -126,7 +229,8 @@
                                     kitchens, including gourmet and everyday food products, disposables, and much more.
                                     As our true partner, we will always work with you to find the best solutions for
                                     your kitchen.</span>
-                                <h5 class="ft-14p"><a href="" class="txt-orange">Click Here</a> to see where we deliver
+                                <h5 class="ft-14p"><a href="" class="bold-ft txt-orange abuslinks">Click Here</a> to see
+                                    where we deliver
                                 </h5>
                                 <ul class="abusheart">
                                     <li>Low order minimums and deliveries 6 days a week
@@ -143,8 +247,7 @@
 
                             <div class="holder-container">
                                 <div class="imageandtextgrid-image">
-                                    <img src="&mvt:global:homecook:image;"
-                                        alt="who we are" />
+                                    <img src="&mvt:global:homecook:image;" alt="who we are" />
                                     <p>Home Cooks</p>
                                 </div>
                                 <span class="ft-14p ft-md abuscontentspan">Home cooks: We now offer FREE FedEx Ground
@@ -155,13 +258,20 @@
                                     all with amazing savings!</span>
                                 <h5 class="ft-14p"> Shopping wit h Food Related:</h5>
                                 <ul class="abusheart">
-                                    <li>Join our <a class="bold-ft txt-orange" href="/famclub.html">Fam Club</a> for amazing deals, rewards points, and much
+                                    <li>Join our <a class="bold-ft txt-orange" href="/famclub.html">Fam Club</a> for
+                                        amazing deals, rewards points, and much
                                         more - Try us FREE for a year!</li>
-                                    <li>Save 10% on select products when you buy in 3s with <a class="bold-ft txt-orange" onclick="getThreebieVideo('SFNT');">Threebies</a> -
-                                        Just look for the <img src="&mvt:global:threebie_icon:image;" class="abusiconimg" /></li>
-                                    <li>Save up to 25% on chef sized &amp; case products with <a class="bold-ft txt-orange" onclick="getSLACVideo('SFNT');">Shop the Chef
-                                            Size</a> - Just look for the <img src="&mvt:global:slacicongreen:image;" class="abusiconimg" /></li>
-                                    <li>Shop our <a href="/market.html">Market</a> for professional chef favorites in home
+                                    <li>Save 10% on select products when you buy in 3s with <a
+                                            class="bold-ft txt-orange" onclick="getThreebieVideo('SFNT');">Threebies</a>
+                                        -
+                                        Just look for the <img src="&mvt:global:threebie_icon:image;"
+                                            class="abusiconimg" /></li>
+                                    <li>Save up to 25% on chef sized &amp; case products with <a
+                                            class="bold-ft txt-orange" onclick="getSLACVideo('SFNT');">Shop the Chef
+                                            Size</a> - Just look for the <img src="&mvt:global:slacicongreen:image;"
+                                            class="abusiconimg" /></li>
+                                    <li>Shop our <a class="bold-ft txt-orange" href="/market.html">Market</a> for
+                                        professional chef favorites in home
                                         kitchen-friendly sizes, hand-cut and packaged to order</li>
                                 </ul>
 
@@ -169,8 +279,7 @@
 
                             <div class="holder-container">
                                 <div class="imageandtextgrid-image">
-                                    <img src="&mvt:global:nonprofitservice:image;"
-                                        alt="who we are" />
+                                    <img src="&mvt:global:nonprofitservice:image;" alt="who we are" />
                                     <p>Non-Profit Services</p>
                                 </div>
                                 <span class="ft-14p ft-md abuscontentspan">In response to the rising need in our
@@ -179,15 +288,71 @@
                                     diversified, partnering with non-profit businesses across the country. Today, we
                                     offer unique, customized programs and food kits designed to meet the needs of each
                                     community your non-profit serves.</span>
-                                    <h5 class="ft-14p"><a href="" class="txt-orange">Click Here</a> to learn more about partnering with us</h5>
-                                    <ul class="abusheart">
-                                        <li><strong>Bulk full truck loads &amp; Orders by the pallet</strong></li>
-                                        <li><strong>Customizable food kits</strong></li>
-                                        <li><strong>Nutrition-based programs</strong></li>
-                                        <li><strong>Culinary kitchen programs</strong></li>
-                                    </ul>
+                                <h5 class="ft-14p"><a href="" class="bold-ft txt-orange abuslinks">Click Here</a> to
+                                    learn more about
+                                    partnering with us</h5>
+                                <ul class="abusheart">
+                                    <li><strong>Bulk full truck loads &amp; Orders by the pallet</strong></li>
+                                    <li><strong>Customizable food kits</strong></li>
+                                    <li><strong>Nutrition-based programs</strong></li>
+                                    <li><strong>Culinary kitchen programs</strong></li>
+                                </ul>
                             </div>
                         </div>
+
+
+                        <section class="timeline-container">
+                            <h2>Our Story</h2>
+                            <div class="timeline ft-24p">
+                                <div class="timeline-item active" data-year="1992">
+                                    <span>1992</span>
+                                    <div class="dot"></div>
+                                </div>
+                                <div class="timeline-item" data-year="2010">
+                                    <span>2010 - 2018</span>
+                                    <div class="dot"></div>
+                                </div>
+                                <div class="timeline-item" data-year="2019">
+                                    <span>2019</span>
+                                    <div class="dot"></div>
+                                </div>
+                                <div class="timeline-item" data-year="2020.02.02">
+                                    <span>02.02.2020</span>
+                                    <div class="dot"></div>
+                                </div>
+                                <div class="timeline-item" data-year="2020.03">
+                                    <span>Mar 2020</span>
+                                    <div class="dot"></div>
+                                </div>
+                                <div class="timeline-item" data-year="today">
+                                    <span>Today</span>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+
+                            <div class="content-box" id="timeline-content">
+                                <h3>The Founder</h3>
+                                <p>
+                                    Our father, Manuel Ciorciari, opened an online retail store called Gaucho Gourmet,
+                                    starting small with mostly Yerba Mate from our native Argentina.
+                                </p>
+                                <p>
+                                    His inventory expanded to other specialty imports, and so did his business. His
+                                    promise -
+                                    to always treat customers like family - grew Gaucho Gourmet's family to over 10,000
+                                    customers
+                                    from around the country.
+                                </p>
+                            </div>
+
+
+
+
+                            <div class="nav-arrows">
+                                <button onclick="moveSlide(-1)">&#8249;</button>
+                                <button onclick="moveSlide(1)">&#8250;</button>
+                            </div>
+                        </section>
                         <mvt:item name="hdft" param="footer" />
                         <div class="clearfix"></div>
                     </div>
@@ -209,6 +374,40 @@
         if (hash) {
             $('#' + hash).toggleClass('active');
         }
+
+        const items = document.querySelectorAll('.timeline-item');
+        let currentIndex = 0;
+
+        function updateTimeline(index) {
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            // Replace this logic with dynamic content changes per timeline step
+            const contentBox = document.getElementById('timeline-content');
+            if (index === 0) {
+                contentBox.innerHTML = `
+      <h3>The Founder</h3>
+      <p>Our father, Manuel Ciorciari, opened an online retail store called Gaucho Gourmet...</p>
+    `;
+            } else {
+                contentBox.innerHTML = `<h3>Year ${items[index].dataset.year}</h3><p>Some event occurred in this year.</p>`;
+            }
+        }
+
+        function moveSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = 0;
+            if (currentIndex >= items.length) currentIndex = items.length - 1;
+            updateTimeline(currentIndex);
+        }
+
+        items.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                updateTimeline(index);
+            });
+        });
     </script>
 
 </body>
